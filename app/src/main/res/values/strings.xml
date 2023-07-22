@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">버스왔시야</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--하단 BottomNavigation Menu-->
+    <string name="main_like">즐겨찾기</string>
+    <string name="main_search">검색</string>
+    <string name="main_other">기타</string>
+
+    <!--애드몹-->
+    <!--테스트 ID-->
+    <string name="adModId">ca-app-pub-3940256099942544/6300978111</string>
+
+    <!-- 릴리즈 ID-->
+    <!--<string name="adModId">ca-app-pub-3991873148102758/7356139432</string>-->
+
+
+
+    <string name="noBusMessage">버스정보 없음</string>
+
+</resources>

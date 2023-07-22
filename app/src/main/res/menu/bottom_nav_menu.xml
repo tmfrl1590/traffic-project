@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/likeFragment"
+        android:title="@string/main_like"
+        android:icon="@drawable/like"/>
+
+    <item
+        android:id="@+id/searchFragment"
+        android:title="@string/main_search"
+        android:icon="@drawable/bus"/>
+
+    <item
+        android:id="@+id/otherFragment"
+        android:title="@string/main_other"
+        android:icon="@drawable/setting"/>
+</menu>
