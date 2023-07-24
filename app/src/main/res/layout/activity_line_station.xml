@@ -1,162 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".main.LineStationActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/guideLineLeft" />
+    <data>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineRight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/guideLineRight" />
+    </data>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidLineTop1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="160dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidLineTop2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="50dp"/>
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/rv_lineStationInfo"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        tools:context=".main.LineStationActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#E2E9F3">
-
-            <ImageView
-                android:id="@+id/btn_back"
-                android:layout_width="@dimen/holder_icon_width"
-                android:layout_height="@dimen/holder_icon_height"
-                android:src="@drawable/left_arrow"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <TextView
-                android:id="@+id/lineName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:paddingRight="10dp"
-                app:layout_constraintLeft_toRightOf="@+id/btn_back"
-                app:layout_constraintRight_toLeftOf="@+id/btn_like"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
-            <ImageView
-                android:id="@+id/btn_like"
-                android:layout_width="@dimen/holder_icon_width"
-                android:layout_height="@dimen/holder_icon_height"
-                android:src="@drawable/unlike"
-                android:layout_marginRight="20dp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <TextView
-            android:id="@+id/direction"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:textSize="18sp"/>
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/guideLineLeft" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/guideLineRight" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidLineTop1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="160dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidLineTop2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="50dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
+            android:layout_height="0dp"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/rv_lineStationInfo"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#E2E9F3">
+
+                <ImageView
+                    android:id="@+id/btn_back"
+                    android:layout_width="@dimen/holder_icon_width"
+                    android:layout_height="@dimen/holder_icon_height"
+                    android:src="@drawable/left_arrow"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <TextView
+                    android:id="@+id/lineName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:paddingRight="10dp"
+                    app:layout_constraintLeft_toRightOf="@+id/btn_back"
+                    app:layout_constraintRight_toLeftOf="@+id/btn_like"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <ImageView
+                    android:id="@+id/btn_like"
+                    android:layout_width="@dimen/holder_icon_width"
+                    android:layout_height="@dimen/holder_icon_height"
+                    android:src="@drawable/unlike"
+                    android:layout_marginRight="20dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <TextView
-                android:id="@+id/first_run_time"
-                android:layout_weight="1"
+                android:id="@+id/direction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textSize="16sp"/>
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/last_run_time"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="16sp"/>
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/run_interval"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="16sp"/>
+                <TextView
+                    android:id="@+id/first_run_time"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/last_run_time"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/run_interval"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
 
 
         </LinearLayout>
 
 
-    </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_lineStationInfo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintLeft_toLeftOf="@+id/guidelineLeft"
+            app:layout_constraintRight_toRightOf="@id/guidelineRight"
+            app:layout_constraintTop_toBottomOf="@+id/guidLineTop1"
+            app:layout_constraintBottom_toBottomOf="@+id/guidLineTop2" />
 
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:adSize="BANNER"
+            app:adUnitId="@string/adModId"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/guidelineLeft"
+            app:layout_constraintRight_toRightOf="@id/guidelineRight"
+            app:layout_constraintTop_toTopOf="@id/guidLineTop2"
+            app:layout_constraintVertical_bias="0.974"></com.google.android.gms.ads.AdView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_lineStationInfo"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintLeft_toLeftOf="@+id/guidelineLeft"
-        app:layout_constraintRight_toRightOf="@id/guidelineRight"
-        app:layout_constraintTop_toBottomOf="@+id/guidLineTop1"
-        app:layout_constraintBottom_toBottomOf="@+id/guidLineTop2"/>
-
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:adSize="BANNER"
-        app:adUnitId="@string/adModId"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/guidelineLeft"
-        app:layout_constraintRight_toRightOf="@id/guidelineRight"
-        app:layout_constraintTop_toTopOf="@id/guidLineTop2"
-        app:layout_constraintVertical_bias="0.974"></com.google.android.gms.ads.AdView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

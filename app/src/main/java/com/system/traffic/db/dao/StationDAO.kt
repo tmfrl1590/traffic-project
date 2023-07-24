@@ -14,13 +14,12 @@ interface StationDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertStation(stationEntity: StationEntity)
 
-    @Query("SELECT * FROM station")
-    fun getAllStation() : Flow<List<StationEntity>>
-
-
-    // 정류장 찾기 - 검색
+    // 정류장 검색
     @Query("SELECT * FROM station WHERE busstop_name LIKE :text ")
-    fun getSavedStationList(text : String) : List<StationEntity>
+    fun getSearchedStationList(text : String) : List<StationEntity>
+
+
+
 
     // 정류장 - 즐겨찾기 목록 가져오기
     @Query("SELECT * FROM station WHERE selected ='1'")

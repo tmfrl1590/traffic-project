@@ -9,29 +9,19 @@ import kotlinx.coroutines.flow.flow
 
 
 class DBRepository {
-
     val context = App.context()
     val db = TrafficDataBase.getDatabase(context)
 
+    // 검색
+    fun getSearchedStationList(text : String) = db.stationDAO().getSearchedStationList(text)
+    fun getSearchedLineList(text: String?) = db.lineDAO().getSearchedLineList(text)
 
-    // Station
-
-    fun getAllStation() = db.stationDAO().getAllStation()
-
+    // 파일데이터 DB 저장
     fun insertStation(stationEntity: StationEntity) = db.stationDAO().insertStation(stationEntity)
-
-
-    // Line
-
-    fun getAllLine() = db.lineDAO().getAllLine()
-
     fun insertLine(lineEntity: LineEntity) = db.lineDAO().insertLine(lineEntity)
 
 
-    // test
-    fun getSavedStationList(text : String) = db.stationDAO().getSavedStationList(text)
 
-    fun getSavedLineList(text: String?) = db.lineDAO().getSavedLineList(text)
 
     fun getLineColor() = db.lineDAO().getLineColor()
 

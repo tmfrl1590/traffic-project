@@ -1,95 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/holder_line_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#959292"/>
+    <data>
 
+    </data>
 
     <LinearLayout
+        android:id="@+id/holder_line_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="80dp"
-            android:layout_height="match_parent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#959292" />
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/down_arrow"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="16dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="wrap_content"
-                android:background="#262626"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_width="80dp"
+                android:layout_height="match_parent">
 
-
-                <TextView
-                    android:id="@+id/busStopName"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:textSize="@dimen/holder_main_text"
-                    android:layout_marginLeft="20dp"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:ellipsize="marquee"
-                    android:singleLine="true"
-                    android:focusable="true"
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/down_arrow"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="16dp"
                     app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"/>
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="wrap_content"
+                    android:background="#262626"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/arsId"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:textSize="@dimen/holder_sub_text"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="20dp"/>
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:id="@+id/busStopName"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/holder_main_text"
+                        android:layout_marginLeft="20dp"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:ellipsize="marquee"
+                        android:singleLine="true"
+                        android:focusable="true"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/arsId"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:textSize="@dimen/holder_sub_text"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="20dp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
+
     </LinearLayout>
-
-
-</LinearLayout>
+</layout>

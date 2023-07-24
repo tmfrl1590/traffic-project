@@ -11,10 +11,7 @@ import com.system.traffic.db.entity.LineEntity
 import com.system.traffic.db.entity.StationEntity
 import com.system.traffic.repository.DBRepository
 import com.system.traffic.repository.NetWorkRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class MainViewModel : ViewModel() {
 
@@ -62,50 +59,19 @@ class MainViewModel : ViewModel() {
         get() = _resultLineStationInfoList
 
 
-    // 원하는 정류장 목록 가져오기(검색)
-    fun getSavedStationList(text: String) = viewModelScope.launch(Dispatchers.IO) {
-        val result = dbRepository.getSavedStationList(text)
+    // 정류장 목록 가져오기(검색)
+    fun getSearchedStationList(text: String) = viewModelScope.launch(Dispatchers.IO) {
         selectedStationList = ArrayList()
-        for (i in result) {
-            val a = StationEntity(
-                i.id,
-                i.station_num,
-                i.busstop_name,
-                i.next_busstop,
-                i.busstop_id,
-                i.ars_id,
-                i.longitude,
-                i.latitude,
-                i.selected
-            )
-            selectedStationList.add(a)
-        }
+        selectedStationList = dbRepository.getSearchedStationList(text) as ArrayList<StationEntity>
 
         withContext(Dispatchers.Main) {
             _resultStationList.value = selectedStationList
         }
     }
 
-    fun getSavedLineList(test: String?) = viewModelScope.launch(Dispatchers.IO) {
-        val result = dbRepository.getSavedLineList(test)
-
+    fun getSearchedLineList(test: String?) = viewModelScope.launch(Dispatchers.IO) {
         selectedLineList = ArrayList()
-        for (i in result) {
-            val a = LineEntity(
-                i.id,
-                i.dir_down_name,
-                i.run_interval,
-                i.last_run_time,
-                i.line_num,
-                i.first_run_time,
-                i.dir_up_name,
-                i.line_id,
-                i.line_kind,
-                i.line_name,
-                i.selected
-            )
-            selectedLineList.add(a)
-        }
+        selectedLineList = dbRepository.getSearchedLineList(test) as ArrayList<LineEntity>
 
         withContext(Dispatchers.Main) {
             _resultLineList.value = selectedLineList
@@ -135,7 +101,7 @@ class MainViewModel : ViewModel() {
     }
 
     // 버스 색상 가져오기
-    fun getLineColor() = viewModelScope.launch(Dispatchers.IO) {
+    fun getLineColor() = viewModelScope.launch(Dispatchers.IO){
         val result = dbRepository.getLineColor()
 
         lineColorList = ArrayList()
@@ -178,4 +144,6 @@ class MainViewModel : ViewModel() {
             _resultStationInfo.value = result
         }
     }
+
+
 }

@@ -48,12 +48,16 @@ class LineAdapter(val context : Context, val lineList : ArrayList<LineEntity>, v
 
         for(i in list){
             if(lineList[position].line_id == i.line_id){
-                if(i.line_kind == "1"){
-                    holder.lineName.setTextColor(Color.parseColor("#ff0000"))
-                }else if(i.line_kind == "2"){
-                    holder.lineName.setTextColor(Color.parseColor("#FFA500"))
-                } else if(i.line_kind == "3"){
-                    holder.lineName.setTextColor(Color.parseColor("#228B22"))
+                when (i.line_kind) {
+                    "1" -> {
+                        holder.lineName.setTextColor(Color.parseColor("#ff0000"))
+                    }
+                    "2" -> {
+                        holder.lineName.setTextColor(Color.parseColor("#FFA500"))
+                    }
+                    "3" -> {
+                        holder.lineName.setTextColor(Color.parseColor("#228B22"))
+                    }
                 }
             }
         }

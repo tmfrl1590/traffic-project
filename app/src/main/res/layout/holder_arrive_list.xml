@@ -1,111 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/holder_line_view"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:orientation="vertical"
-    android:background="@drawable/shadow"
-    android:layout_marginBottom="10dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/holder_line_view"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:background="@drawable/shadow"
+        android:layout_marginBottom="10dp">
 
-        <TextView
-            android:id="@+id/lineName"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:gravity="center_vertical"
-            android:text="수완03"
-            android:textColor="#D32F2F"
-            android:textSize="@dimen/holder_main_text"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:ellipsize="marquee"
-            android:singleLine="true"
-            android:focusable="true"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginLeft="10dp"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/low_bus"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:background="#A8A8A8"
-            android:text="저상"
-            android:visibility="invisible"
-            android:textColor="@color/white"
-            android:textSize="13sp"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/lineName"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.619" />
+            <TextView
+                android:id="@+id/lineName"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:gravity="center_vertical"
+                android:text="수완03"
+                android:textColor="#D32F2F"
+                android:textSize="@dimen/holder_main_text"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:focusable="true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginLeft="10dp" />
 
-        <ImageView
-            android:id="@+id/likeArea"
-            android:layout_width="@dimen/holder_icon_width"
-            android:layout_height="@dimen/holder_icon_height"
-            android:src="@drawable/unlike"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            <TextView
+                android:id="@+id/low_bus"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:background="#A8A8A8"
+                android:text="저상"
+                android:visibility="invisible"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/lineName"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.619" />
 
-        <!--<ImageView
-            android:id="@+id/alarm"
-            android:layout_width="@dimen/holder_icon_width"
-            android:layout_height="@dimen/holder_icon_height"
-            android:src="@drawable/alarm"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginRight="10dp"/>-->
+            <ImageView
+                android:id="@+id/likeArea"
+                android:layout_width="@dimen/holder_icon_width"
+                android:layout_height="@dimen/holder_icon_height"
+                android:src="@drawable/unlike"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--<ImageView
+                android:id="@+id/alarm"
+                android:layout_width="@dimen/holder_icon_width"
+                android:layout_height="@dimen/holder_icon_height"
+                android:src="@drawable/alarm"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginRight="10dp"/>-->
 
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/bottomArea"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <TextView
-            android:id="@+id/busStopName"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:textSize="@dimen/holder_sub_text"
-            android:textColor="@color/black"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="12dp"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:ellipsize="marquee"
-            android:singleLine="true"
-            android:focusable="true"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/remainMin"/>
-
-        <TextView
-            android:id="@+id/remainMin"
-            android:layout_width="70dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottomArea"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/busStopName"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:textSize="@dimen/holder_sub_text"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="12dp"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:focusable="true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/remainMin" />
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/remainMin"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</layout>

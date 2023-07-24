@@ -8,19 +8,18 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface LineDAO {
 
+    @Transaction
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertLine(lineEntity: LineEntity)
 
-    @Query("SELECT * FROM line")
-    fun getAllLine() : Flow<List<LineEntity>>
+    // 버스 검색
+    @Query("SELECT * FROM line WHERE line_name LIKE :text ")
+    fun getSearchedLineList(text : String?) : List<LineEntity>
+
 
     @Query("SELECT line_id, line_kind FROM line  ")
     fun getLineColor() : List<LineModel>
 
-
-    // 버스 찾기 - 검색
-    @Query("SELECT * FROM line WHERE line_name LIKE :text ")
-    fun getSavedLineList(text : String?) : List<LineEntity>
 
     // 버스 - 즐겨찾기 목록 가져오기
     @Query("SELECT * FROM line WHERE selected ='1'")

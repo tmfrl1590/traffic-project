@@ -45,7 +45,7 @@ class StationAdapter(val context : Context, val stationList : List<StationEntity
         holder.arsId.text = stationList[position].ars_id
 
         holder.holderStationView.setOnClickListener {
-            val intent = Intent(context, BusArriveActivity::class.java )
+            val intent = Intent(context, BusArriveActivity::class.java)
             intent.putExtra("ars_id", stationList[position].ars_id)
             context.startActivity(intent)
         }

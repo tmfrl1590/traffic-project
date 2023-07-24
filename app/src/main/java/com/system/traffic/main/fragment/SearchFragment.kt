@@ -1,10 +1,13 @@
 package com.system.traffic.main.fragment
 
+import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +17,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
@@ -23,10 +27,19 @@ import com.system.traffic.dataModel.LineModel
 import com.system.traffic.databinding.FragmentSearchBinding
 import com.system.traffic.db.entity.LineEntity
 import com.system.traffic.db.entity.StationEntity
+import com.system.traffic.main.BusArriveActivity
 import com.system.traffic.main.viewModel.MainViewModel
 import com.system.traffic.main.adapter.LineAdapter
+import com.system.traffic.main.adapter.LineListAdapter
 import com.system.traffic.main.adapter.StationAdapter
+import com.system.traffic.main.adapter.StationListAdapter
 import com.system.traffic.main.viewModel.LikeViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {
 
@@ -38,16 +51,20 @@ class SearchFragment : Fragment() {
 
     private var selectedCategory : String = "정류장"
 
-    private lateinit var stationAdapter : StationAdapter
-    private lateinit var lineAdapter : LineAdapter
+    //private lateinit var stationAdapter : StationAdapter
+    //private lateinit var lineAdapter : LineAdapter
+
+
+    private val adapter1: StationListAdapter by lazy { StationListAdapter(Handler()) }
+    private val adapter2: LineListAdapter by lazy { LineListAdapter(Handler()) }
 
     private val stationList = ArrayList<StationEntity>()
     private val lineList = ArrayList<LineEntity>()
 
     private lateinit var busColorList : ArrayList<LineModel>
 
-    var inputText : String = ""
-    var resultText : String = ""
+
+    private var resultText : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,25 +73,26 @@ class SearchFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
 
+        getLineColor()
         initView()
         initEvent()
-
-        /*requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                val action = SearchFragmentDirection.
-            }
-
-        })*/
 
         return binding.root
     }
 
+    private fun getLineColor(){
+        viewModel.getLineColor()
+        viewModel.resultLineColorList.observe(viewLifecycleOwner) {
+            busColorList = it
+        }
+    }
+
     private fun initView(){
+        setCategoryBottomSheet()
         setAdview()
     }
 
     private fun initEvent(){
-
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener, androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean { // 검색버튼 누를때
@@ -82,42 +100,44 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean { // 글자 변경이 일어날때마다
-                inputText = newText.toString()
-                resultText = "%$inputText%"
-                if(resultText!!.isNotEmpty()){
-                    if(binding.selectStationLine.text == "정류장"){
+                if(newText!!.isNotEmpty()){
+                    resultText = "%$newText%"
+                    if(resultText.isNotEmpty()){
+                        if(binding.selectStationLine.text == "정류장"){
 
-                        viewModel.getSavedStationList(resultText)
-                        viewModel.resultStationList.observe(viewLifecycleOwner, Observer {
-                            stationList.clear()
+                            viewModel.getSearchedStationList(resultText)
+                            viewModel.resultStationList.observe(viewLifecycleOwner, Observer {
+                                stationList.clear()
 
-                            for(item in it){
-                                stationList.add(item)
-                            }
+                                for(item in it){
+                                    stationList.add(item)
+                                }
 
-                            setStationRV()
-                        })
+                                setStationRV()
+                            })
 
-                    } else {
-                        viewModel.getSavedLineList(resultText)
-                        viewModel.resultLineList.observe(viewLifecycleOwner, Observer {
-                            lineList.clear()
+                        } else {
+                            viewModel.getSearchedLineList(resultText)
+                            viewModel.resultLineList.observe(viewLifecycleOwner, Observer {
+                                lineList.clear()
 
-                            for(item in it){
-                                lineList.add(item)
-                            }
+                                for(item in it){
+                                    lineList.add(item)
+                                }
 
-                            setLineRV()
-                        })
+                                setLineRV()
+                            })
+                        }
                     }
                 }
+
                 return true
             }
 
         })
+    }
 
-        //binding.inputWord.addTextChangedListener(textWatcher)
-
+    private fun setCategoryBottomSheet(){
         // BottomSheetDialog
         binding.selectStationLine.setOnClickListener {
             // bottomSheetDialog 객체 생성
@@ -135,6 +155,8 @@ class SearchFragment : Fragment() {
                 selectedCategory = bottomSheetView.findViewById<TextView>(R.id.selectedStation).text.toString()
                 binding.selectStationLine.text = selectedCategory
                 binding.searchView.setQuery("", false)
+                stationList.clear()
+                lineList.clear()
                 bottomSheetDialog.dismiss()
             }
 
@@ -142,6 +164,8 @@ class SearchFragment : Fragment() {
                 selectedCategory = bottomSheetView.findViewById<TextView>(R.id.selectedLine).text.toString()
                 binding.selectStationLine.text = selectedCategory
                 binding.searchView.setQuery("", false)
+                stationList.clear()
+                lineList.clear()
                 bottomSheetDialog.dismiss()
             }
 
@@ -160,36 +184,15 @@ class SearchFragment : Fragment() {
     }
 
     private fun setStationRV(){
-        stationAdapter = StationAdapter(requireContext(), stationList)
-        binding.rvStationList.adapter = stationAdapter
+        binding.rvStationList.adapter = adapter1
         binding.rvStationList.layoutManager = LinearLayoutManager(requireContext())
-
-        stationAdapter.itemClick = object : StationAdapter.ItemClick{
-            override fun onClick(view: View, position: Int) {
-                likeViewModel.updateStation(stationList[position])
-                stationAdapter.notifyDataSetChanged()
-            }
-        }
+        adapter1.submitList(stationList)
     }
 
     private fun setLineRV(){
-
-        viewModel.getLineColor()
-        viewModel.resultLineColorList.observe(this){
-            busColorList = it
-
-            lineAdapter = LineAdapter(requireContext(), lineList, busColorList)
-            binding.rvStationList.adapter = lineAdapter
-            binding.rvStationList.layoutManager = LinearLayoutManager(requireContext())
-
-            lineAdapter.itemClick = object : LineAdapter.ItemClick{
-                override fun onClick(view: View, position: Int) {
-                    likeViewModel.updateLine(lineList[position])
-                    lineAdapter.notifyDataSetChanged()
-                }
-
-            }
-        }
+        binding.rvStationList.adapter = adapter2
+        binding.rvStationList.layoutManager = LinearLayoutManager(requireContext())
+        adapter2.submitList(lineList)
     }
 
     override fun onDestroy() {
@@ -197,4 +200,22 @@ class SearchFragment : Fragment() {
         _binding = null
     }
 
+    inner class Handler {
+        fun onStationClick(stationEntity: StationEntity) {
+            likeViewModel.updateStation(stationEntity)
+            adapter1.notifyDataSetChanged()
+        }
+
+        fun onLineClick(lineEntity: LineEntity){
+            likeViewModel.updateLine(lineEntity)
+            adapter2.notifyDataSetChanged()
+        }
+
+        fun intentBusArriveActivity(stationEntity: StationEntity){
+            val intent = Intent(requireContext(), BusArriveActivity::class.java).apply {
+                putExtra("ars_id", stationEntity.ars_id )
+            }
+            startActivity(intent)
+        }
+    }
 }
