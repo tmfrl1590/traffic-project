@@ -15,7 +15,6 @@ import androidx.fragment.app.activityViewModels
 import com.system.traffic.R
 import com.system.traffic.dataModel.BusArriveModel
 import com.system.traffic.main.BusArriveActivity
-import com.system.traffic.main.BusArriveActivity.Companion.ACTION_CANCEL
 import com.system.traffic.main.MainActivity
 import com.system.traffic.main.viewModel.DataStoreViewModel
 import com.system.traffic.main.viewModel.MainViewModel

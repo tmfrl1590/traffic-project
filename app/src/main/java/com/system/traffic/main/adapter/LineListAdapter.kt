@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.system.traffic.R
 import com.system.traffic.databinding.HolderLineListBinding
 import com.system.traffic.db.entity.LineEntity
-import com.system.traffic.main.fragment.SearchFragment
+import com.system.traffic.main.Handler1
 
-class LineListAdapter(private val handler: SearchFragment.Handler): ListAdapter<LineEntity, LineListAdapter.ContentViewHolder>(diffCallback) {
+class LineListAdapter(private val handler: Handler1): ListAdapter<LineEntity, LineListAdapter.ContentViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContentViewHolder {
         return ContentViewHolder(
@@ -35,7 +35,7 @@ class LineListAdapter(private val handler: SearchFragment.Handler): ListAdapter<
         }
     }
 
-    inner class ContentViewHolder(private val binding: HolderLineListBinding, private val handler: SearchFragment.Handler): RecyclerView.ViewHolder(binding.root){
+    inner class ContentViewHolder(private val binding: HolderLineListBinding, private val handler: Handler1): RecyclerView.ViewHolder(binding.root){
         fun bind(item: LineEntity){
             binding.item = item
             binding.handler = handler

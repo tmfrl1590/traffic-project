@@ -9,7 +9,7 @@
 
         <variable
             name="handler"
-            type="com.system.traffic.main.fragment.SearchFragment.Handler" />
+            type="com.system.traffic.main.Handler1" />
 
     </data>
 
@@ -19,7 +19,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/shadow">
+        android:background="@drawable/shadow"
+        android:onClick="@{() -> handler.intentLineStationActivity(item)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

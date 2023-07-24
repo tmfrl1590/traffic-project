@@ -1,21 +1,16 @@
 package com.system.traffic.main.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ListAdapter
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.system.traffic.R
 import com.system.traffic.databinding.HolderStationListBinding
 import com.system.traffic.db.entity.StationEntity
-import com.system.traffic.main.fragment.SearchFragment
+import com.system.traffic.main.Handler1
 
 
-class StationListAdapter(private val handler: SearchFragment.Handler) : androidx.recyclerview.widget.ListAdapter<StationEntity, StationListAdapter.ContentViewHolder>(diffCallback) {
+class StationListAdapter(private val handler: Handler1) : androidx.recyclerview.widget.ListAdapter<StationEntity, StationListAdapter.ContentViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContentViewHolder {
         return ContentViewHolder(
@@ -39,7 +34,7 @@ class StationListAdapter(private val handler: SearchFragment.Handler) : androidx
         }
     }
 
-    inner class ContentViewHolder(private val binding: HolderStationListBinding, private val handler: SearchFragment.Handler) : RecyclerView.ViewHolder(binding.root){
+    inner class ContentViewHolder(private val binding: HolderStationListBinding, private val handler: Handler1) : RecyclerView.ViewHolder(binding.root){
         fun bind(item: StationEntity){
             binding.item = item
             binding.handler = handler

@@ -22,7 +22,6 @@ class DBRepository {
 
 
 
-
     fun getLineColor() = db.lineDAO().getLineColor()
 
 
@@ -38,11 +37,11 @@ class DBRepository {
     // 즐겨찾기 추가, 삭제 - 버스
     fun updateLine(lineEntity: LineEntity) = db.lineDAO().updateLine(lineEntity)
 
-    // 즐겨찾기 - 버스 추가 삭제(상세화면에서)
-    fun updateLineLike(text: String, lineId: String) = db.lineDAO().updateLineLike(text, lineId)
-
     // 즐겨찾기 - 정류장 추가 삭제(상세화면에서)
     fun updateStationLike(text: String, ars_id: String) = db.stationDAO().updateStationLike(text, ars_id)
+
+    // 즐겨찾기 - 버스 추가 삭제(상세화면에서)
+    fun updateLineLike(text: String, lineId: String) = db.lineDAO().updateLineLike(text, lineId)
 
     // 즐겨찾기 - 해당 버스가 이미 즐겨찾기 되있는지 확인여부
     fun getIsLikeLine(lineId: String) = db.lineDAO().getIsLikeLine(lineId)

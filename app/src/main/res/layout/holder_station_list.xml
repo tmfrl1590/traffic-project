@@ -10,7 +10,7 @@
 
         <variable
             name="handler"
-            type="com.system.traffic.main.fragment.SearchFragment.Handler" />
+            type="com.system.traffic.main.Handler1" />
     </data>
 
 

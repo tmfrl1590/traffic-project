@@ -3,18 +3,13 @@ package com.system.traffic.main
 import android.animation.ObjectAnimator
 import android.app.ActivityManager
 import android.app.AlertDialog
-import android.app.Notification.Action
-import android.app.NotificationManager
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.ads.AdRequest
@@ -75,26 +70,28 @@ class BusArriveActivity : AppCompatActivity() {
             color = it
         }
 
-        dataStoreViewModel.getAlarmReloadTime()
+        /*dataStoreViewModel.getAlarmReloadTime()
         dataStoreViewModel.resultAlarmReloadTime.observe(this) {
             reloadTime = it
-        }
+        }*/
 
         initView()
         initEvent()
     }
 
-    private fun initEvent() {
-        binding.swipe.setOnRefreshListener {
-            binding.swipe.isRefreshing = false
-            setRV()
-        }
-
+    fun reloadBusArriveInfo(){
         binding.btnReload.setOnClickListener {
             val currDegree = binding.btnReload.rotationX
             ObjectAnimator.ofFloat(binding.btnReload, View.ROTATION, currDegree, currDegree + 180f)
                 .setDuration(300).start()
 
+            setRV()
+        }
+    }
+
+    private fun initEvent() {
+        binding.swipe.setOnRefreshListener {
+            binding.swipe.isRefreshing = false
             setRV()
         }
     }
@@ -116,7 +113,7 @@ class BusArriveActivity : AppCompatActivity() {
 
                 busColorList = it
 
-                likeViewModel.getLikeLineList()
+                /*likeViewModel.getLikeLineList()
                 likeViewModel.likeLineList.observe(this) {
 
                     for (item in it) {
@@ -158,7 +155,7 @@ class BusArriveActivity : AppCompatActivity() {
                                     dataStoreViewModel.setAlarmServiceStation("")
                                     dataStoreViewModel.setAlarmServiceLine("")
 
-                                    stopAlarmService()
+                                    //stopAlarmService()
 
                                 } else { //
                                     alertDialog()
@@ -175,14 +172,14 @@ class BusArriveActivity : AppCompatActivity() {
                                 serviceStation = busStopId
                                 serviceLine = lineName
 
-                                startAlarmService()
+                                //startAlarmService()
 
                                 busArriveAdapter.notifyDataSetChanged()
                             }
 
                         }
                     }
-                }
+                }*/
             }
         }
 
@@ -195,7 +192,7 @@ class BusArriveActivity : AppCompatActivity() {
         }
     }
 
-    private fun startAlarmService() {
+    /*private fun startAlarmService() {
 
         val intent = Intent(this, AlarmService::class.java).apply {
             action = ACTION_START
@@ -207,9 +204,9 @@ class BusArriveActivity : AppCompatActivity() {
             putExtra("arsId", arsId)
         }
         startService(intent)
-    }
+    }*/
 
-    private fun stopAlarmService() {
+    /*private fun stopAlarmService() {
         val intent = Intent(this, AlarmService::class.java).apply {
             action = ACTION_STOP
         }
@@ -219,7 +216,7 @@ class BusArriveActivity : AppCompatActivity() {
         serviceMap["alarmLine"] = ""
 
         busArriveAdapter.notifyDataSetChanged()
-    }
+    }*/
 
     private fun alertDialog() {
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null)
@@ -240,7 +237,7 @@ class BusArriveActivity : AppCompatActivity() {
             serviceStation = busStopId
             serviceLine = lineName
 
-            startAlarmService()
+            //startAlarmService()
 
             busArriveAdapter.notifyDataSetChanged()
 
@@ -253,7 +250,7 @@ class BusArriveActivity : AppCompatActivity() {
         }
     }
 
-    private fun getAlarmService() {
+    /*private fun getAlarmService() {
         dataStoreViewModel.getAlarmServiceStation()
         dataStoreViewModel.resultAlarmServiceStation.observe(this) {
             serviceStation = it
@@ -265,10 +262,10 @@ class BusArriveActivity : AppCompatActivity() {
                 serviceMap["alarmLine"] = serviceLine
             }
         }
-    }
+    }*/
 
     private fun initView() {
-        arsId = intent.getStringExtra("ars_id") ?: ""
+        arsId = intent.getStringExtra("ars_id").toString()
 
         viewModel.getStationInfo(arsId)
         viewModel.resultStationInfo.observe(this) {
@@ -284,12 +281,12 @@ class BusArriveActivity : AppCompatActivity() {
         }
 
 
-        if (!isMyServiceRunning(AlarmService::class.java)) {
+        /*if (!isMyServiceRunning(AlarmService::class.java)) {
             dataStoreViewModel.setAlarmServiceStation("")
             dataStoreViewModel.setAlarmServiceLine("")
-        }
+        }*/
 
-        getAlarmService()
+        //getAlarmService()
 
 
         // 즐겨찾기 - 세팅
@@ -311,7 +308,7 @@ class BusArriveActivity : AppCompatActivity() {
 
     private fun getLikeInfo(arsId: String) {
         // 상단 즐겨찾기 아이콘 세팅
-        likeViewModel.getLikeStationList()
+        /*likeViewModel.getLikeStationList()
         likeViewModel.likeStationList.observe(this) {
 
             for (item in it) {
@@ -322,7 +319,7 @@ class BusArriveActivity : AppCompatActivity() {
                     binding.btnLike.setBackgroundResource(R.drawable.unlike)
                 }
             }
-        }
+        }*/
     }
 
     private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
@@ -351,6 +348,5 @@ class BusArriveActivity : AppCompatActivity() {
     companion object {
         const val ACTION_START = "start"
         const val ACTION_STOP = "stop"
-        const val ACTION_CANCEL = "cancel"
     }
 }

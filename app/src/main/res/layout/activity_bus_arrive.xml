@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="activity"
+            type="com.system.traffic.main.BusArriveActivity" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -93,7 +95,8 @@
                         android:id="@+id/btn_reload"
                         android:layout_width="@dimen/holder_icon_width"
                         android:layout_height="@dimen/holder_icon_height"
-                        android:src="@drawable/reload" />
+                        android:src="@drawable/reload"
+                        android:onClick="@{() -> activity.reloadBusArriveInfo()}"/>
 
                 </LinearLayout>
 
