@@ -1,10 +1,14 @@
 package com.system.traffic.main.viewModel
 
+import android.content.Intent
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.system.traffic.App
 import com.system.traffic.dataStore.MyDataStore
+import com.system.traffic.main.other.SuggestActivity
 import kotlinx.coroutines.launch
 
 class DataStoreViewModel : ViewModel()  {

@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
@@ -29,7 +30,7 @@ class BusArriveActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityBusArriveBinding
 
-    private val viewModel: MainViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModels()
     private val likeViewModel: LikeViewModel by viewModels()
     private val dataStoreViewModel: DataStoreViewModel by viewModels()
 
@@ -62,8 +63,10 @@ class BusArriveActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityBusArriveBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView<ActivityBusArriveBinding?>(this, R.layout.activity_bus_arrive)
+        binding.activity = this@BusArriveActivity
+
+        //setContentView(binding.root)
 
         dataStoreViewModel.getArriveColor()
         dataStoreViewModel.resultArriveColor.observe(this) {
@@ -80,13 +83,18 @@ class BusArriveActivity : AppCompatActivity() {
     }
 
     fun reloadBusArriveInfo(){
-        binding.btnReload.setOnClickListener {
+        val currDegree = binding.btnReload.rotationX
+        ObjectAnimator.ofFloat(binding.btnReload, View.ROTATION, currDegree, currDegree + 180f)
+            .setDuration(300).start()
+
+        setRV()
+        /*binding.btnReload.setOnClickListener {
             val currDegree = binding.btnReload.rotationX
             ObjectAnimator.ofFloat(binding.btnReload, View.ROTATION, currDegree, currDegree + 180f)
                 .setDuration(300).start()
 
             setRV()
-        }
+        }*/
     }
 
     private fun initEvent() {
@@ -102,14 +110,14 @@ class BusArriveActivity : AppCompatActivity() {
         busColorList = ArrayList()
         likeLineList = ArrayList()
 
-        viewModel.getBusArrive(busStopId)
+        mainViewModel.getBusArrive(busStopId)
         // 해당 정류소의 버스정보가 있으면 - 리사이클러 세팅
-        viewModel.resultBusArriveList.observe(this) {
+        mainViewModel.resultBusArriveList.observe(this) {
 
             busArriveList = it
 
-            viewModel.getLineColor()
-            viewModel.resultLineColorList.observe(this) {
+            mainViewModel.getLineColor()
+            mainViewModel.resultLineColorList.observe(this) {
 
                 busColorList = it
 
@@ -184,7 +192,7 @@ class BusArriveActivity : AppCompatActivity() {
         }
 
         // 해당 정류소의 버스정보가 없으면
-        viewModel.resultBusArriveState.observe(this) {
+        mainViewModel.resultBusArriveState.observe(this) {
             if (it == "0") {
                 binding.rvBusArriveList.visibility = View.INVISIBLE
                 binding.noBusInfo.visibility = View.VISIBLE
@@ -267,8 +275,8 @@ class BusArriveActivity : AppCompatActivity() {
     private fun initView() {
         arsId = intent.getStringExtra("ars_id").toString()
 
-        viewModel.getStationInfo(arsId)
-        viewModel.resultStationInfo.observe(this) {
+        mainViewModel.getStationInfo(arsId)
+        mainViewModel.resultStationInfo.observe(this) {
             busStopName = it.busstop_name!!
             nextBusStop = it.next_busstop!!
             selected = it.selected!!

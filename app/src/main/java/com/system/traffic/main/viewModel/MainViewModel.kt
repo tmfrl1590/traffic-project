@@ -59,6 +59,7 @@ class MainViewModel : ViewModel() {
         get() = _resultLineStationInfoList
 
 
+
     // 정류장 목록 가져오기(검색)
     fun getSearchedStationList(text: String) = viewModelScope.launch(Dispatchers.IO) {
         selectedStationList = ArrayList()
@@ -144,6 +145,4 @@ class MainViewModel : ViewModel() {
             _resultStationInfo.value = result
         }
     }
-
-
 }
