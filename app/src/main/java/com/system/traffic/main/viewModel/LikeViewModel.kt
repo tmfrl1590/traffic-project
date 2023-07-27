@@ -16,10 +16,10 @@ class LikeViewModel : ViewModel() {
 
     private val dbRepository = DBRepository()
 
-    //lateinit var likeStationList : LiveData<List<StationEntity>>
-    //lateinit var likeLineList : LiveData<List<LineEntity>>
 
-
+    private val _resultLikeStationList = MutableLiveData<List<StationEntity>>()
+    val resultLikeStationList : LiveData<List<StationEntity>>
+        get() = _resultLikeStationList
 
 
     // 정류장 - 즐겨찾기 목록 가져오기
@@ -41,12 +41,15 @@ class LikeViewModel : ViewModel() {
         likeLineList = dbRepository.getLikeLineList().asLiveData()
     }*/
 
+
     val likeLineList = dbRepository.getLikeLineList()
         .stateIn(
             initialValue = emptyList(),
             started = SharingStarted.WhileSubscribed(5000),
             scope = viewModelScope
         )
+
+
 
     // 정류장 - 즐겨찾기 추가, 삭제
     fun updateStation(stationEntity: StationEntity) = viewModelScope.launch(Dispatchers.IO) {
@@ -69,7 +72,7 @@ class LikeViewModel : ViewModel() {
     }
 
     // 즐겨찾기 - 정류장 추가 삭제(상세화면에서)
-    fun updateStationLike(ars_id : String) = viewModelScope.launch(Dispatchers.IO) {
+    fun updateLikeStation(ars_id : String) = viewModelScope.launch(Dispatchers.IO) {
         val result : StationEntity = dbRepository.getIsLikeStation(ars_id)
 
         if(result == null){

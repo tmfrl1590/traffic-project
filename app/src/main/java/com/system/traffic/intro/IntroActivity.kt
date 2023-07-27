@@ -65,7 +65,7 @@ class IntroActivity : AppCompatActivity() {
 
         introViewModel.setUpIsFirstLogin()
         dataStoreViewModel.setArriveColor(ColorUtil.RED)
-        dataStoreViewModel.setAlarmReloadTime("30000")
+        //dataStoreViewModel.setAlarmReloadTime("30000")
 
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)

@@ -211,30 +211,12 @@ class SearchFragment : Fragment() {
                 putExtra("line_name", lineEntity.line_name)
                 putExtra("dir_start", lineEntity.dir_up_name)
                 putExtra("dir_end", lineEntity.dir_down_name)
-                putExtra("selected", lineEntity.selected)
                 putExtra("first_run_time", lineEntity.first_run_time)
                 putExtra("last_run_time", lineEntity.last_run_time)
                 putExtra("run_interval", lineEntity.run_interval)
+                putExtra("selected", lineEntity.selected)
             }
             startActivity(intent)
         }
     }
-    /*inner class Handler {
-        fun onStationClick(stationEntity: StationEntity) {
-            likeViewModel.updateStation(stationEntity)
-            adapter1.notifyDataSetChanged()
-        }
-
-        fun onLineClick(lineEntity: LineEntity){
-            likeViewModel.updateLine(lineEntity)
-            adapter2.notifyDataSetChanged()
-        }
-
-        fun intentBusArriveActivity(stationEntity: StationEntity){
-            val intent = Intent(requireContext(), BusArriveActivity::class.java).apply {
-                putExtra("ars_id", stationEntity.ars_id )
-            }
-            startActivity(intent)
-        }
-    }*/
 }

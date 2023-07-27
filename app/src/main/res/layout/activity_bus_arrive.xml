@@ -89,7 +89,8 @@
                         android:layout_width="@dimen/holder_icon_width"
                         android:layout_height="@dimen/holder_icon_height"
                         android:layout_marginRight="10dp"
-                        android:src="@drawable/unlike" />
+                        android:src="@drawable/unlike"
+                        android:onClick="@{() -> activity.updateLikeStation()}"/>
 
                     <ImageView
                         android:id="@+id/btn_reload"

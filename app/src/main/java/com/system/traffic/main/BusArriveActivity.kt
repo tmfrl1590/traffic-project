@@ -11,7 +11,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
@@ -25,6 +29,10 @@ import com.system.traffic.main.viewModel.DataStoreViewModel
 import com.system.traffic.main.viewModel.LikeViewModel
 import com.system.traffic.main.viewModel.MainViewModel
 import com.system.traffic.service.AlarmService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class BusArriveActivity : AppCompatActivity() {
 
@@ -54,7 +62,7 @@ class BusArriveActivity : AppCompatActivity() {
 
     private var reloadTime: String = ""
 
-    private lateinit var color: String
+    private var color: String = ""
 
     var serviceMap = mutableMapOf("alarmStation" to "", "alarmLine" to "")
     var serviceStation: String = ""
@@ -66,20 +74,82 @@ class BusArriveActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView<ActivityBusArriveBinding?>(this, R.layout.activity_bus_arrive)
         binding.activity = this@BusArriveActivity
 
-        //setContentView(binding.root)
-
-        dataStoreViewModel.getArriveColor()
-        dataStoreViewModel.resultArriveColor.observe(this) {
-            color = it
-        }
+        busStopId = intent.getStringExtra("busstop_id").toString()
+        arsId = intent.getStringExtra("ars_id").toString()
 
         /*dataStoreViewModel.getAlarmReloadTime()
         dataStoreViewModel.resultAlarmReloadTime.observe(this) {
             reloadTime = it
         }*/
 
+        busArriveList = ArrayList()
+        busColorList = ArrayList()
+        likeLineList = ArrayList()
+
+
+        runBlocking {
+            val job = lifecycleScope.launch(Dispatchers.IO){
+                dataStoreViewModel.getArriveColor()
+                mainViewModel.getBusArrive(busStopId)
+                mainViewModel.getLineColor()
+            }
+
+            job.join()
+        }
+
+        dataStoreViewModel.resultArriveColor.observe(this) {
+            color = it
+        }
+
+        // 상단 즐겨찾기 세팅
+        lifecycleScope.launch{
+            likeViewModel.likeStationList
+                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collectLatest {
+                    for (item in it) {
+                        if (arsId == item.ars_id) {
+                            binding.btnLike.setBackgroundResource(R.drawable.like)
+                            break
+                        } else {
+                            binding.btnLike.setBackgroundResource(R.drawable.unlike)
+                        }
+                    }
+                }
+        }
+
+        lifecycleScope.launch{
+            likeViewModel.likeLineList
+                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collectLatest {
+
+                    likeLineList = it.toCollection(ArrayList())
+
+                }
+        }
+
+        mainViewModel.resultLineColorList.observe(this) {
+            busColorList = it
+        }
+
+
+        getBusArriveList()
         initView()
         initEvent()
+        setAdview()
+    }
+
+    fun getBusArriveList(){
+        mainViewModel.resultBusArriveList.observe(this) {
+            busArriveList = it
+            if(busArriveList.isEmpty()){
+                binding.rvBusArriveList.visibility = View.INVISIBLE
+                binding.noBusInfo.visibility = View.VISIBLE
+
+            }else {
+                setRV()
+                Log.d("asdlkjhasd", "버스정보가 있음")
+            }
+        }
     }
 
     fun reloadBusArriveInfo(){
@@ -87,42 +157,42 @@ class BusArriveActivity : AppCompatActivity() {
         ObjectAnimator.ofFloat(binding.btnReload, View.ROTATION, currDegree, currDegree + 180f)
             .setDuration(300).start()
 
-        setRV()
-        /*binding.btnReload.setOnClickListener {
-            val currDegree = binding.btnReload.rotationX
-            ObjectAnimator.ofFloat(binding.btnReload, View.ROTATION, currDegree, currDegree + 180f)
-                .setDuration(300).start()
-
-            setRV()
-        }*/
+        getBusArriveList()
     }
 
     private fun initEvent() {
         binding.swipe.setOnRefreshListener {
             binding.swipe.isRefreshing = false
-            setRV()
+            getBusArriveList()
         }
     }
 
     private fun setRV() {
 
-        busArriveList = ArrayList()
-        busColorList = ArrayList()
-        likeLineList = ArrayList()
+        Log.d("asdasd", busArriveList.toString())
 
-        mainViewModel.getBusArrive(busStopId)
-        // 해당 정류소의 버스정보가 있으면 - 리사이클러 세팅
-        mainViewModel.resultBusArriveList.observe(this) {
+        busArriveAdapter = BusArriveAdapter(
+            this,
+            busArriveList,
+            busColorList,
+            likeLineList,
+            color,
+            busStopId,
+            serviceMap
+        )
 
-            busArriveList = it
+        binding.rvBusArriveList.adapter = busArriveAdapter
+        binding.rvBusArriveList.layoutManager = LinearLayoutManager(this)
 
-            mainViewModel.getLineColor()
-            mainViewModel.resultLineColorList.observe(this) {
+        busArriveAdapter.itemClick = object : BusArriveAdapter.ItemClick {
+            override fun onClick(view: View, position: Int) {
+                likeViewModel.updateLineLike(busArriveList[position].line_id!!)
+                likeLineList.clear()
+                busArriveAdapter.notifyDataSetChanged()
+            }
+        }
 
-                busColorList = it
-
-                /*likeViewModel.getLikeLineList()
-                likeViewModel.likeLineList.observe(this) {
+                /*likeViewModel.likeLineList.observe(this) {
 
                     for (item in it) {
                         likeLineList.add(item)
@@ -182,22 +252,13 @@ class BusArriveActivity : AppCompatActivity() {
 
                                 //startAlarmService()
 
-                                busArriveAdapter.notifyDataSetChanged()
+                                bus기ArriveAdapter.notifyDataSetChanged()
                             }
 
                         }
                     }
                 }*/
-            }
-        }
 
-        // 해당 정류소의 버스정보가 없으면
-        mainViewModel.resultBusArriveState.observe(this) {
-            if (it == "0") {
-                binding.rvBusArriveList.visibility = View.INVISIBLE
-                binding.noBusInfo.visibility = View.VISIBLE
-            }
-        }
     }
 
     /*private fun startAlarmService() {
@@ -273,7 +334,7 @@ class BusArriveActivity : AppCompatActivity() {
     }*/
 
     private fun initView() {
-        arsId = intent.getStringExtra("ars_id").toString()
+
 
         mainViewModel.getStationInfo(arsId)
         mainViewModel.resultStationInfo.observe(this) {
@@ -284,8 +345,6 @@ class BusArriveActivity : AppCompatActivity() {
 
             binding.stationName.text = "$busStopName($arsId)"
             binding.nextBusStop.text = nextBusStop + "방면 "
-
-            setRV()
         }
 
 
@@ -297,37 +356,10 @@ class BusArriveActivity : AppCompatActivity() {
         //getAlarmService()
 
 
-        // 즐겨찾기 - 세팅
-        getLikeInfo(arsId)
-        binding.btnLike.setOnClickListener {
-            likeViewModel.updateStationLike(arsId)
-
-            if (selected == "1") {
-                selected = "0"
-                binding.btnLike.setBackgroundResource(R.drawable.unlike)
-            } else {
-                selected = "1"
-                binding.btnLike.setBackgroundResource(R.drawable.like)
-            }
-        }
-
-        setAdview()
     }
 
-    private fun getLikeInfo(arsId: String) {
-        // 상단 즐겨찾기 아이콘 세팅
-        /*likeViewModel.getLikeStationList()
-        likeViewModel.likeStationList.observe(this) {
-
-            for (item in it) {
-                if (arsId == item.ars_id) {
-                    binding.btnLike.setBackgroundResource(R.drawable.like)
-                    break
-                } else {
-                    binding.btnLike.setBackgroundResource(R.drawable.unlike)
-                }
-            }
-        }*/
+    fun updateLikeStation(){
+        likeViewModel.updateLikeStation(arsId)
     }
 
     private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {

@@ -46,10 +46,6 @@ class MainViewModel : ViewModel() {
     val resultBusArriveList: LiveData<ArrayList<BusArriveModel>>
         get() = _resultBusArriveList
 
-    private val _resultBusArriveState = MutableLiveData<String>()
-    val resultBusArriveState: LiveData<String>
-        get() = _resultBusArriveState
-
     private val _resultLineColorList = MutableLiveData<ArrayList<LineModel>>()
     val resultLineColorList: LiveData<ArrayList<LineModel>>
         get() = _resultLineColorList
@@ -79,24 +75,20 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun getBusArrive(ars_id: String?) = viewModelScope.launch {
+    // 버스 도착 정보 가져오기
+    fun getBusArrive(ars_id: String?) = viewModelScope.launch(Dispatchers.IO) {
         val result = netWorkRepository.getBusArriveList(ars_id)
 
         busArriveList = ArrayList()
 
-        if (result.row_count == "0") {
-
-            withContext(Dispatchers.Main) {
-                _resultBusArriveState.value = "0"
-            }
-        } else {
+        if (result.row_count != "0") {
             for (arrive in result.itemList) {
                 busArriveList.add(arrive)
             }
+        }
 
-            withContext(Dispatchers.Main) {
-                _resultBusArriveList.value = busArriveList
-            }
+        withContext(Dispatchers.Main) {
+            _resultBusArriveList.value = busArriveList
         }
 
     }

@@ -135,6 +135,7 @@ class LikeFragment : Fragment() {
 
         override fun intentBusArriveActivity(stationEntity: StationEntity) {
             val intent = Intent(requireContext(), BusArriveActivity::class.java).apply {
+                putExtra("busstop_id", stationEntity.busstop_id )
                 putExtra("ars_id", stationEntity.ars_id )
             }
             startActivity(intent)
