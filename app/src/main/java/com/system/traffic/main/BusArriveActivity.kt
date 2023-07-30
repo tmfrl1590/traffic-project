@@ -53,7 +53,7 @@ class BusArriveActivity : AppCompatActivity() {
     //private lateinit var busArriveAdapter: BusArriveAdapter
     private val adapter: BusArriveListAdapter by lazy {
         BusArriveListAdapter(
-            busColorList, Handler(likeViewModel), arriveColor
+            busColorList, Handler(likeViewModel)
         )
     }
 
@@ -93,7 +93,6 @@ class BusArriveActivity : AppCompatActivity() {
 
         busArriveList = ArrayList()
         busColorList = ArrayList()
-        //likeLineList = ArrayList()
 
 
         runBlocking {
@@ -106,9 +105,9 @@ class BusArriveActivity : AppCompatActivity() {
             job.join()
         }
 
-        dataStoreViewModel.resultArriveColor.observe(this) {
+        /*dataStoreViewModel.resultArriveColor.observe(this) {
             arriveColor = it
-        }
+        }*/
 
         mainViewModel.resultLineColorList.observe(this) {
             busColorList = it
@@ -134,14 +133,11 @@ class BusArriveActivity : AppCompatActivity() {
             likeViewModel.likeLineList
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collectLatest {
-
                     LikeUtil.likeLineList = it.toCollection(ArrayList())
 
                     getBusArriveList()
-
                 }
         }
-
 
         initView()
         initEvent()

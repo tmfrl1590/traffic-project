@@ -8,8 +8,12 @@
             type="android.view.View"/>
 
         <variable
-            name="item"
+            name="busArriveModel"
             type="com.system.traffic.dataModel.BusArriveModel" />
+
+        <variable
+            name="settingUtil"
+            type="com.system.traffic.util.SettingUtil" />
 
         <variable
             name="handler"
@@ -35,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:gravity="center_vertical"
-                android:text="@{item.line_name}"
+                android:text="@{busArriveModel.line_name}"
                 android:textColor="#D32F2F"
                 android:textSize="@dimen/holder_main_text"
                 android:marqueeRepeatLimit="marquee_forever"
@@ -54,7 +58,7 @@
                 android:layout_marginLeft="8dp"
                 android:background="#A8A8A8"
                 android:text="저상"
-                android:visibility="@{item.low_bus.equals(1) ? View.VISIBLE : View.GONE}"
+                android:visibility="@{busArriveModel.low_bus.equals(1) ? View.VISIBLE : View.GONE}"
                 android:textColor="@color/white"
                 android:textSize="13sp"
                 android:gravity="center"
@@ -68,7 +72,7 @@
                 android:layout_width="@dimen/holder_icon_width"
                 android:layout_height="@dimen/holder_icon_height"
                 android:src="@drawable/unlike"
-                android:onClick="@{() -> handler.updateLikeLine(item.line_id)}"
+                android:onClick="@{() -> handler.updateLikeLine(busArriveModel.line_id)}"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
@@ -95,7 +99,7 @@
                 android:id="@+id/busStopName"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:text="@{ `현재 : ` + item.busstop_name + `(` + item.remain_stop + ` 정거장 전)` }"
+                android:text="@{ `현재 : ` + busArriveModel.busstop_name + `(` + busArriveModel.remain_stop + ` 정거장 전)` }"
                 android:textSize="@dimen/holder_sub_text"
                 android:textColor="@color/black"
                 android:gravity="center_vertical"
@@ -115,9 +119,9 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@{item.remain_min.equals(1) ? `곧도착` : item.remain_min + `분` }"
-                android:textColor="@color/black"
+                android:text="@{busArriveModel.remain_min.equals(1) ? `곧도착` : busArriveModel.remain_min + `분` }"
                 android:textSize="18sp"
+                app:arriveColor="@{settingUtil.BUS_ARRIVE_COLOR}"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />

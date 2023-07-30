@@ -39,23 +39,6 @@ class LineListAdapter(private val handler: Handler1): ListAdapter<LineEntity, Li
         fun bind(item: LineEntity){
             binding.item = item
             binding.handler = handler
-            when(item.line_kind){
-                "1" -> {
-                    binding.lineName.setTextColor(Color.parseColor("#ff0000"))
-                }
-                "2" -> {
-                    binding.lineName.setTextColor(Color.parseColor("#FFA500"))
-                }
-                "3" -> {
-                    binding.lineName.setTextColor(Color.parseColor("#228B22"))
-                }
-            }
-
-            if(item.selected){
-                binding.btnLike.setImageResource(R.drawable.like)
-            }else{
-                binding.btnLike.setImageResource(R.drawable.unlike)
-            }
         }
     }
 }

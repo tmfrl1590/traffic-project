@@ -3,8 +3,6 @@ package com.system.traffic.main.adapter
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +15,7 @@ import com.system.traffic.dataModel.BusArriveModel
 import com.system.traffic.dataModel.LineModel
 import com.system.traffic.db.entity.LineEntity
 import com.system.traffic.main.LineStationActivity
-import com.system.traffic.service.AlarmService
-import com.system.traffic.util.ColorUtil
+import com.system.traffic.util.SettingUtil
 
 class BusArriveAdapter(
     val context: Context,
@@ -116,16 +113,16 @@ class BusArriveAdapter(
 
 
         when (color) {
-            ColorUtil.RED -> {
+            SettingUtil.RED -> {
                 holder.remainMin.setTextColor(Color.parseColor("#ff0000"))
             }
-            ColorUtil.YELLOW -> {
+            SettingUtil.YELLOW -> {
                 holder.remainMin.setTextColor(Color.parseColor("#FFC107"))
             }
-            ColorUtil.GREEN -> {
+            SettingUtil.GREEN -> {
                 holder.remainMin.setTextColor(Color.parseColor("#00ff00"))
             }
-            ColorUtil.BLUE -> {
+            SettingUtil.BLUE -> {
                 holder.remainMin.setTextColor(Color.parseColor("#0000ff"))
             }
         }

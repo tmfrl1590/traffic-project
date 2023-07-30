@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -23,8 +24,10 @@ import com.system.traffic.main.BusArriveActivity
 import com.system.traffic.main.Handler1
 import com.system.traffic.main.LineStationActivity
 import com.system.traffic.main.adapter.*
+import com.system.traffic.main.viewModel.DataStoreViewModel
 import com.system.traffic.main.viewModel.LikeViewModel
 import com.system.traffic.main.viewModel.MainViewModel
+import com.system.traffic.util.SettingUtil
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -34,6 +37,7 @@ class LikeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val likeViewModel : LikeViewModel by activityViewModels()
+    private val dataStoreViewModel : DataStoreViewModel by activityViewModels()
 
     private val stationAdapter: StationListAdapter by lazy { StationListAdapter(Handler(likeViewModel)) }
     private val lineAdapter: LineListAdapter by lazy { LineListAdapter(Handler(likeViewModel)) }
@@ -52,11 +56,19 @@ class LikeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        getArriveColor()
         setStation()
         setLine()
         setAdview()
     }
 
+    private fun getArriveColor(){
+        dataStoreViewModel.getArriveColor()
+        dataStoreViewModel.resultArriveColor.observe(viewLifecycleOwner){
+            SettingUtil.BUS_ARRIVE_COLOR = it
+        }
+    }
 
     private fun setAdview(){
         MobileAds.initialize(requireContext())

@@ -10,15 +10,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.system.traffic.BuildConfig
 import com.system.traffic.R
 import com.system.traffic.databinding.FragmentOtherBinding
 import com.system.traffic.main.other.SuggestActivity
 import com.system.traffic.main.viewModel.DataStoreViewModel
-import com.system.traffic.main.viewModel.MainViewModel
 import com.system.traffic.main.viewModel.OtherViewModel
-import com.system.traffic.util.ColorUtil
+import com.system.traffic.util.SettingUtil
 
 
 class OtherFragment : Fragment() {
@@ -58,9 +58,13 @@ class OtherFragment : Fragment() {
             startActivity(intent)
         }
 
-        otherViewModel.setArriveColor.observe(viewLifecycleOwner){
+        binding.arriveColor.setOnClickListener {
             setArriveColor()
         }
+
+        /*otherViewModel.setArriveColor.observe(viewLifecycleOwner){
+            setArriveColor()
+        }*/
     }
 
     /*fun setReloadTime(){
@@ -102,34 +106,39 @@ class OtherFragment : Fragment() {
         bottomSheetDialog.show()
     }*/
 
-    fun setArriveColor(){
+    private fun setArriveColor(){
+
         val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
         val bottomSheetView = LayoutInflater.from(requireContext()).inflate( R.layout.layout_bottom_color, null)
         bottomSheetView.findViewById<View>(R.id.btn_close).setOnClickListener {
             bottomSheetDialog.dismiss()
         }
         bottomSheetView.findViewById<View>(R.id.bottom_red).setOnClickListener{
-            selectedColor = ColorUtil.RED
+            selectedColor = SettingUtil.RED
             dataStoreViewModel.setArriveColor(selectedColor)
-            binding.arriveColor.text = ColorUtil.RED
+            binding.arriveColor.text = SettingUtil.RED
+            SettingUtil.BUS_ARRIVE_COLOR = SettingUtil.RED
             bottomSheetDialog.dismiss()
         }
         bottomSheetView.findViewById<View>(R.id.bottom_blue).setOnClickListener{
-            selectedColor = ColorUtil.BLUE
+            selectedColor = SettingUtil.BLUE
             dataStoreViewModel.setArriveColor(selectedColor)
-            binding.arriveColor.text = ColorUtil.BLUE
+            binding.arriveColor.text = SettingUtil.BLUE
+            SettingUtil.BUS_ARRIVE_COLOR = SettingUtil.BLUE
             bottomSheetDialog.dismiss()
         }
         bottomSheetView.findViewById<View>(R.id.bottom_green).setOnClickListener{
-            selectedColor = ColorUtil.GREEN
+            selectedColor = SettingUtil.GREEN
             dataStoreViewModel.setArriveColor(selectedColor)
-            binding.arriveColor.text = ColorUtil.GREEN
+            binding.arriveColor.text = SettingUtil.GREEN
+            SettingUtil.BUS_ARRIVE_COLOR = SettingUtil.GREEN
             bottomSheetDialog.dismiss()
         }
         bottomSheetView.findViewById<View>(R.id.bottom_yellow).setOnClickListener{
-            selectedColor = ColorUtil.YELLOW
+            selectedColor = SettingUtil.YELLOW
             dataStoreViewModel.setArriveColor(selectedColor)
-            binding.arriveColor.text = ColorUtil.YELLOW
+            binding.arriveColor.text = SettingUtil.YELLOW
+            SettingUtil.BUS_ARRIVE_COLOR = SettingUtil.YELLOW
             bottomSheetDialog.dismiss()
         }
 

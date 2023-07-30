@@ -29,8 +29,6 @@ class LikeViewModel : ViewModel() {
             scope = viewModelScope
         )
 
-
-
     // 버스 - 즐겨찾기 목록 가져오기 *
     val likeLineList = dbRepository.getLikeLineList(true)
         .stateIn(

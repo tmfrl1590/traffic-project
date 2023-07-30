@@ -2,7 +2,6 @@ package com.system.traffic.intro
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -11,7 +10,7 @@ import com.system.traffic.dataModel.StationModel
 import com.system.traffic.databinding.ActivityIntroBinding
 import com.system.traffic.main.MainActivity
 import com.system.traffic.main.viewModel.DataStoreViewModel
-import com.system.traffic.util.ColorUtil
+import com.system.traffic.util.SettingUtil
 import kotlinx.coroutines.*
 import org.json.JSONObject
 
@@ -38,6 +37,7 @@ class IntroActivity : AppCompatActivity() {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
+
             } else {
                 runBlocking {
                     setStationLineData()
@@ -64,7 +64,9 @@ class IntroActivity : AppCompatActivity() {
         job.join()
 
         introViewModel.setUpIsFirstLogin()
-        dataStoreViewModel.setArriveColor(ColorUtil.RED)
+        dataStoreViewModel.setArriveColor(SettingUtil.RED)
+        SettingUtil.BUS_ARRIVE_COLOR = SettingUtil.RED
+
         //dataStoreViewModel.setAlarmReloadTime("30000")
 
         val intent = Intent(this, MainActivity::class.java)

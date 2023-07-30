@@ -39,11 +39,11 @@ class StationListAdapter(private val handler: Handler1) : androidx.recyclerview.
             binding.item = item
             binding.handler = handler
 
-            if(item.selected){
+            /*if(item.selected){
                 binding.btnLike.setImageResource(R.drawable.like)
             }else{
                 binding.btnLike.setImageResource(R.drawable.unlike)
-            }
+            }*/
         }
     }
 

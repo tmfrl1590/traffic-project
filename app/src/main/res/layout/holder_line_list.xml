@@ -38,6 +38,7 @@
                 android:ellipsize="marquee"
                 android:singleLine="true"
                 android:focusable="true"
+                app:lineNameColor="@{item.line_kind}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/btn_like" />
@@ -48,8 +49,8 @@
                 android:layout_height="@dimen/holder_icon_height"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/unlike"
                 android:onClick="@{ () -> handler.onLineClick(item)}"
+                app:isLike="@{item.selected}"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
