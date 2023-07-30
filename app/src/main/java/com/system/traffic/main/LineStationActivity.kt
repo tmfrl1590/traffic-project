@@ -71,7 +71,7 @@ class LineStationActivity : AppCompatActivity() {
         viewModel.getLineStationInfo(lineId)
         viewModel.resultLineStationInfo.observe(this){
 
-            if(it.selected == "1"){
+            if(it.selected){
                 binding.btnLike.setBackgroundResource(R.drawable.like)
             }else{
                 binding.btnLike.setBackgroundResource(R.drawable.unlike)

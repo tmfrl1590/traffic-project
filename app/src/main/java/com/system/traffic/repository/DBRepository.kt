@@ -29,7 +29,7 @@ class DBRepository {
     fun getLikeStationList() = db.stationDAO().getLikeStationList()
 
     // 즐겨찾기 가져오기(버스)
-    fun getLikeLineList() = db.lineDAO().getLikeLineList()
+    fun getLikeLineList(isLike: Boolean) = db.lineDAO().getLikeLineList(isLike)
 
     // 즐겨찾기 추가, 삭제 - 정류장
     fun updateStation(stationEntity: StationEntity) = db.stationDAO().updateStation(stationEntity)

@@ -43,7 +43,7 @@ class IntroViewModel : ViewModel() {
                 i.ars_id,
                 i.longitude,
                 i.latitude,
-                i.selected
+                false
             )
 
             stationEntity.let {
@@ -65,7 +65,7 @@ class IntroViewModel : ViewModel() {
                 i.line_id,
                 i.line_kind,
                 i.line_name,
-                i.selected
+                false
             )
 
             lineEntity.let {

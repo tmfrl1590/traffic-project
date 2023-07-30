@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import android.app.ActivityManager
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -24,11 +25,14 @@ import com.system.traffic.dataModel.BusArriveModel
 import com.system.traffic.dataModel.LineModel
 import com.system.traffic.databinding.ActivityBusArriveBinding
 import com.system.traffic.db.entity.LineEntity
+import com.system.traffic.db.entity.StationEntity
 import com.system.traffic.main.adapter.BusArriveAdapter
+import com.system.traffic.main.adapter.BusArriveListAdapter
 import com.system.traffic.main.viewModel.DataStoreViewModel
 import com.system.traffic.main.viewModel.LikeViewModel
 import com.system.traffic.main.viewModel.MainViewModel
 import com.system.traffic.service.AlarmService
+import com.system.traffic.util.LikeUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -42,15 +46,20 @@ class BusArriveActivity : AppCompatActivity() {
     private val likeViewModel: LikeViewModel by viewModels()
     private val dataStoreViewModel: DataStoreViewModel by viewModels()
 
-    private lateinit var busArriveAdapter: BusArriveAdapter
-
     private lateinit var busArriveList: ArrayList<BusArriveModel>
     private lateinit var busColorList: ArrayList<LineModel>
-    private lateinit var likeLineList: ArrayList<LineEntity>
+    //private lateinit var likeLineList: ArrayList<LineEntity>
+
+    //private lateinit var busArriveAdapter: BusArriveAdapter
+    private val adapter: BusArriveListAdapter by lazy {
+        BusArriveListAdapter(
+            busColorList, Handler(likeViewModel), arriveColor
+        )
+    }
 
     private var busStopId: String = ""
 
-    private var selected: String = "0"
+    private var selected: Boolean = false
 
     private var busStopName: String = ""
     private var nextBusStop: String = ""
@@ -62,7 +71,7 @@ class BusArriveActivity : AppCompatActivity() {
 
     private var reloadTime: String = ""
 
-    private var color: String = ""
+    private var arriveColor: String = ""
 
     var serviceMap = mutableMapOf("alarmStation" to "", "alarmLine" to "")
     var serviceStation: String = ""
@@ -84,7 +93,7 @@ class BusArriveActivity : AppCompatActivity() {
 
         busArriveList = ArrayList()
         busColorList = ArrayList()
-        likeLineList = ArrayList()
+        //likeLineList = ArrayList()
 
 
         runBlocking {
@@ -98,7 +107,11 @@ class BusArriveActivity : AppCompatActivity() {
         }
 
         dataStoreViewModel.resultArriveColor.observe(this) {
-            color = it
+            arriveColor = it
+        }
+
+        mainViewModel.resultLineColorList.observe(this) {
+            busColorList = it
         }
 
         // 상단 즐겨찾기 세팅
@@ -122,17 +135,14 @@ class BusArriveActivity : AppCompatActivity() {
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collectLatest {
 
-                    likeLineList = it.toCollection(ArrayList())
+                    LikeUtil.likeLineList = it.toCollection(ArrayList())
+
+                    getBusArriveList()
 
                 }
         }
 
-        mainViewModel.resultLineColorList.observe(this) {
-            busColorList = it
-        }
 
-
-        getBusArriveList()
         initView()
         initEvent()
         setAdview()
@@ -147,7 +157,6 @@ class BusArriveActivity : AppCompatActivity() {
 
             }else {
                 setRV()
-                Log.d("asdlkjhasd", "버스정보가 있음")
             }
         }
     }
@@ -157,6 +166,7 @@ class BusArriveActivity : AppCompatActivity() {
         ObjectAnimator.ofFloat(binding.btnReload, View.ROTATION, currDegree, currDegree + 180f)
             .setDuration(300).start()
 
+        mainViewModel.getBusArrive(busStopId)
         getBusArriveList()
     }
 
@@ -169,57 +179,14 @@ class BusArriveActivity : AppCompatActivity() {
 
     private fun setRV() {
 
-        Log.d("asdasd", busArriveList.toString())
-
-        busArriveAdapter = BusArriveAdapter(
-            this,
-            busArriveList,
-            busColorList,
-            likeLineList,
-            color,
-            busStopId,
-            serviceMap
-        )
-
-        binding.rvBusArriveList.adapter = busArriveAdapter
+        binding.rvBusArriveList.adapter = adapter
         binding.rvBusArriveList.layoutManager = LinearLayoutManager(this)
+        adapter.submitList(busArriveList)
 
-        busArriveAdapter.itemClick = object : BusArriveAdapter.ItemClick {
-            override fun onClick(view: View, position: Int) {
-                likeViewModel.updateLineLike(busArriveList[position].line_id!!)
-                likeLineList.clear()
-                busArriveAdapter.notifyDataSetChanged()
-            }
-        }
 
                 /*likeViewModel.likeLineList.observe(this) {
 
-                    for (item in it) {
-                        likeLineList.add(item)
-                    }
 
-                    busArriveAdapter = BusArriveAdapter(
-                        this,
-                        busArriveList,
-                        busColorList,
-                        likeLineList,
-                        color,
-                        busStopId,
-                        serviceMap
-                    )
-                    binding.rvBusArriveList.adapter = busArriveAdapter
-                    binding.rvBusArriveList.layoutManager = LinearLayoutManager(this)
-
-                    binding.rvBusArriveList.visibility = View.VISIBLE
-                    binding.noBusInfo.visibility = View.INVISIBLE
-
-                    busArriveAdapter.itemClick = object : BusArriveAdapter.ItemClick {
-                        override fun onClick(view: View, position: Int) {
-                            likeViewModel.updateLineLike(busArriveList[position].line_id!!)
-                            likeLineList.clear()
-                            busArriveAdapter.notifyDataSetChanged()
-                        }
-                    }
 
                     busArriveAdapter.itemClick2 = object : BusArriveAdapter.ItemClick2 {
                         override fun onClick(view: View, position: Int) {
@@ -258,7 +225,6 @@ class BusArriveActivity : AppCompatActivity() {
                         }
                     }
                 }*/
-
     }
 
     /*private fun startAlarmService() {
@@ -287,7 +253,7 @@ class BusArriveActivity : AppCompatActivity() {
         busArriveAdapter.notifyDataSetChanged()
     }*/
 
-    private fun alertDialog() {
+    /*private fun alertDialog() {
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null)
         val mBuilder = AlertDialog.Builder(this)
             .setView(mDialogView)
@@ -317,7 +283,7 @@ class BusArriveActivity : AppCompatActivity() {
         noButton.setOnClickListener {
             mAlertDialog.dismiss()
         }
-    }
+    }*/
 
     /*private fun getAlarmService() {
         dataStoreViewModel.getAlarmServiceStation()
@@ -388,5 +354,22 @@ class BusArriveActivity : AppCompatActivity() {
     companion object {
         const val ACTION_START = "start"
         const val ACTION_STOP = "stop"
+    }
+
+    inner class Handler(private val likeViewModel: LikeViewModel){
+        fun updateLikeLine(lineId: String){
+            likeViewModel.updateLineLike(lineId)
+        }
+
+        fun intentLineStationActivity(){
+            val intent = Intent(this@BusArriveActivity, LineStationActivity::class.java).apply {
+                /*intent.putExtra("line_id", busArriveList)
+                intent.putExtra("line_name", busArriveList[position].line_name)
+                intent.putExtra("dir_start", busArriveList[position].dir_start)
+                intent.putExtra("dir_end", busArriveList[position].dir_end)*/
+            }
+
+            startActivity(intent)
+        }
     }
 }

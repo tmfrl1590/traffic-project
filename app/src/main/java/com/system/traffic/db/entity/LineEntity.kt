@@ -16,5 +16,5 @@ data class LineEntity (
     val line_id : String?,
     val line_kind : String?,
     val line_name : String?,
-    var selected : String?
+    var selected : Boolean
     )

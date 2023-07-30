@@ -51,7 +51,7 @@ class LineListAdapter(private val handler: Handler1): ListAdapter<LineEntity, Li
                 }
             }
 
-            if(item.selected == "1"){
+            if(item.selected){
                 binding.btnLike.setImageResource(R.drawable.like)
             }else{
                 binding.btnLike.setImageResource(R.drawable.unlike)

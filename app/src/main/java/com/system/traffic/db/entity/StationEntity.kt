@@ -14,5 +14,5 @@ data class StationEntity (
     val ars_id : String?,
     val longitude: String?,
     val latitude: String?,
-    var selected : String?
+    var selected : Boolean
 )

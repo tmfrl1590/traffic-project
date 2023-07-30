@@ -78,7 +78,7 @@ class LineAdapter(val context : Context, val lineList : ArrayList<LineEntity>, v
             context.startActivity(intent)
         }
 
-        if(lineList[position].selected == "1"){
+        if(lineList[position].selected){
             holder.btnLike.setBackgroundResource(R.drawable.like)
         }else{
             holder.btnLike.setBackgroundResource(R.drawable.unlike)

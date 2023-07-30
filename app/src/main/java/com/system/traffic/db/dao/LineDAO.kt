@@ -22,8 +22,9 @@ interface LineDAO {
 
 
     // 버스 - 즐겨찾기 목록 가져오기
-    @Query("SELECT * FROM line WHERE selected ='1'")
-    fun getLikeLineList() : Flow<List<LineEntity>>
+    @Query("SELECT * FROM line WHERE selected ==:isLike")
+    fun getLikeLineList(isLike: Boolean) : Flow<List<LineEntity>>
+
 
     // 즐겨찾기 - 버스 추가, 삭제
     @Update

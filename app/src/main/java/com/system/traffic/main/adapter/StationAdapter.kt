@@ -50,7 +50,7 @@ class StationAdapter(val context : Context, val stationList : List<StationEntity
             context.startActivity(intent)
         }
 
-        if(stationList[position].selected == "1"){
+        if(stationList[position].selected){
             holder.btnLike.setBackgroundResource(R.drawable.like)
         }else{
             holder.btnLike.setBackgroundResource(R.drawable.unlike)

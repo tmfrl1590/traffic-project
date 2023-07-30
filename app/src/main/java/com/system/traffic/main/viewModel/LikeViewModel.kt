@@ -17,11 +17,6 @@ class LikeViewModel : ViewModel() {
     private val dbRepository = DBRepository()
 
 
-    private val _resultLikeStationList = MutableLiveData<List<StationEntity>>()
-    val resultLikeStationList : LiveData<List<StationEntity>>
-        get() = _resultLikeStationList
-
-
     // 정류장 - 즐겨찾기 목록 가져오기
     /*fun getLikeStationList() = viewModelScope.launch {
         likeStationList = dbRepository.getLikeStationList().asLiveData()
@@ -36,13 +31,8 @@ class LikeViewModel : ViewModel() {
 
 
 
-    // 버스 - 즐겨찾기 목록 가져오기
-    /*fun getLikeLineList() = viewModelScope.launch {
-        likeLineList = dbRepository.getLikeLineList().asLiveData()
-    }*/
-
-
-    val likeLineList = dbRepository.getLikeLineList()
+    // 버스 - 즐겨찾기 목록 가져오기 *
+    val likeLineList = dbRepository.getLikeLineList(true)
         .stateIn(
             initialValue = emptyList(),
             started = SharingStarted.WhileSubscribed(5000),
@@ -53,21 +43,13 @@ class LikeViewModel : ViewModel() {
 
     // 정류장 - 즐겨찾기 추가, 삭제
     fun updateStation(stationEntity: StationEntity) = viewModelScope.launch(Dispatchers.IO) {
-        if(stationEntity.selected == "0"){
-            stationEntity.selected = "1"
-        }else{
-            stationEntity.selected = "0"
-        }
+        stationEntity.selected = !stationEntity.selected
         dbRepository.updateStation(stationEntity)
     }
 
     // 버스- 즐겨찾기 추가, 삭제
     fun updateLine(lineEntity: LineEntity) = viewModelScope.launch(Dispatchers.IO) {
-        if(lineEntity.selected == "0"){
-            lineEntity.selected = "1"
-        }else{
-            lineEntity.selected = "0"
-        }
+        lineEntity.selected = !lineEntity.selected
         dbRepository.updateLine(lineEntity)
     }
 
