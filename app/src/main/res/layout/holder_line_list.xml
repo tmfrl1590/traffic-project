@@ -20,7 +20,7 @@
         android:orientation="vertical"
         android:layout_marginBottom="5dp"
         android:background="@drawable/shadow"
-        android:onClick="@{() -> handler.intentLineStationActivity(item)}">
+        android:onClick="@{() -> handler.intentLineStationActivity(item.line_id)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

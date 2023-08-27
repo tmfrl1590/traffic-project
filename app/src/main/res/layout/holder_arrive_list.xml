@@ -27,7 +27,7 @@
         android:orientation="vertical"
         android:background="@drawable/shadow"
         android:layout_marginBottom="10dp"
-        android:onClick="@{() -> handler.intentLineStationActivity()}">
+        android:onClick="@{() -> handler.intentLineStationActivity(busArriveModel.line_id)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

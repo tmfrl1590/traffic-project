@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+   <!-- <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>-->
 
     <application
         android:name=".App"
@@ -46,19 +46,15 @@
             android:launchMode="singleInstance"
             android:taskAffinity="" />
 
-        <service
+        <!--<service
             android:name=".service.AlarmService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true" />-->
 
-        <!--Test Id : ca-app-pub-3940256099942544~3347511713 -->
-        <!-- Release Id : ca-app-pub-3991873148102758~3904544234-->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
-        <meta-data
-            android:name="com.kakao.sdk.AppKey"
-            android:value="5f2da680f4ffe3922c411732367fff69" />
+            android:value="@string/adModSettingId" />
+
     </application>
 
 </manifest>

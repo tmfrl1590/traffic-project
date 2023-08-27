@@ -13,5 +13,5 @@ interface Handler1 {
 
     fun intentBusArriveActivity(stationEntity: StationEntity)
 
-    fun intentLineStationActivity(lineEntity: LineEntity)
+    fun intentLineStationActivity(lineId: String)
 }

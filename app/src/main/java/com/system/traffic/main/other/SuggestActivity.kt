@@ -21,13 +21,13 @@ class SuggestActivity : AppCompatActivity() {
     private fun sendEmail(){
         val emailAddress = "tmfrl1590@gmail.com"
 
-        val intent = Intent( Intent.ACTION_SEND)
-
-        intent.type = "text/plain"
-        intent.setPackage("com.google.android.gm")
-        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(emailAddress))
-        intent.putExtra(Intent.EXTRA_SUBJECT, "[문의하기]")
-        intent.putExtra(Intent.EXTRA_TEXT, "문의내용을 입력해주세요.")
+        val intent = Intent( Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            setPackage("com.google.android.gm")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(emailAddress))
+            putExtra(Intent.EXTRA_SUBJECT, "[문의하기]")
+            putExtra(Intent.EXTRA_TEXT, "문의내용을 입력해주세요.")
+        }
 
         startActivity(Intent.createChooser(intent, "메일전송하기"))
 

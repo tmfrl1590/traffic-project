@@ -1,18 +1,14 @@
 package com.system.traffic.main
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.system.traffic.R
 import com.system.traffic.databinding.ActivityLineStationBinding
-import com.system.traffic.db.entity.StationEntity
-import com.system.traffic.main.adapter.LineStationInfoAdapter
+import com.system.traffic.main.adapter.LineStationInfoListAdapter
 import com.system.traffic.main.viewModel.LikeViewModel
 import com.system.traffic.main.viewModel.MainViewModel
 
@@ -20,14 +16,12 @@ class LineStationActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityLineStationBinding
 
-    private val viewModel : MainViewModel by viewModels()
+    private val mainViewModel : MainViewModel by viewModels()
     private val likeViewModel : LikeViewModel by viewModels()
 
-    private lateinit var lineStationAdapter : LineStationInfoAdapter
-
-    private var selected : String = "0"
-
-
+    private val adapter: LineStationInfoListAdapter by lazy {
+        LineStationInfoListAdapter()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -35,41 +29,28 @@ class LineStationActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initView()
+        initEvent()
+        setAdview()
+    }
+
+    private fun initEvent(){
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun initView(){
 
         val lineId = intent.getStringExtra("line_id")!!
-        val lineName = intent.getStringExtra("line_name")
-        val dirStart = intent.getStringExtra("dir_start")
-        val dirEnd = intent.getStringExtra("dir_end")
-        val firstRunTime = intent.getStringExtra("first_run_time")
-        val lastRunTime = intent.getStringExtra("last_run_time")
-        val runInterval = intent.getStringExtra("run_interval")
-        selected = intent.getStringExtra("selected").toString()
 
-        binding.firstRunTime.text = "첫차시간\n$firstRunTime"
-        binding.lastRunTime.text = "막차시간\n$lastRunTime"
-        binding.runInterval.text = "운행간격\n$runInterval 분"
+        mainViewModel.getLineStationInfo(lineId)
+        mainViewModel.resultLineStationInfo.observe(this@LineStationActivity){
+            binding.firstRunTime.text = "첫차시간\n${it.first_run_time ?: "a"}"
+            binding.lastRunTime.text = "막차시간\n${it.last_run_time ?: "b"}"
+            binding.runInterval.text = "운행간격\n${it.run_interval ?: "c"} 분"
 
-        binding.lineName.text = lineName
-        binding.direction.text = "$dirEnd ~ $dirStart"
-
-
-        binding.btnLike.setOnClickListener {
-            likeViewModel.updateLineLike(lineId!!)
-
-            if(selected == "1"){
-                selected = "0"
-                binding.btnLike.setBackgroundResource(R.drawable.unlike)
-            }else{
-                selected = "1"
-                binding.btnLike.setBackgroundResource(R.drawable.like)
-            }
-        }
-
-        viewModel.getLineStationInfo(lineId)
-        viewModel.resultLineStationInfo.observe(this){
+            binding.lineName.text = it.line_name
+            binding.direction.text = "${it.dir_down_name} ~ ${it.dir_up_name}"
 
             if(it.selected){
                 binding.btnLike.setBackgroundResource(R.drawable.like)
@@ -79,18 +60,17 @@ class LineStationActivity : AppCompatActivity() {
         }
 
 
-        viewModel.getLineStationInfoList(lineId)
-        viewModel.resultLineStationInfoList.observe(this){
-            lineStationAdapter = LineStationInfoAdapter(this, it)
-            binding.rvLineStationInfo.adapter = lineStationAdapter
+        binding.btnLike.setOnClickListener {
+            likeViewModel.updateLineLike(lineId)
+        }
+
+
+        mainViewModel.getLineStationInfoList(lineId)
+        mainViewModel.resultLineStationInfoList.observe(this){
+            binding.rvLineStationInfo.adapter = adapter
             binding.rvLineStationInfo.layoutManager = LinearLayoutManager(this)
+            adapter.submitList(it)
         }
-
-        binding.btnBack.setOnClickListener {
-            finish()
-        }
-
-        setAdview()
     }
 
     private fun setAdview(){

@@ -19,8 +19,6 @@ interface StationDAO {
     fun getSearchedStationList(text : String) : List<StationEntity>
 
 
-
-
     // 정류장 - 즐겨찾기 목록 가져오기
     @Query("SELECT * FROM station WHERE selected ='1'")
     fun getLikeStationList() : Flow<List<StationEntity>>

@@ -8,5 +8,4 @@ object SettingUtil {
     const val YELLOW = "노랑"
 
     var BUS_ARRIVE_COLOR : String = ""
-
 }

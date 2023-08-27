@@ -5,7 +5,6 @@ import android.content.Context
 import timber.log.Timber
 
 class App : Application() {
-
     init {
         instance = this
     }

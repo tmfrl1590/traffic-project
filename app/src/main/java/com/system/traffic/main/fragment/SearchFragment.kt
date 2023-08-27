@@ -206,16 +206,9 @@ class SearchFragment : Fragment() {
             startActivity(intent)
         }
 
-        override fun intentLineStationActivity(lineEntity: LineEntity) {
+        override fun intentLineStationActivity(lineId: String) {
             val intent = Intent(requireContext(), LineStationActivity::class.java).apply {
-                putExtra("line_id", lineEntity.line_id)
-                putExtra("line_name", lineEntity.line_name)
-                putExtra("dir_start", lineEntity.dir_up_name)
-                putExtra("dir_end", lineEntity.dir_down_name)
-                putExtra("first_run_time", lineEntity.first_run_time)
-                putExtra("last_run_time", lineEntity.last_run_time)
-                putExtra("run_interval", lineEntity.run_interval)
-                putExtra("selected", lineEntity.selected)
+                putExtra("line_id", lineId)
             }
             startActivity(intent)
         }

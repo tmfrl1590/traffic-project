@@ -48,9 +48,7 @@ class BusArriveActivity : AppCompatActivity() {
 
     private lateinit var busArriveList: ArrayList<BusArriveModel>
     private lateinit var busColorList: ArrayList<LineModel>
-    //private lateinit var likeLineList: ArrayList<LineEntity>
 
-    //private lateinit var busArriveAdapter: BusArriveAdapter
     private val adapter: BusArriveListAdapter by lazy {
         BusArriveListAdapter(
             busColorList, Handler(likeViewModel)
@@ -59,23 +57,13 @@ class BusArriveActivity : AppCompatActivity() {
 
     private var busStopId: String = ""
 
-    private var selected: Boolean = false
-
-    private var busStopName: String = ""
-    private var nextBusStop: String = ""
-
-    private var remainStop: String = ""
-    private var lineName: String = ""
-
     private var arsId: String = ""
 
-    private var reloadTime: String = ""
-
-    private var arriveColor: String = ""
+    /*private var reloadTime: String = ""
 
     var serviceMap = mutableMapOf("alarmStation" to "", "alarmLine" to "")
     var serviceStation: String = ""
-    var serviceLine: String = ""
+    var serviceLine: String = ""*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,10 +92,6 @@ class BusArriveActivity : AppCompatActivity() {
 
             job.join()
         }
-
-        /*dataStoreViewModel.resultArriveColor.observe(this) {
-            arriveColor = it
-        }*/
 
         mainViewModel.resultLineColorList.observe(this) {
             busColorList = it
@@ -144,7 +128,7 @@ class BusArriveActivity : AppCompatActivity() {
         setAdview()
     }
 
-    fun getBusArriveList(){
+    private fun getBusArriveList(){
         mainViewModel.resultBusArriveList.observe(this) {
             busArriveList = it
             if(busArriveList.isEmpty()){
@@ -296,19 +280,11 @@ class BusArriveActivity : AppCompatActivity() {
     }*/
 
     private fun initView() {
-
-
         mainViewModel.getStationInfo(arsId)
         mainViewModel.resultStationInfo.observe(this) {
-            busStopName = it.busstop_name!!
-            nextBusStop = it.next_busstop!!
-            selected = it.selected!!
-            busStopId = it.busstop_id!!
-
-            binding.stationName.text = "$busStopName($arsId)"
-            binding.nextBusStop.text = nextBusStop + "방면 "
+            binding.stationName.text = "${it.busstop_name} ($arsId)"
+            binding.nextBusStop.text = it.next_busstop + "방면"
         }
-
 
         /*if (!isMyServiceRunning(AlarmService::class.java)) {
             dataStoreViewModel.setAlarmServiceStation("")
@@ -357,14 +333,10 @@ class BusArriveActivity : AppCompatActivity() {
             likeViewModel.updateLineLike(lineId)
         }
 
-        fun intentLineStationActivity(){
+        fun intentLineStationActivity(lineId: String){
             val intent = Intent(this@BusArriveActivity, LineStationActivity::class.java).apply {
-                /*intent.putExtra("line_id", busArriveList)
-                intent.putExtra("line_name", busArriveList[position].line_name)
-                intent.putExtra("dir_start", busArriveList[position].dir_start)
-                intent.putExtra("dir_end", busArriveList[position].dir_end)*/
+                putExtra("line_id", lineId)
             }
-
             startActivity(intent)
         }
     }

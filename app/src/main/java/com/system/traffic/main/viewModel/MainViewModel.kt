@@ -12,6 +12,10 @@ import com.system.traffic.db.entity.StationEntity
 import com.system.traffic.repository.DBRepository
 import com.system.traffic.repository.NetWorkRepository
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.stateIn
+import java.util.concurrent.Flow
 
 class MainViewModel : ViewModel() {
 
@@ -123,10 +127,10 @@ class MainViewModel : ViewModel() {
     }
 
     fun getLineStationInfo(line_id: String) = viewModelScope.launch(Dispatchers.IO) {
-        val result = dbRepository.getLineStationInfo(line_id)
-
-        withContext(Dispatchers.Main) {
-            _resultLineStationInfo.value = result
+        dbRepository.getLineStationInfo(line_id).collect{
+            withContext(Dispatchers.Main) {
+                _resultLineStationInfo.value = it
+            }
         }
     }
 

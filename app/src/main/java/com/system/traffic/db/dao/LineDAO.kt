@@ -4,6 +4,7 @@ import androidx.room.*
 import com.system.traffic.dataModel.LineModel
 import com.system.traffic.db.entity.LineEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 @Dao
 interface LineDAO {
@@ -40,5 +41,5 @@ interface LineDAO {
 
     // 버스 정보 가져오기 1대
     @Query("SELECT * FROM line WHERE line_id =:lineId")
-    fun getLineStationInfo(lineId: String) : LineEntity
+    fun getLineStationInfo(lineId: String) : Flow<LineEntity>
 }
