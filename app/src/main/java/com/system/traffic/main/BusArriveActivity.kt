@@ -125,7 +125,6 @@ class BusArriveActivity : AppCompatActivity() {
 
         initView()
         initEvent()
-        setAdview()
     }
 
     private fun getBusArriveList(){
@@ -317,11 +316,6 @@ class BusArriveActivity : AppCompatActivity() {
         return false
     }
 
-    private fun setAdview() {
-        MobileAds.initialize(this)
-        val adRequest = AdRequest.Builder().build()
-        binding.adView.loadAd(adRequest)
-    }
 
     companion object {
         const val ACTION_START = "start"

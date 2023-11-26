@@ -127,17 +127,6 @@
                 app:layout_constraintTop_toTopOf="@id/guidLineTop1"
                 app:layout_constraintBottom_toTopOf="@id/guidLineTop2" />
 
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/adView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:adSize="BANNER"
-                app:adUnitId="@string/adModId"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="@+id/guidelineLeft"
-                app:layout_constraintRight_toRightOf="@id/guidelineRight"
-                app:layout_constraintTop_toTopOf="@id/guidLineTop2"
-                app:layout_constraintVertical_bias="0.974"></com.google.android.gms.ads.AdView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
