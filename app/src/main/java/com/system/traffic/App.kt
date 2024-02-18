@@ -2,22 +2,23 @@ package com.system.traffic
 
 import android.app.Application
 import android.content.Context
-import timber.log.Timber
+import dagger.hilt.android.HiltAndroidApp
 
-class App : Application() {
+@HiltAndroidApp
+class App : Application(){
     init {
         instance = this
     }
 
+    override fun onCreate() {
+        super.onCreate()
+    }
+
     companion object {
-        private var instance : App? = null
+        private var instance : Application? = null
 
         fun context() : Context {
             return instance!!.applicationContext
         }
-    }
-
-    override fun onCreate() {
-        super.onCreate()
     }
 }
