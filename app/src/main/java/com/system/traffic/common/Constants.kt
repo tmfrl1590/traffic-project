@@ -1,4 +1,4 @@
-package com.system.traffic.network
+package com.system.traffic.common
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

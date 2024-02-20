@@ -47,6 +47,7 @@ fun BusArriveScreen(
     lineViewModel: LineViewModel = hiltViewModel(),
 ) {
 
+    println("arsId : $arsId")
     //val busArriveList by busArriveViewModel.resultBusArriveList.observeAsState()
 
     LaunchedEffect(key1 = arsId){
@@ -61,7 +62,9 @@ fun BusArriveScreen(
         stationViewModel.getStationInfo(arsId )
     }
 
-    Column {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+    ) {
         TopInfoArea(stationViewModel)
 
         Spacer(modifier = Modifier.size(20.dp))
@@ -92,7 +95,6 @@ fun BusArriveScreen(
 @Composable
 fun TopInfoArea(stationViewModel: StationViewModel){
     val stationInfo by stationViewModel.stationInfo.collectAsState()
-
 
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.size(8.dp))

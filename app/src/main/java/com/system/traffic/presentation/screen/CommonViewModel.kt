@@ -26,7 +26,7 @@ class CommonViewModel @Inject constructor(
     }
 
     // 버스 도착 정보 이동
-    fun goBusArriveScreen(navHostController: NavHostController, ars_id: String){
+    /*fun goBusArriveScreen(navHostController: NavHostController, ars_id: String){
         NavigationUtils.navigate(navHostController, BusArriveNav.navigateWithArg(ars_id))
-    }
+    }*/
 }

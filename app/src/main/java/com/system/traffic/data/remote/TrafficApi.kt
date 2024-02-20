@@ -1,4 +1,4 @@
-package com.system.traffic.network
+package com.system.traffic.data.remote
 
 import com.system.traffic.domain.dataModel.BusArriveBody
 import com.system.traffic.domain.dataModel.LineStationBody

@@ -37,7 +37,7 @@ import com.system.traffic.presentation.screen.CommonViewModel
 import com.system.traffic.presentation.screen.station.StationViewModel
 
 @Composable
-fun MainLineScreen(
+fun LineScreen(
     navHostController: NavHostController,
     stationViewModel: StationViewModel = hiltViewModel(),
     lineViewModel: LineViewModel = hiltViewModel(),
@@ -78,7 +78,7 @@ fun LineInfo(stationEntity: StationEntity, stationViewModel: StationViewModel, c
             .height(100.dp)
             .fillMaxWidth()
             .border(1.dp, Color.Black, shape = RoundedCornerShape(5.dp)),
-        onClick = { commonViewModel.goBusArriveScreen(navHostController, stationEntity.busstop_id.toString()) }
+        //onClick = { commonViewModel.goBusArriveScreen(navHostController, stationEntity.busstop_id.toString()) }
     ){
 
         Box(modifier = Modifier.fillMaxSize()){

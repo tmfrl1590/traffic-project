@@ -24,7 +24,7 @@ import com.system.traffic.presentation.screen.station.StationInfo
 import com.system.traffic.presentation.screen.station.StationViewModel
 
 @Composable
-fun MainLikeScreen(
+fun LikeScreen(
     navHostController: NavHostController,
     stationViewModel: StationViewModel = hiltViewModel(),
     commonViewModel: CommonViewModel = hiltViewModel(),

@@ -12,16 +12,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.system.traffic.navigation.BusArriveNav
-import com.system.traffic.navigation.Graph
 import com.system.traffic.navigation.MainNav
-import com.system.traffic.presentation.screen.bus_arrive.BusArriveScreen
-import com.system.traffic.presentation.screen.home.MainLikeScreen
-import com.system.traffic.presentation.screen.line.MainLineScreen
-import com.system.traffic.presentation.screen.station.MainStationScreen
+import com.system.traffic.navigation.gragh.HomeGraph
 
 @Composable
 fun MainScreen(
@@ -36,32 +30,7 @@ fun MainScreen(
 
     ) {
         it
-        NavHost(
-            navController = navController,
-            route = Graph.HOME,
-            startDestination = MainNav.LIKE.route
-        ) {
-            composable(route = MainNav.LIKE.route) {
-                MainLikeScreen(navController)
-            }
-            composable(route = MainNav.STATION.route) {
-                MainStationScreen(navController)
-            }
-            composable(route = MainNav.LINE.route) {
-                MainLineScreen(navController)
-            }
-
-            composable(
-                route = BusArriveNav.routWithArgName(),
-                arguments = BusArriveNav.arguments,
-                deepLinks = BusArriveNav.deepLinks,
-            ) {
-                val busArriveString = BusArriveNav.findArgument(it)
-                if (busArriveString != null) {
-                    BusArriveScreen(busArriveString)
-                }
-            }
-        }
+        HomeGraph(navController = navController)
     }
 }
 
@@ -79,34 +48,42 @@ fun MainBottomNavigationBar(
         MainNav.LINE,
     )
 
-    NavigationBar {
-        bottomNavigationItems.forEachIndexed { index, navigationItem ->
-            NavigationBarItem(
-                selected = index == navigationSelectedItem,
-                onClick = {
-                    navigationSelectedItem = index
-                    navController.navigate(navigationItem.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+    val bottomBarDestination = bottomNavigationItems.any { it.route == currentDestination?.route }
+
+    if(bottomBarDestination){
+        NavigationBar {
+            bottomNavigationItems.forEachIndexed { index, navigationItem ->
+                NavigationBarItem(
+                    selected = index == navigationSelectedItem,
+                    onClick = {
+                        navigationSelectedItem = index
+                        navController.navigate(navigationItem.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
+                    },
+                    icon = {
+                        Icon(
+                            imageVector = if (index == navigationSelectedItem) {
+                                navigationItem.selectedIcon
+                            } else {
+                                navigationItem.unselectedIcon
+                            },
+                            contentDescription = navigationItem.title,
+                        )
+                    },
+                    label = {
+                        Text(text = navigationItem.title)
                     }
-                },
-                icon = {
-                    Icon(
-                        imageVector = if (index == navigationSelectedItem) {
-                            navigationItem.selectedIcon
-                        } else {
-                            navigationItem.unselectedIcon
-                        },
-                        contentDescription = navigationItem.title,
-                    )
-                },
-                label = {
-                    Text(text = navigationItem.title)
-                }
-            )
+                )
+            }
         }
     }
+
 }

@@ -6,7 +6,6 @@ import com.system.traffic.data.local.db.dao.StationDao
 import com.system.traffic.data.repository.BusArriveRepositoryImpl
 import com.system.traffic.data.repository.FileRepositoryImpl
 import com.system.traffic.data.repository.LineRepositoryImpl
-import com.system.traffic.data.repository.Repository
 import com.system.traffic.data.repository.StationRepositoryImpl
 import com.system.traffic.domain.repository.BusArriveRepository
 import com.system.traffic.domain.repository.FileRepository
@@ -17,8 +16,7 @@ import com.system.traffic.domain.useCase.FileUseCase
 import com.system.traffic.domain.useCase.LineUseCase
 import com.system.traffic.domain.useCase.StationUseCase
 import com.system.traffic.domain.useCase.UseCase
-import com.system.traffic.network.TrafficApi
-import dagger.Binds
+import com.system.traffic.data.remote.TrafficApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

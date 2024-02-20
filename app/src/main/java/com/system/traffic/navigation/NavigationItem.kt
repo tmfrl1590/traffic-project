@@ -14,6 +14,8 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
+import com.system.traffic.navigation.NavigationRouteName.DEEP_LINK_SCHEME
 import com.system.traffic.navigation.NavigationRouteName.MAIN_LIKE
 import com.system.traffic.navigation.NavigationRouteName.MAIN_LINE
 import com.system.traffic.navigation.NavigationRouteName.MAIN_STATION
@@ -36,21 +38,21 @@ sealed class MainNav(override val route: String, val selectedIcon : ImageVector,
 }
 
 sealed class SplashNav(override val route: String, override val title: String): Destination {
-    object SPLASH: SplashNav(NavigationTitle.SPLASH, NavigationTitle.SPLASH)
+    object SPLASH: SplashNav(NavigationRouteName.SPLASH, NavigationTitle.SPLASH)
 
     override val deepLinks: List<NavDeepLink> = listOf(
         //navDeepLink { uriPattern = "$DEEP_LINK_SCHEME${SearchNav.route}" }
     )
 }
 
-object BusArriveNav: DestinationArg<String> {
 
+object BusArriveNav: DestinationArg<String> {
     override val route: String = NavigationRouteName.BUS_ARRIVE
     override val title: String = NavigationTitle.BUS_ARRIVE
     override val argName: String = NavigationRouteName.BUS_ARRIVE
 
     override val deepLinks: List<NavDeepLink> = listOf(
-
+        navDeepLink { uriPattern = "$DEEP_LINK_SCHEME$route/{$argName}"  }
     )
     override val arguments: List<NamedNavArgument> = listOf(
         navArgument(argName){ type = NavType.StringType}
@@ -83,6 +85,7 @@ interface DestinationArg<T>: Destination {
 }
 
 object NavigationRouteName{
+    const val DEEP_LINK_SCHEME = "traffic://"
     const val SPLASH = "splash"
     const val MAIN_LIKE = "main_home"
     const val MAIN_STATION = "main_station"
@@ -102,4 +105,5 @@ object Graph {
     const val ROOT = "root_graph"
     const val SPLASH = "splash_graph"
     const val HOME = "home_graph"
+    const val BUS_ARRIVE = "bus_arrive"
 }

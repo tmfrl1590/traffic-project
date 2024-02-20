@@ -33,12 +33,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.system.traffic.presentation.component.SearchBox
 import com.system.traffic.domain.dataModel.StationEntity
+import com.system.traffic.navigation.BusArriveNav
+import com.system.traffic.navigation.Graph
 import com.system.traffic.presentation.screen.CommonViewModel
 import com.system.traffic.presentation.screen.line.LineViewModel
 
 
 @Composable
-fun MainStationScreen(
+fun StationScreen(
     navHostController: NavHostController,
     stationViewModel: StationViewModel = hiltViewModel(),
     lineViewModel: LineViewModel = hiltViewModel(),
@@ -90,7 +92,10 @@ fun StationInfo(
             .fillMaxWidth()
             .border(1.dp, Color.Black, shape = RoundedCornerShape(8.dp)),
         onClick = {
-            commonViewModel.goBusArriveScreen(navHostController, stationEntity.busstop_id.toString())
+            //commonViewModel.goBusArriveScreen(navHostController, stationEntity.busstop_id.toString())
+            //navHostController.navigate(BusArriveNav.navigateWithArg(stationEntity.busstop_id.toString()))
+            println("test111 ${stationEntity.busstop_id.toString()}")
+            navHostController.navigate(route = "${Graph.BUS_ARRIVE}/${stationEntity.busstop_id.toString()}")
         }
     ){
         Box(modifier = Modifier.fillMaxSize()){

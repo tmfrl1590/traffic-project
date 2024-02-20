@@ -1,7 +1,7 @@
 package com.system.traffic.di
 
-import com.system.traffic.network.Constants.BASE_URL
-import com.system.traffic.network.TrafficApi
+import com.system.traffic.common.Constants.BASE_URL
+import com.system.traffic.data.remote.TrafficApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

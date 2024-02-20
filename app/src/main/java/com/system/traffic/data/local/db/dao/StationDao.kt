@@ -6,10 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import com.system.traffic.domain.dataModel.BusArriveBody
 import com.system.traffic.domain.dataModel.StationEntity
-import com.system.traffic.network.TrafficApi
-import com.system.traffic.network.Constants
 import kotlinx.coroutines.flow.Flow
 
 @Dao
