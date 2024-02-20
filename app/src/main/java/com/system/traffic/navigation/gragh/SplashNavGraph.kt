@@ -53,23 +53,16 @@ fun HomeGraph(navController: NavHostController){
 fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
     navigation(
         route = "${Graph.BUS_ARRIVE}/{id}",
-        startDestination = BusArriveNav.route,
-
+        startDestination = "${BusArriveNav.route}/{id}",
     ) {
-        println("test111 $id")
         composable(
-            route = BusArriveNav.route,
+            route = "${BusArriveNav.route}/{id}",
             arguments = BusArriveNav.arguments,
-            /*arguments = listOf(navArgument("id"){
-                type = NavType.IntType
-            }),*/
             deepLinks = BusArriveNav.deepLinks,
-        ) {
-            val busArriveString = BusArriveNav.findArgument(it)
+        ) { entry ->
+            val busArriveString = entry.arguments?.getString("id")
             if (busArriveString != null) {
                 BusArriveScreen(busArriveString)
-            }else{
-                BusArriveScreen("1234")
             }
         }
     }

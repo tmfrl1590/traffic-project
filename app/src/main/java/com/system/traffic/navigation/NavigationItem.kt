@@ -105,5 +105,5 @@ object Graph {
     const val ROOT = "root_graph"
     const val SPLASH = "splash_graph"
     const val HOME = "home_graph"
-    const val BUS_ARRIVE = "bus_arrive"
+    const val BUS_ARRIVE = "bus_arrive_graph"
 }
