@@ -3,10 +3,8 @@ package com.system.traffic.navigation.gragh
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.system.traffic.navigation.BusArriveNav
 import com.system.traffic.navigation.Graph
@@ -60,9 +58,12 @@ fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
             arguments = BusArriveNav.arguments,
             deepLinks = BusArriveNav.deepLinks,
         ) { entry ->
-            val busArriveString = entry.arguments?.getString("id")
-            if (busArriveString != null) {
-                BusArriveScreen(busArriveString)
+            val arsId = entry.arguments?.getString("id")
+            if (arsId != null) {
+                BusArriveScreen(
+                    arsId = arsId,
+                    navController = navController
+                )
             }
         }
     }

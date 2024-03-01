@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.viewModelScope
+import com.system.traffic.common.Resource
 import com.system.traffic.domain.dataModel.BusArriveBody
 import com.system.traffic.domain.dataModel.BusArriveModel
 import com.system.traffic.domain.useCase.UseCase
@@ -25,6 +26,10 @@ class BusArriveViewModel @Inject constructor(
     private val useCase: UseCase,
 ): ViewModel(){
 
+    // 버스 도착 정보 가져오기
+    suspend fun getBusArriveList(arsId: String): Resource<BusArriveBody> {
+        return useCase.busArriveUseCase.getBusArriveList(arsId)
+    }
 
     /*private val _resultBusArriveList = MutableLiveData<BusArriveBody>()
     val resultBusArriveList: LiveData<BusArriveBody> = _resultBusArriveList
