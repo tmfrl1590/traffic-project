@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Divider
@@ -18,9 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.system.traffic.presentation.screen.CommonViewModel
-import com.system.traffic.presentation.screen.station.StationInfo
+import com.system.traffic.presentation.screen.component.StationInfo
 import com.system.traffic.presentation.screen.station.StationViewModel
 
 @Composable
@@ -29,7 +29,6 @@ fun LikeScreen(
     stationViewModel: StationViewModel = hiltViewModel(),
     commonViewModel: CommonViewModel = hiltViewModel(),
 ) {
-    val navController = rememberNavController()
     val likeStationList by stationViewModel.likeStationList.collectAsState(initial = listOf())
 
     Column(
@@ -41,18 +40,22 @@ fun LikeScreen(
             modifier = Modifier
                 .weight(1f)
         ) {
-            Text(text = "정류장", fontSize = 20.sp)
-            Spacer(modifier = Modifier.size(10.dp))
+            TitleComponent(
+                title = "정류장"
+            )
+
             Divider()
-            Spacer(modifier = Modifier.size(10.dp))
+
+            Spacer(modifier = Modifier
+                .size(8.dp)
+            )
 
             if(likeStationList.isNotEmpty()){
-                LazyColumn(){
+                LazyColumn {
                     items(likeStationList.size){ index ->
                         StationInfo(
                             stationEntity = likeStationList[index],
                             stationViewModel = stationViewModel,
-                            commonViewModel = commonViewModel,
                             navHostController = navHostController
                         )
                     }
@@ -64,6 +67,7 @@ fun LikeScreen(
                 ) {
                     Text(
                         text = "즐겨찾기 정보가\n없습니다",
+                        lineHeight = 24.sp,
                         fontSize = 24.sp,
                         textAlign = TextAlign.Center,
                     )
@@ -75,13 +79,29 @@ fun LikeScreen(
             modifier = Modifier
                 .weight(1f)
         ) {
-            Text(text = "정류장", fontSize = 20.sp)
-            Spacer(modifier = Modifier.size(10.dp))
+            TitleComponent(
+                title = "노선"
+            )
+
             Divider()
-            Spacer(modifier = Modifier.size(10.dp))
+
+            Spacer(modifier = Modifier.size(8.dp))
+
             LazyColumn(modifier = Modifier.fillMaxSize()){
 
             }
         }
     }
+}
+
+@Composable
+fun TitleComponent(
+    title: String,
+){
+    Text(
+        text = title,
+        fontSize = 20.sp,
+        modifier = Modifier
+            .padding(12.dp)
+    )
 }
