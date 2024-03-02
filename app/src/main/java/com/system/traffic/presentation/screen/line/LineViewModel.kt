@@ -1,14 +1,14 @@
 package com.system.traffic.presentation.screen.line
 
 import androidx.lifecycle.ViewModel
-import com.system.traffic.domain.dataModel.LineModel
-import com.system.traffic.domain.dataModel.LineEntity
-import com.system.traffic.domain.useCase.LineUseCase
+import androidx.lifecycle.viewModelScope
+import com.system.traffic.domain.model.LineModel
 import com.system.traffic.domain.useCase.UseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,4 +28,9 @@ class LineViewModel @Inject constructor(
             _lineColorList.emit(it)
         }
     }*/
+
+    // 노선 즐겨찾기 추가, 삭제
+    fun updateLine(lineModel: LineModel)= viewModelScope.launch(Dispatchers.IO) {
+        useCase.lineUseCase.updateLine(lineModel.copy(selected = !lineModel.selected))
+    }
 }

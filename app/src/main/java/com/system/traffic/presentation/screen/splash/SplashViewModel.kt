@@ -1,10 +1,10 @@
 package com.system.traffic.presentation.screen.splash
 
 import androidx.lifecycle.ViewModel
-import com.system.traffic.domain.dataModel.LineEntity
-import com.system.traffic.domain.dataModel.LineModel
-import com.system.traffic.domain.dataModel.StationEntity
-import com.system.traffic.domain.dataModel.StationModel
+import com.system.traffic.data.local.db.entity.LineEntity
+import com.system.traffic.domain.model.LineModel
+import com.system.traffic.data.local.db.entity.StationEntity
+import com.system.traffic.domain.model.StationModel
 import com.system.traffic.domain.useCase.UseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

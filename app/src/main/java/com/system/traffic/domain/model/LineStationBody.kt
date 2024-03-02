@@ -1,4 +1,4 @@
-package com.system.traffic.domain.dataModel
+package com.system.traffic.domain.model
 
 import com.google.gson.annotations.SerializedName
 

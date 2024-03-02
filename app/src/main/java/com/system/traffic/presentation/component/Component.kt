@@ -1,4 +1,4 @@
-package com.system.traffic.presentation.screen.component
+package com.system.traffic.presentation.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -20,6 +20,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,18 +30,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.system.traffic.domain.dataModel.StationEntity
+import com.system.traffic.domain.model.StationModel
 import com.system.traffic.navigation.Graph
 import com.system.traffic.presentation.screen.station.StationViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StationInfo(
-    stationEntity: StationEntity,
+    stationModel: StationModel,
     stationViewModel: StationViewModel,
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    //likeStationList: List<StationModel>
 ){
     val likeStationList by stationViewModel.likeStationList.collectAsState(initial = listOf())
+
+    var selectedStation by remember {
+        mutableStateOf(false)
+    }
+
+    selectedStation = likeStationList.contains(stationModel)
 
     Card(
         modifier = Modifier
@@ -48,7 +58,7 @@ fun StationInfo(
         border = BorderStroke(1.dp, Color.Black),
         shape = RoundedCornerShape(12.dp),
         onClick = {
-            navHostController.navigate(route = "${Graph.BUS_ARRIVE}/${stationEntity.busstop_id.toString()}")
+            navHostController.navigate(route = "${Graph.BUS_ARRIVE}/${stationModel.busstop_id}")
         }
     ){
         Box(
@@ -57,11 +67,20 @@ fun StationInfo(
                 .background(Color.White),
         ){
             IconButton(
-                onClick = { stationViewModel.updateStation(stationEntity) },
+                onClick = { if(selectedStation){
+                    println("즐겨찾기 삭제")
+                    stationViewModel.deleteLikeStation(stationModel.busstop_id)
+                }else{
+                    println("즐겨찾기 추가")
+                    stationViewModel.insertLikeStation(stationModel)
+                } },
                 modifier = Modifier
                     .align(Alignment.TopEnd)
             ){
-                Icon( if(likeStationList.contains(stationEntity)) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder, "")
+                Icon(
+                    imageVector = if(selectedStation) Icons.Default.Favorite else Icons.Default.FavoriteBorder ,
+                    contentDescription = "Favorite"
+                )
             }
 
             Column(
@@ -70,7 +89,7 @@ fun StationInfo(
                     .fillMaxSize()
             ) {
                 Text(
-                    text = stationEntity.busstop_name!!,
+                    text = stationModel.busstop_name!!,
                     modifier = Modifier
                         .height(50.dp),
                     fontSize = 16.sp,
@@ -78,7 +97,7 @@ fun StationInfo(
                 )
 
                 Text(
-                    text = "${stationEntity.next_busstop} | ${stationEntity.ars_id}",
+                    text = "${stationModel.next_busstop} | ${stationModel.ars_id}",
                     modifier = Modifier
                         .weight(5f)
                 )

@@ -3,6 +3,7 @@ package com.system.traffic.di
 import android.content.Context
 import androidx.room.Room
 import com.system.traffic.data.local.db.TrafficDatabase
+import com.system.traffic.data.local.db.dao.LikeStationDao
 import com.system.traffic.data.local.db.dao.LineDao
 import com.system.traffic.data.local.db.dao.StationDao
 import dagger.Module
@@ -41,4 +42,9 @@ object DatabaseModule {
         return database.lineDAO()
     }
 
+    @Provides
+    @Singleton
+    fun likeStationDao(database: TrafficDatabase): LikeStationDao {
+        return database.likeStationDAO()
+    }
 }

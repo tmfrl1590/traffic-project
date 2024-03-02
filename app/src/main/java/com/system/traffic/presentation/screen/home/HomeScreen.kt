@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -20,15 +21,19 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.system.traffic.presentation.screen.CommonViewModel
-import com.system.traffic.presentation.screen.component.StationInfo
+import com.system.traffic.presentation.component.StationInfo
 import com.system.traffic.presentation.screen.station.StationViewModel
 
 @Composable
-fun LikeScreen(
+fun HomeScreen(
     navHostController: NavHostController,
     stationViewModel: StationViewModel = hiltViewModel(),
     commonViewModel: CommonViewModel = hiltViewModel(),
 ) {
+    LaunchedEffect(Unit){
+        stationViewModel.getLikeStationList()
+    }
+
     val likeStationList by stationViewModel.likeStationList.collectAsState(initial = listOf())
 
     Column(
@@ -54,9 +59,10 @@ fun LikeScreen(
                 LazyColumn {
                     items(likeStationList.size){ index ->
                         StationInfo(
-                            stationEntity = likeStationList[index],
+                            stationModel = likeStationList[index],
                             stationViewModel = stationViewModel,
-                            navHostController = navHostController
+                            navHostController = navHostController,
+                            //likeStationList = likeStationList,
                         )
                     }
                 }

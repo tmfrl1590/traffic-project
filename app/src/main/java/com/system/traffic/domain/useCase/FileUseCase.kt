@@ -1,8 +1,7 @@
 package com.system.traffic.domain.useCase
 
-import com.system.traffic.data.repository.Repository
-import com.system.traffic.domain.dataModel.LineEntity
-import com.system.traffic.domain.dataModel.StationEntity
+import com.system.traffic.data.local.db.entity.LineEntity
+import com.system.traffic.data.local.db.entity.StationEntity
 import com.system.traffic.domain.repository.FileRepository
 
 class FileUseCase(

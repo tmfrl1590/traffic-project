@@ -1,30 +1,24 @@
 package com.system.traffic.data.repository
 
 import com.system.traffic.data.local.db.dao.StationDao
-import com.system.traffic.domain.dataModel.StationEntity
+import com.system.traffic.domain.model.StationModel
+import com.system.traffic.data.local.db.entity.toLikeStationModel
 import com.system.traffic.domain.repository.StationRepository
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
+import kotlinx.coroutines.flow.map
 
-class StationRepositoryImpl (
+class StationRepositoryImpl(
     private val stationDao: StationDao,
-): StationRepository {
-
-    override fun getLikeStationList(): Flow<List<StationEntity>> {
-        return stationDao.getLikeStationList()
-    }
+) : StationRepository {
 
     // 정류장 검색
-    override fun getSearchedStationList(keyword: String): List<StationEntity> {
-        return stationDao.getSearchedStationList(keyword)
+    override fun getSearchedStationList(keyword: String): List<StationModel> {
+        return stationDao.getSearchedStationList(keyword).map { it.toLikeStationModel() }
     }
 
-    override fun updateStation(stationEntity: StationEntity) {
-        stationDao.updateStation(stationEntity)
-    }
 
-    override fun getStationInfo(ars_id: String): Flow<StationEntity> {
-        return stationDao.getStationInfo(ars_id)
+    override fun getStationInfo(arsId: String): Flow<StationModel> {
+        return stationDao.getStationInfo(arsId).map { it.toLikeStationModel() }
     }
 }
 

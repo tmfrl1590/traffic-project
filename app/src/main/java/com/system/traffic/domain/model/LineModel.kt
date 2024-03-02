@@ -1,4 +1,4 @@
-package com.system.traffic.domain.dataModel
+package com.system.traffic.domain.model
 
 data class LineModel(
     val dir_down_name: String?,
@@ -10,5 +10,5 @@ data class LineModel(
     val line_id: String?,
     val line_kind: String?,
     val line_name: String?,
-    var selected : String?
+    var selected : Boolean
 )

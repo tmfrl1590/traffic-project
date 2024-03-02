@@ -1,9 +1,9 @@
 package com.system.traffic.domain.repository
 
-import com.system.traffic.domain.dataModel.LineEntity
-import com.system.traffic.domain.dataModel.LineModel
-import com.system.traffic.domain.dataModel.StationEntity
-import com.system.traffic.domain.dataModel.StationModel
+import com.system.traffic.data.local.db.entity.LineEntity
+import com.system.traffic.domain.model.LineModel
+import com.system.traffic.data.local.db.entity.StationEntity
+import com.system.traffic.domain.model.StationModel
 
 interface FileRepository {
 

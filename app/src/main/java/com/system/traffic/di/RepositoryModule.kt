@@ -1,6 +1,7 @@
 package com.system.traffic.di
 
 import com.system.traffic.data.local.dataSource.FileDataSource
+import com.system.traffic.data.local.db.dao.LikeStationDao
 import com.system.traffic.data.local.db.dao.LineDao
 import com.system.traffic.data.local.db.dao.StationDao
 import com.system.traffic.data.repository.BusArriveRepositoryImpl
@@ -17,6 +18,9 @@ import com.system.traffic.domain.useCase.LineUseCase
 import com.system.traffic.domain.useCase.StationUseCase
 import com.system.traffic.domain.useCase.UseCase
 import com.system.traffic.data.remote.TrafficApi
+import com.system.traffic.data.repository.LikeStationRepositoryImpl
+import com.system.traffic.domain.repository.LikeStationRepository
+import com.system.traffic.domain.useCase.LikeStationUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,22 +30,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
-    @Provides
-    @Singleton
-    fun provideUseCases(
-        //repository: Repository,
-        stationRepository: StationRepository,
-        lineRepository: LineRepository,
-        busArriveRepository: BusArriveRepository,
-        fileRepository: FileRepository,
-    ): UseCase {
-        return UseCase(
-            stationUseCase = StationUseCase(stationRepository),
-            lineUseCase = LineUseCase(lineRepository),
-            busArriveUseCase = BusArriveUseCase(busArriveRepository),
-            fileUseCase = FileUseCase(fileRepository)
-        )
-    }
+
 
     @Provides
     @Singleton
@@ -65,6 +54,12 @@ object RepositoryModule {
     @Singleton
     fun provideBusArriveRepository(trafficApi: TrafficApi): BusArriveRepository {
         return BusArriveRepositoryImpl(trafficApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLikeStationRepository(likeStationDao: LikeStationDao): LikeStationRepository {
+        return LikeStationRepositoryImpl(likeStationDao)
     }
 }
 

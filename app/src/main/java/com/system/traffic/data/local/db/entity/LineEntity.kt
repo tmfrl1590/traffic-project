@@ -1,9 +1,11 @@
-package com.system.traffic.domain.dataModel
+package com.system.traffic.data.local.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.system.traffic.common.Constants.LINE_ENTITY
+import com.system.traffic.domain.model.LineModel
 
-@Entity(tableName = "line")
+@Entity(tableName = LINE_ENTITY)
 data class LineEntity (
     @PrimaryKey(autoGenerate = true)
     val id : Int,

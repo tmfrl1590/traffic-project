@@ -1,4 +1,4 @@
-package com.system.traffic.domain.dataModel
+package com.system.traffic.domain.model
 
 data class StationModel (
     val station_num : String,
@@ -8,5 +8,4 @@ data class StationModel (
     val ars_id : String,
     val longitude: String,
     val latitude: String,
-    var selected : String
 )

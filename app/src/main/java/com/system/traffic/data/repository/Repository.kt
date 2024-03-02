@@ -1,7 +1,8 @@
 package com.system.traffic.data.repository
 
-import com.system.traffic.domain.dataModel.LineEntity
-import com.system.traffic.domain.dataModel.StationEntity
+import com.system.traffic.data.local.db.entity.LineEntity
+import com.system.traffic.data.local.db.entity.StationEntity
+import com.system.traffic.domain.model.StationModel
 import com.system.traffic.domain.repository.BusArriveRepository
 import com.system.traffic.domain.repository.FileRepository
 import com.system.traffic.domain.repository.LineRepository
@@ -14,9 +15,7 @@ class Repository @Inject constructor(
     private val fileRepository: FileRepository,
     private val busArriveRepository: BusArriveRepository
 ){
-    fun getLikeStationList() = stationRepository.getLikeStationList()
     fun getSearchedStationList(keyword: String) = stationRepository.getSearchedStationList(keyword)
-    fun updateStation(stationEntity: StationEntity) = stationRepository.updateStation(stationEntity)
     fun getStationInfo(ars_id: String) = stationRepository.getStationInfo(ars_id)
     //fun getLineColor() = lineRepository.getLineColor()
     fun getFileStationData() = fileRepository.getStationFileData()

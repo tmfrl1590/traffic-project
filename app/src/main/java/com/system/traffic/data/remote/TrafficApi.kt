@@ -1,7 +1,7 @@
 package com.system.traffic.data.remote
 
-import com.system.traffic.domain.dataModel.BusArriveBody
-import com.system.traffic.domain.dataModel.LineStationBody
+import com.system.traffic.domain.model.BusArriveBody
+import com.system.traffic.domain.model.LineStationBody
 import retrofit2.http.GET
 import retrofit2.http.Query
 

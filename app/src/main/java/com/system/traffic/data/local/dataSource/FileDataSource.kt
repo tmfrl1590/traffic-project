@@ -1,8 +1,8 @@
 package com.system.traffic.data.local.dataSource
 
 import android.content.Context
-import com.system.traffic.domain.dataModel.LineModel
-import com.system.traffic.domain.dataModel.StationModel
+import com.system.traffic.domain.model.LineModel
+import com.system.traffic.domain.model.StationModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import org.json.JSONObject
 import javax.inject.Inject
@@ -29,7 +29,7 @@ class FileDataSource @Inject constructor(
             val longitude = jsonObject.getString("LONGITUDE").toString()
             val latitude = jsonObject.getString("LATITUDE").toString()
 
-            val station = StationModel(stationNum, busStopName, nextBusStop, busStopId, arsId, longitude, latitude, "0")
+            val station = StationModel(stationNum, busStopName, nextBusStop, busStopId, arsId, longitude, latitude)
             stationList.add(station)
         }
         return stationList
@@ -51,7 +51,7 @@ class FileDataSource @Inject constructor(
             val lineKind = jsonObject.getString("LINE_KIND").toString()
             val lineName = jsonObject.getString("LINE_NAME").toString()
 
-            val line = LineModel(dirDownName, runInterval, lastRunTime, lineNum, firstRunTime, dirUpName, lineId, lineKind, lineName, "0")
+            val line = LineModel(dirDownName, runInterval, lastRunTime, lineNum, firstRunTime, dirUpName, lineId, lineKind, lineName, false)
             lineList.add(line)
         }
         return lineList

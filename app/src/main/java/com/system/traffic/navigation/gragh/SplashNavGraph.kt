@@ -11,7 +11,7 @@ import com.system.traffic.navigation.Graph
 import com.system.traffic.navigation.MainNav
 import com.system.traffic.navigation.SplashNav
 import com.system.traffic.presentation.screen.bus_arrive.BusArriveScreen
-import com.system.traffic.presentation.screen.home.LikeScreen
+import com.system.traffic.presentation.screen.home.HomeScreen
 import com.system.traffic.presentation.screen.line.LineScreen
 import com.system.traffic.presentation.screen.splash.SplashScreen
 import com.system.traffic.presentation.screen.station.StationScreen
@@ -35,7 +35,7 @@ fun HomeGraph(navController: NavHostController){
         startDestination = MainNav.LIKE.route
     ) {
         composable(route = MainNav.LIKE.route) {
-            LikeScreen(navController)
+            HomeScreen(navController)
         }
         composable(route = MainNav.STATION.route) {
             StationScreen(navController)

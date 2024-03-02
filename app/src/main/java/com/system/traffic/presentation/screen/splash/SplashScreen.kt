@@ -12,8 +12,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.system.traffic.R
-import com.system.traffic.domain.dataModel.toLineEntity
-import com.system.traffic.domain.dataModel.toStationEntity
+import com.system.traffic.data.local.db.entity.toLineEntity
+import com.system.traffic.data.local.db.entity.toStationEntity
 import com.system.traffic.navigation.Graph
 import com.system.traffic.presentation.screen.CommonViewModel
 import kotlinx.coroutines.Dispatchers
