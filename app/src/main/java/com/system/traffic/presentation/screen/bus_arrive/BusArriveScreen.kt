@@ -27,8 +27,11 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -70,6 +73,7 @@ fun BusArriveScreen(
     LaunchedEffect(Unit){
         stationViewModel.getLikeStationList()
         lineViewModel.getLikeLineList1()
+        lineViewModel.getLineColor()
     }
 
     val stationInfo by stationViewModel.stationInfo.collectAsState()
@@ -91,6 +95,7 @@ fun BusArriveScreen(
                 title = {
                     Text(
                         text = "${stationInfo.busstop_name} (${stationInfo.ars_id})",
+                        fontSize = 20.sp,
                     )
                 },
                 navigationIcon = {
@@ -110,10 +115,11 @@ fun BusArriveScreen(
                     ) {
                         Icon(
                             imageVector = if(selectedStation) Icons.Default.Favorite else Icons.Default.FavoriteBorder ,
-                            contentDescription = "Favorite"
+                            contentDescription = "Favorite",
+                            tint = Color(0xFFE91E63),
                         )
                     }
-                    IconButton(
+                    /*IconButton(
                         onClick = {
 
                         }
@@ -122,15 +128,19 @@ fun BusArriveScreen(
                             imageVector = Icons.Default.Refresh,
                             contentDescription = ""
                         )
-                    }
-                }
+                    }*/
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.White,
+                )
             )
         }
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(it),
+                .padding(it)
+                .background(Color.White),
         ) {
             NextBusStop(
                 nextBusStopName = stationInfo.next_busstop
@@ -224,25 +234,21 @@ fun BusArriveCard(
     onAdd: (String) -> Unit ,
     onRemove: (String) -> Unit
 ){
-    LaunchedEffect(true){
-        //lineViewModel.getLineOne(busArriveModel.line_id!!)
-    }
 
-    println("likeLineList : $likeLineList")
+
+
 
     val lineColorList by lineViewModel.lineColorList.collectAsState()
-
-    //val lineModelOne by lineViewModel.lineInfo.collectAsState()
-    //println("즐겨찾기11 : $lineModelOne")
+    println("lineColorList : $lineColorList")
 
     var color = Color.Black
 
 
-    /*for(i in lineColorList){
+    for(i in lineColorList){
         if(i.line_id == busArriveModel.line_id){
             color = lineColor(i.line_kind.toString())
         }
-    }*/
+    }
 
     var selectedLine by remember {
         mutableStateOf(false)
@@ -259,7 +265,7 @@ fun BusArriveCard(
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .height(100.dp)
             .fillMaxWidth(),
-        border = BorderStroke(1.dp, Color.Black),
+        border = BorderStroke(1.dp, Color.LightGray),
         shape = RoundedCornerShape(8.dp),
     ) {
         Box(
@@ -280,7 +286,8 @@ fun BusArriveCard(
             ){
                 Icon(
                     imageVector = if(selectedLine) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-                    contentDescription = "Favorite"
+                    contentDescription = "Favorite",
+                    tint = Color(0xFFE91E63)
                 )
             }
             Column(

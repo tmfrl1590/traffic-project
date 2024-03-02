@@ -1,5 +1,6 @@
 package com.system.traffic.presentation.screen.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,6 +16,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,6 +54,7 @@ fun HomeScreen(
         Column(
             modifier = Modifier
                 .weight(1f)
+                .background(Color.White)
         ) {
             TitleComponent(
                 title = "정류장"
@@ -80,6 +84,7 @@ fun HomeScreen(
         Column(
             modifier = Modifier
                 .weight(1f)
+                .background(Color.White)
         ) {
             TitleComponent(
                 title = "노선"
@@ -138,6 +143,7 @@ fun TitleComponent(
     Text(
         text = title,
         fontSize = 20.sp,
+        fontWeight = FontWeight.Bold,
         modifier = Modifier
             .padding(12.dp)
     )

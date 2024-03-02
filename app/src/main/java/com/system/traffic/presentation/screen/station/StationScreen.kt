@@ -19,8 +19,8 @@ import com.system.traffic.presentation.component.StationInfo
 fun StationScreen(
     navHostController: NavHostController,
     stationViewModel: StationViewModel = hiltViewModel(),
-){
-    LaunchedEffect(Unit){
+) {
+    LaunchedEffect(Unit) {
         stationViewModel.getLikeStationList()
     }
 
@@ -34,24 +34,25 @@ fun StationScreen(
 
     Column {
         SearchBox(
-            type = "정류장",
+            text = "정류장",
             keyword = keyword,
-            onValueChange = {keyword = it},
-            searchAction = {stationViewModel.getSearchedStationList(keyword = keyword) },
+            onValueChange = { keyword = it },
+            searchAction = {
+                stationViewModel.getSearchedStationList(keyword = keyword)
+            },
         )
 
-        if(searchedStationList.isNotEmpty()){
-            LazyColumn(){
-                items(searchedStationList.size){ index ->
+        if (searchedStationList.isNotEmpty()) {
+            LazyColumn {
+                items(searchedStationList.size) { index ->
                     StationInfo(
                         searchedStationList[index],
                         stationViewModel,
                         navHostController,
-                        //likeStationList
                     )
                 }
             }
-        }else{
+        } else {
             //Log.i("qewqwe", "값이없습니다ㅑ")
         }
     }

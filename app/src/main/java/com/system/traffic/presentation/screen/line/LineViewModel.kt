@@ -27,16 +27,13 @@ class LineViewModel @Inject constructor(
     val lineInfo : StateFlow<LineModel> = _lineInfo
 
     // 버스 색상 가져오기(종류 가져오기)
-    /*suspend fun getLineColor() {
-        lineUseCase.getLineColor().collectLatest {
-            _lineColorList.emit(it)
+    fun getLineColor() {
+        viewModelScope.launch(Dispatchers.IO) {
+            useCase.lineUseCase.getLineColor().collectLatest {
+                _lineColorList.emit(it)
+            }
         }
-    }*/
-
-    // 노선 즐겨찾기 추가, 삭제
-    /*fun updateLine(lineModel: LineModel)= viewModelScope.launch(Dispatchers.IO) {
-        useCase.lineUseCase.updateLine(lineModel.copy(selected = !lineModel.selected))
-    }*/
+    }
 
     // 노선 한 건 조회
     fun getLineOne(lineId: String) = viewModelScope.launch(Dispatchers.IO) {

@@ -7,6 +7,8 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.system.traffic.data.local.db.entity.LineEntity
+import com.system.traffic.domain.model.LineModel
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LineDao {
@@ -15,12 +17,8 @@ interface LineDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertLine(lineEntity: LineEntity)
 
-    /*@Query("SELECT line_id, line_kind FROM line")
-    fun getLineColor() : Flow<List<LineModel>>*/
-
-    // 노선 즐겨찾기 추가, 삭제
-    @Update
-    fun updateLine(lineEntity: LineEntity)
+    @Query("SELECT * FROM line_entity")
+    fun getLineColor() : Flow<List<LineEntity>>
 
     // 노선 한건 조회
     @Query("SELECT * FROM line_entity WHERE line_id=:lineId")

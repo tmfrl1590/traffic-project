@@ -60,7 +60,7 @@ fun StationInfo(
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .height(100.dp)
             .fillMaxWidth(),
-        border = BorderStroke(1.dp, Color.Black),
+        border = BorderStroke(1.dp, Color.LightGray),
         shape = RoundedCornerShape(12.dp),
         onClick = {
             navHostController.navigate(route = "${Graph.BUS_ARRIVE}/${stationModel.busstop_id}")
@@ -82,7 +82,8 @@ fun StationInfo(
             ){
                 Icon(
                     imageVector = if(selectedStation) Icons.Default.Favorite else Icons.Default.FavoriteBorder ,
-                    contentDescription = "Favorite"
+                    contentDescription = "Favorite",
+                    tint = Color(0xFFE91E63)
                 )
             }
 
@@ -133,7 +134,7 @@ fun LineInfo(
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .height(100.dp)
             .fillMaxWidth(),
-        border = BorderStroke(1.dp, Color.Black),
+        border = BorderStroke(1.dp, Color.LightGray),
         shape = RoundedCornerShape(12.dp),
         //onClick = { commonViewModel.goBusArriveScreen(navHostController, stationEntity.busstop_id.toString()) }
     ){
@@ -150,7 +151,11 @@ fun LineInfo(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
             ){
-                Icon( if(selectedStation) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder, "")
+                Icon(
+                    imageVector = if(selectedStation) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                    contentDescription = "Favorite",
+                    tint = Color(0xFFE91E63)
+                )
             }
 
             val a = lineModel.line_kind?.let { lineColor(it) }

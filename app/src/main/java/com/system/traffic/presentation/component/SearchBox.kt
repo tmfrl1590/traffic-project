@@ -25,11 +25,11 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun SearchBox(
-    type: String,
+    text: String,
     keyword: String,
     onValueChange: (String) -> Unit,
     searchAction: () -> Unit,
-){
+) {
     Row(
         modifier = Modifier
             .padding(16.dp)
@@ -37,8 +37,8 @@ fun SearchBox(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = type,
-            fontSize = 20.sp,
+            text = text,
+            fontSize = 16.sp,
             modifier = Modifier.weight(1f),
             textAlign = TextAlign.Center
         )
@@ -61,7 +61,12 @@ fun SearchBox(
             ),
             maxLines = 1,
             singleLine = true,
-            leadingIcon = { Icon(imageVector = Icons.Filled.Search, contentDescription = "") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = ""
+                )
+            },
             modifier = Modifier.weight(3f),
         )
     }

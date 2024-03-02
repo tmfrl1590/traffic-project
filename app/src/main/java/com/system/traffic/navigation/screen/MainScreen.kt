@@ -1,21 +1,27 @@
 package com.system.traffic.navigation.screen
 
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.system.traffic.navigation.MainNav
 import com.system.traffic.navigation.gragh.HomeGraph
+import androidx.compose.material3.NavigationBarItemColors as NavigationBarItemColors
 
 @Composable
 fun MainScreen(
@@ -26,7 +32,8 @@ fun MainScreen(
     Scaffold(
         bottomBar = {
             MainBottomNavigationBar(navController = navController)
-        }
+        },
+        containerColor = Color.White,
 
     ) {
         it
@@ -54,7 +61,9 @@ fun MainBottomNavigationBar(
     val bottomBarDestination = bottomNavigationItems.any { it.route == currentDestination?.route }
 
     if(bottomBarDestination){
-        NavigationBar {
+        NavigationBar(
+            containerColor = Color.White
+        ) {
             bottomNavigationItems.forEachIndexed { index, navigationItem ->
                 NavigationBarItem(
                     selected = index == navigationSelectedItem,
@@ -80,7 +89,11 @@ fun MainBottomNavigationBar(
                     },
                     label = {
                         Text(text = navigationItem.title)
-                    }
+                    },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = Color(0xFFFFC74C25),
+                    )
+
                 )
             }
         }

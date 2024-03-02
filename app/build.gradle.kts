@@ -13,8 +13,8 @@ android {
         applicationId = "com.system.traffic"
         minSdk = 28
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 7
+        versionName = "1.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -93,7 +93,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
 
     // livedata
-    implementation("androidx.compose.runtime:runtime-livedata:1.5.3")
+    //implementation("androidx.compose.runtime:runtime-livedata:1.5.3")
 
     // DateStore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
