@@ -28,9 +28,6 @@ class StationViewModel @Inject constructor(
     val likeStationList : StateFlow<List<StationModel>> = _likeStationList
 
 
-    // 즐겨찾기 - 리스트 가져오기 (즐겨찾기 페이지)
-    //val likeStationList = useCase.stationUseCase.getLikeStationList()
-
     // 정류장 검색
     fun getSearchedStationList(keyword: String) = viewModelScope.launch(Dispatchers.IO) {
         val result = useCase.stationUseCase.getSearchedStationList(keyword = "%$keyword%")
@@ -39,11 +36,6 @@ class StationViewModel @Inject constructor(
             _searchedStationList.value = result
         }
     }
-
-    // 정류장 즐겨찾기 추가, 삭제
-    /*fun updateStation(stationModel: StationModel)= viewModelScope.launch(Dispatchers.IO) {
-        useCase.stationUseCase.updateStation(stationModel.copy(selected = !stationModel.selected) )
-    }*/
 
     suspend fun getStationInfo(arsId: String){
         useCase.stationUseCase.getStationInfo(arsId).collectLatest {
@@ -65,7 +57,6 @@ class StationViewModel @Inject constructor(
     fun getLikeStationList() {
         viewModelScope.launch(Dispatchers.IO) {
             useCase.likeStationUseCase.getLikeStationList().collectLatest {
-                println("즐겨찾기 리스트 조회 : $it")
                 _likeStationList.emit(it)
             }
         }

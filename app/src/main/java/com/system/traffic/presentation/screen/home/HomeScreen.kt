@@ -20,21 +20,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.system.traffic.presentation.screen.CommonViewModel
+import com.system.traffic.presentation.component.LineInfo
 import com.system.traffic.presentation.component.StationInfo
+import com.system.traffic.presentation.screen.CommonViewModel
+import com.system.traffic.presentation.screen.line.LineViewModel
 import com.system.traffic.presentation.screen.station.StationViewModel
 
 @Composable
 fun HomeScreen(
     navHostController: NavHostController,
     stationViewModel: StationViewModel = hiltViewModel(),
+    lineViewModel: LineViewModel = hiltViewModel(),
     commonViewModel: CommonViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit){
         stationViewModel.getLikeStationList()
+        lineViewModel.getLikeLineList1()
     }
 
     val likeStationList by stationViewModel.likeStationList.collectAsState(initial = listOf())
+    val likeLineList by lineViewModel.likeLineList.collectAsState(initial = listOf())
+
+    println("likeLineList $likeLineList")
 
     Column(
         modifier = Modifier
@@ -62,22 +69,11 @@ fun HomeScreen(
                             stationModel = likeStationList[index],
                             stationViewModel = stationViewModel,
                             navHostController = navHostController,
-                            //likeStationList = likeStationList,
                         )
                     }
                 }
             }else {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Text(
-                        text = "즐겨찾기 정보가\n없습니다",
-                        lineHeight = 24.sp,
-                        fontSize = 24.sp,
-                        textAlign = TextAlign.Center,
-                    )
-                }
+                NoLikeContent()
             }
         }
 
@@ -93,10 +89,45 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.size(8.dp))
 
-            LazyColumn(modifier = Modifier.fillMaxSize()){
-
+            if(likeLineList.isNotEmpty()){
+                LazyColumn {
+                    items(likeLineList.size){ index ->
+                        /*StationInfo(
+                            stationModel = likeStationList[index],
+                            stationViewModel = stationViewModel,
+                            navHostController = navHostController,
+                        )*/
+                        LineInfo(
+                            //stationEntity = ,
+                            lineModel = likeLineList[index],
+                            stationViewModel = stationViewModel,
+                            lineViewModel = lineViewModel,
+                            //commonViewModel = ,
+                            navHostController = navHostController
+                        )
+                    }
+                }
+            }else {
+                NoLikeContent()
             }
+
+
         }
+    }
+}
+
+@Composable
+fun NoLikeContent(){
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Text(
+            text = "즐겨찾기 정보가\n없습니다",
+            lineHeight = 24.sp,
+            fontSize = 24.sp,
+            textAlign = TextAlign.Center,
+        )
     }
 }
 

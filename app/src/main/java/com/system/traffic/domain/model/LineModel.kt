@@ -10,5 +10,4 @@ data class LineModel(
     val line_id: String?,
     val line_kind: String?,
     val line_name: String?,
-    var selected : Boolean
 )

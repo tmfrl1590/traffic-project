@@ -63,36 +63,3 @@ fun LineScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun LineInfo(stationEntity: StationEntity, stationViewModel: StationViewModel, commonViewModel: CommonViewModel, navHostController: NavHostController){
-    val likeStationList by stationViewModel.likeStationList.collectAsState(initial = listOf())
-
-    Card(
-        modifier = Modifier
-            .padding(10.dp)
-            .height(100.dp)
-            .fillMaxWidth()
-            .border(1.dp, Color.Black, shape = RoundedCornerShape(5.dp)),
-        //onClick = { commonViewModel.goBusArriveScreen(navHostController, stationEntity.busstop_id.toString()) }
-    ){
-
-        Box(modifier = Modifier.fillMaxSize()){
-            IconButton(
-                onClick = {  },
-                modifier = Modifier.align(Alignment.TopEnd)
-            ){
-                //Icon( if(likeStationList.contains(stationEntity)) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder, "")
-            }
-
-            Column(
-                modifier = Modifier
-                    .padding(10.dp)
-                    .fillMaxSize()
-            ) {
-                Text(text = stationEntity.busstop_name!!,  modifier = Modifier.height(50.dp), fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                Text(text = "${stationEntity.next_busstop} | ${stationEntity.ars_id}", modifier = Modifier.weight(5f))
-            }
-        }
-    }
-}

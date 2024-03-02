@@ -12,8 +12,8 @@ class LineUseCase (
         return lineRepository.getLineColor()
     }*/
 
-    fun updateLine(lineModel: LineModel){
-        lineRepository.updateLine(lineModel)
+    // 노선 한건 조회
+    fun getLineOne(lineId: String): LineModel {
+        return lineRepository.getLineOne(lineId)
     }
-
 }

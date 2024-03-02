@@ -48,6 +48,7 @@ import androidx.navigation.NavController
 import com.system.traffic.common.Resource
 import com.system.traffic.domain.model.BusArriveBody
 import com.system.traffic.domain.model.BusArriveModel
+import com.system.traffic.domain.model.LineModel
 import com.system.traffic.presentation.screen.line.LineViewModel
 import com.system.traffic.presentation.screen.station.StationViewModel
 
@@ -61,8 +62,6 @@ fun BusArriveScreen(
     lineViewModel: LineViewModel = hiltViewModel(),
 ) {
 
-    println("arsId : $arsId")
-
     // arsId 에 해당하는 정류장 정보 가져오기
     LaunchedEffect(key1 = arsId){
         stationViewModel.getStationInfo(arsId)
@@ -70,6 +69,7 @@ fun BusArriveScreen(
 
     LaunchedEffect(Unit){
         stationViewModel.getLikeStationList()
+        lineViewModel.getLikeLineList1()
     }
 
     val stationInfo by stationViewModel.stationInfo.collectAsState()
@@ -132,7 +132,7 @@ fun BusArriveScreen(
                 .fillMaxSize()
                 .padding(it),
         ) {
-            TopContent(
+            NextBusStop(
                 nextBusStopName = stationInfo.next_busstop
             )
 
@@ -153,6 +153,9 @@ fun BusArriveList(
     busArriveViewModel: BusArriveViewModel,
     lineViewModel: LineViewModel
 ){
+    val likeLineList by lineViewModel.likeLineList.collectAsState(initial = listOf())
+
+
     val busArriveList = produceState<Resource<BusArriveBody>>(initialValue = Resource.Loading()){
         value = busArriveViewModel.getBusArriveList(arsId)
     }.value
@@ -182,7 +185,14 @@ fun BusArriveList(
                 ){index, item ->
                     BusArriveCard(
                         busArriveModel = item,
-                        lineViewModel = lineViewModel
+                        lineViewModel = lineViewModel,
+                        likeLineList = likeLineList,
+                        onAdd = {
+                            lineViewModel.insertLikeLine(it)
+                        },
+                        onRemove = {
+                            lineViewModel.deleteLikeLine(it)
+                        }
                     )
                 }
             }
@@ -191,7 +201,7 @@ fun BusArriveList(
 }
 
 @Composable
-fun TopContent(
+fun NextBusStop(
     nextBusStopName: String,
 ){
     Box(
@@ -209,12 +219,24 @@ fun TopContent(
 @Composable
 fun BusArriveCard(
     busArriveModel: BusArriveModel,
-    lineViewModel: LineViewModel
+    lineViewModel: LineViewModel,
+    likeLineList: List<LineModel>,
+    onAdd: (String) -> Unit ,
+    onRemove: (String) -> Unit
 ){
+    LaunchedEffect(true){
+        //lineViewModel.getLineOne(busArriveModel.line_id!!)
+    }
+
+    println("likeLineList : $likeLineList")
 
     val lineColorList by lineViewModel.lineColorList.collectAsState()
 
+    //val lineModelOne by lineViewModel.lineInfo.collectAsState()
+    //println("즐겨찾기11 : $lineModelOne")
+
     var color = Color.Black
+
 
     /*for(i in lineColorList){
         if(i.line_id == busArriveModel.line_id){
@@ -222,9 +244,19 @@ fun BusArriveCard(
         }
     }*/
 
+    var selectedLine by remember {
+        mutableStateOf(false)
+    }
+
+    likeLineList.forEach {
+        if(busArriveModel.line_id == it.line_id){
+            selectedLine = true
+        }
+    }
+
     Card(
         modifier = Modifier
-            .padding(16.dp)
+            .padding(horizontal = 16.dp, vertical = 8.dp)
             .height(100.dp)
             .fillMaxWidth(),
         border = BorderStroke(1.dp, Color.Black),
@@ -237,11 +269,19 @@ fun BusArriveCard(
         ){
             IconButton(
                 onClick = {
-                    //lineViewModel.updateLineColor(busArriveModel.line_id!!)
+                    if(selectedLine){
+                        onRemove(busArriveModel.line_id!!)
+                        selectedLine = false
+                    }else{
+                        onAdd(busArriveModel.line_id!!)
+                    }
                 },
                 modifier = Modifier.align(Alignment.TopEnd)
             ){
-                Icon(Icons.Filled.Favorite, "")
+                Icon(
+                    imageVector = if(selectedLine) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                    contentDescription = "Favorite"
+                )
             }
             Column(
                 modifier = Modifier
@@ -270,8 +310,8 @@ fun BusArriveCard(
     }
 }
 
-fun lineColor(lien_kind: String): Color {
-    return when (lien_kind) {
+fun lineColor(lienKind: String): Color {
+    return when (lienKind) {
         "1" -> {
             Color.Red
         }

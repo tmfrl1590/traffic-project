@@ -51,7 +51,7 @@ class FileDataSource @Inject constructor(
             val lineKind = jsonObject.getString("LINE_KIND").toString()
             val lineName = jsonObject.getString("LINE_NAME").toString()
 
-            val line = LineModel(dirDownName, runInterval, lastRunTime, lineNum, firstRunTime, dirUpName, lineId, lineKind, lineName, false)
+            val line = LineModel(dirDownName, runInterval, lastRunTime, lineNum, firstRunTime, dirUpName, lineId, lineKind, lineName)
             lineList.add(line)
         }
         return lineList
