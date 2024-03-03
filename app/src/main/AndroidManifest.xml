@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
     <application
         android:name=".App"
@@ -31,6 +32,9 @@
         <!--<meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/adModSettingId" />-->
+        <!--<meta-data
+            android:name="google_analytics_adid_collection_enabled"
+            android:value="false" />-->
 
     </application>
 
