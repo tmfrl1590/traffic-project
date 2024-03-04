@@ -72,7 +72,6 @@ fun BusArriveScreen(
 
     LaunchedEffect(Unit){
         stationViewModel.getLikeStationList()
-        lineViewModel.getLikeLineList1()
         lineViewModel.getLineColor()
     }
 
@@ -84,10 +83,6 @@ fun BusArriveScreen(
     }
 
     selectedStation = likeStationList.contains(stationInfo)
-
-    /*LaunchedEffect(Unit){
-        lineViewModel.getLineColor()
-    }*/
 
     Scaffold(
         topBar = {
@@ -119,16 +114,6 @@ fun BusArriveScreen(
                             tint = Color(0xFFE91E63),
                         )
                     }
-                    /*IconButton(
-                        onClick = {
-
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Refresh,
-                            contentDescription = ""
-                        )
-                    }*/
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.White,
@@ -163,9 +148,6 @@ fun BusArriveList(
     busArriveViewModel: BusArriveViewModel,
     lineViewModel: LineViewModel
 ){
-    val likeLineList by lineViewModel.likeLineList.collectAsState(initial = listOf())
-
-
     val busArriveList = produceState<Resource<BusArriveBody>>(initialValue = Resource.Loading()){
         value = busArriveViewModel.getBusArriveList(arsId)
     }.value
@@ -196,13 +178,7 @@ fun BusArriveList(
                     BusArriveCard(
                         busArriveModel = item,
                         lineViewModel = lineViewModel,
-                        likeLineList = likeLineList,
-                        onAdd = {
-                            lineViewModel.insertLikeLine(it)
-                        },
-                        onRemove = {
-                            lineViewModel.deleteLikeLine(it)
-                        }
+
                     )
                 }
             }
@@ -230,16 +206,8 @@ fun NextBusStop(
 fun BusArriveCard(
     busArriveModel: BusArriveModel,
     lineViewModel: LineViewModel,
-    likeLineList: List<LineModel>,
-    onAdd: (String) -> Unit ,
-    onRemove: (String) -> Unit
 ){
-
-
-
-
     val lineColorList by lineViewModel.lineColorList.collectAsState()
-    println("lineColorList : $lineColorList")
 
     var color = Color.Black
 
@@ -250,51 +218,30 @@ fun BusArriveCard(
         }
     }
 
-    var selectedLine by remember {
-        mutableStateOf(false)
-    }
-
-    likeLineList.forEach {
-        if(busArriveModel.line_id == it.line_id){
-            selectedLine = true
-        }
-    }
-
     Card(
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .height(100.dp)
             .fillMaxWidth(),
-        border = BorderStroke(1.dp, Color.LightGray),
+        border = BorderStroke(
+            width = 1.dp,
+            color = Color.LightGray
+        ),
         shape = RoundedCornerShape(8.dp),
     ) {
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White),
-        ){
-            IconButton(
-                onClick = {
-                    if(selectedLine){
-                        onRemove(busArriveModel.line_id!!)
-                        selectedLine = false
-                    }else{
-                        onAdd(busArriveModel.line_id!!)
-                    }
-                },
-                modifier = Modifier.align(Alignment.TopEnd)
-            ){
-                Icon(
-                    imageVector = if(selectedLine) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-                    contentDescription = "Favorite",
-                    tint = Color(0xFFE91E63)
-                )
-            }
-            Column(
+                .background(Color.White)
+        ) {
+            Row(
                 modifier = Modifier
-                    .padding(10.dp)
-                    .fillMaxSize()
-            ) {
+                    .height(52.dp)
+                    .padding(8.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Top
+            ){
                 Text(
                     text = busArriveModel.line_name!!,
                     fontSize = 16.sp,
@@ -302,17 +249,20 @@ fun BusArriveCard(
                     color = color
                 )
 
-                Row(
-                    modifier = Modifier
-                        .height(40.dp)
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.Bottom
-                ){
-                    Text(text = "현재 : ${busArriveModel.busstop_name} (${busArriveModel.remain_stop} 정거장 전)", modifier = Modifier.wrapContentWidth())
-                    Text(text = "${busArriveModel.remain_min}분", modifier = Modifier.wrapContentWidth(), textAlign = TextAlign.End, color = Color.Red)
-                }
+                Text(
+                    text = "${busArriveModel.remain_min}분",
+                    modifier = Modifier.wrapContentWidth(),
+                    textAlign = TextAlign.End,
+                    color = Color.Red
+                )
             }
+
+            Text(
+                text = "현재 : ${busArriveModel.busstop_name} (${busArriveModel.remain_stop} 정거장 전)",
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .padding(8.dp)
+            )
         }
     }
 }

@@ -20,9 +20,6 @@ class LineViewModel @Inject constructor(
     private val _lineColorList = MutableStateFlow<List<LineModel>>(listOf())
     val lineColorList : StateFlow<List<LineModel>> = _lineColorList
 
-    private val _likeLineList = MutableStateFlow<List<LineModel>>(listOf())
-    val likeLineList : StateFlow<List<LineModel>> = _likeLineList
-
     private val _lineInfo = MutableStateFlow(LineModel("", "", "", "", "", "" ,"", "", ""))
     val lineInfo : StateFlow<LineModel> = _lineInfo
 
@@ -39,26 +36,6 @@ class LineViewModel @Inject constructor(
     fun getLineOne(lineId: String) = viewModelScope.launch(Dispatchers.IO) {
         useCase.lineUseCase.getLineOne(lineId).let {
             _lineInfo.emit(it)
-        }
-    }
-
-    // 즐겨찾기 추가
-    fun insertLikeLine(lineId: String)= viewModelScope.launch(Dispatchers.IO) {
-        val lineModel = useCase.lineUseCase.getLineOne(lineId)
-        useCase.likeLineUseCase.addLikeLine(lineModel)
-    }
-
-    // 즐겨찾기 삭제
-    fun deleteLikeLine(lineId: String)= viewModelScope.launch(Dispatchers.IO) {
-        useCase.likeLineUseCase.deleteLikeLine(lineId)
-    }
-
-    // 즐겨찾기 리스트 조회
-    fun getLikeLineList1(){
-        viewModelScope.launch(Dispatchers.IO) {
-            useCase.likeLineUseCase.getLikeLineList().collectLatest {
-                _likeLineList.emit(it)
-            }
         }
     }
 }

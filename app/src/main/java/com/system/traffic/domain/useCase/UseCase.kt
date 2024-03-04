@@ -6,5 +6,4 @@ data class UseCase(
     val busArriveUseCase: BusArriveUseCase,
     val fileUseCase: FileUseCase,
     val likeStationUseCase: LikeStationUseCase,
-    val likeLineUseCase: LikeLineUseCase,
 )

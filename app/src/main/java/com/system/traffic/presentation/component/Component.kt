@@ -121,13 +121,13 @@ fun LineInfo(
 ){
 
     //val likeStationList by stationViewModel.likeStationList.collectAsState(initial = listOf())
-    val likeLineList by lineViewModel.likeLineList.collectAsState()
+    //val likeLineList by lineViewModel.likeLineList.collectAsState()
 
     var selectedStation by remember {
         mutableStateOf(false)
     }
 
-    selectedStation = likeLineList.contains(lineModel)
+    //selectedStation = likeLineList.contains(lineModel)
 
     Card(
         modifier = Modifier
@@ -145,8 +145,7 @@ fun LineInfo(
         ){
             IconButton(
                 onClick = {
-                    if(selectedStation)lineViewModel.deleteLikeLine(lineModel.line_id!!)
-                    else lineViewModel.insertLikeLine(lineModel.line_id!!)
+
                 },
                 modifier = Modifier
                     .align(Alignment.TopEnd)

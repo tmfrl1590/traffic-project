@@ -3,7 +3,6 @@ package com.system.traffic.di
 import android.content.Context
 import androidx.room.Room
 import com.system.traffic.data.local.db.TrafficDatabase
-import com.system.traffic.data.local.db.dao.LikeLineDao
 import com.system.traffic.data.local.db.dao.LikeStationDao
 import com.system.traffic.data.local.db.dao.LineDao
 import com.system.traffic.data.local.db.dao.StationDao
@@ -47,11 +46,5 @@ object DatabaseModule {
     @Singleton
     fun likeStationDao(database: TrafficDatabase): LikeStationDao {
         return database.likeStationDAO()
-    }
-
-    @Provides
-    @Singleton
-    fun likeLineDao(database: TrafficDatabase): LikeLineDao {
-        return database.likeLineDAO()
     }
 }

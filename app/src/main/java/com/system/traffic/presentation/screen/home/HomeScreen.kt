@@ -23,100 +23,45 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.system.traffic.presentation.component.LineInfo
 import com.system.traffic.presentation.component.StationInfo
-import com.system.traffic.presentation.screen.CommonViewModel
-import com.system.traffic.presentation.screen.line.LineViewModel
 import com.system.traffic.presentation.screen.station.StationViewModel
 
 @Composable
 fun HomeScreen(
     navHostController: NavHostController,
     stationViewModel: StationViewModel = hiltViewModel(),
-    lineViewModel: LineViewModel = hiltViewModel(),
-    commonViewModel: CommonViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit){
         stationViewModel.getLikeStationList()
-        lineViewModel.getLikeLineList1()
     }
 
     val likeStationList by stationViewModel.likeStationList.collectAsState(initial = listOf())
-    val likeLineList by lineViewModel.likeLineList.collectAsState(initial = listOf())
-
-    println("likeLineList $likeLineList")
 
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(Color.White)
     ) {
+        TitleComponent(
+            title = "정류장"
+        )
 
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .background(Color.White)
-        ) {
-            TitleComponent(
-                title = "정류장"
-            )
+        Divider()
 
-            Divider()
+        Spacer(modifier = Modifier.size(8.dp))
 
-            Spacer(modifier = Modifier
-                .size(8.dp)
-            )
-
-            if(likeStationList.isNotEmpty()){
-                LazyColumn {
-                    items(likeStationList.size){ index ->
-                        StationInfo(
-                            stationModel = likeStationList[index],
-                            stationViewModel = stationViewModel,
-                            navHostController = navHostController,
-                        )
-                    }
+        if(likeStationList.isNotEmpty()){
+            LazyColumn {
+                items(likeStationList.size){ index ->
+                    StationInfo(
+                        stationModel = likeStationList[index],
+                        stationViewModel = stationViewModel,
+                        navHostController = navHostController,
+                    )
                 }
-            }else {
-                NoLikeContent()
             }
-        }
-
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .background(Color.White)
-        ) {
-            TitleComponent(
-                title = "노선"
-            )
-
-            Divider()
-
-            Spacer(modifier = Modifier.size(8.dp))
-
-            if(likeLineList.isNotEmpty()){
-                LazyColumn {
-                    items(likeLineList.size){ index ->
-                        /*StationInfo(
-                            stationModel = likeStationList[index],
-                            stationViewModel = stationViewModel,
-                            navHostController = navHostController,
-                        )*/
-                        LineInfo(
-                            //stationEntity = ,
-                            lineModel = likeLineList[index],
-                            stationViewModel = stationViewModel,
-                            lineViewModel = lineViewModel,
-                            //commonViewModel = ,
-                            navHostController = navHostController
-                        )
-                    }
-                }
-            }else {
-                NoLikeContent()
-            }
-
-
+        }else {
+            NoLikeContent()
         }
     }
 }
