@@ -28,18 +28,6 @@ class MainActivity : ComponentActivity() {
                     RootNavigationGraph(navController = rememberNavController())
                 }
             }
-
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
-                window.setDecorFitsSystemWindows(false)
-                val controller = window.insetsController
-                if(controller != null){
-                    controller.hide(
-                        WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars()
-                    )
-                    controller.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-
-                }
-            }
         }
     }
 }

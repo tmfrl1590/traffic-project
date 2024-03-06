@@ -21,7 +21,4 @@
     <color name="arriveGreen">#00ff00</color>
     <color name="arriveBlue">#0000ff</color>
 
-    <!--구분선 색상-->
-    <color name="dividerColor">#9C9797</color>
-
 </resources>

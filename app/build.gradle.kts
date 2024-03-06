@@ -13,7 +13,7 @@ android {
         applicationId = "com.system.traffic"
         minSdk = 28
         targetSdk = 34
-        versionCode = 12
+        versionCode = 14
         versionName = "1.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
