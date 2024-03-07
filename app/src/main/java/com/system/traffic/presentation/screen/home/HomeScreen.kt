@@ -1,5 +1,7 @@
 package com.system.traffic.presentation.screen.home
 
+import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -31,16 +35,24 @@ fun HomeScreen(
     navHostController: NavHostController,
     stationViewModel: StationViewModel = hiltViewModel(),
 ) {
+    val context = LocalContext.current
+
     LaunchedEffect(Unit){
         stationViewModel.getLikeStationList()
     }
 
     val likeStationList by stationViewModel.likeStationList.collectAsState(initial = listOf())
 
+    BackHandler(
+        enabled = true,
+        onBack = {
+            (context as Activity).finish()
+        }
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
     ) {
         TitleComponent(
             title = "정류장"
@@ -90,6 +102,7 @@ fun TitleComponent(
         fontSize = 20.sp,
         fontWeight = FontWeight.Bold,
         modifier = Modifier
-            .padding(12.dp)
+            .padding(12.dp),
+        color = Color.Black
     )
 }
