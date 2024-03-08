@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface StationRepository {
 
-    fun getSearchedStationList(keyword: String): List<StationModel>
+    fun getSearchedStationList(keyword: String): Flow<List<StationModel>>
 
 
     fun getStationInfo(arsId: String): Flow<StationModel>

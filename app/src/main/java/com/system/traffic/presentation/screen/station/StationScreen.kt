@@ -24,8 +24,6 @@ fun StationScreen(
         stationViewModel.getLikeStationList()
     }
 
-    val likeStationList by stationViewModel.likeStationList.collectAsState(initial = listOf())
-
     var keyword by remember {
         mutableStateOf("")
     }
@@ -37,9 +35,7 @@ fun StationScreen(
             text = "정류장",
             keyword = keyword,
             onValueChange = { keyword = it },
-            searchAction = {
-                stationViewModel.getSearchedStationList(keyword = keyword)
-            },
+            searchAction = { stationViewModel.getSearchedStationList(keyword = keyword) },
         )
 
         if (searchedStationList.isNotEmpty()) {

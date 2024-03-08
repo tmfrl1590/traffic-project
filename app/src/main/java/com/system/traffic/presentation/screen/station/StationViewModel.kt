@@ -30,10 +30,8 @@ class StationViewModel @Inject constructor(
 
     // 정류장 검색
     fun getSearchedStationList(keyword: String) = viewModelScope.launch(Dispatchers.IO) {
-        val result = useCase.stationUseCase.getSearchedStationList(keyword = "%$keyword%")
-
-        withContext(Dispatchers.Main){
-            _searchedStationList.value = result
+        useCase.stationUseCase.getSearchedStationList(keyword = "%$keyword%").collectLatest {
+            _searchedStationList.emit(it)
         }
     }
 

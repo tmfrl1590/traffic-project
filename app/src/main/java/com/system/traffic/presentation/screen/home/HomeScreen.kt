@@ -58,7 +58,7 @@ fun HomeScreen(
             title = "정류장"
         )
 
-        Divider()
+        HorizontalDivider()
 
         Spacer(modifier = Modifier.size(8.dp))
 

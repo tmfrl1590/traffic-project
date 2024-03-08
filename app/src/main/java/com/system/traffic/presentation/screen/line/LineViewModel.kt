@@ -23,6 +23,16 @@ class LineViewModel @Inject constructor(
     private val _lineInfo = MutableStateFlow(LineModel("", "", "", "", "", "" ,"", "", ""))
     val lineInfo : StateFlow<LineModel> = _lineInfo
 
+    private val _searchedLineList = MutableStateFlow<List<LineModel>>(listOf())
+    val searchedLineList : StateFlow<List<LineModel>> = _searchedLineList
+
+    // 노선 검색
+    fun getSearchedLineList(keyword: String) = viewModelScope.launch(Dispatchers.IO) {
+        useCase.lineUseCase.getSearchedLineList(keyword = "%$keyword%").collectLatest {
+            _searchedLineList.emit(it)
+        }
+    }
+
     // 버스 색상 가져오기(종류 가져오기)
     fun getLineColor() {
         viewModelScope.launch(Dispatchers.IO) {

@@ -12,10 +12,11 @@ class StationRepositoryImpl(
 ) : StationRepository {
 
     // 정류장 검색
-    override fun getSearchedStationList(keyword: String): List<StationModel> {
-        return stationDao.getSearchedStationList(keyword).map { it.toLikeStationModel() }
+    override fun getSearchedStationList(keyword: String): Flow<List<StationModel>> {
+        return stationDao.getSearchedStationList(keyword).map { list ->
+            list.map { it.toLikeStationModel() }
+        }
     }
-
 
     override fun getStationInfo(arsId: String): Flow<StationModel> {
         return stationDao.getStationInfo(arsId).map { it.toLikeStationModel() }

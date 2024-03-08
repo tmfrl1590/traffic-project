@@ -18,6 +18,12 @@ class LineRepositoryImpl(
         }
     }
 
+    override fun getSearchedLineList(keyword: String): Flow<List<LineModel>> {
+        return lineDao.getSearchedLineList(keyword).map { list ->
+            list.map { it.toLineModel() }
+        }
+    }
+
     override fun getLineOne(lineId: String): LineModel {
         return lineDao.getLineOne(lineId).toLineModel()
     }

@@ -7,6 +7,8 @@ interface LineRepository {
 
     fun getLineColor(): Flow<List<LineModel>>
 
+    fun getSearchedLineList(keyword: String): Flow<List<LineModel>>
+
      // 노선 한건 조회
      fun getLineOne(lineId: String): LineModel
 }

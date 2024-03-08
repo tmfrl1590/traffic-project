@@ -2,7 +2,6 @@ package com.system.traffic.presentation.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,7 +13,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -31,16 +29,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.system.traffic.data.local.db.entity.StationEntity
 import com.system.traffic.domain.model.LineModel
 import com.system.traffic.domain.model.StationModel
 import com.system.traffic.navigation.Graph
-import com.system.traffic.presentation.screen.CommonViewModel
 import com.system.traffic.presentation.screen.bus_arrive.lineColor
 import com.system.traffic.presentation.screen.line.LineViewModel
 import com.system.traffic.presentation.screen.station.StationViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StationInfo(
     stationModel: StationModel,

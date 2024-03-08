@@ -12,6 +12,10 @@ class LineUseCase (
         return lineRepository.getLineColor()
     }
 
+    fun getSearchedLineList(keyword: String): Flow<List<LineModel>> {
+        return lineRepository.getSearchedLineList(keyword)
+    }
+
     // 노선 한건 조회
     fun getLineOne(lineId: String): LineModel {
         return lineRepository.getLineOne(lineId)

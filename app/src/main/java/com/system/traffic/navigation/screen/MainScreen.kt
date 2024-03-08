@@ -60,7 +60,7 @@ fun MainBottomNavigationBar(
 
     val bottomBarDestination = bottomNavigationItems.any { it.route == currentDestination?.route }
 
-    if(bottomBarDestination){
+    if (bottomBarDestination) {
         NavigationBar(
             containerColor = Color.White
         ) {
@@ -92,11 +92,12 @@ fun MainBottomNavigationBar(
                     },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = Color(0xFFFFC74C25),
+                        selectedTextColor = Color(0xFFFFC74C25),
+                        unselectedIconColor = Color.Black,
+                        unselectedTextColor = Color.Black,
                     )
-
                 )
             }
         }
     }
-
 }
