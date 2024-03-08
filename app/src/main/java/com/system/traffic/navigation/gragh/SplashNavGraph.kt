@@ -46,7 +46,7 @@ fun HomeGraph(
             StationScreen(navController)
         }
         composable(route = MainNav.LINE.route) {
-            LineScreen(navController)
+            LineScreen()
         }
 
         detailsNavGraph(navController = navController)
