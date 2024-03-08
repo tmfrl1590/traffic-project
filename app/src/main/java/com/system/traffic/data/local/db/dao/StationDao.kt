@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import androidx.room.Update
 import com.system.traffic.data.local.db.entity.StationEntity
 import kotlinx.coroutines.flow.Flow
 

@@ -5,9 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import androidx.room.Update
 import com.system.traffic.data.local.db.entity.LineEntity
-import com.system.traffic.domain.model.LineModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao

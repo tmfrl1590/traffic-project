@@ -1,7 +1,6 @@
 package com.system.traffic.ui.theme
 
 import android.app.Activity
-import android.graphics.Color.toArgb
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -13,7 +12,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.system.traffic.R
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,

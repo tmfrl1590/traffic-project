@@ -2,14 +2,11 @@ package com.system.traffic.navigation.screen
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -24,7 +21,6 @@ import androidx.navigation.compose.rememberNavController
 import com.system.traffic.navigation.MainNav
 import com.system.traffic.navigation.gragh.HomeGraph
 import com.system.traffic.ui.theme.MainColor
-import androidx.compose.material3.NavigationBarItemColors as NavigationBarItemColors
 
 @Composable
 fun MainScreen(

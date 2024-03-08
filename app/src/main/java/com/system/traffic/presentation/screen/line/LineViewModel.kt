@@ -20,9 +20,6 @@ class LineViewModel @Inject constructor(
     private val _lineColorList = MutableStateFlow<List<LineModel>>(listOf())
     val lineColorList : StateFlow<List<LineModel>> = _lineColorList
 
-    private val _lineInfo = MutableStateFlow(LineModel("", "", "", "", "", "" ,"", "", ""))
-    val lineInfo : StateFlow<LineModel> = _lineInfo
-
     private val _searchedLineList = MutableStateFlow<List<LineModel>>(listOf())
     val searchedLineList : StateFlow<List<LineModel>> = _searchedLineList
 
@@ -39,13 +36,6 @@ class LineViewModel @Inject constructor(
             useCase.lineUseCase.getLineColor().collectLatest {
                 _lineColorList.emit(it)
             }
-        }
-    }
-
-    // 노선 한 건 조회
-    fun getLineOne(lineId: String) = viewModelScope.launch(Dispatchers.IO) {
-        useCase.lineUseCase.getLineOne(lineId).let {
-            _lineInfo.emit(it)
         }
     }
 }
