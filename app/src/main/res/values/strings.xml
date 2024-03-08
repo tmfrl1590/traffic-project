@@ -18,5 +18,11 @@
 
 
     <string name="noBusMessage">버스정보 없음</string>
+    <string name="station">정류장</string>
+    <string name="line">노선</string>
+    <string name="searched_station_no_data">정류장 정보가 없습니다</string>
+    <string name="searched_line_no_data">노선 정보가 없습니다</string>
+    <string name="bus_arrive_no_data">버스도착 정보가\n없습니다</string>
+    <string name="like_no_data">즐겨찾기 정보가\n없습니다</string>
 
 </resources>

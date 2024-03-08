@@ -32,9 +32,8 @@ import androidx.navigation.NavHostController
 import com.system.traffic.domain.model.LineModel
 import com.system.traffic.domain.model.StationModel
 import com.system.traffic.navigation.Graph
-import com.system.traffic.presentation.screen.bus_arrive.lineColor
-import com.system.traffic.presentation.screen.line.LineViewModel
 import com.system.traffic.presentation.screen.station.StationViewModel
+import com.system.traffic.ui.theme.MainColor
 
 @Composable
 fun StationInfo(
@@ -78,19 +77,19 @@ fun StationInfo(
                 Icon(
                     imageVector = if(selectedStation) Icons.Default.Favorite else Icons.Default.FavoriteBorder ,
                     contentDescription = "Favorite",
-                    tint = Color(0xFFE91E63)
+                    tint = MainColor
                 )
             }
 
             Column(
                 modifier = Modifier
-                    .padding(10.dp)
+                    .padding(12.dp)
                     .fillMaxSize()
             ) {
                 Text(
-                    text = stationModel.busstop_name!!,
+                    text = stationModel.busstop_name,
                     modifier = Modifier
-                        .height(50.dp),
+                        .height(52.dp),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -107,23 +106,8 @@ fun StationInfo(
 
 @Composable
 fun LineInfo(
-    //stationEntity: StationEntity,
     lineModel: LineModel,
-    stationViewModel: StationViewModel,
-    lineViewModel: LineViewModel,
-    //commonViewModel: CommonViewModel,
-    navHostController: NavHostController
 ){
-
-    //val likeStationList by stationViewModel.likeStationList.collectAsState(initial = listOf())
-    //val likeLineList by lineViewModel.likeLineList.collectAsState()
-
-    var selectedStation by remember {
-        mutableStateOf(false)
-    }
-
-    //selectedStation = likeLineList.contains(lineModel)
-
     Card(
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -131,40 +115,25 @@ fun LineInfo(
             .fillMaxWidth(),
         border = BorderStroke(1.dp, Color.LightGray),
         shape = RoundedCornerShape(12.dp),
-        //onClick = { commonViewModel.goBusArriveScreen(navHostController, stationEntity.busstop_id.toString()) }
     ){
+        val lineColor = lineModel.line_kind?.let { lineColor(it) }
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
+                .background(Color.White),
         ){
-            IconButton(
-                onClick = {
-
-                },
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-            ){
-                Icon(
-                    imageVector = if(selectedStation) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-                    contentDescription = "Favorite",
-                    tint = Color(0xFFE91E63)
-                )
-            }
-
-            val a = lineModel.line_kind?.let { lineColor(it) }
-
             Column(
                 modifier = Modifier
-                    .padding(10.dp)
+                    .padding(12.dp)
                     .fillMaxSize()
             ) {
                 Text(
                     text = lineModel.line_name!!,
-                    modifier = Modifier.height(50.dp),
+                    modifier = Modifier.height(52.dp),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    color = a!!
+                    color = lineColor!!
                 )
 
                 Text(
@@ -172,6 +141,43 @@ fun LineInfo(
                     modifier = Modifier.weight(5f)
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun NoDataComponent(
+    text: String,
+){
+    Box(
+        modifier = Modifier
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = text,
+            fontSize = 24.sp,
+            color = Color.Black
+        )
+    }
+}
+
+fun lineColor(lienKind: String): Color {
+    return when (lienKind) {
+        "1" -> {
+            Color.Red
+        }
+
+        "2" -> {
+            Color.Green
+        }
+
+        "3" -> {
+            Color.Blue
+        }
+
+        else -> {
+            Color.Black
         }
     }
 }

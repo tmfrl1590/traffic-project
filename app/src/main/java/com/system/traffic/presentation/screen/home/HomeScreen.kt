@@ -2,15 +2,14 @@ package com.system.traffic.presentation.screen.home
 
 import android.app.Activity
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,12 +20,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.system.traffic.R
 import com.system.traffic.presentation.component.StationInfo
 import com.system.traffic.presentation.screen.station.StationViewModel
 
@@ -55,7 +56,7 @@ fun HomeScreen(
             .fillMaxSize()
     ) {
         TitleComponent(
-            title = "정류장"
+            title = stringResource(R.string.station)
         )
 
         HorizontalDivider()
@@ -63,7 +64,10 @@ fun HomeScreen(
         Spacer(modifier = Modifier.size(8.dp))
 
         if(likeStationList.isNotEmpty()){
-            LazyColumn {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxHeight()
+            ) {
                 items(likeStationList.size){ index ->
                     StationInfo(
                         stationModel = likeStationList[index],
@@ -85,7 +89,7 @@ fun NoLikeContent(){
         modifier = Modifier.fillMaxSize()
     ) {
         Text(
-            text = "즐겨찾기 정보가\n없습니다",
+            text = stringResource(R.string.like_no_data),
             lineHeight = 24.sp,
             fontSize = 24.sp,
             textAlign = TextAlign.Center,

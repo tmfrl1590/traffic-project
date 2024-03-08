@@ -1,5 +1,6 @@
 package com.system.traffic.navigation.screen
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -14,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -21,6 +23,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.system.traffic.navigation.MainNav
 import com.system.traffic.navigation.gragh.HomeGraph
+import com.system.traffic.ui.theme.MainColor
 import androidx.compose.material3.NavigationBarItemColors as NavigationBarItemColors
 
 @Composable
@@ -36,8 +39,10 @@ fun MainScreen(
         containerColor = Color.White,
 
     ) {
-        it
-        HomeGraph(navController = navController)
+        HomeGraph(
+            navController = navController,
+            modifier = Modifier.padding(it)
+        )
     }
 }
 
@@ -91,8 +96,8 @@ fun MainBottomNavigationBar(
                         Text(text = navigationItem.title)
                     },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = Color(0xFFFFC74C25),
-                        selectedTextColor = Color(0xFFFFC74C25),
+                        selectedIconColor = MainColor,
+                        selectedTextColor = MainColor,
                         unselectedIconColor = Color.Black,
                         unselectedTextColor = Color.Black,
                     )
