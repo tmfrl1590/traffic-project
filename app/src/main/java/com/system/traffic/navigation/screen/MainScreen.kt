@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -51,7 +52,7 @@ fun MainBottomNavigationBar(
     }
 
     val bottomNavigationItems = listOf(
-        MainNav.LIKE,
+        MainNav.HOME,
         MainNav.STATION,
         MainNav.LINE,
     )
@@ -67,15 +68,14 @@ fun MainBottomNavigationBar(
         ) {
             bottomNavigationItems.forEachIndexed { index, navigationItem ->
                 NavigationBarItem(
-                    selected = index == navigationSelectedItem,
+                    selected = currentDestination?.hierarchy?.any {
+                        it.route == navigationItem.route
+                    } == true,
                     onClick = {
                         navigationSelectedItem = index
                         navController.navigate(navigationItem.route) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
+                            popUpTo(navController.graph.findStartDestination().id)
                             launchSingleTop = true
-                            restoreState = true
                         }
                     },
                     icon = {

@@ -37,9 +37,9 @@ fun HomeGraph(
         modifier = modifier,
         navController = navController,
         route = Graph.HOME,
-        startDestination = MainNav.LIKE.route,
+        startDestination = MainNav.HOME.route,
     ) {
-        composable(route = MainNav.LIKE.route) {
+        composable(route = MainNav.HOME.route) {
             HomeScreen(navController)
         }
         composable(route = MainNav.STATION.route) {

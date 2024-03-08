@@ -16,20 +16,34 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.system.traffic.navigation.NavigationRouteName.DEEP_LINK_SCHEME
-import com.system.traffic.navigation.NavigationRouteName.MAIN_LIKE
+import com.system.traffic.navigation.NavigationRouteName.MAIN_HOME
 import com.system.traffic.navigation.NavigationRouteName.MAIN_LINE
 import com.system.traffic.navigation.NavigationRouteName.MAIN_STATION
 import com.system.traffic.util.GsonUtils
 
-sealed class MainNav(override val route: String, val selectedIcon : ImageVector, val unselectedIcon: ImageVector, override val title: String): Destination {
-    object LIKE: MainNav(MAIN_LIKE, Icons.Filled.Home, Icons.Outlined.Home,
-        NavigationTitle.MAIN_LIKE
+sealed class MainNav(
+    override val route: String,
+    val selectedIcon : ImageVector,
+    val unselectedIcon: ImageVector,
+    override val title: String
+): Destination {
+    object HOME: MainNav(
+        route = MAIN_HOME,
+        selectedIcon = Icons.Filled.Home,
+        unselectedIcon = Icons.Outlined.Home,
+        title = NavigationTitle.MAIN_HOME
     )
-    object STATION: MainNav(MAIN_STATION, Icons.Filled.DirectionsBus, Icons.Outlined.DirectionsBus,
-        NavigationTitle.MAIN_STATION
+    object STATION: MainNav(
+        route = MAIN_STATION,
+        selectedIcon = Icons.Filled.DirectionsBus,
+        unselectedIcon = Icons.Outlined.DirectionsBus,
+        title = NavigationTitle.MAIN_STATION
     )
-    object LINE: MainNav(MAIN_LINE, Icons.Filled.Route, Icons.Outlined.Route,
-        NavigationTitle.MAIN_LINE
+    object LINE: MainNav(
+        route = MAIN_LINE,
+        selectedIcon = Icons.Filled.Route,
+        unselectedIcon = Icons.Outlined.Route,
+        title = NavigationTitle.MAIN_LINE
     )
 
     override val deepLinks: List<NavDeepLink> = listOf(
@@ -87,7 +101,7 @@ interface DestinationArg<T>: Destination {
 object NavigationRouteName{
     const val DEEP_LINK_SCHEME = "traffic://"
     const val SPLASH = "splash"
-    const val MAIN_LIKE = "main_home"
+    const val MAIN_HOME = "main_home"
     const val MAIN_STATION = "main_station"
     const val MAIN_LINE = "main_line"
     const val BUS_ARRIVE = "bus_arrive"
@@ -95,7 +109,7 @@ object NavigationRouteName{
 
 object NavigationTitle{
     const val SPLASH = "스플래시"
-    const val MAIN_LIKE = "홈"
+    const val MAIN_HOME = "홈"
     const val MAIN_STATION = "정류장"
     const val MAIN_LINE = "노선"
     const val BUS_ARRIVE = "bus_arrive"
