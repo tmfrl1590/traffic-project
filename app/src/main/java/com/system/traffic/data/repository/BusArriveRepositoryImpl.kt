@@ -5,6 +5,7 @@ import com.system.traffic.domain.repository.BusArriveRepository
 import com.system.traffic.common.Constants
 import com.system.traffic.common.Resource
 import com.system.traffic.data.remote.TrafficApi
+import kotlinx.coroutines.flow.Flow
 
 class BusArriveRepositoryImpl (
     private val trafficApi: TrafficApi,

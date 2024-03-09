@@ -59,9 +59,9 @@ fun HomeScreen(
             title = stringResource(R.string.station)
         )
 
-        HorizontalDivider()
-
-        Spacer(modifier = Modifier.size(8.dp))
+        HorizontalDivider(
+            modifier = Modifier.padding(16.dp),
+        )
 
         if(likeStationList.isNotEmpty()){
             LazyColumn(
@@ -106,7 +106,7 @@ fun TitleComponent(
         fontSize = 20.sp,
         fontWeight = FontWeight.Bold,
         modifier = Modifier
-            .padding(12.dp),
+            .padding(16.dp),
         color = Color.Black
     )
 }

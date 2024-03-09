@@ -13,7 +13,7 @@ android {
         applicationId = "com.system.traffic"
         minSdk = 28
         targetSdk = 34
-        versionCode = 16
+        versionCode = 17
         versionName = "1.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -96,6 +96,9 @@ dependencies {
 
     // 아이콘 확장
     implementation("androidx.compose.material:material-icons-extended-android:1.6.3")
+
+    // LiveData
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.3")
 }
 kapt {
     correctErrorTypes = true

@@ -94,8 +94,8 @@ fun MainBottomNavigationBar(
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = MainColor,
                         selectedTextColor = MainColor,
-                        unselectedIconColor = Color.Black,
-                        unselectedTextColor = Color.Black,
+                        unselectedIconColor = Color.Gray,
+                        unselectedTextColor = Color.Gray,
                     )
                 )
             }

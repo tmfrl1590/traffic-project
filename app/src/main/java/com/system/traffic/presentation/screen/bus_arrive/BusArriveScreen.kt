@@ -29,10 +29,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.PullToRefreshState
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
@@ -40,7 +44,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -65,12 +71,13 @@ fun BusArriveScreen(
     lineViewModel: LineViewModel = hiltViewModel(),
 ) {
 
+
     // arsId 에 해당하는 정류장 정보 가져오기
-    LaunchedEffect(key1 = arsId){
+    LaunchedEffect(key1 = arsId) {
         stationViewModel.getStationInfo(arsId)
     }
 
-    LaunchedEffect(Unit){
+    LaunchedEffect(true) {
         stationViewModel.getLikeStationList()
         lineViewModel.getLineColor()
     }
@@ -110,15 +117,15 @@ fun BusArriveScreen(
                 actions = {
                     IconButton(
                         onClick = {
-                            if(selectedStation){
+                            if (selectedStation) {
                                 stationViewModel.deleteLikeStation(arsId)
-                            }else{
+                            } else {
                                 stationViewModel.insertLikeStation(stationInfo)
                             }
                         }
                     ) {
                         Icon(
-                            imageVector = if(selectedStation) Icons.Default.Favorite else Icons.Default.FavoriteBorder ,
+                            imageVector = if (selectedStation) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                             contentDescription = "Favorite",
                             tint = MainColor,
                         )
@@ -145,30 +152,46 @@ fun BusArriveScreen(
             BusArriveList(
                 arsId = arsId,
                 busArriveViewModel = busArriveViewModel,
-                lineViewModel = lineViewModel
+                lineViewModel = lineViewModel,
             )
         }
+
+
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BusArriveList(
     arsId: String,
     busArriveViewModel: BusArriveViewModel,
-    lineViewModel: LineViewModel
-){
-    val busArriveList = produceState<Resource<BusArriveBody>>(initialValue = Resource.Loading()){
+    lineViewModel: LineViewModel,
+) {
+    //val refreshState = rememberPullToRefreshState()
+
+    /*if(refreshState.isRefreshing){
+        println("getBusArriveList  isRefreshing")
+        LaunchedEffect(true) {
+            busArriveViewModel.getBusArriveList(arsId)
+            refreshState.endRefresh()
+        }
+    }*/
+
+    val busArriveList = produceState<Resource<BusArriveBody>>(initialValue = Resource.Loading()) {
         value = busArriveViewModel.getBusArriveList(arsId)
     }.value
 
-    if(busArriveList.data == null){
+    //val busArriveList by busArriveViewModel.liveData.observeAsState()
+
+    if (busArriveList?.data == null) {
         CircularProgressIndicator()
-    }else{
-        if(busArriveList.data.itemList.isEmpty()){
+    } else {
+        //if (busArriveList.data.itemList.isEmpty()) {
+        if (busArriveList?.data?.itemList?.isEmpty() == true) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
-            ){
+            ) {
                 Text(
                     text = stringResource(R.string.bus_arrive_no_data),
                     fontSize = 32.sp,
@@ -176,21 +199,45 @@ fun BusArriveList(
                     lineHeight = 40.sp
                 )
             }
-        }else{
+        } else {
             LazyColumn {
                 itemsIndexed(
                     items = busArriveList.data.itemList,
                     key = { index, item ->
                         item.bus_id!!
                     }
-                ){index, item ->
+                ) { index, item ->
                     BusArriveCard(
                         busArriveModel = item,
                         lineViewModel = lineViewModel,
-
                     )
                 }
             }
+            /*Box(
+                modifier = Modifier.nestedScroll(refreshState.nestedScrollConnection)
+            ){
+                LazyColumn {
+                    if (!refreshState.isRefreshing) {
+                        itemsIndexed(
+                            //items = busArriveList.data.itemList,
+                            items = busArriveList?.data?.itemList ?: listOf(),
+                            key = { index, item ->
+                                item.bus_id!!
+                            }
+                        ) { index, item ->
+                            BusArriveCard(
+                                busArriveModel = item,
+                                lineViewModel = lineViewModel,
+                            )
+                        }
+                    }
+                }
+
+                PullToRefreshContainer(
+                    state = refreshState,
+                    modifier = Modifier.align(Alignment.TopCenter),
+                )
+            }*/
         }
     }
 }
@@ -198,11 +245,11 @@ fun BusArriveList(
 @Composable
 fun NextBusStop(
     nextBusStopName: String,
-){
+) {
     Box(
         modifier = Modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center
-    ){
+    ) {
         Text(
             text = "${nextBusStopName}방면",
             fontSize = 16.sp,
@@ -215,14 +262,13 @@ fun NextBusStop(
 fun BusArriveCard(
     busArriveModel: BusArriveModel,
     lineViewModel: LineViewModel,
-){
+) {
     val lineColorList by lineViewModel.lineColorList.collectAsState()
 
     var color = Color.Black
 
-
-    for(i in lineColorList){
-        if(i.line_id == busArriveModel.line_id){
+    for (i in lineColorList) {
+        if (i.line_id == busArriveModel.line_id) {
             color = lineColor(i.line_kind.toString())
         }
     }
@@ -250,10 +296,11 @@ fun BusArriveCard(
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.Top
-            ){
+            ) {
                 Text(
                     text = busArriveModel.line_name!!,
                     fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier.height(40.dp),
                     color = color
                 )
