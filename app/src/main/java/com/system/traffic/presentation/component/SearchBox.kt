@@ -72,10 +72,9 @@ fun SearchBox(
             },
             modifier = Modifier.weight(3f),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color.Black,
-                unfocusedBorderColor = Color.Black,
+                focusedBorderColor = Color.Gray,
                 focusedTextColor = Color.Black,
-                cursorColor = Color.Black,
+                cursorColor = Color.Gray,
             )
         )
     }

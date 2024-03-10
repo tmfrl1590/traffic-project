@@ -29,14 +29,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
-import androidx.compose.material3.pulltorefresh.PullToRefreshState
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
@@ -44,18 +40,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
 import com.system.traffic.R
 import com.system.traffic.common.Resource
 import com.system.traffic.domain.model.BusArriveBody
@@ -75,7 +66,7 @@ fun BusArriveScreen(
     lineViewModel: LineViewModel = hiltViewModel(),
 ) {
 
-    // arsId 에 해당하는 정류장 정보 가져오기
+    // 해당 arsId 정류장 조회
     LaunchedEffect(key1 = arsId) {
         stationViewModel.getStationInfo(arsId)
     }
@@ -161,21 +152,12 @@ fun BusArriveScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BusArriveList(
     arsId: String,
     busArriveViewModel: BusArriveViewModel,
     lineViewModel: LineViewModel,
 ) {
-    val refreshState = rememberPullToRefreshState()
-
-    if(refreshState.isRefreshing){
-        LaunchedEffect(true) {
-            busArriveViewModel.getBusArriveList(arsId)
-            refreshState.endRefresh()
-        }
-    }
 
     val busArriveList = produceState<Resource<BusArriveBody>>(initialValue = Resource.Loading()) {
         value = busArriveViewModel.getBusArriveList(arsId)
@@ -197,29 +179,18 @@ fun BusArriveList(
                 )
             }
         } else {
-            Box(
-                modifier = Modifier.nestedScroll(refreshState.nestedScrollConnection)
-            ){
-                LazyColumn {
-                    if (!refreshState.isRefreshing) {
-                        itemsIndexed(
-                            items = busArriveList.data.itemList,
-                            key = { index, item ->
-                                item.bus_id!!
-                            }
-                        ) { index, item ->
-                            BusArriveCard(
-                                busArriveModel = item,
-                                lineViewModel = lineViewModel,
-                            )
-                        }
+            LazyColumn {
+                itemsIndexed(
+                    items = busArriveList.data.itemList,
+                    key = { _, item ->
+                        item.bus_id!!
                     }
+                ) { _, item ->
+                    BusArriveCard(
+                        busArriveModel = item,
+                        lineViewModel = lineViewModel,
+                    )
                 }
-
-                PullToRefreshContainer(
-                    modifier = Modifier.align(Alignment.TopCenter),
-                    state = refreshState,
-                )
             }
         }
     }

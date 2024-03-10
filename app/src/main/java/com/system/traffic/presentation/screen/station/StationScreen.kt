@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.system.traffic.R
+import com.system.traffic.presentation.component.BannersAds
 import com.system.traffic.presentation.component.NoDataComponent
 import com.system.traffic.presentation.component.SearchBox
 import com.system.traffic.presentation.component.StationInfo
@@ -47,7 +48,10 @@ fun StationScreen(
         )
 
         if (searchedStationList.isNotEmpty()) {
-            LazyColumn {
+            LazyColumn(
+                modifier = Modifier
+                    .weight(0.9f)
+            ) {
                 items(searchedStationList.size) { index ->
                     StationInfo(
                         searchedStationList[index],
@@ -58,8 +62,15 @@ fun StationScreen(
             }
         } else {
             NoDataComponent(
+                modifier = Modifier
+                    .weight(0.9f),
                 text = stringResource(R.string.searched_station_no_data)
             )
         }
+
+        BannersAds(
+            modifier = Modifier
+                .weight(0.1f)
+        )
     }
 }

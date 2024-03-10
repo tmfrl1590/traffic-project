@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.system.traffic.R
+import com.system.traffic.presentation.component.BannersAds
 import com.system.traffic.presentation.component.LineInfo
 import com.system.traffic.presentation.component.NoDataComponent
 import com.system.traffic.presentation.component.SearchBox
@@ -40,7 +41,10 @@ fun LineScreen(
         )
 
         if (searchedLineList.isNotEmpty()) {
-            LazyColumn() {
+            LazyColumn(
+                modifier = Modifier
+                    .weight(0.9f)
+            ) {
                 itemsIndexed(
                     items = searchedLineList
                 ) { index, lineModel ->
@@ -51,9 +55,16 @@ fun LineScreen(
             }
         } else {
             NoDataComponent(
+                modifier = Modifier
+                    .weight(0.9f),
                 text = stringResource(R.string.searched_line_no_data)
             )
         }
+
+        BannersAds(
+            modifier = Modifier
+                .weight(0.1f)
+        )
     }
 }
 

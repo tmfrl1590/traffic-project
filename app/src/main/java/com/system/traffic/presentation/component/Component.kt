@@ -28,7 +28,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.system.traffic.domain.model.LineModel
 import com.system.traffic.domain.model.StationModel
 import com.system.traffic.navigation.Graph
@@ -147,10 +151,11 @@ fun LineInfo(
 
 @Composable
 fun NoDataComponent(
+    modifier: Modifier = Modifier,
     text: String,
 ){
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
@@ -180,4 +185,26 @@ fun lineColor(lienKind: String): Color {
             Color.Black
         }
     }
+}
+
+@Composable
+fun BannersAds(
+    modifier: Modifier = Modifier
+) {
+    AndroidView(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp),
+        factory = { context ->
+            AdView(context).apply {
+                setAdSize(AdSize.BANNER)
+                //adUnitId = "ca-app-pub-3940256099942544/6300978111" // 테스트
+                adUnitId = "ca-app-pub-3991873148102758/7356139432" // 실
+                loadAd(AdRequest.Builder().build())
+            }
+        },
+        update = { adView ->
+            adView.loadAd(AdRequest.Builder().build())
+        }
+    )
 }

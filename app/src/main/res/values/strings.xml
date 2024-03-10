@@ -11,10 +11,10 @@
 
     <!--애드몹 ID-->
     <!--테스트 ID-->
-    <string name="adModSettingId">ca-app-pub-3940256099942544~3347511713</string>
+    <!--<string name="adModSettingId">ca-app-pub-3940256099942544~3347511713</string>-->
 
     <!-- 릴리즈 ID-->
-    <!--<string name="adModSettingId">ca-app-pub-3991873148102758~3904544234</string>-->
+    <string name="adModSettingId">ca-app-pub-3991873148102758~3904544234</string>
 
 
     <string name="noBusMessage">버스정보 없음</string>

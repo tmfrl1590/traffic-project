@@ -30,6 +30,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.system.traffic.R
+import com.system.traffic.presentation.component.BannersAds
 import com.system.traffic.presentation.component.StationInfo
 import com.system.traffic.presentation.screen.station.StationViewModel
 
@@ -120,28 +121,5 @@ fun TitleComponent(
         modifier = Modifier
             .padding(16.dp),
         color = Color.Black
-    )
-}
-
-@Composable
-fun BannersAds(
-    modifier: Modifier = Modifier
-) {
-    AndroidView(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(bottom = 8.dp),
-        factory = { context ->
-            AdView(context).apply {
-                setAdSize(AdSize.BANNER)
-                //adUnitId = "ca-app-pub-3940256099942544/6300978111" // 테스트
-                //adUnitId = "ca-app-pub-3991873148102758/7356139432" // 실
-                adUnitId = R.string.adModId.toString()
-                loadAd(AdRequest.Builder().build())
-            }
-        },
-        update = { adView ->
-            adView.loadAd(AdRequest.Builder().build())
-        }
     )
 }
