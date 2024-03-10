@@ -4,11 +4,9 @@ import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
@@ -25,8 +23,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.system.traffic.R
 import com.system.traffic.presentation.component.StationInfo
 import com.system.traffic.presentation.screen.station.StationViewModel
@@ -66,7 +68,7 @@ fun HomeScreen(
         if(likeStationList.isNotEmpty()){
             LazyColumn(
                 modifier = Modifier
-                    .fillMaxHeight()
+                    .weight(0.9f)
             ) {
                 items(likeStationList.size){ index ->
                     StationInfo(
@@ -77,16 +79,26 @@ fun HomeScreen(
                 }
             }
         }else {
-            NoLikeContent()
+            NoLikeContent(
+                modifier = Modifier
+                    .weight(0.9f)
+            )
         }
+
+        BannersAds(
+            modifier = Modifier
+                .weight(0.1f)
+        )
     }
 }
 
 @Composable
-fun NoLikeContent(){
+fun NoLikeContent(
+    modifier: Modifier = Modifier
+){
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxWidth()
     ) {
         Text(
             text = stringResource(R.string.like_no_data),
@@ -108,5 +120,28 @@ fun TitleComponent(
         modifier = Modifier
             .padding(16.dp),
         color = Color.Black
+    )
+}
+
+@Composable
+fun BannersAds(
+    modifier: Modifier = Modifier
+) {
+    AndroidView(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp),
+        factory = { context ->
+            AdView(context).apply {
+                setAdSize(AdSize.BANNER)
+                //adUnitId = "ca-app-pub-3940256099942544/6300978111" // 테스트
+                //adUnitId = "ca-app-pub-3991873148102758/7356139432" // 실
+                adUnitId = R.string.adModId.toString()
+                loadAd(AdRequest.Builder().build())
+            }
+        },
+        update = { adView ->
+            adView.loadAd(AdRequest.Builder().build())
+        }
     )
 }

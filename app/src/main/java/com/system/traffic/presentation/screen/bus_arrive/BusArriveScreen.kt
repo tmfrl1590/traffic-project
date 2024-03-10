@@ -50,8 +50,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.system.traffic.R
 import com.system.traffic.common.Resource
 import com.system.traffic.domain.model.BusArriveBody
@@ -70,7 +74,6 @@ fun BusArriveScreen(
     stationViewModel: StationViewModel = hiltViewModel(),
     lineViewModel: LineViewModel = hiltViewModel(),
 ) {
-
 
     // arsId 에 해당하는 정류장 정보 가져오기
     LaunchedEffect(key1 = arsId) {
@@ -155,8 +158,6 @@ fun BusArriveScreen(
                 lineViewModel = lineViewModel,
             )
         }
-
-
     }
 }
 
@@ -167,27 +168,23 @@ fun BusArriveList(
     busArriveViewModel: BusArriveViewModel,
     lineViewModel: LineViewModel,
 ) {
-    //val refreshState = rememberPullToRefreshState()
+    val refreshState = rememberPullToRefreshState()
 
-    /*if(refreshState.isRefreshing){
-        println("getBusArriveList  isRefreshing")
+    if(refreshState.isRefreshing){
         LaunchedEffect(true) {
             busArriveViewModel.getBusArriveList(arsId)
             refreshState.endRefresh()
         }
-    }*/
+    }
 
     val busArriveList = produceState<Resource<BusArriveBody>>(initialValue = Resource.Loading()) {
         value = busArriveViewModel.getBusArriveList(arsId)
     }.value
 
-    //val busArriveList by busArriveViewModel.liveData.observeAsState()
-
-    if (busArriveList?.data == null) {
+    if (busArriveList.data == null) {
         CircularProgressIndicator()
     } else {
-        //if (busArriveList.data.itemList.isEmpty()) {
-        if (busArriveList?.data?.itemList?.isEmpty() == true) {
+        if (busArriveList.data.itemList.isEmpty()) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -200,27 +197,13 @@ fun BusArriveList(
                 )
             }
         } else {
-            LazyColumn {
-                itemsIndexed(
-                    items = busArriveList.data.itemList,
-                    key = { index, item ->
-                        item.bus_id!!
-                    }
-                ) { index, item ->
-                    BusArriveCard(
-                        busArriveModel = item,
-                        lineViewModel = lineViewModel,
-                    )
-                }
-            }
-            /*Box(
+            Box(
                 modifier = Modifier.nestedScroll(refreshState.nestedScrollConnection)
             ){
                 LazyColumn {
                     if (!refreshState.isRefreshing) {
                         itemsIndexed(
-                            //items = busArriveList.data.itemList,
-                            items = busArriveList?.data?.itemList ?: listOf(),
+                            items = busArriveList.data.itemList,
                             key = { index, item ->
                                 item.bus_id!!
                             }
@@ -234,10 +217,10 @@ fun BusArriveList(
                 }
 
                 PullToRefreshContainer(
-                    state = refreshState,
                     modifier = Modifier.align(Alignment.TopCenter),
+                    state = refreshState,
                 )
-            }*/
+            }
         }
     }
 }
@@ -322,4 +305,3 @@ fun BusArriveCard(
         }
     }
 }
-

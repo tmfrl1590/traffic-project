@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    //id("com.google.gms.google-services")
 }
 
 android {
@@ -13,7 +14,7 @@ android {
         applicationId = "com.system.traffic"
         minSdk = 28
         targetSdk = 34
-        versionCode = 17
+        versionCode = 18
         versionName = "1.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -99,6 +100,8 @@ dependencies {
 
     // LiveData
     implementation("androidx.compose.runtime:runtime-livedata:1.6.3")
+
+    implementation("com.google.android.gms:play-services-ads:23.0.0")
 }
 kapt {
     correctErrorTypes = true

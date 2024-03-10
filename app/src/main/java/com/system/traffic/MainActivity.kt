@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.ads.MobileAds
 import com.system.traffic.navigation.gragh.RootNavigationGraph
 import com.system.traffic.ui.theme.TrafficTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,6 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        MobileAds.initialize(this)
 
         setContent {
             TrafficTheme {
