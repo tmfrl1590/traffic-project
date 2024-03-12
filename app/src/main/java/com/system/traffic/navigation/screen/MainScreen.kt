@@ -55,6 +55,7 @@ fun MainBottomNavigationBar(
         MainNav.HOME,
         MainNav.STATION,
         MainNav.LINE,
+        MainNav.SETTING,
     )
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()

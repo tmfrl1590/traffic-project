@@ -5,9 +5,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DirectionsBus
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Route
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.DirectionsBus
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Route
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
@@ -18,6 +20,7 @@ import androidx.navigation.navDeepLink
 import com.system.traffic.navigation.NavigationRouteName.DEEP_LINK_SCHEME
 import com.system.traffic.navigation.NavigationRouteName.MAIN_HOME
 import com.system.traffic.navigation.NavigationRouteName.MAIN_LINE
+import com.system.traffic.navigation.NavigationRouteName.MAIN_SETTING
 import com.system.traffic.navigation.NavigationRouteName.MAIN_STATION
 import com.system.traffic.util.GsonUtils
 
@@ -44,6 +47,13 @@ sealed class MainNav(
         selectedIcon = Icons.Filled.Route,
         unselectedIcon = Icons.Outlined.Route,
         title = NavigationTitle.MAIN_LINE
+    )
+
+    object SETTING: MainNav(
+        route = MAIN_SETTING,
+        selectedIcon = Icons.Filled.Settings,
+        unselectedIcon = Icons.Outlined.Settings,
+        title = NavigationTitle.MAIN_SETTING
     )
 
     override val deepLinks: List<NavDeepLink> = listOf(
@@ -105,6 +115,7 @@ object NavigationRouteName{
     const val MAIN_STATION = "main_station"
     const val MAIN_LINE = "main_line"
     const val BUS_ARRIVE = "bus_arrive"
+    const val MAIN_SETTING = "main_setting"
 }
 
 object NavigationTitle{
@@ -113,6 +124,7 @@ object NavigationTitle{
     const val MAIN_STATION = "정류장"
     const val MAIN_LINE = "노선"
     const val BUS_ARRIVE = "bus_arrive"
+    const val MAIN_SETTING = "설정"
 }
 
 object Graph {

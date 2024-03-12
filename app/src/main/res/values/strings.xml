@@ -11,15 +11,16 @@
 
     <!--애드몹 ID-->
     <!--테스트 ID-->
-    <!--<string name="adModSettingId">ca-app-pub-3940256099942544~3347511713</string>-->
+    <string name="adModSettingId">ca-app-pub-3940256099942544~3347511713</string>
 
     <!-- 릴리즈 ID-->
-    <string name="adModSettingId">ca-app-pub-3991873148102758~3904544234</string>
+    <!--<string name="adModSettingId">ca-app-pub-3991873148102758~3904544234</string>-->
 
 
     <string name="noBusMessage">버스정보 없음</string>
     <string name="station">정류장</string>
     <string name="line">노선</string>
+    <string name="setting">설정</string>
     <string name="searched_station_no_data">정류장 정보가 없습니다</string>
     <string name="searched_line_no_data">노선 정보가 없습니다</string>
     <string name="bus_arrive_no_data">버스도착 정보가\n없습니다</string>

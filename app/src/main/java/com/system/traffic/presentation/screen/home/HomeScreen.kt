@@ -32,6 +32,7 @@ import com.google.android.gms.ads.AdView
 import com.system.traffic.R
 import com.system.traffic.presentation.component.BannersAds
 import com.system.traffic.presentation.component.StationInfo
+import com.system.traffic.presentation.component.TitleComponent
 import com.system.traffic.presentation.screen.station.StationViewModel
 
 @Composable
@@ -110,16 +111,3 @@ fun NoLikeContent(
     }
 }
 
-@Composable
-fun TitleComponent(
-    title: String,
-){
-    Text(
-        text = title,
-        fontSize = 20.sp,
-        fontWeight = FontWeight.Bold,
-        modifier = Modifier
-            .padding(16.dp),
-        color = Color.Black
-    )
-}

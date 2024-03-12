@@ -14,6 +14,7 @@ import com.system.traffic.navigation.SplashNav
 import com.system.traffic.presentation.screen.bus_arrive.BusArriveScreen
 import com.system.traffic.presentation.screen.home.HomeScreen
 import com.system.traffic.presentation.screen.line.LineScreen
+import com.system.traffic.presentation.screen.setting.SettingScreen
 import com.system.traffic.presentation.screen.splash.SplashScreen
 import com.system.traffic.presentation.screen.station.StationScreen
 
@@ -47,6 +48,9 @@ fun HomeGraph(
         }
         composable(route = MainNav.LINE.route) {
             LineScreen()
+        }
+        composable(route = MainNav.SETTING.route){
+            SettingScreen()
         }
 
         detailsNavGraph(navController = navController)
