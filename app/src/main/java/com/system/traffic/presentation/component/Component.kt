@@ -198,8 +198,8 @@ fun BannersAds(
         factory = { context ->
             AdView(context).apply {
                 setAdSize(AdSize.BANNER)
-                adUnitId = "ca-app-pub-3940256099942544/6300978111" // 테스트
-                //adUnitId = "ca-app-pub-3991873148102758/7356139432" // 실
+                //adUnitId = "ca-app-pub-3940256099942544/6300978111" // 테스트
+                adUnitId = "ca-app-pub-3991873148102758/7356139432" // 실
                 loadAd(AdRequest.Builder().build())
             }
         },
