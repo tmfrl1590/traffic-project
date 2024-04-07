@@ -48,7 +48,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.system.traffic.R
-import com.system.traffic.common.Resource
+import com.system.traffic.common.UIState
 import com.system.traffic.domain.model.BusArriveBody
 import com.system.traffic.domain.model.BusArriveModel
 import com.system.traffic.presentation.component.lineColor
@@ -159,39 +159,51 @@ fun BusArriveList(
     lineViewModel: LineViewModel,
 ) {
 
-    val busArriveList = produceState<Resource<BusArriveBody>>(initialValue = Resource.Loading()) {
-        value = busArriveViewModel.getBusArriveList(arsId)
-    }.value
+    LaunchedEffect(key1 = true) {
+        busArriveViewModel.getBusArriveList(arsId)
+    }
 
-    if (busArriveList.data == null) {
-        CircularProgressIndicator()
-    } else {
-        if (busArriveList.data.itemList.isEmpty()) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = stringResource(R.string.bus_arrive_no_data),
-                    fontSize = 32.sp,
-                    textAlign = TextAlign.Center,
-                    lineHeight = 40.sp
-                )
-            }
-        } else {
-            LazyColumn {
-                itemsIndexed(
-                    items = busArriveList.data.itemList,
-                    key = { _, item ->
-                        item.bus_id!!
-                    }
-                ) { _, item ->
-                    BusArriveCard(
-                        busArriveModel = item,
-                        lineViewModel = lineViewModel,
+    val uiState = busArriveViewModel.uiState.collectAsState()
+    val result = uiState.value.data
+
+    when(uiState.value){
+        is UIState.Loading -> {
+            println("UIState.Loading - 로딩중")
+            CircularProgressIndicator()
+        }
+        is UIState.Success -> {
+            println("UIState.Success - 성공")
+            if (result?.itemList?.isEmpty() == true) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = stringResource(R.string.bus_arrive_no_data),
+                        fontSize = 32.sp,
+                        textAlign = TextAlign.Center,
+                        lineHeight = 40.sp
                     )
                 }
+            } else {
+                LazyColumn {
+                    itemsIndexed(
+                        items = result?.itemList!!,
+                        key = { _, item ->
+                            item.bus_id!!
+                        }
+                    ) { _, item ->
+                        BusArriveCard(
+                            busArriveModel = item,
+                            lineViewModel = lineViewModel,
+                        )
+                    }
+                }
             }
+
+        }
+        is UIState.Error -> {
+            println("UIState.Error - 에러 발생")
         }
     }
 }
