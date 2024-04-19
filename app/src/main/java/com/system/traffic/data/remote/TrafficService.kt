@@ -5,7 +5,7 @@ import com.system.traffic.domain.model.LineStationBody
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface TrafficApi {
+interface TrafficService {
 
     // 버스 도착정보
     @GET("arriveInfo")

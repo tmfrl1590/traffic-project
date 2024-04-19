@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("kotlinx-serialization")
 }
 
 android {
@@ -100,6 +101,9 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.6.5")
 
     implementation("com.google.android.gms:play-services-ads:23.0.0")
+
+    // Sandwich
+    implementation("com.github.skydoves:sandwich-retrofit:2.0.6")
 }
 kapt {
     correctErrorTypes = true

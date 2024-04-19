@@ -1,7 +1,7 @@
 package com.system.traffic.di
 
 import com.system.traffic.common.Constants.BASE_URL
-import com.system.traffic.data.remote.TrafficApi
+import com.system.traffic.data.remote.TrafficService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,12 +33,12 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideTrafficApi(): TrafficApi {
+    fun provideTrafficApi(): TrafficService {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(logging())
             .build()
-            .create(TrafficApi::class.java)
+            .create(TrafficService::class.java)
     }
 }

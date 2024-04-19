@@ -12,7 +12,7 @@ import com.system.traffic.domain.repository.BusArriveRepository
 import com.system.traffic.domain.repository.FileRepository
 import com.system.traffic.domain.repository.LineRepository
 import com.system.traffic.domain.repository.StationRepository
-import com.system.traffic.data.remote.TrafficApi
+import com.system.traffic.data.remote.TrafficService
 import com.system.traffic.data.repository.LikeStationRepositoryImpl
 import com.system.traffic.domain.repository.LikeStationRepository
 import dagger.Module
@@ -44,7 +44,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideBusArriveRepository(trafficApi: TrafficApi): BusArriveRepository {
+    fun provideBusArriveRepository(trafficApi: TrafficService): BusArriveRepository {
         return BusArriveRepositoryImpl(trafficApi)
     }
 
