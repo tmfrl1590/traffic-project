@@ -23,7 +23,12 @@
     <string name="setting">설정</string>
     <string name="searched_station_no_data">정류장 정보가 없습니다</string>
     <string name="searched_line_no_data">노선 정보가 없습니다</string>
-    <string name="bus_arrive_no_data">버스도착 정보가\n없습니다</string>
+
     <string name="like_no_data">즐겨찾기 정보가\n없습니다</string>
+
+    <!--Bus Arrive Screen-->
+    <string name="bus_arrive_no_data">버스도착 정보가\n없습니다</string>
+    <string name="bus_arrive_direction">방면</string>
+    <string name="bus_arrive_now">현재</string>
 
 </resources>

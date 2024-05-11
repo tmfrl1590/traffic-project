@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -31,6 +32,7 @@ import com.system.traffic.R
 import com.system.traffic.common.UIState
 import com.system.traffic.domain.model.BusArriveBody
 import com.system.traffic.domain.model.BusArriveModel
+import com.system.traffic.presentation.component.CustomLoadingBar
 import com.system.traffic.presentation.component.lineColor
 import com.system.traffic.presentation.screen.line.LineViewModel
 
@@ -43,8 +45,7 @@ fun NextBusStop(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "${nextBusStopName}방면",
-            fontSize = 16.sp,
+            text = "${nextBusStopName}${stringResource(R.string.bus_arrive_direction)}",            fontSize = 16.sp,
             textAlign = TextAlign.Center,
         )
     }
@@ -81,6 +82,41 @@ fun SettingBusArriveList(
                 busArriveModel = item,
                 lineViewModel = lineViewModel,
             )
+        }
+    }
+}
+
+@Composable
+fun BusArriveList(
+    arsId: String,
+    busArriveViewModel: BusArriveViewModel,
+    lineViewModel: LineViewModel,
+) {
+    LaunchedEffect(key1 = true) {
+        busArriveViewModel.getBusArriveList(arsId)
+    }
+
+    val uiState = busArriveViewModel.uiState.collectAsState()
+    val result = uiState.value.data
+
+    when (uiState.value) {
+        is UIState.Idle -> {}
+        is UIState.Loading -> {
+            CustomLoadingBar()
+        }
+
+        is UIState.Success -> {
+            if (result?.itemList?.isEmpty() == true) {
+                NoBusArriveText()
+            } else {
+                SettingBusArriveList(
+                    result = result,
+                    lineViewModel = lineViewModel,
+                )
+            }
+        }
+
+        is UIState.Error -> {
         }
     }
 }
@@ -141,7 +177,7 @@ fun BusArriveCard(
             }
 
             Text(
-                text = "현재 : ${busArriveModel.busstop_name} (${busArriveModel.remain_stop} 정거장 전)",
+                text = "${stringResource(id = R.string.bus_arrive_now)} : ${busArriveModel.busstop_name} (${busArriveModel.remain_stop} 정거장 전)",
                 modifier = Modifier
                     .wrapContentWidth()
                     .padding(8.dp)

@@ -127,38 +127,3 @@ fun BusArriveScreen(
         }
     }
 }
-
-@Composable
-fun BusArriveList(
-    arsId: String,
-    busArriveViewModel: BusArriveViewModel,
-    lineViewModel: LineViewModel,
-) {
-    LaunchedEffect(key1 = true) {
-        busArriveViewModel.getBusArriveList(arsId)
-    }
-
-    val uiState = busArriveViewModel.uiState.collectAsState()
-    val result = uiState.value.data
-
-    when (uiState.value) {
-        is UIState.Idle -> {}
-        is UIState.Loading -> {
-            CustomLoadingBar()
-        }
-
-        is UIState.Success -> {
-            if (result?.itemList?.isEmpty() == true) {
-                NoBusArriveText()
-            } else {
-                SettingBusArriveList(
-                    result = result,
-                    lineViewModel = lineViewModel,
-                )
-            }
-        }
-
-        is UIState.Error -> {
-        }
-    }
-}
