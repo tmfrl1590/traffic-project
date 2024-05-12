@@ -2,10 +2,7 @@ package com.system.traffic.presentation.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavHostController
 import com.system.traffic.data.local.dataSource.DataStore
-import com.system.traffic.navigation.BusArriveNav
-import com.system.traffic.util.NavigationUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

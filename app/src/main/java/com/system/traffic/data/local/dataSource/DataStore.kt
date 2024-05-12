@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import com.system.traffic.App
+import com.system.traffic.common.Constants.IS_FIRST_LOGIN
 
 class DataStore {
 
@@ -18,7 +19,7 @@ class DataStore {
 
     private val myDataStore : DataStore<Preferences> = context.dataStore
 
-    private val isFirstLogin = booleanPreferencesKey("isFirstLogin")
+    private val isFirstLogin = booleanPreferencesKey(IS_FIRST_LOGIN)
 
     suspend fun setUpIsFirstLogin(){
         myDataStore.edit { preferences ->

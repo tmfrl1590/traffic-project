@@ -10,7 +10,7 @@ data class BusArriveBody(
     val itemList : ArrayList<BusArriveModel>,
 
     @SerializedName("ROW_COUNT")
-    val row_count : String
+    val rowCount : String
 )
 
 

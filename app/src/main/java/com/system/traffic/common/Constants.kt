@@ -15,4 +15,7 @@ object Constants {
     const val LINE_ENTITY = "line_entity"
     const val STATION_LIKE_ENTITY = "station_like_entity"
     const val LINE_LIKE_ENTITY = "line_like_entity"
+
+    // DataStore
+    const val IS_FIRST_LOGIN = "isFirstLogin"
 }
