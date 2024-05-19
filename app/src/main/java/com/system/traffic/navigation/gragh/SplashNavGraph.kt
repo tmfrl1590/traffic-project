@@ -52,7 +52,6 @@ fun HomeGraph(
         composable(route = MainNav.SETTING.route){
             SettingScreen()
         }
-
         detailsNavGraph(navController = navController)
     }
 }

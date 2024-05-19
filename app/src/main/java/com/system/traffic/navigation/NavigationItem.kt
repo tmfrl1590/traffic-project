@@ -30,7 +30,7 @@ sealed class MainNav(
     val unselectedIcon: ImageVector,
     override val title: String
 ): Destination {
-    object HOME: MainNav(
+    data object HOME: MainNav(
         route = MAIN_HOME,
         selectedIcon = Icons.Filled.Home,
         unselectedIcon = Icons.Outlined.Home,
@@ -42,14 +42,14 @@ sealed class MainNav(
         unselectedIcon = Icons.Outlined.DirectionsBus,
         title = NavigationTitle.MAIN_STATION
     )
-    object LINE: MainNav(
+    data object LINE: MainNav(
         route = MAIN_LINE,
         selectedIcon = Icons.Filled.Route,
         unselectedIcon = Icons.Outlined.Route,
         title = NavigationTitle.MAIN_LINE
     )
 
-    object SETTING: MainNav(
+    data object SETTING: MainNav(
         route = MAIN_SETTING,
         selectedIcon = Icons.Filled.Settings,
         unselectedIcon = Icons.Outlined.Settings,
@@ -62,7 +62,7 @@ sealed class MainNav(
 }
 
 sealed class SplashNav(override val route: String, override val title: String): Destination {
-    object SPLASH: SplashNav(NavigationRouteName.SPLASH, NavigationTitle.SPLASH)
+    data object SPLASH: SplashNav(NavigationRouteName.SPLASH, NavigationTitle.SPLASH)
 
     override val deepLinks: List<NavDeepLink> = listOf(
         //navDeepLink { uriPattern = "$DEEP_LINK_SCHEME${SearchNav.route}" }

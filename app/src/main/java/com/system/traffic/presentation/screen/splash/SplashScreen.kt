@@ -3,23 +3,11 @@ package com.system.traffic.presentation.screen.splash
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.system.traffic.R
 import com.system.traffic.data.local.db.entity.toLineEntity
 import com.system.traffic.data.local.db.entity.toStationEntity
 import com.system.traffic.navigation.Graph
@@ -48,12 +36,8 @@ fun SplashScreen(
                 })
         )
 
-
-        val a = commonViewModel.checkIsFirstLogin()
-        if(a){
-            navHostController.popBackStack()
-            navHostController.navigate(Graph.HOME)
-        }else{
+        val isFirstLogin = commonViewModel.checkIsFirstLogin()
+        if(!isFirstLogin){
             commonViewModel.setUpIsFirstLogin()
 
             launch(Dispatchers.IO) {
@@ -71,28 +55,13 @@ fun SplashScreen(
             }
         }
 
-        delay(1500L)
+        delay(1000L)
 
         navHostController.popBackStack()
         navHostController.navigate(Graph.HOME)
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White),
-        contentAlignment = Alignment.Center
-    ){
-        Image(
-            modifier = Modifier
-                .size(300.dp)
-                .scale(scale.value),
-            painter = painterResource(id = R.drawable.main_bus),
-            contentDescription = ""
-        )
-    }
-
-    LaunchedEffect(Unit){
-
-    }
+    SplashBackground(
+        scale = scale
+    )
 }

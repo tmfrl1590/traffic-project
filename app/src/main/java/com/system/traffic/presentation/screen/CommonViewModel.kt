@@ -18,12 +18,7 @@ class CommonViewModel @Inject constructor(
     }
 
     suspend fun checkIsFirstLogin(): Boolean {
-        delay(3000)
+        delay(1000)
         return DataStore().checkIsFirstLogin()
     }
-
-    // 버스 도착 정보 이동
-    /*fun goBusArriveScreen(navHostController: NavHostController, ars_id: String){
-        NavigationUtils.navigate(navHostController, BusArriveNav.navigateWithArg(ars_id))
-    }*/
 }

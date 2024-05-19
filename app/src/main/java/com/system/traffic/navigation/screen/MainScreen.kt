@@ -24,9 +24,7 @@ import com.system.traffic.navigation.gragh.HomeGraph
 import com.system.traffic.ui.theme.MainColor
 
 @Composable
-fun MainScreen(
-
-) {
+fun MainScreen() {
     val navController = rememberNavController()
 
     Scaffold(
@@ -34,7 +32,6 @@ fun MainScreen(
             MainBottomNavigationBar(navController = navController)
         },
         containerColor = Color.White,
-
     ) {
         HomeGraph(
             navController = navController,
