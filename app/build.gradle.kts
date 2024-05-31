@@ -1,9 +1,12 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id("kotlinx-serialization")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
@@ -32,19 +35,28 @@ android {
             )
         }
     }
+    composeCompiler {
+        enableStrongSkippingMode = true
+        includeSourceInformation = true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
+    /*kotlinOptions {
         jvmTarget = "17"
+    }*/
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
     }
     buildFeatures {
         compose = true
     }
-    composeOptions {
+    /*composeOptions {
         kotlinCompilerExtensionVersion = "1.5.14"
-    }
+    }*/
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
