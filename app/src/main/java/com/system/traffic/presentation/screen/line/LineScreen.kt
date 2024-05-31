@@ -34,6 +34,8 @@ fun LineScreen(
             .fillMaxSize()
     ) {
         SearchBox(
+            modifier = Modifier
+                .weight(0.15f),
             text = stringResource(R.string.line),
             keyword = keyword,
             onValueChange = { keyword = it },
@@ -43,7 +45,7 @@ fun LineScreen(
         if (searchedLineList.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier
-                    .weight(0.9f)
+                    .weight(0.75f)
             ) {
                 itemsIndexed(
                     items = searchedLineList

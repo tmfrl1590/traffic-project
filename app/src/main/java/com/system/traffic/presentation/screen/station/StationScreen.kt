@@ -41,6 +41,8 @@ fun StationScreen(
             .fillMaxSize()
     ) {
         SearchBox(
+            modifier = Modifier
+                .weight(0.15f),
             text = stringResource(R.string.station),
             keyword = keyword,
             onValueChange = { keyword = it },
@@ -50,7 +52,7 @@ fun StationScreen(
         if (searchedStationList.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier
-                    .weight(0.9f)
+                    .weight(0.75f)
             ) {
                 items(searchedStationList.size) { index ->
                     StationInfo(

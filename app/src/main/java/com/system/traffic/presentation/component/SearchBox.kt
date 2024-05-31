@@ -27,13 +27,14 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun SearchBox(
+    modifier: Modifier,
     text: String,
     keyword: String,
     onValueChange: (String) -> Unit,
     searchAction: () -> Unit,
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .padding(16.dp)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
