@@ -38,6 +38,7 @@ import com.google.android.gms.ads.AdView
 import com.system.traffic.domain.model.LineModel
 import com.system.traffic.domain.model.StationModel
 import com.system.traffic.navigation.Graph
+import com.system.traffic.navigation.Screens
 import com.system.traffic.presentation.screen.station.StationViewModel
 import com.system.traffic.ui.theme.MainColor
 
@@ -63,7 +64,8 @@ fun StationInfo(
         border = BorderStroke(1.dp, Color.LightGray),
         shape = RoundedCornerShape(12.dp),
         onClick = {
-            navHostController.navigate(route = "${Graph.BUS_ARRIVE}/${stationModel.busstop_id}")
+            //navHostController.navigate(route = "${Graph.BUS_ARRIVE}/${stationModel.busstop_id}")
+            navHostController.navigate(Screens.BusArrive(arsId = stationModel.busstop_id ?: ""))
         }
     ){
         Box(
@@ -73,7 +75,7 @@ fun StationInfo(
         ){
             IconButton(
                 onClick = { if(selectedStation){
-                    stationViewModel.deleteLikeStation(stationModel.busstop_id)
+                    stationViewModel.deleteLikeStation(stationModel.busstop_id ?: "")
                 }else{
                     stationViewModel.insertLikeStation(stationModel)
                 } },
@@ -93,7 +95,7 @@ fun StationInfo(
                     .fillMaxSize()
             ) {
                 Text(
-                    text = stationModel.busstop_name,
+                    text = stationModel.busstop_name ?: "",
                     modifier = Modifier
                         .height(52.dp),
                     fontSize = 16.sp,

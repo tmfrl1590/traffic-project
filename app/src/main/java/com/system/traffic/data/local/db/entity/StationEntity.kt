@@ -32,11 +32,11 @@ fun StationModel.toStationEntity(): StationEntity {
 fun StationEntity.toLikeStationModel(): StationModel {
     return StationModel(
         station_num = station_num,
-        busstop_name = busstop_name!!,
-        next_busstop = next_busstop!!,
-        busstop_id = busstop_id!!,
-        ars_id = ars_id!!,
-        longitude = longitude!!,
-        latitude = latitude!!,
+        busstop_name = busstop_name ?: "",
+        next_busstop = next_busstop ?: "",
+        busstop_id = busstop_id ?: "",
+        ars_id = ars_id ?: "",
+        longitude = longitude ?: "",
+        latitude = latitude ?: "",
     )
 }

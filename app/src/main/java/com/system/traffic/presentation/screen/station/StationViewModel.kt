@@ -34,9 +34,11 @@ class StationViewModel @Inject constructor(
         }
     }
 
-    suspend fun getStationInfo(arsId: String){
-        useCase.stationUseCase.getStationInfo(arsId).collectLatest {
-            _stationInfo.emit(it)
+    fun getStationInfo(arsId: String){
+        viewModelScope.launch (Dispatchers.IO){
+            useCase.stationUseCase.getStationInfo(arsId).collectLatest {
+                _stationInfo.emit(it)
+            }
         }
     }
 

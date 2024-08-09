@@ -16,7 +16,7 @@ fun NavBackStackEntry?.fromRoute(): Screens {
             Screens.Station::class.simpleName -> Screens.Station
             Screens.Line::class.simpleName -> Screens.Line
             Screens.Setting::class.simpleName -> Screens.Setting
-            Screens.BusArrive::class.simpleName -> Screens.BusArrive(0)
+            Screens.BusArrive::class.simpleName -> Screens.BusArrive("")
             else -> Screens.Splash
         }
     }

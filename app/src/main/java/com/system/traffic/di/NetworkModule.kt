@@ -1,11 +1,16 @@
 package com.system.traffic.di
 
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.skydoves.sandwich.retrofit.adapters.ApiResponseCallAdapterFactory
 import com.system.traffic.common.Constants.BASE_URL
 import com.system.traffic.data.remote.TrafficService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -15,6 +20,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
+    private val json = Json {
+        isLenient = true // Json 큰 따옴표 느슨하게 체크
+        ignoreUnknownKeys = true // Filed 값이 없는 경우 무시
+        coerceInputValues = true // "null이 들어간 경우 dafault 값으로 변경"
+    }
 
     @Singleton
     @Provides
@@ -30,13 +41,17 @@ object NetworkModule {
             .build()
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     @Singleton
     @Provides
     fun provideTrafficApi(): TrafficService {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            //.addConverterFactory(GsonConverterFactory.create())
             .client(logging())
+            .addConverterFactory(
+                json.asConverterFactory("application/json".toMediaType())
+            )
+            .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
             .build()
             .create(TrafficService::class.java)
     }

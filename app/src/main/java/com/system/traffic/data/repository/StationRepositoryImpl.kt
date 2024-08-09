@@ -1,6 +1,7 @@
 package com.system.traffic.data.repository
 
 import com.system.traffic.data.local.db.dao.StationDao
+import com.system.traffic.data.local.db.entity.StationEntity
 import com.system.traffic.domain.model.StationModel
 import com.system.traffic.data.local.db.entity.toLikeStationModel
 import com.system.traffic.domain.repository.StationRepository
@@ -19,7 +20,9 @@ class StationRepositoryImpl(
     }
 
     override fun getStationInfo(arsId: String): Flow<StationModel> {
-        return stationDao.getStationInfo(arsId).map { it.toLikeStationModel() }
+        return stationDao.getStationInfo(arsId).map {
+            it.toLikeStationModel()
+        }
     }
 }
 

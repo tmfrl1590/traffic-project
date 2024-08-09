@@ -68,12 +68,12 @@ fun NoBusArriveText() {
 
 @Composable
 fun SettingBusArriveList(
-    result: BusArriveBody?,
+    result: List<BusArriveModel>?,
     lineViewModel: LineViewModel,
 ) {
     LazyColumn {
         itemsIndexed(
-            items = result?.itemList!!,
+            items = result!!,
             key = { _, item ->
                 item.bus_id!!
             }
@@ -106,7 +106,7 @@ fun BusArriveList(
         }
 
         is UIState.Success -> {
-            if (result?.itemList?.isEmpty() == true) {
+            if (result?.isEmpty() == true) {
                 NoBusArriveText()
             } else {
                 SettingBusArriveList(

@@ -1,9 +1,11 @@
 package com.system.traffic.domain.model
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 //import com.google.gson.annotations.SerializedName
 
+@Serializable
 data class BusArriveBody(
     @SerialName("RESULT")
     //@SerializedName("RESULT")
@@ -19,6 +21,7 @@ data class BusArriveBody(
 )
 
 
+@Serializable
 data class BusArriveModel(
     //@SerializedName("ARRIVE")
     @SerialName("ARRIVE")

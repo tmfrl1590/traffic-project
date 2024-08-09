@@ -40,7 +40,7 @@ sealed interface Screens : ArgInterface {
         override val icon: ImageVector = Icons.Filled.Settings
     }
     @Serializable
-    data class BusArrive(val stationId: Int): Screens {
+    data class BusArrive(val arsId: String): Screens {
         override val title: String = NavigationTitle.BUS_ARRIVE
         override val icon: ImageVector? get() = null
     }

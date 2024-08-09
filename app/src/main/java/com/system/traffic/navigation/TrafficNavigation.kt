@@ -14,6 +14,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import com.system.traffic.presentation.screen.bus_arrive.BusArriveScreen
 import com.system.traffic.presentation.screen.home.HomeScreen
 import com.system.traffic.presentation.screen.line.LineScreen
 import com.system.traffic.presentation.screen.setting.SettingScreen
@@ -83,6 +85,10 @@ fun AppNavHost() {
             }
             composable<Screens.Setting> {
                 SettingScreen()
+            }
+            composable<Screens.BusArrive> { backStackEntry ->
+                val arsId = backStackEntry.toRoute<Screens.BusArrive>().arsId
+                BusArriveScreen(arsId = arsId , navController = navController)
             }
         }
     }

@@ -111,7 +111,7 @@ fun BusArriveScreen(
                 .background(Color.White),
         ) {
             NextBusStop(
-                nextBusStopName = stationInfo.next_busstop
+                nextBusStopName = stationInfo.next_busstop ?: "",
             )
 
             Spacer(modifier = Modifier.size(20.dp))
