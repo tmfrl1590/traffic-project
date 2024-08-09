@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -30,8 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.system.traffic.common.UIState
-import com.system.traffic.presentation.component.CustomLoadingBar
 import com.system.traffic.presentation.component.ScaffoldBackIcon
 import com.system.traffic.presentation.screen.line.LineViewModel
 import com.system.traffic.presentation.screen.station.StationViewModel

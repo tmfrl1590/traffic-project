@@ -9,7 +9,6 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -36,7 +35,7 @@ object NetworkModule {
     fun provideTrafficApi(): TrafficService {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            //.addConverterFactory(GsonConverterFactory.create())
             .client(logging())
             .build()
             .create(TrafficService::class.java)

@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import com.system.traffic.data.local.db.entity.toLineEntity
 import com.system.traffic.data.local.db.entity.toStationEntity
 import com.system.traffic.navigation.Graph
+import com.system.traffic.navigation.Screens
 import com.system.traffic.presentation.screen.CommonViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -58,7 +59,9 @@ fun SplashScreen(
         delay(1000L)
 
         navHostController.popBackStack()
-        navHostController.navigate(Graph.HOME)
+        navHostController.navigate(Screens.Home)
+        //navHostController.navigate(Graph.HOME)
+
     }
 
     SplashBackground(
