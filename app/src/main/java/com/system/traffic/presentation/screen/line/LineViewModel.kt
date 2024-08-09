@@ -3,7 +3,8 @@ package com.system.traffic.presentation.screen.line
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.system.traffic.domain.model.LineModel
-import com.system.traffic.domain.useCase.UseCase
+import com.system.traffic.domain.useCase.line.GetLineColorUseCase
+import com.system.traffic.domain.useCase.line.GetSearchLineUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LineViewModel @Inject constructor(
-    private val useCase: UseCase
+    private val getLineColorUseCase: GetLineColorUseCase,
+    private val getSearchLineUseCase: GetSearchLineUseCase,
 ): ViewModel(){
 
     private val _lineColorList = MutableStateFlow<List<LineModel>>(listOf())
@@ -25,7 +27,7 @@ class LineViewModel @Inject constructor(
 
     // 노선 검색
     fun getSearchedLineList(keyword: String) = viewModelScope.launch(Dispatchers.IO) {
-        useCase.lineUseCase.getSearchedLineList(keyword = "%$keyword%").collectLatest {
+        getSearchLineUseCase(keyword = "%$keyword%").collectLatest {
             _searchedLineList.emit(it)
         }
     }
@@ -33,7 +35,7 @@ class LineViewModel @Inject constructor(
     // 버스 색상 가져오기(종류 가져오기)
     fun getLineColor() {
         viewModelScope.launch(Dispatchers.IO) {
-            useCase.lineUseCase.getLineColor().collectLatest {
+            getLineColorUseCase().collectLatest {
                 _lineColorList.emit(it)
             }
         }

@@ -7,8 +7,9 @@ import com.system.traffic.data.local.db.entity.toLikeStationModel
 import com.system.traffic.domain.repository.StationRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class StationRepositoryImpl(
+class StationRepositoryImpl @Inject constructor(
     private val stationDao: StationDao,
 ) : StationRepository {
 

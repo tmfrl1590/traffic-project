@@ -11,16 +11,6 @@ import com.system.traffic.domain.model.BusArriveModel
 class BusArriveRepositoryImpl (
     private val trafficApi: TrafficService,
 ): BusArriveRepository {
-    /*override suspend fun getBusArriveList(arsId: String): UIState<BusArriveBody>  {
-        println("arsId123: $arsId")
-        val response = try {
-            trafficApi.getBusArriveList(Constants.SERVICE_KEY, arsId)
-        }catch (exception: Exception){
-            return UIState.Error()
-        }
-        println("result111: $response")
-        return UIState.Success(data = response)
-    }*/
     override suspend fun getBusArriveList(arsId: String): ArrayList<BusArriveModel> {
         return when(val result = trafficApi.getBusArriveList(Constants.SERVICE_KEY, arsId)){
             is ApiResponse.Success -> {

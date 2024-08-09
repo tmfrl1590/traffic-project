@@ -3,7 +3,11 @@ package com.system.traffic.presentation.screen.station
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.system.traffic.domain.model.StationModel
-import com.system.traffic.domain.useCase.UseCase
+import com.system.traffic.domain.useCase.like.AddLikeStationUseCase
+import com.system.traffic.domain.useCase.like.DeleteLikeStationUseCase
+import com.system.traffic.domain.useCase.like.GetLikeStationListUseCase
+import com.system.traffic.domain.useCase.station.GetSearchStationUseCase
+import com.system.traffic.domain.useCase.station.GetStationInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +18,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StationViewModel @Inject constructor(
-    private val useCase: UseCase
+    private val getSearchStationUseCase: GetSearchStationUseCase,
+    private val getStationInfoUseCase: GetStationInfoUseCase,
+    private val addLikeStationUseCase: AddLikeStationUseCase,
+    private val deleteLikeStationUseCase: DeleteLikeStationUseCase,
+    private val getLikeStationListUseCase: GetLikeStationListUseCase,
 ): ViewModel() {
 
     private val _stationInfo = MutableStateFlow(StationModel("", "", "", "", "", "", ""))
@@ -29,14 +37,14 @@ class StationViewModel @Inject constructor(
 
     // 정류장 검색
     fun getSearchedStationList(keyword: String) = viewModelScope.launch(Dispatchers.IO) {
-        useCase.stationUseCase.getSearchedStationList(keyword = "%$keyword%").collectLatest {
+        getSearchStationUseCase(keyword = "%$keyword%").collectLatest {
             _searchedStationList.emit(it)
         }
     }
 
     fun getStationInfo(arsId: String){
         viewModelScope.launch (Dispatchers.IO){
-            useCase.stationUseCase.getStationInfo(arsId).collectLatest {
+            getStationInfoUseCase(arsId).collectLatest {
                 _stationInfo.emit(it)
             }
         }
@@ -44,18 +52,18 @@ class StationViewModel @Inject constructor(
 
     // 즐겨찾기 추가
     fun insertLikeStation(stationModel: StationModel) = viewModelScope.launch(Dispatchers.IO) {
-        useCase.likeStationUseCase.addLikeStation(stationModel)
+        addLikeStationUseCase(stationModel)
     }
 
     // 즐겨찾기 삭제
     fun deleteLikeStation(arsId: String) = viewModelScope.launch(Dispatchers.IO) {
-        useCase.likeStationUseCase.deleteLikeStation(arsId)
+        deleteLikeStationUseCase(arsId)
     }
 
     // 즐겨찾기 리스트 조회
     fun getLikeStationList() {
         viewModelScope.launch(Dispatchers.IO) {
-            useCase.likeStationUseCase.getLikeStationList().collectLatest {
+            getLikeStationListUseCase().collectLatest {
                 _likeStationList.emit(it)
             }
         }
