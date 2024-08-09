@@ -10,4 +10,5 @@ plugins {
     // Kotlin Serialization
     kotlin("plugin.serialization") version kotlinVersion apply false
     kotlin("jvm") version kotlinVersion apply false
+    id("com.android.library") version "8.3.1" apply false
 }
