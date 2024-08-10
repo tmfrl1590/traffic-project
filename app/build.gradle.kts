@@ -59,6 +59,11 @@ android {
 }
 
 dependencies {
+    implementation(project(":data"))
+    implementation(project(":domain"))
+    implementation(project(":presentation"))
+    implementation(project(":common"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -110,7 +115,7 @@ dependencies {
     // LiveData
     implementation("androidx.compose.runtime:runtime-livedata:1.6.7")
 
-    implementation("com.google.android.gms:play-services-ads:23.1.0")
+    //implementation("com.google.android.gms:play-services-ads:23.1.0")
 
     // Sandwich
     implementation(libs.sandwich.retrofit)

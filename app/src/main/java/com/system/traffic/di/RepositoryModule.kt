@@ -1,20 +1,20 @@
 package com.system.traffic.di
 
-import com.system.traffic.data.local.dataSource.FileDataSource
-import com.system.traffic.data.local.db.dao.LikeStationDao
-import com.system.traffic.data.local.db.dao.LineDao
-import com.system.traffic.data.local.db.dao.StationDao
-import com.system.traffic.data.repository.BusArriveRepositoryImpl
-import com.system.traffic.data.repository.FileRepositoryImpl
-import com.system.traffic.data.repository.LineRepositoryImpl
-import com.system.traffic.data.repository.StationRepositoryImpl
-import com.system.traffic.domain.repository.BusArriveRepository
-import com.system.traffic.domain.repository.FileRepository
-import com.system.traffic.domain.repository.LineRepository
-import com.system.traffic.domain.repository.StationRepository
-import com.system.traffic.data.remote.TrafficService
-import com.system.traffic.data.repository.LikeStationRepositoryImpl
-import com.system.traffic.domain.repository.LikeStationRepository
+import com.traffic.data.local.dataSource.FileDataSource
+import com.traffic.data.local.db.dao.LikeStationDao
+import com.traffic.data.local.db.dao.LineDao
+import com.traffic.data.local.db.dao.StationDao
+import com.traffic.data.repository.BusArriveRepositoryImpl
+import com.traffic.data.repository.FileRepositoryImpl
+import com.traffic.data.repository.LineRepositoryImpl
+import com.traffic.data.repository.StationRepositoryImpl
+import com.traffic.domain.repository.BusArriveRepository
+import com.traffic.domain.repository.FileRepository
+import com.traffic.domain.repository.LineRepository
+import com.traffic.domain.repository.StationRepository
+import com.traffic.data.remote.TrafficService
+import com.traffic.data.repository.LikeStationRepositoryImpl
+import com.traffic.domain.repository.LikeStationRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,7 +26,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideStationRepository(stationDao: StationDao): StationRepository{
+    fun provideStationRepository(stationDao: StationDao): StationRepository {
         return StationRepositoryImpl(stationDao)
     }
 

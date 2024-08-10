@@ -26,7 +26,6 @@ loggingInterceptor = "4.12.0" # Logging Interceptor
 retrofit2KotlinxSerializationConverter = "0.8.0" # Retrofit2 Kotlinx Serialization Converter
 mszProgressIndicator = "0.8.0" # MSZ Progress Indicator
 gson = "2.10.1" # Gson
-oauth = "5.9.1" # Naver OAuth
 kotlinxSerializationJson = "1.7.0" # Kotlinx Serialization
 datastorePreferences = "1.1.1" # Datastore Preferences
 roomRuntime = "2.6.1"
@@ -42,7 +41,8 @@ naverMapLocation = "21.0.2" # Naver Map Location
 ossLicenses = "17.1.0" # OSS Licenses
 ossLicensesPlugin = "0.10.6" # OSS Licenses Plugin
 ksp = "2.0.0-1.0.22" # KSP
-googleServices = "4.4.2" # Google Services
+googleServices = "4.4.2"
+material = "1.12.0" # Google Services
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -91,9 +91,6 @@ gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 # MSZ Progress Indicator
 msz-progress-indicator = { module = "com.ehsanmsz:msz-progress-indicator", version.ref = "mszProgressIndicator" }
 
-# Naver OAuth
-oauth = { module = "com.navercorp.nid:oauth", version.ref = "oauth" }
-
 # Kotlin Stdlib
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 
@@ -124,7 +121,7 @@ firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx"
 app-update-ktx = { module = "com.google.android.play:app-update-ktx", version.ref = "appUpdateKtx" }
 
 # Naver Map SDK
-map-sdk = { module = "com.naver.maps:map-sdk", version.ref = "mapSdk" }
+# map-sdk = { module = "com.naver.maps:map-sdk", version.ref = "mapSdk" }
 
 # Naver Map Compose
 naver-map-compose = { module = "io.github.fornewid:naver-map-compose", version.ref = "naverMapCompose" }
@@ -138,6 +135,7 @@ naver-map-location = { module = "io.github.fornewid:naver-map-location", version
 # OSS Licenses
 oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "ossLicenses" }
 oss-licenses-plugin = { group = "com.google.android.gms", name = "oss-licenses-plugin", version.ref = "ossLicensesPlugin" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

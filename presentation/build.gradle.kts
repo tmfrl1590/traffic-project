@@ -1,6 +1,11 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("dagger.hilt.android.plugin")
+    id("kotlinx-serialization")
+    id("kotlin-parcelize")
+    alias(libs.plugins.compose.compiler) // 추가
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -24,20 +29,78 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 
 dependencies {
+    implementation(project(":domain"))
+    implementation(project(":common"))
 
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("com.google.android.material:material:1.12.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
+
+    // hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    // Coil
+    implementation(libs.coil.compose)
+
+    // Material Icons Extended
+    implementation(libs.androidx.material.icons.extended)
+
+    // retrofit
+    implementation(libs.retrofit)
+
+    // Sandwich
+    implementation(libs.sandwich.retrofit)
+
+    implementation(libs.kotlinx.coroutines.android)
+
+    // Gson
+    implementation(libs.gson)
+
+    // Custom Progress Indicator
+    implementation(libs.msz.progress.indicator)
+
+    debugImplementation(libs.ui.tooling)
+
+    // 네이버 지도 SDK
+    /*implementation(libs.map.sdk)
+    implementation(libs.naver.map.compose)
+    implementation(libs.play.services.location)
+    implementation(libs.naver.map.location)*/
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics.ktx)
+    implementation(libs.firebase.messaging)
+
+    // In-App Update
+    implementation(libs.app.update.ktx)
+
+    // OpenSource License
+    implementation(libs.oss.licenses)
 }

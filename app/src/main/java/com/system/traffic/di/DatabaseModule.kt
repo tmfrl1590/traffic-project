@@ -2,10 +2,10 @@ package com.system.traffic.di
 
 import android.content.Context
 import androidx.room.Room
-import com.system.traffic.data.local.db.TrafficDatabase
-import com.system.traffic.data.local.db.dao.LikeStationDao
-import com.system.traffic.data.local.db.dao.LineDao
-import com.system.traffic.data.local.db.dao.StationDao
+import com.traffic.data.local.db.TrafficDatabase
+import com.traffic.data.local.db.dao.LikeStationDao
+import com.traffic.data.local.db.dao.LineDao
+import com.traffic.data.local.db.dao.StationDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
