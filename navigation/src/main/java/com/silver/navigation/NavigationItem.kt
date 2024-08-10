@@ -1,4 +1,4 @@
-package com.traffic.presentation.navigation
+package com.silver.navigation
 
 
 import androidx.compose.material.icons.Icons
@@ -14,15 +14,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
-import androidx.navigation.navDeepLink
-import com.traffic.presentation.navigation.NavigationRouteName.DEEP_LINK_SCHEME
-import com.traffic.presentation.navigation.NavigationRouteName.MAIN_HOME
-import com.traffic.presentation.navigation.NavigationRouteName.MAIN_LINE
-import com.traffic.presentation.navigation.NavigationRouteName.MAIN_SETTING
-import com.traffic.presentation.navigation.NavigationRouteName.MAIN_STATION
-import com.traffic.presentation.util.GsonUtils
+import com.silver.navigation.NavigationRouteName.MAIN_HOME
+import com.silver.navigation.NavigationRouteName.MAIN_LINE
+import com.silver.navigation.NavigationRouteName.MAIN_SETTING
+import com.silver.navigation.NavigationRouteName.MAIN_STATION
 
 sealed class MainNav(
     override val route: String,
@@ -70,7 +65,7 @@ sealed class SplashNav(override val route: String, override val title: String): 
 }
 
 
-object BusArriveNav: DestinationArg<String> {
+/*object BusArriveNav: DestinationArg<String> {
     override val route: String = NavigationRouteName.BUS_ARRIVE
     override val title: String = NavigationTitle.BUS_ARRIVE
     override val argName: String = NavigationRouteName.BUS_ARRIVE
@@ -91,7 +86,7 @@ object BusArriveNav: DestinationArg<String> {
         val busArriveString = navBackStackEntry.arguments?.getString(argName)
         return GsonUtils.fromJson<String>(busArriveString)
     }
-}
+}*/
 
 interface Destination {
     val route: String

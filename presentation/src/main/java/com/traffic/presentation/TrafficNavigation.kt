@@ -1,4 +1,4 @@
-package com.traffic.presentation.navigation
+package com.traffic.presentation
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
@@ -15,6 +15,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.silver.navigation.BottomNavigationBar
+import com.silver.navigation.Screens
+import com.silver.navigation.fromRoute
 import com.traffic.presentation.screen.bus_arrive.BusArriveScreen
 import com.traffic.presentation.screen.home.HomeScreen
 import com.traffic.presentation.screen.line.LineScreen

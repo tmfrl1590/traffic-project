@@ -8,7 +8,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.traffic.presentation.navigation.Screens
+import com.silver.navigation.Screens
 import com.traffic.presentation.screen.CommonViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -56,7 +56,7 @@ fun SplashScreen(
         delay(1000L)
 
         navHostController.popBackStack()
-        navHostController.navigate(Screens.Home)
+        navHostController.navigate(com.silver.navigation.Screens.Home)
         //navHostController.navigate(Graph.HOME)
 
     }

@@ -29,12 +29,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 import com.ehsanmsz.mszprogressindicator.progressindicator.BallPulseSyncProgressIndicator
-import com.traffic.domain.model.LineModel
-import com.traffic.domain.model.StationModel
-import com.traffic.presentation.navigation.Screens
+import com.silver.navigation.Screens
 import com.traffic.presentation.screen.station.StationViewModel
 import com.traffic.presentation.ui.theme.MainColor
 
@@ -61,7 +58,7 @@ fun StationInfo(
         shape = RoundedCornerShape(12.dp),
         onClick = {
             //navHostController.navigate(route = "${Graph.BUS_ARRIVE}/${stationModel.busstop_id}")
-            navHostController.navigate(Screens.BusArrive(arsId = stationModel.busstop_id ?: ""))
+            navHostController.navigate(com.silver.navigation.Screens.BusArrive(arsId = stationModel.busstop_id ?: ""))
         }
     ){
         Box(

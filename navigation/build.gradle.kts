@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.traffic.presentation"
+    namespace = "com.silver.navigation"
     compileSdk = 34
 
     defaultConfig {
@@ -38,9 +38,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":domain"))
-    implementation(project(":common"))
-    implementation(project(":navigation"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -57,47 +54,15 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    // hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
-
-    // Coil
-    implementation(libs.coil.compose)
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
 
     // Material Icons Extended
     implementation(libs.androidx.material.icons.extended)
 
-    // retrofit
-    implementation(libs.retrofit)
-
-    // Sandwich
-    implementation(libs.sandwich.retrofit)
-
-    implementation(libs.kotlinx.coroutines.android)
-
-    // Gson
-    implementation(libs.gson)
-
-    // Custom Progress Indicator
-    implementation(libs.msz.progress.indicator)
-
-    debugImplementation(libs.ui.tooling)
-
-    // 네이버 지도 SDK
-    /*implementation(libs.map.sdk)
-    implementation(libs.naver.map.compose)
-    implementation(libs.play.services.location)
-    implementation(libs.naver.map.location)*/
-
-    // Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics.ktx)
-    implementation(libs.firebase.messaging)
-
-    // In-App Update
-    implementation(libs.app.update.ktx)
-
-    // OpenSource License
-    implementation(libs.oss.licenses)
+    // hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 }

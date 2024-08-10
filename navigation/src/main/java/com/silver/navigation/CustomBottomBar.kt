@@ -1,4 +1,4 @@
-package com.traffic.presentation.navigation
+package com.silver.navigation
 
 import android.app.Activity
 import androidx.activity.compose.BackHandler
@@ -62,10 +62,10 @@ fun BottomNavigationBar(
                 },
                 selected = currentScreen == item,
                 onBack = {
-                    if (currentScreen == Screens.Home) {
+                    if (currentScreen == com.silver.navigation.Screens.Home) {
                         (context as Activity).finish()
                     } else {
-                        navController.navigate(Screens.Home)
+                        navController.navigate(com.silver.navigation.Screens.Home)
                     }
                 }
             )
@@ -146,10 +146,10 @@ fun RowScope.AppBottomNavigationBarItem(
 
 private val NavController.shouldShowBottomBar
     get() = when (this.currentBackStackEntry.fromRoute()) {
-        Screens.Home,
-        Screens.Station,
-        Screens.Line,
-        Screens.Setting,
+        com.silver.navigation.Screens.Home,
+        com.silver.navigation.Screens.Station,
+        com.silver.navigation.Screens.Line,
+        com.silver.navigation.Screens.Setting,
         -> true
         else -> false
     }

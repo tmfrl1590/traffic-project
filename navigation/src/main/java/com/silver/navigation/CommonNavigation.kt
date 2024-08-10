@@ -1,4 +1,4 @@
-package com.traffic.presentation.navigation
+package com.silver.navigation
 
 object NavigationTitle{
     const val SPLASH = "스플래시"
