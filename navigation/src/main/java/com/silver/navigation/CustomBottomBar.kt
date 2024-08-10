@@ -146,10 +146,10 @@ fun RowScope.AppBottomNavigationBarItem(
 
 private val NavController.shouldShowBottomBar
     get() = when (this.currentBackStackEntry.fromRoute()) {
-        com.silver.navigation.Screens.Home,
-        com.silver.navigation.Screens.Station,
-        com.silver.navigation.Screens.Line,
-        com.silver.navigation.Screens.Setting,
+        Screens.Home,
+        Screens.Station,
+        Screens.Line,
+        Screens.Setting,
         -> true
         else -> false
     }

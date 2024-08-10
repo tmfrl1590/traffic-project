@@ -4,7 +4,7 @@ import com.traffic.domain.repository.LikeStationRepository
 import javax.inject.Inject
 
 class DeleteLikeStationUseCase @Inject constructor(
-    private val likeStationRepository: com.traffic.domain.repository.LikeStationRepository,
+    private val likeStationRepository: LikeStationRepository,
 ){
     suspend operator fun invoke(arsId: String){
         likeStationRepository.deleteLikeStation(arsId)

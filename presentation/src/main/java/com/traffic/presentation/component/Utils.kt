@@ -57,7 +57,6 @@ fun StationInfo(
         border = BorderStroke(1.dp, Color.LightGray),
         shape = RoundedCornerShape(12.dp),
         onClick = {
-            //navHostController.navigate(route = "${Graph.BUS_ARRIVE}/${stationModel.busstop_id}")
             navHostController.navigate(com.silver.navigation.Screens.BusArrive(arsId = stationModel.busstop_id ?: ""))
         }
     ){

@@ -113,7 +113,7 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
 
     // LiveData
-    implementation("androidx.compose.runtime:runtime-livedata:1.6.7")
+    //implementation("androidx.compose.runtime:runtime-livedata:1.6.7")
 
     //implementation("com.google.android.gms:play-services-ads:23.1.0")
 

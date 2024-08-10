@@ -5,9 +5,9 @@ import com.traffic.domain.repository.FileRepository
 import javax.inject.Inject
 
 class GetFileStationDataUseCase @Inject constructor(
-    private val repository: com.traffic.domain.repository.FileRepository
+    private val repository: FileRepository
 ) {
-    suspend operator fun invoke(): List<com.traffic.domain.model.StationModel>{
+    suspend operator fun invoke(): List<StationModel>{
         return repository.getStationFileData()
     }
 }

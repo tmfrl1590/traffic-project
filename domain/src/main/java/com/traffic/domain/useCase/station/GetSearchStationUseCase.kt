@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetSearchStationUseCase @Inject constructor(
-    private val stationRepository: com.traffic.domain.repository.StationRepository,
+    private val stationRepository: StationRepository,
 ) {
-    operator fun invoke(keyword: String): Flow<List<com.traffic.domain.model.StationModel>>{
+    operator fun invoke(keyword: String): Flow<List<StationModel>>{
         return stationRepository.getSearchedStationList(keyword = keyword)
     }
 }

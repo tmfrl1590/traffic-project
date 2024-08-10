@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetLikeStationListUseCase @Inject constructor(
-    private val likeStationRepository: com.traffic.domain.repository.LikeStationRepository
+    private val likeStationRepository: LikeStationRepository
 ) {
-    operator fun invoke(): Flow<List<com.traffic.domain.model.StationModel>> {
+    operator fun invoke(): Flow<List<StationModel>> {
         return likeStationRepository.getLikeStationList()
     }
 }

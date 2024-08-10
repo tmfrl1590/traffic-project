@@ -5,9 +5,9 @@ import com.traffic.domain.repository.BusArriveRepository
 import javax.inject.Inject
 
 class BusArriveUseCase @Inject constructor(
-    private val repository: com.traffic.domain.repository.BusArriveRepository
+    private val repository: BusArriveRepository
 ) {
-    suspend fun getBusArriveList(arsId: String): ArrayList<com.traffic.domain.model.BusArriveModel> {
+    suspend fun getBusArriveList(arsId: String): ArrayList<BusArriveModel> {
         return repository.getBusArriveList(arsId)
     }
 }

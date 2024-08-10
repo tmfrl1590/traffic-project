@@ -56,9 +56,7 @@ fun SplashScreen(
         delay(1000L)
 
         navHostController.popBackStack()
-        navHostController.navigate(com.silver.navigation.Screens.Home)
-        //navHostController.navigate(Graph.HOME)
-
+        navHostController.navigate(Screens.Home)
     }
 
     SplashBackground(

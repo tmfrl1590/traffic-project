@@ -5,9 +5,9 @@ import com.traffic.domain.repository.LikeStationRepository
 import javax.inject.Inject
 
 class AddLikeStationUseCase @Inject constructor(
-    private val likeStationRepository: com.traffic.domain.repository.LikeStationRepository,
+    private val likeStationRepository: LikeStationRepository,
 ) {
-    suspend operator fun invoke(stationModel: com.traffic.domain.model.StationModel){
+    suspend operator fun invoke(stationModel: StationModel){
         likeStationRepository.addLikeStation(stationModel = stationModel)
     }
 }

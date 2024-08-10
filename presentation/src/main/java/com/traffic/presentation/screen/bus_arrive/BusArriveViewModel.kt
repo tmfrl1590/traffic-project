@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.traffic.common.UIState
 import com.traffic.domain.model.BusArriveModel
+import com.traffic.domain.useCase.arrive.BusArriveUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,11 +14,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BusArriveViewModel @Inject constructor(
-    private val busArriveUseCase: com.traffic.domain.useCase.arrive.BusArriveUseCase,
+    private val busArriveUseCase: BusArriveUseCase,
 ): ViewModel(){
 
     private val _uiState = MutableStateFlow<UIState<List<BusArriveModel>>>(UIState.Idle)
-    val uiState: StateFlow<UIState<List<com.traffic.domain.model.BusArriveModel>>> = _uiState
+    val uiState: StateFlow<UIState<List<BusArriveModel>>> = _uiState
 
     // 버스 도착 정보 조회
     suspend fun getBusArriveList(arsId: String){

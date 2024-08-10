@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetSearchLineUseCase @Inject constructor(
-    private val lineRepository: com.traffic.domain.repository.LineRepository,
+    private val lineRepository: LineRepository,
 ) {
-    operator fun invoke(keyword: String): Flow<List<com.traffic.domain.model.LineModel>>{
+    operator fun invoke(keyword: String): Flow<List<LineModel>>{
         return lineRepository.getSearchedLineList(keyword)
     }
 }
