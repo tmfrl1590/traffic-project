@@ -5,7 +5,9 @@ import com.traffic.domain.model.BusArriveBody
 import com.traffic.domain.model.LineStationBody
 import retrofit2.http.GET
 import retrofit2.http.Query
+import javax.inject.Singleton
 
+@Singleton
 interface TrafficService {
 
     // 버스 도착정보

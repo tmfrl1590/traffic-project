@@ -1,4 +1,4 @@
-package com.system.traffic.di
+package com.silver.di
 
 import com.traffic.data.local.dataSource.FileDataSource
 import com.traffic.data.local.db.dao.LikeStationDao
@@ -20,6 +20,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {

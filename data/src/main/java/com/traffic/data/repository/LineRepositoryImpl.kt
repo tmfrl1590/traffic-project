@@ -6,8 +6,9 @@ import com.traffic.domain.model.LineModel
 import com.traffic.domain.repository.LineRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class LineRepositoryImpl(
+class LineRepositoryImpl @Inject constructor(
     private val lineDao: LineDao,
 ) : LineRepository {
 

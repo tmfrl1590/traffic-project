@@ -8,8 +8,9 @@ import com.traffic.data.local.db.entity.toStationEntity
 import com.traffic.domain.model.LineModel
 import com.traffic.domain.model.StationModel
 import com.traffic.domain.repository.FileRepository
+import javax.inject.Inject
 
-class FileRepositoryImpl (
+class FileRepositoryImpl @Inject constructor(
     private val stationDao: StationDao,
     private val lineDao: LineDao,
     private val dataSource: FileDataSource,

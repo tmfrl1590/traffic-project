@@ -7,8 +7,9 @@ import com.traffic.domain.model.StationModel
 import com.traffic.domain.repository.LikeStationRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class LikeStationRepositoryImpl(
+class LikeStationRepositoryImpl @Inject constructor(
     private val likeStationDao: LikeStationDao,
 ): LikeStationRepository {
     override suspend fun addLikeStation(stationModel: StationModel) {

@@ -1,8 +1,9 @@
-package com.system.traffic.di
+package com.silver.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.skydoves.sandwich.retrofit.adapters.ApiResponseCallAdapterFactory
 import com.traffic.common.Constants.BASE_URL
+import com.traffic.data.remote.TrafficService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,7 +44,7 @@ object NetworkModule {
     @OptIn(ExperimentalSerializationApi::class)
     @Singleton
     @Provides
-    fun provideTrafficApi(): com.traffic.data.remote.TrafficService {
+    fun provideTrafficApi(): TrafficService {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(logging())
@@ -52,6 +53,6 @@ object NetworkModule {
             )
             .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
             .build()
-            .create(com.traffic.data.remote.TrafficService::class.java)
+            .create(TrafficService::class.java)
     }
 }

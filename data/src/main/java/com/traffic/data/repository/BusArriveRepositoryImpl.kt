@@ -5,8 +5,9 @@ import com.traffic.common.Constants
 import com.traffic.data.remote.TrafficService
 import com.traffic.domain.model.BusArriveModel
 import com.traffic.domain.repository.BusArriveRepository
+import javax.inject.Inject
 
-class BusArriveRepositoryImpl (
+class BusArriveRepositoryImpl @Inject constructor(
     private val trafficApi: TrafficService,
 ): BusArriveRepository {
     override suspend fun getBusArriveList(arsId: String): ArrayList<BusArriveModel> {

@@ -4,11 +4,12 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("kotlinx-serialization")
     id("kotlin-parcelize")
+    alias(libs.plugins.compose.compiler) // 추가
     id("com.google.devtools.ksp")
 }
 
 android {
-    namespace = "com.traffic.domain"
+    namespace = "com.silver.di"
     compileSdk = 34
 
     defaultConfig {
@@ -37,8 +38,14 @@ android {
 }
 
 dependencies {
+    implementation(project(":data"))
+    implementation(project(":domain"))
+    //implementation(project(":presentation"))
+    implementation(project(":common"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
+    implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -46,8 +53,27 @@ dependencies {
     // hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    // room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    // retrofit
+    implementation(libs.retrofit)
 
     // Kotlin Serialization
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.serialization.json)
+
+    // kotlinx-serialization-converter
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
+
+    //Okhttp3
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
+    // Sandwich
+    implementation(libs.sandwich.retrofit)
 }
