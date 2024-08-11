@@ -3,7 +3,7 @@ package com.silver.di
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.skydoves.sandwich.retrofit.adapters.ApiResponseCallAdapterFactory
 import com.traffic.common.Constants.BASE_URL
-import com.traffic.data.remote.TrafficService
+import com.traffic.data.service.TrafficService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,9 +35,9 @@ object NetworkModule {
         return OkHttpClient.Builder()
             .addInterceptor(interceptor)
             .addNetworkInterceptor(interceptor)
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
             .build()
     }
 

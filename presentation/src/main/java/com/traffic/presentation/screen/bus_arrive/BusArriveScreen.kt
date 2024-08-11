@@ -14,6 +14,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -39,6 +40,7 @@ import com.traffic.presentation.ui.theme.MainColor
 fun BusArriveScreen(
     arsId: String,
     navController: NavController,
+    snackBarHostState: SnackbarHostState,
     busArriveViewModel: BusArriveViewModel = hiltViewModel(),
     stationViewModel: StationViewModel = hiltViewModel(),
     lineViewModel: LineViewModel = hiltViewModel(),
@@ -120,6 +122,7 @@ fun BusArriveScreen(
                 arsId = arsId,
                 busArriveViewModel = busArriveViewModel,
                 lineViewModel = lineViewModel,
+                snackBarHostState = snackBarHostState,
             )
         }
     }

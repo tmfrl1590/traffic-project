@@ -2,57 +2,43 @@ package com.traffic.domain.model
 
 import kotlinx.serialization.SerialName
 
-
 data class LineStationBody(
-    //@SerializedName("RESULT")
     @SerialName("RESULT")
     val result : Map<String, String>,
 
-    //@SerializedName("BUSSTOP_LIST")
     @SerialName("BUSSTOP_LIST")
-    val itemList : List<com.traffic.domain.model.LineStationModel>,
+    val itemList : List<LineStationModel>,
 
-    //@SerializedName("ROW_COUNT")
     @SerialName("ROW_COUNT")
-    val row_count : String
+    val rowCount : String
 )
 
 data class LineStationModel (
-
-    //@SerializedName("LINE_ID")
     @SerialName("LINE_ID")
-    val line_id : String,
+    val lineId : String,
 
-    //@SerializedName("LINE_NAME")
     @SerialName("LINE_NAME")
-    val line_name : String,
+    val lineName : String,
 
-    //@SerializedName("BUSSTOP_ID")
     @SerialName("BUSSTOP_ID")
-    val busstop_id : String,
+    val busStopId : String,
 
-    //@SerializedName("BUSSTOP_NAME")
     @SerialName("BUSSTOP_NAME")
-    val busstop_name : String,
+    val busStopName : String,
 
-    //@SerializedName("LONGITUDE")
     @SerialName("LONGITUDE")
     val longitude : String,
 
-    //@SerializedName("LATITUDE")
     @SerialName("LATITUDE")
     val latitude : String,
 
-    //@SerializedName("RETURN_FLAG")
     @SerialName("RETURN_FLAG")
-    val return_flag : String,
+    val returnFlag : String,
 
-    //@SerializedName("ARS_ID")
     @SerialName("ARS_ID")
-    val ars_id : String,
+    val arsId : String,
 
-    //@SerializedName("BUSSTOP_NUM")
     @SerialName("BUSSTOP_NUM")
-    val busstop_num : String
+    val busStopNum : String
 
 )

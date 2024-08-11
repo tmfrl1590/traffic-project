@@ -12,7 +12,7 @@ import com.traffic.domain.repository.BusArriveRepository
 import com.traffic.domain.repository.FileRepository
 import com.traffic.domain.repository.LineRepository
 import com.traffic.domain.repository.StationRepository
-import com.traffic.data.remote.TrafficService
+import com.traffic.data.service.TrafficService
 import com.traffic.data.repository.LikeStationRepositoryImpl
 import com.traffic.domain.repository.LikeStationRepository
 import dagger.Module

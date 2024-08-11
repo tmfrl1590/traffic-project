@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,10 +30,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.traffic.common.UIState
+import com.traffic.domain.model.BusArriveModel
 import com.traffic.presentation.R
 import com.traffic.presentation.component.CustomLoadingBar
 import com.traffic.presentation.component.lineColor
+import com.traffic.presentation.component.snackBarMessage
 import com.traffic.presentation.screen.line.LineViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun NextBusStop(
@@ -50,7 +54,7 @@ fun NextBusStop(
 }
 
 @Composable
-fun NoBusArriveText() {
+fun NoBusArrive() {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -65,15 +69,17 @@ fun NoBusArriveText() {
 }
 
 @Composable
-fun SettingBusArriveList(
-    result: List<com.traffic.domain.model.BusArriveModel>?,
+fun BusArriveList(
+    busArriveList: List<BusArriveModel>,
     lineViewModel: LineViewModel,
 ) {
-    LazyColumn {
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
         itemsIndexed(
-            items = result!!,
-            key = { _, item ->
-                item.bus_id!!
+            items = busArriveList,
+            key = { _, busArriveItem ->
+                busArriveItem.busId!!
             }
         ) { _, item ->
             BusArriveCard(
@@ -89,39 +95,47 @@ fun BusArriveList(
     arsId: String,
     busArriveViewModel: BusArriveViewModel,
     lineViewModel: LineViewModel,
+    snackBarHostState: SnackbarHostState,
 ) {
     LaunchedEffect(key1 = true) {
         busArriveViewModel.getBusArriveList(arsId)
     }
 
-    val uiState = busArriveViewModel.uiState.collectAsState()
-    val result = uiState.value.data
+    val busArriveListState by busArriveViewModel.busArriveListState.collectAsState()
+    val resultBusArriveList = busArriveListState.data?.data ?: emptyList()
+    val resultMessage = busArriveListState.data?.message ?: ""
 
-    when (uiState.value) {
+    //val errorFlow by busArriveViewModel.errorFlow.collectAsState("")
+
+    LaunchedEffect(true) {
+        busArriveViewModel.errorFlow.collectLatest { snackBarMessage(snackBarHostState, it) }
+    }
+
+    when (busArriveListState) {
         is UIState.Idle -> {}
-        is UIState.Loading -> {
-            CustomLoadingBar()
-        }
-
+        is UIState.Loading -> CustomLoadingBar()
         is UIState.Success -> {
-            if (result?.isEmpty() == true) {
-                NoBusArriveText()
+            if (resultBusArriveList.isEmpty()) {
+                NoBusArrive()
             } else {
-                SettingBusArriveList(
-                    result = result,
+                BusArriveList(
+                    busArriveList = resultBusArriveList,
                     lineViewModel = lineViewModel,
                 )
             }
         }
-
         is UIState.Error -> {
+            snackBarMessage(
+                snackBarHostState = snackBarHostState,
+                message = resultMessage
+            )
         }
     }
 }
 
 @Composable
 fun BusArriveCard(
-    busArriveModel: com.traffic.domain.model.BusArriveModel,
+    busArriveModel: BusArriveModel,
     lineViewModel: LineViewModel,
 ) {
     val lineColorList by lineViewModel.lineColorList.collectAsState()
@@ -129,14 +143,14 @@ fun BusArriveCard(
     var color = Color.Black
 
     for (i in lineColorList) {
-        if (i.line_id == busArriveModel.line_id) {
+        if (i.line_id == busArriveModel.lineId) {
             color = lineColor(i.line_kind.toString())
         }
     }
 
     Card(
         modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = 16.dp)
             .height(100.dp)
             .fillMaxWidth(),
         border = BorderStroke(
@@ -159,7 +173,7 @@ fun BusArriveCard(
                 verticalAlignment = Alignment.Top
             ) {
                 Text(
-                    text = busArriveModel.line_name!!,
+                    text = busArriveModel.lineName!!,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.height(40.dp),
@@ -167,7 +181,7 @@ fun BusArriveCard(
                 )
 
                 Text(
-                    text = "${busArriveModel.remain_min}분",
+                    text = "${busArriveModel.remainMin}분",
                     modifier = Modifier.wrapContentWidth(),
                     textAlign = TextAlign.End,
                     color = Color.Red
@@ -175,7 +189,7 @@ fun BusArriveCard(
             }
 
             Text(
-                text = "${stringResource(id = R.string.bus_arrive_now)} : ${busArriveModel.busstop_name} (${busArriveModel.remain_stop} 정거장 전)",
+                text = "${stringResource(id = R.string.bus_arrive_now)} : ${busArriveModel.busStopName} (${busArriveModel.remainStop} 정거장 전)",
                 modifier = Modifier
                     .wrapContentWidth()
                     .padding(8.dp)

@@ -1,4 +1,4 @@
-package com.traffic.data.remote
+package com.traffic.data.service
 
 import com.skydoves.sandwich.ApiResponse
 import com.traffic.domain.model.BusArriveBody

@@ -74,7 +74,9 @@ dependencies {
     // Sandwich
     implementation(libs.sandwich.retrofit)
 
-    implementation(libs.kotlinx.coroutines.android)
+    // Coroutines
+    implementation(libs.coroutines.core)
+    implementation(libs.coroutines.android)
 
     // Gson
     implementation(libs.gson)

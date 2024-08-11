@@ -2,7 +2,6 @@ package com.traffic.presentation.screen.setting
 
 import android.content.Intent
 import android.content.pm.PackageInfo
-import android.inputmethodservice.Keyboard.Row
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

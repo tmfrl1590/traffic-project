@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -34,6 +35,10 @@ import com.ehsanmsz.mszprogressindicator.progressindicator.BallPulseSyncProgress
 import com.silver.navigation.Screens
 import com.traffic.presentation.screen.station.StationViewModel
 import com.traffic.presentation.ui.theme.MainColor
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun StationInfo(
@@ -247,4 +252,18 @@ fun ScaffoldBackIcon() {
         contentDescription = "back",
         tint = Color.Black
     )
+}
+
+fun snackBarMessage(
+    snackBarHostState: SnackbarHostState,
+    message: String,
+    durationTime: Long = 2000L
+) {
+    CoroutineScope(Dispatchers.Main).launch {
+        val job = launch {
+            snackBarHostState.showSnackbar(message)
+        }
+        delay(durationTime)
+        job.cancel()
+    }
 }

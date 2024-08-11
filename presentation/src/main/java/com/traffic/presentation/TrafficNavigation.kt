@@ -91,7 +91,7 @@ fun AppNavHost() {
             }
             composable<Screens.BusArrive> { backStackEntry ->
                 val arsId = backStackEntry.toRoute<Screens.BusArrive>().arsId
-                BusArriveScreen(arsId = arsId , navController = navController)
+                BusArriveScreen(arsId = arsId , navController = navController,snackBarHostState = snackBarHostState)
             }
         }
     }
