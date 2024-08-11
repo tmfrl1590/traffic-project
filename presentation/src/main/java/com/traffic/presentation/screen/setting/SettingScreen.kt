@@ -1,6 +1,9 @@
 package com.traffic.presentation.screen.setting
 
+import android.content.Intent
 import android.content.pm.PackageInfo
+import android.inputmethodservice.Keyboard.Row
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.traffic.presentation.R
 import com.traffic.presentation.component.TitleComponent
 
@@ -43,6 +47,14 @@ fun SettingScreen(){
             content = version
         )
 
+        RowContent(
+            title = "오픈소스",
+            content = "",
+            onClick = {
+                context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
+            }
+        )
+
         /*RowContent(
             title = "앱테마 설정",
             content = version
@@ -54,12 +66,16 @@ fun SettingScreen(){
 fun RowContent(
     title: String,
     content: String,
+    onClick: () -> Unit = {},
 ){
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .height(60.dp),
+            .height(60.dp)
+            .clickable {
+                onClick()
+            },
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(
