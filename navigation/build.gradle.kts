@@ -1,11 +1,11 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id("dagger.hilt.android.plugin")
+    alias(libs.plugins.daggerHilt)
+    alias(libs.plugins.compose.compiler) // 추가
+    alias(libs.plugins.ksp)
     id("kotlinx-serialization")
     id("kotlin-parcelize")
-    alias(libs.plugins.compose.compiler) // 추가
-    id("com.google.devtools.ksp")
 }
 
 android {
