@@ -58,7 +58,7 @@ fun SearchBox(
                 imeAction = ImeAction.Search,
                 keyboardType = KeyboardType.Text,
                 capitalization = KeyboardCapitalization.Words,
-                autoCorrect = true
+                autoCorrectEnabled = true
             ),
             keyboardActions = KeyboardActions(
                 onSearch = { searchAction() }

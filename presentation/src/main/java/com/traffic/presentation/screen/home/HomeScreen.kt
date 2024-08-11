@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -53,12 +54,16 @@ fun HomeScreen(
             .fillMaxSize()
     ) {
         TitleComponent(
-            title = stringResource(R.string.station)
+            title = stringResource(R.string.like_station)
         )
 
         HorizontalDivider(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
         )
+
+        Spacer(modifier = Modifier.padding(bottom = 16.dp))
 
         if(likeStationList.isNotEmpty()){
             LazyColumn(

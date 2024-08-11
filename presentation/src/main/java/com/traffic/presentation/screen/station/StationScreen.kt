@@ -42,7 +42,7 @@ fun StationScreen(
         SearchBox(
             modifier = Modifier
                 .weight(0.15f),
-            text = stringResource(R.string.station),
+            text = stringResource(R.string.like_station),
             keyword = keyword,
             onValueChange = { keyword = it },
             searchAction = { stationViewModel.getSearchedStationList(keyword = keyword) },

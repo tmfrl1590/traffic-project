@@ -48,7 +48,7 @@ fun SettingScreen(){
         )
 
         RowContent(
-            title = "오픈소스",
+            title = "오픈소스 목록 보기",
             content = "",
             onClick = {
                 context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))

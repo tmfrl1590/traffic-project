@@ -62,10 +62,10 @@ fun BottomNavigationBar(
                 },
                 selected = currentScreen == item,
                 onBack = {
-                    if (currentScreen == com.silver.navigation.Screens.Home) {
+                    if (currentScreen == Screens.Home) {
                         (context as Activity).finish()
                     } else {
-                        navController.navigate(com.silver.navigation.Screens.Home)
+                        navController.navigate(Screens.Home)
                     }
                 }
             )
