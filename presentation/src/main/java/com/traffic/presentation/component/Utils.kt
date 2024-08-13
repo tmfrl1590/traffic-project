@@ -211,7 +211,7 @@ fun BannersAds(
 }*/
 
 @Composable
-fun TitleComponent(
+fun CommonTitleComponent(
     title: String,
 ){
     Text(
@@ -225,7 +225,7 @@ fun TitleComponent(
 }
 
 @Composable
-fun CustomLoadingBar() {
+fun CustomLoadingBar(){
     Box(
         modifier = Modifier
             .fillMaxSize()

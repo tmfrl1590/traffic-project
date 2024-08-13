@@ -26,7 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.traffic.presentation.R
 import com.traffic.presentation.component.StationInfo
-import com.traffic.presentation.component.TitleComponent
+import com.traffic.presentation.component.CommonTitleComponent
 import com.traffic.presentation.screen.station.StationViewModel
 
 @Composable
@@ -53,7 +53,7 @@ fun HomeScreen(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        TitleComponent(
+        CommonTitleComponent(
             title = stringResource(R.string.like_station)
         )
 
