@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.traffic.presentation.R
-import com.traffic.presentation.component.LineInfo
-import com.traffic.presentation.component.NoDataComponent
-import com.traffic.presentation.component.SearchBox
+import com.traffic.presentation.screen.component.LineInfo
+import com.traffic.presentation.screen.component.NoDataComponent
+import com.traffic.presentation.screen.component.SearchArea
 
 @Composable
 fun LineScreen(
@@ -32,7 +32,7 @@ fun LineScreen(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        SearchBox(
+        SearchArea(
             modifier = Modifier
                 .weight(0.15f),
             text = stringResource(R.string.line),

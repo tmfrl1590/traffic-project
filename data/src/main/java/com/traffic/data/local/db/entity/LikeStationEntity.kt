@@ -19,11 +19,11 @@ data class LikeStationEntity(
 
 fun StationModel.toLikeStationEntity(): LikeStationEntity {
     return LikeStationEntity(
-        station_num = station_num,
-        busstop_name = busstop_name,
-        next_busstop = next_busstop,
-        busstop_id = busstop_id,
-        ars_id = ars_id,
+        station_num = stationNum,
+        busstop_name = busStopName,
+        next_busstop = nextBusStop,
+        busstop_id = busStopId,
+        ars_id = arsId,
         longitude = longitude,
         latitude = latitude,
     )
@@ -31,11 +31,11 @@ fun StationModel.toLikeStationEntity(): LikeStationEntity {
 
 fun LikeStationEntity.toLikeStationModel(): StationModel {
     return StationModel(
-        station_num = station_num,
-        busstop_name = busstop_name!!,
-        next_busstop = next_busstop!!,
-        busstop_id = busstop_id!!,
-        ars_id = ars_id!!,
+        stationNum = station_num,
+        busStopName = busstop_name!!,
+        nextBusStop = next_busstop!!,
+        busStopId = busstop_id!!,
+        arsId = ars_id!!,
         longitude = longitude!!,
         latitude = latitude!!,
     )

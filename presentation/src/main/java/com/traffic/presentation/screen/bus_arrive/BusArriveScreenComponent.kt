@@ -32,9 +32,9 @@ import androidx.compose.ui.unit.sp
 import com.traffic.common.UIState
 import com.traffic.domain.model.BusArriveModel
 import com.traffic.presentation.R
-import com.traffic.presentation.component.CustomLoadingBar
-import com.traffic.presentation.component.lineColor
-import com.traffic.presentation.component.snackBarMessage
+import com.traffic.presentation.screen.component.CustomLoadingBar
+import com.traffic.presentation.screen.component.lineColor
+import com.traffic.presentation.screen.component.snackBarMessage
 import com.traffic.presentation.screen.line.LineViewModel
 import kotlinx.coroutines.flow.collectLatest
 

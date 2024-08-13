@@ -30,7 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.traffic.presentation.component.ScaffoldBackIcon
+import com.traffic.domain.model.StationModel
+import com.traffic.presentation.screen.component.ScaffoldBackIcon
 import com.traffic.presentation.screen.line.LineViewModel
 import com.traffic.presentation.screen.station.StationViewModel
 import com.traffic.presentation.ui.theme.MainColor
@@ -69,7 +70,7 @@ fun BusArriveScreen(
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = "${stationInfo.busstop_name} (${stationInfo.ars_id})",
+                        text = "${stationInfo.busStopName} (${stationInfo.arsId})",
                         fontSize = 20.sp,
                         color = Color.Black
                     )
@@ -86,11 +87,10 @@ fun BusArriveScreen(
                 actions = {
                     IconButton(
                         onClick = {
-                            if (selectedStation) {
-                                stationViewModel.deleteLikeStation(arsId)
-                            } else {
-                                stationViewModel.insertLikeStation(stationInfo)
-                            }
+                            insertOrDeleteStationInfo(
+                                stationModel = stationInfo,
+                                stationViewModel = stationViewModel,
+                            )
                         }
                     ) {
                         Icon(
@@ -113,7 +113,7 @@ fun BusArriveScreen(
                 .background(Color.White),
         ) {
             NextBusStop(
-                nextBusStopName = stationInfo.next_busstop ?: "",
+                nextBusStopName = stationInfo.nextBusStop ?: "",
             )
 
             Spacer(modifier = Modifier.size(20.dp))
@@ -125,5 +125,16 @@ fun BusArriveScreen(
                 snackBarHostState = snackBarHostState,
             )
         }
+    }
+}
+
+private fun insertOrDeleteStationInfo(
+    stationModel: StationModel,
+    stationViewModel: StationViewModel,
+){
+    if(stationModel.selected){
+        stationViewModel.deleteLikeStation(stationModel.busStopId ?: "")
+    }else {
+        stationViewModel.insertLikeStation(stationModel)
     }
 }

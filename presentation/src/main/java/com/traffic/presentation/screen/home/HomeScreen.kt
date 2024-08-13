@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.traffic.presentation.R
-import com.traffic.presentation.component.StationInfo
-import com.traffic.presentation.component.CommonTitleComponent
+import com.traffic.presentation.screen.component.StationInfo
+import com.traffic.presentation.screen.component.CommonTitleComponent
 import com.traffic.presentation.screen.station.StationViewModel
 
 @Composable

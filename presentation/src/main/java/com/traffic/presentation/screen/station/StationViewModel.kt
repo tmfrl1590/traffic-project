@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,7 +24,7 @@ class StationViewModel @Inject constructor(
     private val addLikeStationUseCase: AddLikeStationUseCase,
     private val deleteLikeStationUseCase: DeleteLikeStationUseCase,
     private val getLikeStationListUseCase: GetLikeStationListUseCase,
-): ViewModel() {
+) : ViewModel() {
 
     private val _stationInfo = MutableStateFlow(
         StationModel(
@@ -36,24 +37,31 @@ class StationViewModel @Inject constructor(
             ""
         )
     )
-    val stationInfo : StateFlow<StationModel> = _stationInfo
+    val stationInfo: StateFlow<StationModel> = _stationInfo
 
     private val _searchedStationList = MutableStateFlow<List<StationModel>>(listOf())
-    val searchResult : StateFlow<List<StationModel>> = _searchedStationList
+    val searchResult: StateFlow<List<StationModel>> = _searchedStationList
 
     private val _likeStationList = MutableStateFlow<List<StationModel>>(listOf())
-    val likeStationList : StateFlow<List<StationModel>> = _likeStationList
-
+    val likeStationList: StateFlow<List<StationModel>> = _likeStationList
 
     // 정류장 검색
     fun getSearchedStationList(keyword: String) = viewModelScope.launch(Dispatchers.IO) {
-        getSearchStationUseCase(keyword = "%$keyword%").collectLatest {
+        combine(
+            getSearchStationUseCase(keyword = "%$keyword%"),
+            getLikeStationListUseCase()
+        ) { searchedStationList, likeStationList ->
+            val likeStationSet = likeStationList.map { it.arsId }.toSet() // 좋아요 한 정류장 arsId Set / [5269] , [5269, 5268]
+            searchedStationList.map {
+                it.copy(selected = likeStationSet.contains(it.arsId))
+            }
+        }.collectLatest {
             _searchedStationList.emit(it)
         }
     }
 
-    fun getStationInfo(arsId: String){
-        viewModelScope.launch (Dispatchers.IO){
+    fun getStationInfo(arsId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
             getStationInfoUseCase(arsId).collectLatest {
                 _stationInfo.emit(it)
             }

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.pm.PackageInfo
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
@@ -13,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.traffic.presentation.R
-import com.traffic.presentation.component.CommonTitleComponent
+import com.traffic.presentation.screen.component.CommonTitleComponent
 
 @Composable
 fun SettingScreen(){
@@ -30,7 +31,9 @@ fun SettingScreen(){
         )
 
         HorizontalDivider(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
         )
 
         RowContent(
@@ -40,7 +43,7 @@ fun SettingScreen(){
 
         RowContent(
             title = stringResource(id = R.string.setting_open_source_list),
-            content = "open source",
+            content = "",
             onClick = {
                 context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
             }

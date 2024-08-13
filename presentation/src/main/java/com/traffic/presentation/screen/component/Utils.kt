@@ -1,4 +1,4 @@
-package com.traffic.presentation.component
+package com.traffic.presentation.screen.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.ehsanmsz.mszprogressindicator.progressindicator.BallPulseSyncProgressIndicator
 import com.silver.navigation.Screens
+import com.traffic.domain.model.StationModel
 import com.traffic.presentation.screen.station.StationViewModel
 import com.traffic.presentation.ui.theme.MainColor
 import kotlinx.coroutines.CoroutineScope
@@ -42,7 +43,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun StationInfo(
-    stationModel: com.traffic.domain.model.StationModel,
+    stationModel: StationModel,
     stationViewModel: StationViewModel,
     navHostController: NavHostController,
 ){
@@ -62,7 +63,7 @@ fun StationInfo(
         border = BorderStroke(1.dp, Color.LightGray),
         shape = RoundedCornerShape(12.dp),
         onClick = {
-            navHostController.navigate(Screens.BusArrive(arsId = stationModel.busstop_id ?: ""))
+            navHostController.navigate(Screens.BusArrive(arsId = stationModel.busStopId ?: ""))
         }
     ){
         Box(
@@ -72,9 +73,9 @@ fun StationInfo(
         ){
             IconButton(
                 onClick = { if(selectedStation){
-                    stationViewModel.deleteLikeStation(stationModel.busstop_id ?: "")
+                    //stationViewModel.deleteLikeStation(stationModel.busStopId ?: "")
                 }else{
-                    stationViewModel.insertLikeStation(stationModel)
+                    //stationViewModel.insertLikeStation(stationModel)
                 } },
                 modifier = Modifier
                     .align(Alignment.TopEnd)
@@ -92,7 +93,7 @@ fun StationInfo(
                     .fillMaxSize()
             ) {
                 Text(
-                    text = stationModel.busstop_name ?: "",
+                    text = stationModel.busStopName ?: "",
                     modifier = Modifier
                         .height(52.dp),
                     fontSize = 16.sp,
@@ -100,7 +101,7 @@ fun StationInfo(
                 )
 
                 Text(
-                    text = "${stationModel.next_busstop} | ${stationModel.ars_id}",
+                    text = "${stationModel.nextBusStop} | ${stationModel.arsId}",
                     modifier = Modifier
                         .weight(5f)
                 )

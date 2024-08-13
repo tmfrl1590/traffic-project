@@ -15,23 +15,25 @@
     <!-- 릴리즈 ID-->
     <string name="adModSettingId">ca-app-pub-3991873148102758~3904544234</string>
 
-    <string name="noBusMessage">버스정보 없음</string>
+    <!--Home Screen-->
     <string name="like_station">즐겨찾기</string>
-    <string name="line">노선</string>
-
-    <string name="searched_station_no_data">정류장 정보가 없습니다</string>
-    <string name="searched_line_no_data">노선 정보가 없습니다</string>
-
     <string name="like_no_data">즐겨찾기 정보가\n없습니다</string>
 
-    <!--Bus Arrive Screen-->
-    <string name="bus_arrive_no_data">버스도착 정보가\n없습니다</string>
-    <string name="bus_arrive_direction">방면</string>
-    <string name="bus_arrive_now">현재</string>
+    <!--Station Screen-->
+    <string name="station">정류장</string>
+    <string name="searched_station_no_data">정류장 정보가 없습니다</string>
+
+    <!--Line Screen-->
+    <string name="line">노선</string>
+    <string name="searched_line_no_data">노선 정보가 없습니다</string>
 
     <!--Setting Screen-->
     <string name="setting">설정</string>
     <string name="setting_app_version">앱버전</string>
     <string name="setting_open_source_list">오픈소스 목록 보기</string>
 
+    <!--Bus Arrive Screen-->
+    <string name="bus_arrive_no_data">버스도착 정보가\n없습니다</string>
+    <string name="bus_arrive_direction">방면</string>
+    <string name="bus_arrive_now">현재</string>
 </resources>
