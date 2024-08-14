@@ -34,7 +34,7 @@ class StationViewModel @Inject constructor(
             "",
             "",
             "",
-            ""
+            "",
         )
     )
     val stationInfo: StateFlow<StationModel> = _stationInfo
@@ -51,7 +51,8 @@ class StationViewModel @Inject constructor(
             getSearchStationUseCase(keyword = "%$keyword%"),
             getLikeStationListUseCase()
         ) { searchedStationList, likeStationList ->
-            val likeStationSet = likeStationList.map { it.arsId }.toSet() // 좋아요 한 정류장 arsId Set / [5269] , [5269, 5268]
+            val likeStationSet = likeStationList.map { it.arsId }
+                .toSet() // 좋아요 한 정류장 arsId Set / [5269] , [5269, 5268]
             searchedStationList.map {
                 it.copy(selected = likeStationSet.contains(it.arsId))
             }
@@ -60,11 +61,15 @@ class StationViewModel @Inject constructor(
         }
     }
 
-    fun getStationInfo(arsId: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            getStationInfoUseCase(arsId).collectLatest {
-                _stationInfo.emit(it)
-            }
+    fun getStationInfo(arsId: String) = viewModelScope.launch(Dispatchers.IO) {
+        combine(
+            getStationInfoUseCase(arsId),
+            getLikeStationListUseCase()
+        ) { stationInfo, likeStationList ->
+            val likeStationSet = likeStationList.map { it.arsId }.toSet()
+            stationInfo.copy(selected = likeStationSet.contains(stationInfo.arsId))
+        }.collectLatest {
+            _stationInfo.emit(it)
         }
     }
 

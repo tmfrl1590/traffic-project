@@ -122,7 +122,7 @@ fun LineInfo(
         border = BorderStroke(1.dp, Color.LightGray),
         shape = RoundedCornerShape(12.dp),
     ){
-        val lineColor = lineModel.line_kind?.let { lineColor(it) }
+        val lineColor = lineModel.lineKind?.let { lineColor(it) }
 
         Box(
             modifier = Modifier
@@ -135,7 +135,7 @@ fun LineInfo(
                     .fillMaxSize()
             ) {
                 Text(
-                    text = lineModel.line_name!!,
+                    text = lineModel.lineName!!,
                     modifier = Modifier.height(52.dp),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
@@ -143,7 +143,7 @@ fun LineInfo(
                 )
 
                 Text(
-                    text = "${lineModel.dir_down_name} ~ ${lineModel.dir_up_name}",
+                    text = "${lineModel.dirDownName} ~ ${lineModel.dirUpName}",
                     modifier = Modifier.weight(5f)
                 )
             }
@@ -171,21 +171,10 @@ fun NoDataComponent(
 
 fun lineColor(lienKind: String): Color {
     return when (lienKind) {
-        "1" -> {
-            Color.Red
-        }
-
-        "2" -> {
-            Color.Green
-        }
-
-        "3" -> {
-            Color.Blue
-        }
-
-        else -> {
-            Color.Black
-        }
+        "1" -> Color.Red
+        "2" -> Color.Green
+        "3" -> Color.Blue
+        else -> Color.Black
     }
 }
 

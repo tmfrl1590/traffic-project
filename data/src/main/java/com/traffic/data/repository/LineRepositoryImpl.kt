@@ -12,12 +12,6 @@ class LineRepositoryImpl @Inject constructor(
     private val lineDao: LineDao,
 ) : LineRepository {
 
-    override fun getLineColor(): Flow<List<LineModel>> {
-        return lineDao.getLineColor().map { list ->
-            list.map { it.toLineModel() }
-        }
-    }
-
     override fun getSearchedLineList(keyword: String): Flow<List<LineModel>> {
         return lineDao.getSearchedLineList(keyword).map { list ->
             list.map { it.toLineModel() }
@@ -26,5 +20,9 @@ class LineRepositoryImpl @Inject constructor(
 
     override fun getLineOne(lineId: String): LineModel {
         return lineDao.getLineOne(lineId).toLineModel()
+    }
+
+    override fun getLineKind(lineId: String): String {
+        return lineDao.getLineKind(lineId)
     }
 }

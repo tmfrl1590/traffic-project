@@ -7,6 +7,7 @@ import com.traffic.common.ResultCode
 import com.traffic.common.UIState
 import com.traffic.domain.model.BusArriveModel
 import com.traffic.domain.useCase.arrive.BusArriveUseCase
+import com.traffic.domain.useCase.line.GetLineKindUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BusArriveViewModel @Inject constructor(
     private val busArriveUseCase: BusArriveUseCase,
+    private val getLineKindUseCase: GetLineKindUseCase,
 ): ViewModel() {
 
     private val _busArriveListState = MutableStateFlow<UIState<BaseResponse<List<BusArriveModel>>>>(UIState.Idle)
@@ -32,6 +34,9 @@ class BusArriveViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             _busArriveListState.value = UIState.Loading
             val result = busArriveUseCase(arsId)
+            result.data?.map {
+                it.lineKind = getLineKindUseCase(it.lineId ?: "")
+            }
 
             when (result.code) {
                 ResultCode.BUS_ARRIVE_GET_SUCCESS.code -> _busArriveListState.value = UIState.Success(data = result)

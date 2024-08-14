@@ -63,5 +63,7 @@ data class BusArriveModel(
     val arriveFlag : String?,
 
     @SerialName("LINE_NAME")
-    val lineName : String?
+    val lineName : String?,
+
+    var lineKind : String? = null,
 )

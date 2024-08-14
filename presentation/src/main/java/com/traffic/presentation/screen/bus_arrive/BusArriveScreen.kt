@@ -53,26 +53,16 @@ fun BusArriveScreen(
 
     LaunchedEffect(true) {
         stationViewModel.getLikeStationList()
-        lineViewModel.getLineColor()
     }
 
     val stationInfo by stationViewModel.stationInfo.collectAsState()
-    val likeStationList by stationViewModel.likeStationList.collectAsState(initial = listOf())
-
-    var selectedStation by remember {
-        mutableStateOf(false)
-    }
-
-    selectedStation = likeStationList.contains(stationInfo)
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(
-                        text = "${stationInfo.busStopName} (${stationInfo.arsId})",
-                        fontSize = 20.sp,
-                        color = Color.Black
+                    BusArriveScreenTitle(
+                        stationInfo = stationInfo,
                     )
                 },
                 navigationIcon = {
@@ -85,20 +75,10 @@ fun BusArriveScreen(
                     }
                 },
                 actions = {
-                    IconButton(
-                        onClick = {
-                            insertOrDeleteStationInfo(
-                                stationModel = stationInfo,
-                                stationViewModel = stationViewModel,
-                            )
-                        }
-                    ) {
-                        Icon(
-                            imageVector = if (selectedStation) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                            contentDescription = "Favorite",
-                            tint = MainColor,
-                        )
-                    }
+                    StationFavoriteIcon(
+                        stationViewModel = stationViewModel,
+                        stationInfo = stationInfo,
+                    )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.White,
@@ -125,6 +105,27 @@ fun BusArriveScreen(
                 snackBarHostState = snackBarHostState,
             )
         }
+    }
+}
+
+@Composable
+private fun StationFavoriteIcon(
+    stationViewModel: StationViewModel,
+    stationInfo: StationModel,
+) {
+    IconButton(
+        onClick = {
+            insertOrDeleteStationInfo(
+                stationModel = stationInfo,
+                stationViewModel = stationViewModel,
+            )
+        }
+    ) {
+        Icon(
+            imageVector = if (stationInfo.selected) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+            contentDescription = "Favorite",
+            tint = MainColor,
+        )
     }
 }
 

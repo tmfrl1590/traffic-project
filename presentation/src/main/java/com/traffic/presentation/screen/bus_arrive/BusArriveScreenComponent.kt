@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.traffic.common.UIState
 import com.traffic.domain.model.BusArriveModel
+import com.traffic.domain.model.StationModel
 import com.traffic.presentation.R
 import com.traffic.presentation.screen.component.CustomLoadingBar
 import com.traffic.presentation.screen.component.lineColor
@@ -71,7 +72,6 @@ fun NoBusArrive() {
 @Composable
 fun BusArriveList(
     busArriveList: List<BusArriveModel>,
-    lineViewModel: LineViewModel,
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -84,7 +84,6 @@ fun BusArriveList(
         ) { _, item ->
             BusArriveCard(
                 busArriveModel = item,
-                lineViewModel = lineViewModel,
             )
         }
     }
@@ -105,8 +104,6 @@ fun BusArriveList(
     val resultBusArriveList = busArriveListState.data?.data ?: emptyList()
     val resultMessage = busArriveListState.data?.message ?: ""
 
-    //val errorFlow by busArriveViewModel.errorFlow.collectAsState("")
-
     LaunchedEffect(true) {
         busArriveViewModel.errorFlow.collectLatest { snackBarMessage(snackBarHostState, it) }
     }
@@ -120,7 +117,6 @@ fun BusArriveList(
             } else {
                 BusArriveList(
                     busArriveList = resultBusArriveList,
-                    lineViewModel = lineViewModel,
                 )
             }
         }
@@ -136,18 +132,7 @@ fun BusArriveList(
 @Composable
 fun BusArriveCard(
     busArriveModel: BusArriveModel,
-    lineViewModel: LineViewModel,
 ) {
-    val lineColorList by lineViewModel.lineColorList.collectAsState()
-
-    var color = Color.Black
-
-    for (i in lineColorList) {
-        if (i.line_id == busArriveModel.lineId) {
-            color = lineColor(i.line_kind.toString())
-        }
-    }
-
     Card(
         modifier = Modifier
             .padding(horizontal = 16.dp)
@@ -177,7 +162,7 @@ fun BusArriveCard(
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.height(40.dp),
-                    color = color
+                    color = lineColor(busArriveModel.lineKind ?: "1")
                 )
 
                 Text(
@@ -196,4 +181,21 @@ fun BusArriveCard(
             )
         }
     }
+}
+
+@Composable
+fun BusArriveScreenTitle(
+    stationInfo: StationModel,
+) {
+    Text(
+        text = busArriveScreenTitleText(stationInfo),
+        fontSize = 20.sp,
+        color = Color.Black
+    )
+}
+
+fun busArriveScreenTitleText(
+    stationInfo: StationModel,
+): String{
+    return "${stationInfo.busStopName} (${stationInfo.arsId})"
 }

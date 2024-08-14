@@ -5,7 +5,6 @@ import androidx.room.PrimaryKey
 import com.traffic.common.Constants.LINE_ENTITY
 import com.traffic.domain.model.LineModel
 import javax.annotation.Nonnull
-import javax.annotation.Nullable
 
 @Entity(tableName = LINE_ENTITY)
 data class LineEntity (
@@ -26,29 +25,29 @@ data class LineEntity (
 
 fun LineModel.toLineEntity(): LineEntity {
     return LineEntity(
-        dir_down_name = dir_down_name!!,
-        run_interval = run_interval,
-        last_run_time = last_run_time,
-        line_num = line_num,
-        first_run_time = first_run_time,
-        dir_up_name = dir_up_name,
-        line_id = line_id!!,
-        line_kind = line_kind,
-        line_name = line_name,
+        dir_down_name = dirDownName!!,
+        run_interval = runInterval,
+        last_run_time = lastRunTime,
+        line_num = lineNum,
+        first_run_time = firstRunTime,
+        dir_up_name = dirUpName,
+        line_id = lineId!!,
+        line_kind = lineKind,
+        line_name = lineName,
         selected = false ,
     )
 }
 
 fun LineEntity.toLineModel(): LineModel {
     return LineModel(
-        dir_down_name = dir_down_name,
-        run_interval = run_interval,
-        last_run_time = last_run_time,
-        line_num = line_num,
-        first_run_time = first_run_time,
-        dir_up_name = dir_up_name,
-        line_id = line_id,
-        line_kind = line_kind,
-        line_name = line_name,
+        dirDownName = dir_down_name,
+        runInterval = run_interval,
+        lastRunTime = last_run_time,
+        lineNum = line_num,
+        firstRunTime = first_run_time,
+        dirUpName = dir_up_name,
+        lineId = line_id,
+        lineKind = line_kind,
+        lineName = line_name,
     )
 }
