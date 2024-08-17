@@ -1,6 +1,7 @@
 package com.silver.navigation
 
 import android.app.Activity
+import android.content.Context
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +23,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,6 +33,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 @Composable
 fun BottomNavigationBar(
     navController: NavHostController,
+    context: Context,
 ) {
     val screenList = listOf(
         Screens.Home,
@@ -43,8 +44,6 @@ fun BottomNavigationBar(
 
     val backStackEntry = navController.currentBackStackEntryAsState()
     val currentScreen = backStackEntry.value.fromRoute()
-
-    val context = LocalContext.current
 
     AppBottomNavigationBar(
         show = navController.shouldShowBottomBar

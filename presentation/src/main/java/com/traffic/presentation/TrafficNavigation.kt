@@ -10,6 +10,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -35,12 +36,17 @@ fun AppNavHost() {
 
     val snackBarHostState = remember { SnackbarHostState() }
 
+    val context = LocalContext.current
+
     Scaffold(
         snackbarHost = {
             SnackbarHost(snackBarHostState)
         },
         bottomBar = {
-            BottomNavigationBar(navController = navController)
+            BottomNavigationBar(
+                navController = navController,
+                context = context,
+            )
         }
     ){
         NavHost(
@@ -78,7 +84,7 @@ fun AppNavHost() {
                 SplashScreen(navHostController = navController)
             }
             composable<Screens.Home> {
-                HomeScreen(navHostController = navController)
+                HomeScreen(navHostController = navController, context = context)
             }
             composable<Screens.Station> {
                 StationScreen(navHostController = navController)
@@ -87,7 +93,7 @@ fun AppNavHost() {
                 LineScreen()
             }
             composable<Screens.Setting> {
-                SettingScreen()
+                SettingScreen(context = context)
             }
             composable<Screens.BusArrive> { backStackEntry ->
                 val arsId = backStackEntry.toRoute<Screens.BusArrive>().arsId

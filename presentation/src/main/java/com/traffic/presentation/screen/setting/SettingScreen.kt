@@ -1,5 +1,6 @@
 package com.traffic.presentation.screen.setting
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import androidx.compose.foundation.layout.Column
@@ -17,8 +18,9 @@ import com.traffic.presentation.R
 import com.traffic.presentation.screen.component.CommonTitleComponent
 
 @Composable
-fun SettingScreen(){
-    val context = LocalContext.current
+fun SettingScreen(
+    context: Context,
+){
     val info: PackageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
     val version = info.versionName
 
