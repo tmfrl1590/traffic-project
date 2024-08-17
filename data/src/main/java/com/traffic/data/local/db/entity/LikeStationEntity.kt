@@ -38,5 +38,6 @@ fun LikeStationEntity.toLikeStationModel(): StationModel {
         arsId = ars_id!!,
         longitude = longitude!!,
         latitude = latitude!!,
+        selected = true
     )
 }

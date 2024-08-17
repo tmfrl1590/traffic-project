@@ -41,74 +41,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-@Composable
-fun StationInfo(
-    stationModel: StationModel,
-    stationViewModel: StationViewModel,
-    navHostController: NavHostController,
-){
-    val likeStationList by stationViewModel.likeStationList.collectAsState(initial = listOf())
 
-    var selectedStation by remember {
-        mutableStateOf(false)
-    }
-
-    selectedStation = likeStationList.contains(stationModel)
-
-    Card(
-        modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .height(100.dp)
-            .fillMaxWidth(),
-        border = BorderStroke(1.dp, Color.LightGray),
-        shape = RoundedCornerShape(12.dp),
-        onClick = {
-            navHostController.navigate(Screens.BusArrive(arsId = stationModel.busStopId ?: ""))
-        }
-    ){
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White),
-        ){
-            IconButton(
-                onClick = { if(selectedStation){
-                    //stationViewModel.deleteLikeStation(stationModel.busStopId ?: "")
-                }else{
-                    //stationViewModel.insertLikeStation(stationModel)
-                } },
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-            ){
-                Icon(
-                    imageVector = if(selectedStation) Icons.Default.Favorite else Icons.Default.FavoriteBorder ,
-                    contentDescription = "Favorite",
-                    tint = MainColor
-                )
-            }
-
-            Column(
-                modifier = Modifier
-                    .padding(12.dp)
-                    .fillMaxSize()
-            ) {
-                Text(
-                    text = stationModel.busStopName ?: "",
-                    modifier = Modifier
-                        .height(52.dp),
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
-                )
-
-                Text(
-                    text = "${stationModel.nextBusStop} | ${stationModel.arsId}",
-                    modifier = Modifier
-                        .weight(5f)
-                )
-            }
-        }
-    }
-}
 
 @Composable
 fun LineInfo(

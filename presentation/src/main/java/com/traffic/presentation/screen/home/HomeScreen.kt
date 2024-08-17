@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.traffic.presentation.R
-import com.traffic.presentation.screen.component.StationInfo
 import com.traffic.presentation.screen.component.CommonTitleComponent
 import com.traffic.presentation.screen.station.StationViewModel
 
@@ -65,30 +64,11 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.padding(bottom = 16.dp))
 
-        if(likeStationList.isNotEmpty()){
-            LazyColumn(
-                modifier = Modifier
-                    .weight(0.9f)
-            ) {
-                items(likeStationList.size){ index ->
-                    StationInfo(
-                        stationModel = likeStationList[index],
-                        stationViewModel = stationViewModel,
-                        navHostController = navHostController,
-                    )
-                }
-            }
-        }else {
-            NoLikeContent(
-                modifier = Modifier
-                    .weight(0.9f)
-            )
-        }
-
-        /*BannersAds(
-            modifier = Modifier
-                .weight(0.1f)
-        )*/
+        LikeStationArea(
+            stationViewModel = stationViewModel,
+            navHostController = navHostController,
+            likeStationList = likeStationList,
+        )
     }
 }
 
