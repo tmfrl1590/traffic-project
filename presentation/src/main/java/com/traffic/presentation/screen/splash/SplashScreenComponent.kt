@@ -15,6 +15,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.traffic.presentation.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
 
 @Composable
 fun SplashBackground(
@@ -34,4 +38,24 @@ fun SplashBackground(
             contentDescription = ""
         )
     }
+}
+
+suspend fun setFileData(
+    splashViewModel: SplashViewModel,
+){
+    val insertStationJob = CoroutineScope(Dispatchers.IO).launch {
+        val stationList = splashViewModel.getFileStationData()
+        for(item in stationList){
+            splashViewModel.insertStationInfo(item)
+        }
+    }
+
+    val insertLineJob = CoroutineScope(Dispatchers.IO).launch {
+        val lineList = splashViewModel.getFileLineData()
+        for(item in lineList){
+            splashViewModel.insertLineInfo(item)
+        }
+    }
+
+    joinAll(insertStationJob, insertLineJob)
 }

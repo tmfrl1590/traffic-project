@@ -9,17 +9,12 @@ import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.silver.navigation.Screens
-import com.traffic.presentation.screen.CommonViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
 fun SplashScreen(
     navHostController: NavHostController,
     splashViewModel: SplashViewModel = hiltViewModel(),
-    commonViewModel: CommonViewModel = hiltViewModel(),
-){
+) {
     val scale = remember {
         Animatable(0f)
     }
@@ -33,27 +28,13 @@ fun SplashScreen(
                     OvershootInterpolator(8f).getInterpolation(it)
                 })
         )
+        val isCheckFirstLogin = splashViewModel.getIsFirstLogin()
 
-        val isFirstLogin = commonViewModel.checkIsFirstLogin()
-        if(!isFirstLogin){
-            commonViewModel.setUpIsFirstLogin()
+        if (isCheckFirstLogin) {
+            splashViewModel.setUpIsFirstLogin()
 
-            launch(Dispatchers.IO) {
-                val stationList = splashViewModel.getFileStationData()
-                for(item in stationList){
-                    splashViewModel.insertStationInfo(item)
-                }
-            }
-
-            launch(Dispatchers.IO){
-                val lineList = splashViewModel.getFileLineData()
-                for(item in lineList){
-                    splashViewModel.insertLineInfo(item)
-                }
-            }
+            setFileData(splashViewModel)
         }
-
-        delay(1000L)
 
         navHostController.popBackStack()
         navHostController.navigate(Screens.Home)

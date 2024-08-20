@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.traffic.domain.model.LineModel
 import com.traffic.domain.model.StationModel
+import com.traffic.domain.useCase.datastore.GetIsFirstLoginUseCase
+import com.traffic.domain.useCase.datastore.SetUpIsFirstLoginUseCase
 import com.traffic.domain.useCase.file.GetFileLineDataUseCase
 import com.traffic.domain.useCase.file.GetFileStationDataUseCase
 import com.traffic.domain.useCase.file.InsertLineFileDataUseCase
@@ -19,7 +21,8 @@ class SplashViewModel @Inject constructor(
     private val insertLineFileDataUseCase: InsertLineFileDataUseCase,
     private val getFileStationDataUseCase: GetFileStationDataUseCase,
     private val getFileLineDataUseCase: GetFileLineDataUseCase,
-
+    private val setUpIsFirstLoginUseCase: SetUpIsFirstLoginUseCase,
+    private val getIsFirstLoginUseCase: GetIsFirstLoginUseCase,
     ): ViewModel(){
 
     // json 파일로부터 정류장 정보 읽어오기
@@ -43,5 +46,13 @@ class SplashViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             insertLineFileDataUseCase(lineModel = lineModel)
         }
+    }
+
+    fun setUpIsFirstLogin() = viewModelScope.launch(Dispatchers.IO) {
+        setUpIsFirstLoginUseCase()
+    }
+
+    suspend fun getIsFirstLogin(): Boolean{
+        return getIsFirstLoginUseCase()
     }
 }
