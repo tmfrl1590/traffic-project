@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EvStation
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LineAxis
+import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import kotlinx.serialization.Serializable
@@ -33,6 +34,11 @@ sealed interface Screens : ArgInterface {
     data object Line: Screens {
         override val title: String = NavigationTitle.MAIN_LINE
         override val icon: ImageVector = Icons.Filled.LineAxis
+    }
+    @Serializable
+    data object Map: Screens {
+        override val title: String = NavigationTitle.MAIN_MAP
+        override val icon: ImageVector = Icons.Filled.Map
     }
     @Serializable
     data object Setting: Screens {

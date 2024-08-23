@@ -15,6 +15,7 @@ fun NavBackStackEntry?.fromRoute(): Screens {
             Screens.Home::class.simpleName -> Screens.Home
             Screens.Station::class.simpleName -> Screens.Station
             Screens.Line::class.simpleName -> Screens.Line
+            Screens.Map::class.simpleName -> Screens.Map
             Screens.Setting::class.simpleName -> Screens.Setting
             Screens.BusArrive::class.simpleName -> Screens.BusArrive(
                 ""

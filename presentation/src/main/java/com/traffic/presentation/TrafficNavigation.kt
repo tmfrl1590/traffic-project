@@ -22,6 +22,7 @@ import com.silver.navigation.fromRoute
 import com.traffic.presentation.screen.bus_arrive.BusArriveScreen
 import com.traffic.presentation.screen.home.HomeScreen
 import com.traffic.presentation.screen.line.LineScreen
+import com.traffic.presentation.screen.map.MapScreen
 import com.traffic.presentation.screen.setting.SettingScreen
 import com.traffic.presentation.screen.splash.SplashScreen
 import com.traffic.presentation.screen.station.StationScreen
@@ -91,6 +92,9 @@ fun AppNavHost() {
             }
             composable<Screens.Line> {
                 LineScreen()
+            }
+            composable<Screens.Map> {
+                MapScreen(context = context, snackBarHostState = snackBarHostState)
             }
             composable<Screens.Setting> {
                 SettingScreen(context = context)

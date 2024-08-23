@@ -123,7 +123,7 @@ firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx"
 app-update-ktx = { module = "com.google.android.play:app-update-ktx", version.ref = "appUpdateKtx" }
 
 # Naver Map SDK
-# map-sdk = { module = "com.naver.maps:map-sdk", version.ref = "mapSdk" }
+map-sdk = { module = "com.naver.maps:map-sdk", version.ref = "mapSdk" }
 
 # Naver Map Compose
 naver-map-compose = { module = "io.github.fornewid:naver-map-compose", version.ref = "naverMapCompose" }

@@ -39,6 +39,7 @@ fun BottomNavigationBar(
         Screens.Home,
         Screens.Station,
         Screens.Line,
+        Screens.Map,
         Screens.Setting,
     )
 
@@ -148,6 +149,7 @@ private val NavController.shouldShowBottomBar
         Screens.Home,
         Screens.Station,
         Screens.Line,
+        Screens.Map,
         Screens.Setting,
         -> true
         else -> false
