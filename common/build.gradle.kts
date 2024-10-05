@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlinx-serialization")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -43,4 +44,7 @@ dependencies {
     // Kotlin Serialization
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.google.firebase.analytics.ktx)
+    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
 }

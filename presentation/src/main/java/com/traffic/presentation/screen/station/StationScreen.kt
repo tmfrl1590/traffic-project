@@ -1,5 +1,6 @@
 package com.traffic.presentation.screen.station
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -13,16 +14,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.traffic.common.firebase.logEvent
 import com.traffic.presentation.R
 import com.traffic.presentation.screen.component.SearchArea
 
 
 @Composable
 fun StationScreen(
+    context: Context,
     navHostController: NavHostController,
     stationViewModel: StationViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit) {
+        logEvent(context, "StationScreen")
         stationViewModel.getLikeStationList()
     }
 

@@ -82,16 +82,16 @@ fun AppNavHost() {
             },
         ){
             composable<Screens.Splash> {
-                SplashScreen(navHostController = navController)
+                SplashScreen(context = context, navHostController = navController)
             }
             composable<Screens.Home> {
                 HomeScreen(navHostController = navController, context = context)
             }
             composable<Screens.Station> {
-                StationScreen(navHostController = navController)
+                StationScreen(context = context, navHostController = navController)
             }
             composable<Screens.Line> {
-                LineScreen()
+                LineScreen(context = context)
             }
             composable<Screens.Map> {
                 MapScreen(context = context, snackBarHostState = snackBarHostState)
@@ -101,7 +101,7 @@ fun AppNavHost() {
             }
             composable<Screens.BusArrive> { backStackEntry ->
                 val arsId = backStackEntry.toRoute<Screens.BusArrive>().arsId
-                BusArriveScreen(arsId = arsId , navController = navController,snackBarHostState = snackBarHostState)
+                BusArriveScreen(context = context, arsId = arsId , navController = navController,snackBarHostState = snackBarHostState)
             }
         }
     }

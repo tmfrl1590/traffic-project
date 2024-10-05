@@ -9,11 +9,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import com.traffic.common.firebase.logEvent
 import com.traffic.presentation.R
 import com.traffic.presentation.screen.component.CommonTitleComponent
 
@@ -21,6 +23,9 @@ import com.traffic.presentation.screen.component.CommonTitleComponent
 fun SettingScreen(
     context: Context,
 ){
+    LaunchedEffect(key1 = Unit) {
+        logEvent(context, "SettingScreen")
+    }
     val info: PackageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
     val version = info.versionName
 

@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.traffic.common.firebase.logEvent
 import com.traffic.presentation.R
 import com.traffic.presentation.screen.component.CommonTitleComponent
 import com.traffic.presentation.screen.station.StationViewModel
@@ -33,9 +34,9 @@ fun HomeScreen(
     navHostController: NavHostController,
     stationViewModel: StationViewModel = hiltViewModel(),
 ) {
-
     LaunchedEffect(Unit){
         stationViewModel.getLikeStationList()
+        logEvent(context, "HomeScreen")
     }
 
     val likeStationList by stationViewModel.likeStationList.collectAsState(initial = listOf())

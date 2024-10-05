@@ -1,5 +1,6 @@
 package com.traffic.presentation.screen.bus_arrive
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.traffic.common.firebase.logEvent
 import com.traffic.domain.model.StationModel
 import com.traffic.presentation.screen.component.ScaffoldBackIcon
 import com.traffic.presentation.screen.line.LineViewModel
@@ -39,6 +41,7 @@ import com.traffic.presentation.ui.theme.MainColor
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BusArriveScreen(
+    context: Context,
     arsId: String,
     navController: NavController,
     snackBarHostState: SnackbarHostState,
@@ -52,6 +55,7 @@ fun BusArriveScreen(
     }
 
     LaunchedEffect(true) {
+        logEvent(context, "BusArriveScreen")
         stationViewModel.getLikeStationList()
     }
 

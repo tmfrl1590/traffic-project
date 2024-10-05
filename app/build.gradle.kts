@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.daggerHilt)
     alias(libs.plugins.compose.compiler)
     id("com.google.android.gms.oss-licenses-plugin")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -17,8 +18,8 @@ android {
         applicationId = "com.system.traffic"
         minSdk = 28
         targetSdk = 34
-        versionCode = 25
-        versionName = "1.4.12"
+        versionCode = 27
+        versionName = "1.4.20"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -82,4 +83,7 @@ dependencies {
 
     // OpenSource License
     implementation(libs.oss.licenses)
+
+    implementation(libs.google.firebase.analytics.ktx)
+    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
 }
