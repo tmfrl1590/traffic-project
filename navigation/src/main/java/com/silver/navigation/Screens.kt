@@ -9,45 +9,62 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import kotlinx.serialization.Serializable
 
-interface ArgInterface {
-    val title: String
-    val icon: ImageVector?
+sealed interface Screens {
+    @Serializable
+    data object Splash: Screens
+    @Serializable
+    data object Main: Screens
+    @Serializable
+    data object Home: Screens
+    @Serializable
+    data object Station: Screens
+    @Serializable
+    data object Line: Screens
+    @Serializable
+    data object Map: Screens
+    @Serializable
+    data object Setting: Screens
+    @Serializable
+    data class BusArrive(val arsId: String): Screens
 }
 
-sealed interface Screens : ArgInterface {
-    @Serializable
-    data object Splash: Screens {
-        override val title: String = NavigationTitle.SPLASH
-        override val icon: ImageVector? = null
-    }
-    @Serializable
-    data object Home: Screens {
-        override val title: String = NavigationTitle.MAIN_HOME
-        override val icon: ImageVector = Icons.Filled.Home
-    }
-    @Serializable
-    data object Station: Screens {
-        override val title: String = NavigationTitle.MAIN_STATION
-        override val icon: ImageVector = Icons.Filled.EvStation
-    }
-    @Serializable
-    data object Line: Screens {
-        override val title: String = NavigationTitle.MAIN_LINE
-        override val icon: ImageVector = Icons.Filled.LineAxis
-    }
-    @Serializable
-    data object Map: Screens {
-        override val title: String = NavigationTitle.MAIN_MAP
-        override val icon: ImageVector = Icons.Filled.Map
-    }
-    @Serializable
-    data object Setting: Screens {
-        override val title: String = NavigationTitle.MAIN_SETTING
-        override val icon: ImageVector = Icons.Filled.Settings
-    }
-    @Serializable
-    data class BusArrive(val arsId: String): Screens {
-        override val title: String = NavigationTitle.BUS_ARRIVE
-        override val icon: ImageVector? get() = null
-    }
+
+val bottomDestinations = listOf(
+    BottomBarScreen.Home,
+    BottomBarScreen.Station,
+    BottomBarScreen.Line,
+    BottomBarScreen.Map,
+    BottomBarScreen.Setting,
+)
+
+sealed class BottomBarScreen (
+    val screen: Screens,
+    val name: String,
+    val icon: ImageVector,
+){
+    data object Home: BottomBarScreen(
+        screen = Screens.Home,
+        name = "홈",
+        icon = Icons.Filled.Home
+    )
+    data object Station: BottomBarScreen(
+        screen = Screens.Station,
+        name = "정류장",
+        icon = Icons.Filled.EvStation
+    )
+    data object Line: BottomBarScreen(
+        screen = Screens.Line,
+        name = "노선",
+        icon = Icons.Filled.LineAxis
+    )
+    data object Map: BottomBarScreen(
+        screen = Screens.Map,
+        name = "지도",
+        icon = Icons.Filled.Map
+    )
+    data object Setting: BottomBarScreen(
+        screen = Screens.Setting,
+        name = "설정",
+        icon = Icons.Filled.Settings
+    )
 }

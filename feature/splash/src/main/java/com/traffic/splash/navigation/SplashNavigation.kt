@@ -13,7 +13,7 @@ fun NavGraphBuilder.splashGraph(
         SplashScreen(
             onGoHomeScreen = {
                 navHostController.popBackStack()
-                navHostController.navigate(Screens.Home)
+                navHostController.navigate(Screens.Main)
             }
         )
     }

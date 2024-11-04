@@ -1,4 +1,4 @@
-package com.traffic.station
+package com.traffic.station.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -31,6 +31,7 @@ import com.silver.navigation.Screens
 import com.traffic.common.NoDataComponent
 import com.traffic.common.R
 import com.traffic.domain.model.StationModel
+import com.traffic.station.viewmodel.StationViewModel
 
 @Composable
 fun StationListArea(
@@ -38,6 +39,7 @@ fun StationListArea(
     stationViewModel: StationViewModel,
     navHostController: NavHostController,
     searchedStationList: List<StationModel>,
+    onStationCardClick: (String) -> Unit,
 ) {
     if (searchedStationList.isNotEmpty()) {
         LazyColumn(
@@ -53,6 +55,7 @@ fun StationListArea(
                     stationModel = item,
                     stationViewModel = stationViewModel,
                     navHostController = navHostController,
+                    onStationCardClick = onStationCardClick
                 )
             }
         }
@@ -74,6 +77,7 @@ private fun SearchedStationInfo(
     stationModel: StationModel,
     stationViewModel: StationViewModel,
     navHostController: NavHostController,
+    onStationCardClick: (String) -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -83,7 +87,8 @@ private fun SearchedStationInfo(
         border = BorderStroke(1.dp, Color.LightGray),
         shape = RoundedCornerShape(12.dp),
         onClick = {
-            navHostController.navigate(Screens.BusArrive(arsId = stationModel.busStopId ?: ""))
+            //navHostController.navigate(Screens.BusArrive(arsId = stationModel.busStopId ?: ""))
+            onStationCardClick(stationModel.busStopId ?: "")
         }
     ){
         Box(

@@ -1,7 +1,5 @@
 package com.silver.navigation
 
-import android.app.Activity
-import android.content.Context
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,41 +31,22 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 @Composable
 fun BottomNavigationBar(
     navController: NavHostController,
-    context: Context,
+    onTabClick: (BottomBarScreen) -> Unit,
+    onBack: (BottomBarScreen) -> Unit,
 ) {
-    val screenList = listOf(
-        Screens.Home,
-        Screens.Station,
-        Screens.Line,
-        Screens.Map,
-        Screens.Setting,
-    )
-
     val backStackEntry = navController.currentBackStackEntryAsState()
-    val currentScreen = backStackEntry.value.fromRoute()
+    val currentScreen = backStackEntry.value.fromBottomRoute()
 
     AppBottomNavigationBar(
         show = navController.shouldShowBottomBar
     ) {
-        screenList.forEach { item ->
+        bottomDestinations.forEach { item ->
             AppBottomNavigationBarItem(
                 icon = item.icon,
-                label = item.title,
-                onClick = {
-                    if (currentScreen != item) {
-                        navController.navigate(item) {
-                            popUpTo(navController.currentBackStackEntry.fromRoute())
-                        }
-                    }
-                },
+                label = item.name,
                 selected = currentScreen == item,
-                onBack = {
-                    if (currentScreen == Screens.Home) {
-                        (context as Activity).finish()
-                    } else {
-                        navController.navigate(Screens.Home)
-                    }
-                }
+                onTabClick = { onTabClick(item) },
+                onBack = { onBack(currentScreen) }
             )
         }
     }
@@ -107,11 +86,10 @@ fun AppBottomNavigationBar(
 
 @Composable
 fun RowScope.AppBottomNavigationBarItem(
-    modifier: Modifier = Modifier,
     label: String,
-    onClick: () -> Unit,
     selected: Boolean,
     icon: ImageVector? = null,
+    onTabClick: () -> Unit,
     onBack: () -> Unit,
 ) {
     BackHandler(
@@ -120,13 +98,11 @@ fun RowScope.AppBottomNavigationBarItem(
     )
 
     Column(
-        modifier = modifier
+        modifier = Modifier
             .weight(1f)
-            .clickable(
-                onClick = onClick,
-            ),
+            .clickable(onClick = onTabClick),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         Icon(
             imageVector = icon!!,
@@ -145,12 +121,11 @@ fun RowScope.AppBottomNavigationBarItem(
 }
 
 private val NavController.shouldShowBottomBar
-    get() = when (this.currentBackStackEntry.fromRoute()) {
-        Screens.Home,
-        Screens.Station,
-        Screens.Line,
-        Screens.Map,
-        Screens.Setting,
+    get() = when (this.currentBackStackEntry.fromBottomRoute()) {
+        BottomBarScreen.Home,
+        BottomBarScreen.Station,
+        BottomBarScreen.Line,
+        BottomBarScreen.Map,
+        BottomBarScreen.Setting,
         -> true
-        else -> false
     }

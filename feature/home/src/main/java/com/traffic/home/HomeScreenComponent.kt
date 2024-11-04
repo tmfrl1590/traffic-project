@@ -27,13 +27,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.silver.navigation.Screens
 import com.traffic.domain.model.StationModel
-import com.traffic.station.StationViewModel
+import com.traffic.station.viewmodel.StationViewModel
 
 @Composable
 fun LikeStationArea(
     modifier: Modifier = Modifier,
     likeStationList: List<StationModel>,
-    stationViewModel: com.traffic.station.StationViewModel,
+    stationViewModel: StationViewModel,
     navHostController: NavHostController,
 ) {
     if(likeStationList.isNotEmpty()){
@@ -63,7 +63,7 @@ fun LikeStationArea(
 @Composable
 private fun StationInfo(
     stationModel: StationModel,
-    stationViewModel: com.traffic.station.StationViewModel,
+    stationViewModel: StationViewModel,
     navHostController: NavHostController,
 ){
     Card(
@@ -123,7 +123,7 @@ private fun StationInfo(
 
 private fun insertOrDeleteStationInfo(
     stationModel: StationModel,
-    stationViewModel: com.traffic.station.StationViewModel,
+    stationViewModel: StationViewModel,
 ){
     if(stationModel.selected){
         stationViewModel.deleteLikeStation(stationModel.busStopId ?: "")

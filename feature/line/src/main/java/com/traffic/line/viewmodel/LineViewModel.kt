@@ -1,4 +1,4 @@
-package com.traffic.line
+package com.traffic.line.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

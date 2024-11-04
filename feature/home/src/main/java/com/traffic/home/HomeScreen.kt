@@ -25,12 +25,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.traffic.common.CommonTitleComponent
 import com.traffic.common.R
+import com.traffic.station.viewmodel.StationViewModel
 
 @Composable
 fun HomeScreen(
     context: Context,
     navHostController: NavHostController,
-    stationViewModel: com.traffic.station.StationViewModel = hiltViewModel(),
+    stationViewModel: StationViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit){
         stationViewModel.getLikeStationList()

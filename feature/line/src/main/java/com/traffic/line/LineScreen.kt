@@ -1,6 +1,5 @@
 package com.traffic.line
 
-import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -40,10 +39,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.traffic.common.LineInfo
 import com.traffic.common.NoDataComponent
 import com.traffic.common.R
+import com.traffic.line.viewmodel.LineViewModel
 
 @Composable
 fun LineScreen(
-    context: Context,
     lineViewModel: LineViewModel = hiltViewModel(),
 ) {
     var keyword by remember {

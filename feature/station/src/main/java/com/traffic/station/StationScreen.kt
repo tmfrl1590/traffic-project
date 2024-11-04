@@ -37,13 +37,15 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.traffic.common.R
+import com.traffic.station.component.StationListArea
+import com.traffic.station.viewmodel.StationViewModel
 
 
 @Composable
 fun StationScreen(
-    context: Context,
     navHostController: NavHostController,
     stationViewModel: StationViewModel = hiltViewModel(),
+    onStationCardClick: (String) -> Unit
 ) {
     LaunchedEffect(Unit) {
         //logEvent(context, "StationScreen")
@@ -75,6 +77,7 @@ fun StationScreen(
             stationViewModel = stationViewModel,
             navHostController = navHostController,
             searchedStationList = searchedStationList,
+            onStationCardClick = onStationCardClick,
         )
     }
 }

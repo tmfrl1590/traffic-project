@@ -29,8 +29,8 @@ import androidx.navigation.NavController
 import com.traffic.common.ScaffoldBackIcon
 import com.traffic.common.firebase.logEvent
 import com.traffic.domain.model.StationModel
-import com.traffic.line.LineViewModel
-import com.traffic.station.StationViewModel
+import com.traffic.line.viewmodel.LineViewModel
+import com.traffic.station.viewmodel.StationViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,8 +40,8 @@ fun BusArriveScreen(
     navController: NavController,
     snackBarHostState: SnackbarHostState,
     busArriveViewModel: BusArriveViewModel = hiltViewModel(),
-    stationViewModel: com.traffic.station.StationViewModel = hiltViewModel(),
-    lineViewModel: com.traffic.line.LineViewModel = hiltViewModel(),
+    stationViewModel: StationViewModel = hiltViewModel(),
+    lineViewModel: LineViewModel = hiltViewModel(),
 ) {
     // 해당 arsId 정류장 조회
     LaunchedEffect(key1 = arsId) {
@@ -108,7 +108,7 @@ fun BusArriveScreen(
 
 @Composable
 private fun StationFavoriteIcon(
-    stationViewModel: com.traffic.station.StationViewModel,
+    stationViewModel: StationViewModel,
     stationInfo: StationModel,
 ) {
     IconButton(
@@ -128,7 +128,7 @@ private fun StationFavoriteIcon(
 
 private fun insertOrDeleteStationInfo(
     stationModel: StationModel,
-    stationViewModel: com.traffic.station.StationViewModel,
+    stationViewModel: StationViewModel,
 ){
     if(stationModel.selected){
         stationViewModel.deleteLikeStation(stationModel.busStopId ?: "")

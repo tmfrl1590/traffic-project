@@ -35,6 +35,7 @@ import com.traffic.common.lineTestColor
 import com.traffic.common.snackBarMessage
 import com.traffic.domain.model.BusArriveModel
 import com.traffic.domain.model.StationModel
+import com.traffic.line.viewmodel.LineViewModel
 
 @Composable
 fun NextBusStop(
@@ -91,7 +92,7 @@ fun BusArriveList(
 fun BusArriveList(
     arsId: String,
     busArriveViewModel: BusArriveViewModel,
-    lineViewModel: com.traffic.line.LineViewModel,
+    lineViewModel: LineViewModel,
     snackBarHostState: SnackbarHostState,
 ) {
     LaunchedEffect(key1 = true) {

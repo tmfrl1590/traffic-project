@@ -1,4 +1,4 @@
-package com.traffic.station
+package com.traffic.station.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

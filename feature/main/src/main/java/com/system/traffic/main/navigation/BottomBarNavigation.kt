@@ -1,0 +1,54 @@
+package com.system.traffic.main.navigation
+
+import android.content.Context
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.navigation
+import com.silver.navigation.Screens
+import com.traffic.home.navigation.homeNavGraph
+import com.traffic.line.navigation.lineNavGraph
+import com.traffic.map.navigation.mapNavGraph
+import com.traffic.setting.navigation.settingNavGraph
+import com.traffic.station.navigation.stationNavGraph
+
+@Composable
+fun BottomBarGraph(
+    context: Context,
+    navController: NavHostController,
+    snackBarHostState: SnackbarHostState,
+    paddingValues: PaddingValues,
+    onStationCardClick: (String) -> Unit
+) {
+    NavHost(
+        modifier = Modifier
+            .padding(paddingValues),
+        navController = navController,
+        startDestination = Screens.Main
+    ) {
+        navigation<Screens.Main>(
+            startDestination = Screens.Home
+        ){
+
+            homeNavGraph(
+                context = context,
+                navHostController = navController
+            )
+            stationNavGraph(
+                navHostController = navController,
+                onStationCardClick = onStationCardClick
+            )
+            lineNavGraph()
+
+            mapNavGraph(
+                context = context,
+                snackBarHostState = snackBarHostState
+            )
+            settingNavGraph()
+        }
+    }
+}
