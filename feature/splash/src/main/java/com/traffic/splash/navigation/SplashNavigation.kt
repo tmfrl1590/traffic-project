@@ -7,7 +7,7 @@ import com.silver.navigation.Screens
 import com.traffic.splash.SplashScreen
 
 fun NavGraphBuilder.splashGraph(
-    navHostController: NavHostController
+    navHostController: NavHostController,
 ){
     composable<Screens.Splash> {
         SplashScreen(

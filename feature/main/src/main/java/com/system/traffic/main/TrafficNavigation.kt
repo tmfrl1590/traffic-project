@@ -22,8 +22,7 @@ import com.silver.navigation.fromRoute
 import com.traffic.bus_arrive.BusArriveScreen
 import com.traffic.home.HomeScreen
 import com.traffic.line.LineScreen
-import com.traffic.setting.SettingScreen
-import com.traffic.splash.SplashScreen
+import com.traffic.setting.navigation.settingNavGraph
 import com.traffic.splash.navigation.splashGraph
 import com.traffic.station.StationScreen
 
@@ -84,12 +83,7 @@ fun AppNavHost() {
             splashGraph(
                 navHostController = navController
             )
-            /*composable<Screens.Splash> {
-                SplashScreen(
-                    context = context,
-                    navHostController = navController
-                )
-            }*/
+
             composable<Screens.Home> {
                 HomeScreen(navHostController = navController, context = context)
             }
@@ -105,9 +99,11 @@ fun AppNavHost() {
             composable<Screens.Map> {
                 com.traffic.map.MapScreen(context = context, snackBarHostState = snackBarHostState)
             }
-            composable<Screens.Setting> {
-                SettingScreen(context = context)
-            }
+
+            settingNavGraph(
+                navHostController = navController
+            )
+
             composable<Screens.BusArrive> { backStackEntry ->
                 val arsId = backStackEntry.toRoute<Screens.BusArrive>().arsId
                 BusArriveScreen(
