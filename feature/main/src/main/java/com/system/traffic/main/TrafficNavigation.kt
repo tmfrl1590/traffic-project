@@ -24,6 +24,7 @@ import com.traffic.home.HomeScreen
 import com.traffic.line.LineScreen
 import com.traffic.setting.SettingScreen
 import com.traffic.splash.SplashScreen
+import com.traffic.splash.navigation.splashGraph
 import com.traffic.station.StationScreen
 
 const val ANIMATION_DURATION = 500
@@ -80,12 +81,15 @@ fun AppNavHost() {
                 )
             },
         ){
-            composable<Screens.Splash> {
+            splashGraph(
+                navHostController = navController
+            )
+            /*composable<Screens.Splash> {
                 SplashScreen(
                     context = context,
                     navHostController = navController
                 )
-            }
+            }*/
             composable<Screens.Home> {
                 HomeScreen(navHostController = navController, context = context)
             }

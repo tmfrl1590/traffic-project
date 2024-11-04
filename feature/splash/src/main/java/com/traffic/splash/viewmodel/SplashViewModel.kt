@@ -1,4 +1,4 @@
-package com.traffic.splash
+package com.traffic.splash.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
