@@ -15,8 +15,16 @@
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/di" />
             <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/bus_arrive" />
+            <option value="$PROJECT_DIR$/feature/home" />
+            <option value="$PROJECT_DIR$/feature/line" />
+            <option value="$PROJECT_DIR$/feature/main" />
+            <option value="$PROJECT_DIR$/feature/map" />
+            <option value="$PROJECT_DIR$/feature/setting" />
+            <option value="$PROJECT_DIR$/feature/splash" />
+            <option value="$PROJECT_DIR$/feature/station" />
             <option value="$PROJECT_DIR$/navigation" />
-            <option value="$PROJECT_DIR$/presentation" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
