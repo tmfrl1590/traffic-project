@@ -2,7 +2,7 @@
 
 ---
 ### 소개
-버스를 타고 출,퇴근을 하면서 사용하기 위해 만들어 본 광주 버스 앱
+버스를 타고 출,퇴근을 하면서 사용하기 위해 개발한 광주 버스 앱
 
 ---
 ### 기술스택
@@ -10,7 +10,7 @@
 
 안드로이드 : Jetpack Compose, Hilt, Retrofit2, Room, DataStore, Navigation
 
-멀티모듈 : app, presentation, domain, data, di, navigation, common
+멀티모듈 : app, feature, domain, data, di, navigation, common
 
 ---
 ### 기능
@@ -23,7 +23,7 @@
 ### 설명
 ###### SplashScreen
 
-- 앱 실행이 처음이라면 presentation 모듈의 assets 에 있는 station.json, line.json 파일을 읽어와서 Room 데이터베이스에 저장한다.
+- 앱 실행이 처음이라면 feature(splash) 모듈의 assets 에 있는 station.json, line.json 파일을 읽어와서 Room 데이터베이스에 저장한다.
 - 이후에는 홈화면 이동한다.
 
 ###### HomeScreen
