@@ -69,6 +69,7 @@ fun BottomBarGraph(
                 navHostController = navController
             )
             stationNavGraph(
+                snackBarHostState = snackBarHostState,
                 onStationCardClick = onStationCardClick
             )
             lineNavGraph()

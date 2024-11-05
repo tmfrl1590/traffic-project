@@ -2,6 +2,8 @@ package com.traffic.station
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -12,7 +14,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.traffic.common.R
+import com.traffic.common.Resource
 import com.traffic.common.SearchArea
 import com.traffic.domain.model.StationModel
 import com.traffic.station.component.SearchedStationListArea
@@ -21,6 +25,7 @@ import com.traffic.station.viewmodel.StationViewModel
 
 @Composable
 fun StationScreen(
+    snackBarHostState: SnackbarHostState,
     stationViewModel: StationViewModel = hiltViewModel(),
     onStationCardClick: (String) -> Unit,
     onSearchStation: (String) -> Unit,
@@ -31,9 +36,10 @@ fun StationScreen(
         stationViewModel.getLikeStationList()
     }
 
-    val searchedStationList by stationViewModel.searchResult.collectAsState(initial = listOf())
+    val searchedStationList by stationViewModel.searchedStationList.collectAsStateWithLifecycle(initialValue = Resource.Idle())
 
     StationContent(
+        snackBarHostState = snackBarHostState,
         searchedStationList = searchedStationList,
         onStationCardClick = onStationCardClick,
         onSearchStation = onSearchStation,
@@ -44,7 +50,8 @@ fun StationScreen(
 
 @Composable
 private fun StationContent(
-    searchedStationList: List<StationModel>,
+    snackBarHostState: SnackbarHostState,
+    searchedStationList: Resource<List<StationModel>>,
     onStationCardClick: (String) -> Unit,
     onSearchStation: (String) -> Unit,
     onFavoriteIconClick: (StationModel) -> Unit,
@@ -67,6 +74,7 @@ private fun StationContent(
         SearchedStationListArea(
             modifier = Modifier
                 .weight(0.85f),
+            snackBarHostState = snackBarHostState,
             searchedStationList = searchedStationList,
             onStationCardClick = onStationCardClick,
             onFavoriteIconClick = onFavoriteIconClick

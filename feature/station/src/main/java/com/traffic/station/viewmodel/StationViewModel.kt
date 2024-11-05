@@ -2,6 +2,7 @@ package com.traffic.station.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.traffic.common.Resource
 import com.traffic.domain.model.StationModel
 import com.traffic.domain.useCase.like.AddLikeStationUseCase
 import com.traffic.domain.useCase.like.DeleteLikeStationUseCase
@@ -29,25 +30,40 @@ class StationViewModel @Inject constructor(
     private val _stationInfo = MutableStateFlow(StationModel("", "", "", "", "", "", ""))
     val stationInfo: StateFlow<StationModel> = _stationInfo
 
-    private val _searchedStationList = MutableStateFlow<List<StationModel>>(listOf())
-    val searchResult: StateFlow<List<StationModel>> = _searchedStationList
-
     private val _likeStationList = MutableStateFlow<List<StationModel>>(listOf())
     val likeStationList: StateFlow<List<StationModel>> = _likeStationList
 
+    // 뷰모델에서 사용할 StateFlow 정의
+    private val _searchedStationList = MutableStateFlow<Resource<List<StationModel>>>(Resource.Idle())
+    val searchedStationList: StateFlow<Resource<List<StationModel>>> = _searchedStationList
+
+    private var currentKeyword: String? = null
+
     // 정류장 검색
-    fun getSearchedStationList(keyword: String) = viewModelScope.launch(Dispatchers.IO) {
+    private fun getSearchedStationList(keyword: String) = viewModelScope.launch(Dispatchers.IO) {
+        currentKeyword = keyword
+
         combine(
             getSearchStationUseCase(keyword = "%$keyword%"),
             getLikeStationListUseCase()
         ) { searchedStationList, likeStationList ->
-            val likeStationSet = likeStationList.map { it.arsId }
-                .toSet() // 좋아요 한 정류장 arsId Set / [5269] , [5269, 5268]
-            searchedStationList.map {
-                it.copy(selected = likeStationSet.contains(it.arsId))
+            // 좋아요 정류장의 arsId Set 생성
+            val likeStationSet = likeStationList.map { it.arsId }.toSet()
+
+            when (searchedStationList) {
+                is Resource.Success -> {
+                    // 좋아요 상태가 반영된 검색 결과 리스트 생성
+                    val updatedList = searchedStationList.data.map { it.copy(selected = likeStationSet.contains(it.arsId)) }
+                    Resource.Success(updatedList)
+                }
+                is Resource.Error -> { Resource.Error() }
+                is Resource.Loading -> { Resource.Loading() }
+                else -> Resource.Idle()
             }
-        }.collectLatest {
-            _searchedStationList.emit(it)
+        }.collectLatest { result ->
+            if (currentKeyword == keyword) {
+                _searchedStationList.emit(result)
+            }
         }
     }
 

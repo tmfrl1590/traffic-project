@@ -18,8 +18,10 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,39 +34,60 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.traffic.common.NoDataComponent
 import com.traffic.common.R
+import com.traffic.common.Resource
+import com.traffic.common.snackBarMessage
 import com.traffic.domain.model.StationModel
 import com.traffic.station.util.currentBusStopNameAndArsId
 
 @Composable
 fun SearchedStationListArea(
     modifier: Modifier = Modifier,
-    searchedStationList: List<StationModel>,
+    snackBarHostState: SnackbarHostState,
+    searchedStationList: Resource<List<StationModel>>,
     onStationCardClick: (String) -> Unit,
     onFavoriteIconClick: (StationModel) -> Unit,
 ) {
-    if (searchedStationList.isNotEmpty()) {
-        LazyColumn(
-            modifier = modifier
-        ){
-            itemsIndexed(
-                items = searchedStationList,
-                key = { index, _ ->
-                    index
+    Box(
+        modifier = modifier
+    ){
+        when(searchedStationList){
+            is Resource.Idle -> {}
+            is Resource.Loading -> {
+                Box(
+                    modifier = modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ){
+                    CircularProgressIndicator()
                 }
-            ){_, item ->
-                SearchedStationInfo(
-                    busStopName = item.busStopName ?: "",
-                    stationModel = item,
-                    onStationCardClick = onStationCardClick,
-                    onFavoriteIconClick = {onFavoriteIconClick(it)},
-                )
             }
+            is Resource.Success -> {
+                if(searchedStationList.data.isEmpty()){
+                    NoDataComponent(
+                        modifier = modifier.fillMaxSize(),
+                        text = stringResource(R.string.searched_station_no_data)
+                    )
+                }else {
+                    LazyColumn(
+                        modifier = modifier
+                    ){
+                        itemsIndexed(
+                            items = searchedStationList.data,
+                            key = { index, _ ->
+                                index
+                            }
+                        ){_, item ->
+                            SearchedStationInfo(
+                                busStopName = item.busStopName ?: "",
+                                stationModel = item,
+                                onStationCardClick = onStationCardClick,
+                                onFavoriteIconClick = {onFavoriteIconClick(it)},
+                            )
+                        }
+                    }
+                }
+            }
+            is Resource.Error -> snackBarMessage(snackBarHostState, stringResource(R.string.common2))
         }
-    } else {
-        NoDataComponent(
-            modifier = modifier,
-            text = stringResource(R.string.searched_station_no_data)
-        )
     }
 }
 
@@ -205,7 +228,6 @@ private fun CurrentBusStopNameAndArsId(
             text = currentBusStopNameAndArsId(nextBusStop = nextBusStop,  arsId = arsId)
         )
     }
-
 }
 
 @Preview(showBackground = true)
