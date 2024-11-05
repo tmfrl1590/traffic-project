@@ -1,9 +1,11 @@
 package com.traffic.station.component
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -24,22 +27,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import com.silver.navigation.Screens
 import com.traffic.common.NoDataComponent
 import com.traffic.common.R
 import com.traffic.domain.model.StationModel
-import com.traffic.station.viewmodel.StationViewModel
+import com.traffic.station.util.currentBusStopNameAndArsId
 
 @Composable
-fun StationListArea(
+fun SearchedStationListArea(
     modifier: Modifier = Modifier,
-    stationViewModel: StationViewModel,
-    navHostController: NavHostController,
     searchedStationList: List<StationModel>,
     onStationCardClick: (String) -> Unit,
+    onFavoriteIconClick: (StationModel) -> Unit,
 ) {
     if (searchedStationList.isNotEmpty()) {
         LazyColumn(
@@ -52,133 +53,176 @@ fun StationListArea(
                 }
             ){_, item ->
                 SearchedStationInfo(
+                    busStopName = item.busStopName ?: "",
                     stationModel = item,
-                    stationViewModel = stationViewModel,
-                    navHostController = navHostController,
-                    onStationCardClick = onStationCardClick
+                    onStationCardClick = onStationCardClick,
+                    onFavoriteIconClick = {onFavoriteIconClick(it)},
                 )
             }
         }
     } else {
         NoDataComponent(
             modifier = modifier,
-            text = stringResource(R.string.searched_line_no_data)
+            text = stringResource(R.string.searched_station_no_data)
         )
     }
-
-    /*BannersAds(
-        modifier = Modifier
-            .weight(0.1f)
-    )*/
 }
 
 @Composable
 private fun SearchedStationInfo(
+    busStopName: String,
     stationModel: StationModel,
-    stationViewModel: StationViewModel,
-    navHostController: NavHostController,
     onStationCardClick: (String) -> Unit,
+    onFavoriteIconClick: (StationModel) -> Unit,
 ) {
     Card(
+        onClick = { onStationCardClick(stationModel.busStopId ?: "") },
         modifier = Modifier
+            .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
-            .height(100.dp)
-            .fillMaxWidth(),
-        border = BorderStroke(1.dp, Color.LightGray),
+            .height(100.dp),
         shape = RoundedCornerShape(12.dp),
-        onClick = {
-            //navHostController.navigate(Screens.BusArrive(arsId = stationModel.busStopId ?: ""))
-            onStationCardClick(stationModel.busStopId ?: "")
-        }
+        border = BorderStroke(1.dp, Color.LightGray),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
     ){
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White),
-        ){
-            StationInfoFavoriteIcon(
+                .padding(12.dp)
+        ) {
+            SearchedStationInfoTopArea(
                 modifier = Modifier
-                    .align(Alignment.TopEnd),
+                    .fillMaxWidth()
+                    .weight(1f),
+                busStopName = busStopName,
                 stationModel = stationModel,
-                stationViewModel = stationViewModel,
+                onFavoriteIconClick = onFavoriteIconClick,
             )
 
-            Column(
+            SearchedStationInfoBottomArea(
                 modifier = Modifier
-                    .padding(12.dp)
-                    .fillMaxSize()
-            ) {
-                BusStationName(
-                    stationModel = stationModel
-                )
-
-                CurrentBusStopNameAndArsId(
-                    modifier = Modifier
-                        .padding(top = 4.dp),
-                    stationModel = stationModel
-                )
-            }
+                    .fillMaxWidth()
+                    .weight(1f),
+                nextBusStop = stationModel.nextBusStop ?: "",
+                arsId = stationModel.arsId ?: ""
+            )
         }
     }
+}
+
+@Composable
+private fun SearchedStationInfoTopArea(
+    modifier: Modifier,
+    busStopName: String,
+    stationModel: StationModel,
+    onFavoriteIconClick: (StationModel) -> Unit,
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        BusStationName(
+            busStopName = busStopName
+        )
+
+        StationInfoFavoriteIcon(
+            modifier = Modifier,
+            stationModel = stationModel,
+            onFavoriteIconClick = { onFavoriteIconClick(stationModel) }
+        )
+    }
+}
+
+@Composable
+private fun SearchedStationInfoBottomArea(
+    modifier: Modifier,
+    nextBusStop: String,
+    arsId: String
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        CurrentBusStopNameAndArsId(
+            modifier = Modifier
+                .fillMaxSize(),
+            nextBusStop = nextBusStop,
+            arsId = arsId,
+        )
+    }
+}
+
+@Composable
+private fun BusStationName(
+    busStopName: String,
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxHeight(),
+        contentAlignment = Alignment.Center
+    ){
+        Text(
+            text = busStopName,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold
+        )
+    }
+
 }
 
 @Composable
 private fun StationInfoFavoriteIcon(
     modifier: Modifier,
     stationModel: StationModel,
-    stationViewModel: StationViewModel,
+    onFavoriteIconClick: (StationModel) -> Unit = {}
 ) {
     IconButton(
-        onClick = {
-            insertOrDeleteStationInfo(
-                stationModel = stationModel,
-                stationViewModel = stationViewModel
-            )
-        },
-        modifier = modifier
+        modifier = modifier,
+        onClick = { onFavoriteIconClick(stationModel) }
     ){
         Icon(
             imageVector = if(stationModel.selected) Icons.Default.Favorite else Icons.Default.FavoriteBorder ,
             contentDescription = "Favorite",
+            tint = if(stationModel.selected) Color.Red else Color.Gray
         )
     }
-}
-
-private fun insertOrDeleteStationInfo(
-    stationModel: StationModel,
-    stationViewModel: StationViewModel,
-){
-    if(stationModel.selected){
-        stationViewModel.deleteLikeStation(stationModel.busStopId ?: "")
-    }else {
-        stationViewModel.insertLikeStation(stationModel)
-    }
-}
-
-@Composable
-private fun BusStationName(
-    stationModel: StationModel,
-) {
-    Text(
-        text = stationModel.busStopName ?: "",
-        modifier = Modifier
-            .height(52.dp),
-        fontSize = 16.sp,
-        fontWeight = FontWeight.Bold
-    )
 }
 
 @Composable
 private fun CurrentBusStopNameAndArsId(
     modifier: Modifier,
-    stationModel: StationModel,
+    nextBusStop: String,
+    arsId: String
 ) {
-    Text(
-        text = currentBusStopNameAndArsId(stationModel),
-        modifier = modifier
-    )
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.CenterStart
+    ){
+        Text(
+            text = currentBusStopNameAndArsId(nextBusStop = nextBusStop,  arsId = arsId)
+        )
+    }
+
 }
 
-private fun currentBusStopNameAndArsId(stationModel: StationModel): String {
-    return "${stationModel.nextBusStop} | ${stationModel.arsId}"
+@Preview(showBackground = true)
+@Composable
+fun SearchedStationInfoPreview() {
+    SearchedStationInfo(
+        busStopName = "서울역",
+        stationModel = StationModel(
+            stationNum = "11",
+            busStopName = "서울역",
+            nextBusStop = "서울역",
+            busStopId = "100100001",
+            arsId = "100001",
+            longitude = null,
+            latitude = null,
+        ),
+        onStationCardClick = {},
+        onFavoriteIconClick = {}
+    )
 }

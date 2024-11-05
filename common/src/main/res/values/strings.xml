@@ -36,4 +36,7 @@
     <string name="bus_arrive_no_data">버스도착 정보가\n없습니다</string>
     <string name="bus_arrive_direction">방면</string>
     <string name="bus_arrive_now">현재</string>
+
+    <!--Common-->
+    <string name="common1">검색어를 입력해주세요</string>
 </resources>

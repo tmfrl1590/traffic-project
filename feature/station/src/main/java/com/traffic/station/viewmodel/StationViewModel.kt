@@ -26,17 +26,7 @@ class StationViewModel @Inject constructor(
     private val getLikeStationListUseCase: GetLikeStationListUseCase,
 ) : ViewModel() {
 
-    private val _stationInfo = MutableStateFlow(
-        StationModel(
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-        )
-    )
+    private val _stationInfo = MutableStateFlow(StationModel("", "", "", "", "", "", ""))
     val stationInfo: StateFlow<StationModel> = _stationInfo
 
     private val _searchedStationList = MutableStateFlow<List<StationModel>>(listOf())
@@ -88,6 +78,20 @@ class StationViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             getLikeStationListUseCase().collectLatest {
                 _likeStationList.emit(it)
+            }
+        }
+    }
+
+    fun onStationUIEvents(stationUIEvents: StationUIEvents){
+        when(stationUIEvents){
+            StationUIEvents.OnStationCardClick -> {}
+            is StationUIEvents.OnSearchStationList -> getSearchedStationList(stationUIEvents.keyword)
+            is StationUIEvents.OnFavoriteIconClick -> {
+                if(stationUIEvents.stationModel.selected){
+                    deleteLikeStation(stationUIEvents.stationModel.busStopId ?: "")
+                }else {
+                    insertLikeStation(stationUIEvents.stationModel)
+                }
             }
         }
     }

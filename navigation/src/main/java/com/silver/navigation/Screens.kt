@@ -28,15 +28,6 @@ sealed interface Screens {
     data class BusArrive(val arsId: String): Screens
 }
 
-
-val bottomDestinations = listOf(
-    BottomBarScreen.Home,
-    BottomBarScreen.Station,
-    BottomBarScreen.Line,
-    BottomBarScreen.Map,
-    BottomBarScreen.Setting,
-)
-
 sealed class BottomBarScreen (
     val screen: Screens,
     val name: String,
@@ -68,3 +59,11 @@ sealed class BottomBarScreen (
         icon = Icons.Filled.Settings
     )
 }
+
+val bottomDestinations = listOf(
+    BottomBarScreen.Home,
+    BottomBarScreen.Station,
+    BottomBarScreen.Line,
+    BottomBarScreen.Map,
+    BottomBarScreen.Setting,
+)
