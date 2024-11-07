@@ -25,7 +25,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.silver.navigation.Screens
 import com.traffic.domain.model.StationModel
 import com.traffic.station.viewmodel.StationViewModel
 
@@ -34,7 +33,7 @@ fun LikeStationArea(
     modifier: Modifier = Modifier,
     likeStationList: List<StationModel>,
     stationViewModel: StationViewModel,
-    navHostController: NavHostController,
+    onStationCardClick: (String) -> Unit,
 ) {
     if(likeStationList.isNotEmpty()){
         LazyColumn(
@@ -44,7 +43,7 @@ fun LikeStationArea(
                 StationInfo(
                     stationModel = likeStationList[index],
                     stationViewModel = stationViewModel,
-                    navHostController = navHostController,
+                    onStationCardClick = onStationCardClick
                 )
             }
         }
@@ -53,18 +52,13 @@ fun LikeStationArea(
             modifier = modifier
         )
     }
-
-    /*BannersAds(
-        modifier = Modifier
-            .weight(0.1f)
-    )*/
 }
 
 @Composable
 private fun StationInfo(
     stationModel: StationModel,
     stationViewModel: StationViewModel,
-    navHostController: NavHostController,
+    onStationCardClick: (String) -> Unit,
 ){
     Card(
         modifier = Modifier
@@ -74,7 +68,7 @@ private fun StationInfo(
         border = BorderStroke(1.dp, Color.LightGray),
         shape = RoundedCornerShape(12.dp),
         onClick = {
-            navHostController.navigate(Screens.BusArrive(arsId = stationModel.busStopId ?: ""))
+            onStationCardClick(stationModel.busStopId ?: "")
         }
     ){
         Box(
@@ -95,6 +89,7 @@ private fun StationInfo(
                 Icon(
                     imageVector = if(stationModel.selected) Icons.Default.Favorite else Icons.Default.FavoriteBorder ,
                     contentDescription = "Favorite",
+                    tint = Color.Red
                 )
             }
 

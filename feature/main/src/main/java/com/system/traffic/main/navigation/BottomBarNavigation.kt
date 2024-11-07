@@ -66,7 +66,7 @@ fun BottomBarGraph(
 
             homeNavGraph(
                 context = context,
-                navHostController = navController
+                onStationCardClick = onStationCardClick
             )
             stationNavGraph(
                 snackBarHostState = snackBarHostState,

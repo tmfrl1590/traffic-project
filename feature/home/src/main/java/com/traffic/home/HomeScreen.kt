@@ -30,8 +30,8 @@ import com.traffic.station.viewmodel.StationViewModel
 @Composable
 fun HomeScreen(
     context: Context,
-    navHostController: NavHostController,
     stationViewModel: StationViewModel = hiltViewModel(),
+    onStationCardClick: (String) -> Unit
 ) {
     LaunchedEffect(Unit){
         stationViewModel.getLikeStationList()
@@ -66,8 +66,8 @@ fun HomeScreen(
         LikeStationArea(
             modifier = Modifier.weight(0.9f),
             stationViewModel = stationViewModel,
-            navHostController = navHostController,
             likeStationList = likeStationList,
+            onStationCardClick = onStationCardClick
         )
     }
 }
