@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.traffic.common.BaseResponse
 import com.traffic.common.ResultCode
 import com.traffic.common.UIState
-import com.traffic.domain.model.BusArriveModel
+import com.traffic.domain.model.BusArriveItem
 import com.traffic.domain.model.StationModel
 import com.traffic.domain.useCase.arrive.BusArriveUseCase
 import com.traffic.domain.useCase.like.AddLikeStationUseCase
@@ -34,8 +34,8 @@ class BusArriveViewModel @Inject constructor(
     private val deleteLikeStationUseCase: DeleteLikeStationUseCase,
 ): ViewModel() {
 
-    private val _busArriveListState = MutableStateFlow<UIState<BaseResponse<List<BusArriveModel>>>>(UIState.Idle)
-    val busArriveListState: StateFlow<UIState<BaseResponse<List<BusArriveModel>>>> = _busArriveListState
+    private val _busArriveListState = MutableStateFlow<UIState<BaseResponse<List<BusArriveItem>>>>(UIState.Idle)
+    val busArriveListState: StateFlow<UIState<BaseResponse<List<BusArriveItem>>>> = _busArriveListState
 
     private val _errorFlow = MutableSharedFlow<String>()
     val errorFlow = _errorFlow.asSharedFlow()

@@ -1,22 +1,20 @@
-package com.traffic.domain.model
+package com.traffic.data.remote.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class BusArriveBody(
+data class BusArriveDto(
     @SerialName("RESULT")
     val result : Map<String, String>,
-
     @SerialName("BUSSTOP_LIST")
-    val itemList : ArrayList<BusArriveModel>,
-
+    val itemList : List<BusArriveItemDto>,
     @SerialName("ROW_COUNT")
     val rowCount : String
 )
 
 @Serializable
-data class BusArriveModel(
+data class BusArriveItemDto(
     @SerialName("ARRIVE")
     val arrive : String?,
 
