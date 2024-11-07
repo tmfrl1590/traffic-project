@@ -8,13 +8,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.silver.navigation.Screens
 import com.traffic.bus_arrive.BusArriveScreen
+import com.traffic.bus_arrive.viewmodel.BusArriveUIEvents
+import com.traffic.bus_arrive.viewmodel.BusArriveViewModel
 import com.traffic.splash.navigation.splashGraph
+import com.traffic.station.viewmodel.StationUIEvents
+import com.traffic.station.viewmodel.StationViewModel
 
 const val ANIMATION_DURATION = 500
 
@@ -68,12 +73,15 @@ fun AppNavHost() {
         }
 
         composable<Screens.BusArrive> { backStackEntry ->
+            val busArriveViewModel = hiltViewModel<BusArriveViewModel>()
             val arsId = backStackEntry.toRoute<Screens.BusArrive>().arsId
             BusArriveScreen(
                 context = context,
                 arsId = arsId,
-                navController = navController,
-                snackBarHostState = snackBarHostState
+                snackBarHostState = snackBarHostState,
+                busArriveViewModel = busArriveViewModel,
+                onBackClick = { navController.popBackStack() },
+                onFavoriteIconClick = { busArriveViewModel.onBusArriveUIEvents(BusArriveUIEvents.OnFavoriteIconClick(it)) }
             )
         }
     }

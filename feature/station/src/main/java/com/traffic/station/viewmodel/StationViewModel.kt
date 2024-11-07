@@ -21,14 +21,10 @@ import javax.inject.Inject
 @HiltViewModel
 class StationViewModel @Inject constructor(
     private val getSearchStationUseCase: GetSearchStationUseCase,
-    private val getStationInfoUseCase: GetStationInfoUseCase,
     private val addLikeStationUseCase: AddLikeStationUseCase,
     private val deleteLikeStationUseCase: DeleteLikeStationUseCase,
     private val getLikeStationListUseCase: GetLikeStationListUseCase,
 ) : ViewModel() {
-
-    private val _stationInfo = MutableStateFlow(StationModel("", "", "", "", "", "", ""))
-    val stationInfo: StateFlow<StationModel> = _stationInfo
 
     private val _likeStationList = MutableStateFlow<List<StationModel>>(listOf())
     val likeStationList: StateFlow<List<StationModel>> = _likeStationList
@@ -67,17 +63,7 @@ class StationViewModel @Inject constructor(
         }
     }
 
-    fun getStationInfo(arsId: String) = viewModelScope.launch(Dispatchers.IO) {
-        combine(
-            getStationInfoUseCase(arsId),
-            getLikeStationListUseCase()
-        ) { stationInfo, likeStationList ->
-            val likeStationSet = likeStationList.map { it.arsId }.toSet()
-            stationInfo.copy(selected = likeStationSet.contains(stationInfo.arsId))
-        }.collectLatest {
-            _stationInfo.emit(it)
-        }
-    }
+
 
     // 즐겨찾기 추가
     fun insertLikeStation(stationModel: StationModel) = viewModelScope.launch(Dispatchers.IO) {

@@ -1,4 +1,4 @@
-package com.traffic.bus_arrive
+package com.traffic.bus_arrive.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -14,7 +14,13 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,16 +35,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.traffic.bus_arrive.util.busArriveScreenTitleText
+import com.traffic.bus_arrive.viewmodel.BusArriveViewModel
 import com.traffic.common.R
 import com.traffic.common.UIState
 import com.traffic.common.lineTestColor
 import com.traffic.common.snackBarMessage
 import com.traffic.domain.model.BusArriveModel
 import com.traffic.domain.model.StationModel
-import com.traffic.line.viewmodel.LineViewModel
 
 @Composable
-fun NextBusStop(
+fun NextBusStopArea(
     nextBusStopName: String,
 ) {
     Box(
@@ -46,9 +53,25 @@ fun NextBusStop(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            //text = "${nextBusStopName}${stringResource(R.string.bus_arrive_direction)}",            fontSize = 16.sp,
-            text = "asdasd",
+            text = "${nextBusStopName}${stringResource(R.string.bus_arrive_direction)}",
+            fontSize = 16.sp,
             textAlign = TextAlign.Center,
+        )
+    }
+}
+
+@Composable
+fun StationFavoriteIcon(
+    stationModel: StationModel,
+    onFavoriteIconClick: (StationModel) -> Unit,
+) {
+    IconButton(
+        onClick = { onFavoriteIconClick(stationModel) }
+    ) {
+        Icon(
+            imageVector = if (stationModel.selected) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+            contentDescription = "Favorite",
+            tint = Color.Red,
         )
     }
 }
@@ -69,7 +92,7 @@ fun NoBusArrive() {
 }
 
 @Composable
-fun BusArriveList(
+fun BusArriveListArea(
     busArriveList: List<BusArriveModel>,
 ) {
     LazyColumn(
@@ -89,10 +112,9 @@ fun BusArriveList(
 }
 
 @Composable
-fun BusArriveList(
+fun BusArriveListArea(
     arsId: String,
     busArriveViewModel: BusArriveViewModel,
-    lineViewModel: LineViewModel,
     snackBarHostState: SnackbarHostState,
 ) {
     LaunchedEffect(key1 = true) {
@@ -101,7 +123,7 @@ fun BusArriveList(
 
     val busArriveListState by busArriveViewModel.busArriveListState.collectAsState()
     val resultBusArriveList = busArriveListState.data?.data ?: emptyList()
-    val resultMessage = busArriveListState.data?.message ?: ""
+    val resultMessage = busArriveListState.data?.message ?: "aaa"
 
     LaunchedEffect(true) {
         /*busArriveViewModel.errorFlow.collectLatest {
@@ -114,12 +136,12 @@ fun BusArriveList(
 
     when (busArriveListState) {
         is UIState.Idle -> {}
-        is UIState.Loading -> {}
+        is UIState.Loading -> CircularProgressIndicator()
         is UIState.Success -> {
             if (resultBusArriveList.isEmpty()) {
                 NoBusArrive()
             } else {
-                BusArriveList(
+                BusArriveListArea(
                     busArriveList = resultBusArriveList,
                 )
             }
@@ -130,6 +152,7 @@ fun BusArriveList(
                 message = resultMessage
             )
         }
+        is UIState.Exception -> {}
     }
 }
 
@@ -198,10 +221,4 @@ fun BusArriveScreenTitle(
         fontSize = 20.sp,
         color = Color.Black
     )
-}
-
-fun busArriveScreenTitleText(
-    stationInfo: StationModel,
-): String{
-    return "${stationInfo.busStopName} (${stationInfo.arsId})"
 }

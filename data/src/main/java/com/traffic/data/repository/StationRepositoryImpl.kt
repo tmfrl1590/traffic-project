@@ -20,7 +20,6 @@ class StationRepositoryImpl @Inject constructor(
     override fun getSearchedStationList(keyword: String): Flow<Resource<List<StationModel>>> = callbackFlow {
         try {
             trySend(Resource.Loading())
-            delay(1000)
             val searchedStationList = stationDao.getSearchedStationList(keyword).map {
                 it.toLikeStationModel()
             }

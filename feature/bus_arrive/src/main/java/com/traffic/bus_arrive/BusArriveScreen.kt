@@ -7,75 +7,95 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.traffic.bus_arrive.component.BusArriveListArea
+import com.traffic.bus_arrive.component.BusArriveScreenTitle
+import com.traffic.bus_arrive.component.NextBusStopArea
+import com.traffic.bus_arrive.component.StationFavoriteIcon
+import com.traffic.bus_arrive.viewmodel.BusArriveViewModel
 import com.traffic.common.ScaffoldBackIcon
 import com.traffic.common.firebase.logEvent
 import com.traffic.domain.model.StationModel
-import com.traffic.line.viewmodel.LineViewModel
-import com.traffic.station.viewmodel.StationViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BusArriveScreen(
     context: Context,
     arsId: String,
-    navController: NavController,
     snackBarHostState: SnackbarHostState,
-    busArriveViewModel: BusArriveViewModel = hiltViewModel(),
-    stationViewModel: StationViewModel = hiltViewModel(),
-    lineViewModel: LineViewModel = hiltViewModel(),
+    busArriveViewModel: BusArriveViewModel,
+    onBackClick: () -> Unit,
+    onFavoriteIconClick: (StationModel) -> Unit,
 ) {
     // 해당 arsId 정류장 조회
     LaunchedEffect(key1 = arsId) {
-        stationViewModel.getStationInfo(arsId)
+        busArriveViewModel.getStationInfo(arsId)
     }
 
     LaunchedEffect(true) {
         logEvent(context, "BusArriveScreen")
-        stationViewModel.getLikeStationList()
+        //stationViewModel.getLikeStationList()
     }
 
-    val stationInfo by stationViewModel.stationInfo.collectAsState()
+    val error by busArriveViewModel.errorFlow.collectAsStateWithLifecycle("")
+    LaunchedEffect(error) {
+        if (error.isNotEmpty()) {
+            snackBarHostState.showSnackbar(error)
+        }
+    }
 
+    val stationModel by busArriveViewModel.stationInfo.collectAsStateWithLifecycle()
+
+    BusArriveScreenContent(
+        busArriveViewModel = busArriveViewModel,
+        stationModel = stationModel,
+        arsId = arsId,
+        snackBarHostState = snackBarHostState,
+        onBackClick = onBackClick,
+        onFavoriteIconClick = onFavoriteIconClick,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BusArriveScreenContent(
+    busArriveViewModel: BusArriveViewModel,
+    stationModel: StationModel,
+    arsId: String,
+    snackBarHostState: SnackbarHostState,
+    onBackClick: () -> Unit,
+    onFavoriteIconClick: (StationModel) -> Unit,
+) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
                     BusArriveScreenTitle(
-                        stationInfo = stationInfo,
+                        stationInfo = stationModel,
                     )
                 },
                 navigationIcon = {
                     IconButton(
-                        onClick = {
-                            navController.popBackStack()
-                        }
+                        onClick = onBackClick
                     ) {
                         ScaffoldBackIcon()
                     }
                 },
                 actions = {
                     StationFavoriteIcon(
-                        stationViewModel = stationViewModel,
-                        stationInfo = stationInfo,
+                        stationModel = stationModel,
+                        onFavoriteIconClick = onFavoriteIconClick,
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -90,49 +110,17 @@ fun BusArriveScreen(
                 .padding(it)
                 .background(Color.White),
         ) {
-            NextBusStop(
-                nextBusStopName = stationInfo.nextBusStop ?: "",
+            NextBusStopArea(
+                nextBusStopName = stationModel.nextBusStop ?: "",
             )
 
             Spacer(modifier = Modifier.size(20.dp))
 
-            BusArriveList(
+            BusArriveListArea(
                 arsId = arsId,
                 busArriveViewModel = busArriveViewModel,
-                lineViewModel = lineViewModel,
                 snackBarHostState = snackBarHostState,
             )
         }
-    }
-}
-
-@Composable
-private fun StationFavoriteIcon(
-    stationViewModel: StationViewModel,
-    stationInfo: StationModel,
-) {
-    IconButton(
-        onClick = {
-            insertOrDeleteStationInfo(
-                stationModel = stationInfo,
-                stationViewModel = stationViewModel,
-            )
-        }
-    ) {
-        Icon(
-            imageVector = if (stationInfo.selected) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-            contentDescription = "Favorite",
-        )
-    }
-}
-
-private fun insertOrDeleteStationInfo(
-    stationModel: StationModel,
-    stationViewModel: StationViewModel,
-){
-    if(stationModel.selected){
-        stationViewModel.deleteLikeStation(stationModel.busStopId ?: "")
-    }else {
-        stationViewModel.insertLikeStation(stationModel)
     }
 }

@@ -37,6 +37,7 @@ android {
 
 dependencies {
     implementation(project(":navigation"))
+    implementation(project(":domain"))
     implementation(project(":feature:splash"))
     implementation(project(":feature:home"))
     implementation(project(":feature:station"))

@@ -44,7 +44,6 @@ fun StationScreen(
         onStationCardClick = onStationCardClick,
         onSearchStation = onSearchStation,
         onFavoriteIconClick = onFavoriteIconClick
-
     )
 }
 
