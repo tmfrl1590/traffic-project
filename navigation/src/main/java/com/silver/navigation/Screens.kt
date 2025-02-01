@@ -43,7 +43,7 @@ sealed class BottomBarScreen (
         name = "정류장",
         icon = Icons.Filled.EvStation
     )
-    data object Line: BottomBarScreen(
+    /*data object Line: BottomBarScreen(
         screen = Screens.Line,
         name = "노선",
         icon = Icons.Filled.LineAxis
@@ -52,7 +52,7 @@ sealed class BottomBarScreen (
         screen = Screens.Map,
         name = "지도",
         icon = Icons.Filled.Map
-    )
+    )*/
     data object Setting: BottomBarScreen(
         screen = Screens.Setting,
         name = "설정",
@@ -63,7 +63,7 @@ sealed class BottomBarScreen (
 val bottomDestinations = listOf(
     BottomBarScreen.Home,
     BottomBarScreen.Station,
-    BottomBarScreen.Line,
-    BottomBarScreen.Map,
+    //BottomBarScreen.Line,
+    //BottomBarScreen.Map,
     BottomBarScreen.Setting,
 )

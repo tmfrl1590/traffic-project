@@ -7,8 +7,8 @@ fun NavBackStackEntry?.fromBottomRoute(): BottomBarScreen{
         return when (it) {
             BottomBarScreen.Home::class.simpleName -> BottomBarScreen.Home
             BottomBarScreen.Station::class.simpleName -> BottomBarScreen.Station
-            BottomBarScreen.Line::class.simpleName -> BottomBarScreen.Line
-            BottomBarScreen.Map::class.simpleName -> BottomBarScreen.Map
+            //BottomBarScreen.Line::class.simpleName -> BottomBarScreen.Line
+            //BottomBarScreen.Map::class.simpleName -> BottomBarScreen.Map
             BottomBarScreen.Setting::class.simpleName -> BottomBarScreen.Setting
             else -> BottomBarScreen.Home
         }

@@ -124,8 +124,8 @@ private val NavController.shouldShowBottomBar
     get() = when (this.currentBackStackEntry.fromBottomRoute()) {
         BottomBarScreen.Home,
         BottomBarScreen.Station,
-        BottomBarScreen.Line,
-        BottomBarScreen.Map,
+        //BottomBarScreen.Line,
+        //BottomBarScreen.Map,
         BottomBarScreen.Setting,
         -> true
     }
