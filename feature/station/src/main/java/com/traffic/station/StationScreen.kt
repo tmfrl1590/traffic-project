@@ -1,8 +1,11 @@
 package com.traffic.station
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,7 +15,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.traffic.common.R
@@ -62,17 +67,27 @@ private fun StationContent(
             .fillMaxSize()
     ) {
         SearchArea(
-            modifier = Modifier
-                .weight(0.15f),
-            text = stringResource(R.string.station),
             keyword = keyword,
             onValueChange = { keyword = it },
             searchAction = { onSearchStation(keyword) },
         )
 
-        SearchedStationListArea(
+        Spacer(
             modifier = Modifier
-                .weight(0.85f),
+                .height(12.dp)
+        )
+
+        HorizontalDivider(
+            thickness = 1.dp,
+            color = Color(0xFFE5E7EB)
+        )
+
+        Spacer(
+            modifier = Modifier
+                .height(12.dp)
+        )
+
+        SearchedStationListArea(
             snackBarHostState = snackBarHostState,
             searchedStationList = searchedStationList,
             onStationCardClick = onStationCardClick,

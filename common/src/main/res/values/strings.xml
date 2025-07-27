@@ -38,6 +38,6 @@
     <string name="bus_arrive_now">현재</string>
 
     <!--Common-->
-    <string name="common1">검색어를 입력해주세요</string>
+    <string name="common1">정류장명을 입력하세요</string>
     <string name="common2">에러가 발생했습니다</string>
 </resources>

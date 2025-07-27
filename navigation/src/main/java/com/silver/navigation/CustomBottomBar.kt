@@ -31,13 +31,11 @@ import com.traffic.common.noRippleClickable
 
 @Composable
 fun BottomNavigationBar(
+    currentScreen: BottomBarScreen,
     navController: NavHostController,
     onTabClick: (BottomBarScreen) -> Unit,
     onBack: (BottomBarScreen) -> Unit,
 ) {
-    val backStackEntry = navController.currentBackStackEntryAsState()
-    val currentScreen = backStackEntry.value.fromBottomRoute()
-
     AppBottomNavigationBar(
         show = navController.shouldShowBottomBar
     ) {

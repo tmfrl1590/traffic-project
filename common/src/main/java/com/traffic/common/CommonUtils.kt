@@ -3,12 +3,14 @@ package com.traffic.common
 import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -207,32 +209,26 @@ fun snackBarMessage(
 
 @Composable
 fun SearchArea(
-    modifier: Modifier,
-    text: String,
     keyword: String,
     onValueChange: (String) -> Unit,
     searchAction: () -> Unit,
 ) {
     Row(
-        modifier = modifier
-            .padding(16.dp)
-            .fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(54.dp)
+            .padding(horizontal = 20.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(
-            text = text,
-            fontSize = 16.sp,
-            modifier = Modifier.weight(1f),
-            textAlign = TextAlign.Center,
-            color = Color.Black
-        )
-
-        Spacer(modifier = Modifier.size(20.dp))
-
         OutlinedTextField(
             value = keyword,
             onValueChange = onValueChange,
-            placeholder = { Text(text = stringResource(id = R.string.common1)) },
+            placeholder = {
+                Text(
+                    text = stringResource(id = R.string.common1),
+                    color = Color(0xFFADAEBC),
+                )
+            },
             shape = RoundedCornerShape(8.dp),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Search,
@@ -245,18 +241,17 @@ fun SearchArea(
             ),
             maxLines = 1,
             singleLine = true,
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Filled.Search,
-                    contentDescription = ""
-                )
-            },
-            modifier = Modifier.weight(3f),
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight(),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color.Gray,
+                focusedBorderColor = Color(0xFFE5E7EB),
+                unfocusedBorderColor = Color(0xFFE5E7EB),
+                focusedContainerColor = Color(0xFFF9FAFB),
+                unfocusedContainerColor = Color(0xFFF9FAFB),
                 focusedTextColor = Color.Black,
                 cursorColor = Color.Gray,
-            )
+            ),
         )
     }
 }

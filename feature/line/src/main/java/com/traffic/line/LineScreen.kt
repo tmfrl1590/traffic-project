@@ -39,9 +39,6 @@ fun LineScreen(
             .fillMaxSize()
     ) {
         SearchArea(
-            modifier = Modifier
-                .weight(0.15f),
-            text = stringResource(R.string.line),
             keyword = keyword,
             onValueChange = { keyword = it },
             searchAction = { lineViewModel.getSearchedLineList(keyword = keyword) },

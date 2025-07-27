@@ -1,6 +1,7 @@
 package com.traffic.station.component
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -27,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,20 +44,19 @@ import com.traffic.station.util.currentBusStopNameAndArsId
 
 @Composable
 fun SearchedStationListArea(
-    modifier: Modifier = Modifier,
     snackBarHostState: SnackbarHostState,
     searchedStationList: Resource<List<StationModel>>,
     onStationCardClick: (String) -> Unit,
     onFavoriteIconClick: (StationModel) -> Unit,
 ) {
     Box(
-        modifier = modifier
+        modifier = Modifier
     ){
         when(searchedStationList){
             is Resource.Idle -> {}
             is Resource.Loading -> {
                 Box(
-                    modifier = modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ){
                     CircularProgressIndicator()
@@ -63,12 +65,12 @@ fun SearchedStationListArea(
             is Resource.Success -> {
                 if(searchedStationList.data.isEmpty()){
                     NoDataComponent(
-                        modifier = modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxSize(),
                         text = stringResource(R.string.searched_station_no_data)
                     )
                 }else {
                     LazyColumn(
-                        modifier = modifier
+                        modifier = Modifier
                     ){
                         itemsIndexed(
                             items = searchedStationList.data,
@@ -207,9 +209,9 @@ private fun StationInfoFavoriteIcon(
         onClick = { onFavoriteIconClick(stationModel) }
     ){
         Icon(
-            imageVector = if(stationModel.selected) Icons.Default.Favorite else Icons.Default.FavoriteBorder ,
+            painter = painterResource(id = if (stationModel.selected) R.drawable.icon_selected_star else R.drawable.icon_unselected_star),
             contentDescription = "Favorite",
-            tint = if(stationModel.selected) Color.Red else Color.Gray
+            tint = Color.Unspecified
         )
     }
 }
