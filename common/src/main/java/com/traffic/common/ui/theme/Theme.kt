@@ -1,4 +1,4 @@
-package com.system.traffic.ui.theme
+package com.traffic.common.ui.theme
 
 import android.app.Activity
 import android.os.Build

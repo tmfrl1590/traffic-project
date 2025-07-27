@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.system.traffic.main.AppNavHost
-import com.system.traffic.ui.theme.TrafficTheme
+import com.traffic.common.ui.theme.TrafficTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -28,6 +28,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.traffic.common.noRippleClickable
+import com.traffic.common.ui.theme.MainColor
 
 @Composable
 fun BottomNavigationBar(
@@ -109,7 +110,7 @@ fun RowScope.AppBottomNavigationBarItem(
         Icon(
             imageVector = icon!!,
             contentDescription = "",
-            tint = if (selected) Color.Red else Color.Gray
+            tint = if (selected) MainColor else Color.Gray
         )
 
         Text(
@@ -117,7 +118,7 @@ fun RowScope.AppBottomNavigationBarItem(
             fontSize = 12.sp,
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal,
-            color = if (selected) Color.Red else Color.Black
+            color = if (selected) MainColor else Color.Black
         )
     }
 }
