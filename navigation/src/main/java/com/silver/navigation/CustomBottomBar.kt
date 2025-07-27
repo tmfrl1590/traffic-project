@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.traffic.common.noRippleClickable
 
 @Composable
 fun BottomNavigationBar(
@@ -100,7 +101,10 @@ fun RowScope.AppBottomNavigationBarItem(
     Column(
         modifier = Modifier
             .weight(1f)
-            .clickable(onClick = onTabClick),
+            .noRippleClickable {
+                onTabClick()
+            }
+        ,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
