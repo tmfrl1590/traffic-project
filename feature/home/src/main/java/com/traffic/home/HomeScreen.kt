@@ -2,12 +2,14 @@ package com.traffic.home
 
 import android.app.Activity
 import android.content.Context
+import android.widget.Space
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
@@ -35,7 +37,6 @@ fun HomeScreen(
 ) {
     LaunchedEffect(Unit){
         stationViewModel.getLikeStationList()
-        //logEvent(context, "HomeScreen")
     }
 
     val likeStationList by stationViewModel.likeStationList.collectAsState(initial = listOf())
@@ -55,13 +56,10 @@ fun HomeScreen(
             title = stringResource(com.traffic.common.R.string.like_station)
         )
 
-        HorizontalDivider(
+        Spacer(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .height(12.dp)
         )
-
-        Spacer(modifier = Modifier.padding(bottom = 16.dp))
 
         LikeStationArea(
             modifier = Modifier.weight(0.9f),

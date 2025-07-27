@@ -4,8 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
@@ -40,15 +42,6 @@ private fun SettingScreenContent(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        CommonTitleComponent(
-            title = stringResource(id = R.string.setting)
-        )
-
-        HorizontalDivider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-        )
 
         SettingRowContent(
             title = stringResource(R.string.setting_app_version),

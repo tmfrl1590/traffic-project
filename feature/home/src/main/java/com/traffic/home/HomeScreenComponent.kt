@@ -21,10 +21,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.traffic.common.R
 import com.traffic.domain.model.StationModel
 import com.traffic.station.viewmodel.StationViewModel
 
@@ -87,9 +89,9 @@ private fun StationInfo(
                     .align(Alignment.TopEnd)
             ){
                 Icon(
-                    imageVector = if(stationModel.selected) Icons.Default.Favorite else Icons.Default.FavoriteBorder ,
+                    painter = painterResource(id = if (stationModel.selected) R.drawable.icon_selected_star else R.drawable.icon_unselected_star),
                     contentDescription = "Favorite",
-                    tint = Color.Red
+                    tint = Color.Unspecified
                 )
             }
 

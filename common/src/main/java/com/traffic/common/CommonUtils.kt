@@ -158,7 +158,7 @@ fun CommonTitleComponent(
         fontSize = 20.sp,
         fontWeight = FontWeight.Bold,
         modifier = Modifier
-            .padding(16.dp),
+            .padding(start = 16.dp),
         color = Color.Black
     )
 }

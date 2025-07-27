@@ -35,11 +35,37 @@ fun MainScreen(
 
     Scaffold(
         topBar = {
-            if(currentScreen == BottomBarScreen.Station){
+            if(currentScreen == BottomBarScreen.Home){
+                CenterAlignedTopAppBar(
+                    title = {
+                        Text(
+                            text = "광주버스",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    },
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = Color.White
+                    )
+                )
+            } else if(currentScreen == BottomBarScreen.Station){
                 CenterAlignedTopAppBar(
                     title = {
                         Text(
                             text = "정류장 검색",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    },
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = Color.White
+                    )
+                )
+            } else if(currentScreen == BottomBarScreen.Setting){
+                CenterAlignedTopAppBar(
+                    title = {
+                        Text(
+                            text = "설정",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.SemiBold
                         )
