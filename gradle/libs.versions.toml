@@ -43,6 +43,7 @@ ossLicensesPlugin = "0.10.6" # OSS Licenses Plugin
 ksp = "2.0.20-1.0.24" # KSP
 googleServices = "4.4.2"
 material = "1.12.0" # Google Services
+playServicesAds = "24.4.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -138,6 +139,9 @@ naver-map-location = { module = "io.github.fornewid:naver-map-location", version
 oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "ossLicenses" }
 oss-licenses-plugin = { group = "com.google.android.gms", name = "oss-licenses-plugin", version.ref = "ossLicensesPlugin" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+# admob
+play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

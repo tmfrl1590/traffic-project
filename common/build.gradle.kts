@@ -75,4 +75,7 @@ dependencies {
 
     implementation(libs.google.firebase.analytics.ktx)
     implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
+
+    // Admob
+    implementation(libs.play.services.ads)
 }

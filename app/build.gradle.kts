@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -10,6 +11,9 @@ plugins {
     id("com.google.gms.google-services")
 }
 
+val properties = Properties()
+properties.load(project.rootProject.file("local.properties").inputStream())
+
 android {
     namespace= "com.system.traffic"
     compileSdk = 35
@@ -18,8 +22,8 @@ android {
         applicationId = "com.system.traffic"
         minSdk = 28
         targetSdk = 35
-        versionCode = 29
-        versionName = "1.4.22"
+        versionCode = 30
+        versionName = "2.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -27,14 +31,31 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file(properties.getProperty("RELEASE_STORE_FILE"))
+            storePassword = properties.getProperty("RELEASE_STORE_PASSWORD")
+            keyAlias = properties.getProperty("RELEASE_KEY_ALIAS")
+            keyPassword = properties.getProperty("RELEASE_STORE_PASSWORD")
+        }
+    }
     buildTypes {
+        debug {
+            // 애드몹 앱 id
+            manifestPlaceholders["ADMOB_APP_ID"] = properties.getProperty("DEBUG_ADMOB_APP_ID")
+            // 광고단위 id
+            buildConfigField("String", "AD_UNIT_ID", "\"${properties.getProperty("DEBUG_AD_UNIT_ID")}\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                     getDefaultProguardFile("proguard-android-optimize.txt"),
                     "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug")
+            manifestPlaceholders["ADMOB_APP_ID"] = properties.getProperty("RELEASE_ADMOB_APP_ID")
+            buildConfigField("String", "AD_UNIT_ID", "\"${properties.getProperty("RELEASE_AD_UNIT_ID")}\"")
+
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     composeCompiler {
@@ -52,6 +73,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     packaging {
         resources {
@@ -97,4 +119,6 @@ dependencies {
 
     implementation(libs.google.firebase.analytics.ktx)
     implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
+
+    implementation(libs.play.services.ads)
 }

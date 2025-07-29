@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import com.traffic.common.AdBannerView
 import com.traffic.common.CommonTitleComponent
 import com.traffic.common.R
 import com.traffic.setting.component.SettingRowContent
@@ -42,18 +43,29 @@ private fun SettingScreenContent(
         modifier = Modifier
             .fillMaxSize()
     ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        ) {
+            SettingRowContent(
+                title = stringResource(R.string.setting_app_version),
+                content = version,
+            )
 
-        SettingRowContent(
-            title = stringResource(R.string.setting_app_version),
-            content = version,
-        )
+            SettingRowContent(
+                title = stringResource(id = R.string.setting_open_source_list),
+                content = "",
+                onClick = {
+                    context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
+                }
+            )
+        }
 
-        SettingRowContent(
-            title = stringResource(id = R.string.setting_open_source_list),
-            content = "",
-            onClick = {
-                context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
-            }
+
+        AdBannerView(
+            modifier = Modifier
+                .padding(vertical = 16.dp)
         )
     }
 }

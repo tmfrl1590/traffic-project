@@ -3,7 +3,9 @@ package com.traffic.station
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.SnackbarHostState
@@ -20,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.traffic.common.AdBannerView
 import com.traffic.common.R
 import com.traffic.common.Resource
 import com.traffic.common.SearchArea
@@ -66,33 +69,45 @@ private fun StationContent(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        SearchArea(
-            keyword = keyword,
-            onValueChange = { keyword = it },
-            searchAction = { onSearchStation(keyword) },
-        )
-
-        Spacer(
+        Column(
             modifier = Modifier
-                .height(12.dp)
-        )
+                .fillMaxWidth()
+                .weight(1f)
+        ) {
+            SearchArea(
+                keyword = keyword,
+                onValueChange = { keyword = it },
+                searchAction = { onSearchStation(keyword) },
+            )
 
-        HorizontalDivider(
-            thickness = 1.dp,
-            color = Color(0xFFE5E7EB)
-        )
+            Spacer(
+                modifier = Modifier
+                    .height(12.dp)
+            )
 
-        Spacer(
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = Color(0xFFE5E7EB)
+            )
+
+            Spacer(
+                modifier = Modifier
+                    .height(12.dp)
+            )
+
+            SearchedStationListArea(
+                snackBarHostState = snackBarHostState,
+                searchedStationList = searchedStationList,
+                onStationCardClick = onStationCardClick,
+                onFavoriteIconClick = onFavoriteIconClick
+            )
+        }
+
+        AdBannerView(
             modifier = Modifier
-                .height(12.dp)
+                .padding(vertical = 16.dp)
         )
 
-        SearchedStationListArea(
-            snackBarHostState = snackBarHostState,
-            searchedStationList = searchedStationList,
-            onStationCardClick = onStationCardClick,
-            onFavoriteIconClick = onFavoriteIconClick
-        )
     }
 }
 

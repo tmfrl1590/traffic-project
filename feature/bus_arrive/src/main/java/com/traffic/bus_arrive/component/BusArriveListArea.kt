@@ -10,11 +10,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -148,21 +150,40 @@ fun BusArriveCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.Top
             ) {
-                Text(
-                    text = busArriveModel.lineName!!,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.height(40.dp),
-                    color = lineTestColor(
-                        busArriveModel.lineKind ?: "1"
-                    )
-                )
+                Card(
+                    modifier = Modifier
+                        .wrapContentWidth()
+                    ,
+                    colors = CardDefaults.cardColors(
+                        containerColor = lineTestColor(busArriveModel.lineKind ?: "1")
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .padding(horizontal = 12.dp)
+                            .padding(vertical = 8.dp)
+                        ,
+                        contentAlignment = Alignment.Center
+                    ){
+                        Text(
+                            text = busArriveModel.lineName!!,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.height(40.dp),
+                            color = Color.White
+                        )
+                    }
+                }
+
 
                 Text(
                     text = "${busArriveModel.remainMin}분",
                     modifier = Modifier.wrapContentWidth(),
                     textAlign = TextAlign.End,
-                    color = Color.Red
+                    color = Color.Red,
+                    fontWeight = FontWeight.SemiBold
                 )
             }
 
