@@ -32,9 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.traffic.bus_arrive.component.BusArriveListArea
-import com.traffic.bus_arrive.component.BusArriveScreenTitle
 import com.traffic.bus_arrive.component.NextBusStopArea
-import com.traffic.bus_arrive.component.StationFavoriteIcon
 import com.traffic.bus_arrive.viewmodel.BusArriveViewModel
 import com.traffic.common.AdBannerView
 import com.traffic.common.R
@@ -45,6 +43,7 @@ import com.traffic.domain.model.StationModel
 @Composable
 fun BusArriveScreen(
     context: Context,
+    state: BusArriveState,
     arsId: String,
     snackBarHostState: SnackbarHostState,
     busArriveViewModel: BusArriveViewModel,
@@ -56,7 +55,11 @@ fun BusArriveScreen(
         busArriveViewModel.getStationInfo(arsId)
     }
 
-    LaunchedEffect(true) {
+    LaunchedEffect(key1 = Unit) {
+        busArriveViewModel.getBusArriveList(arsId)
+    }
+
+    LaunchedEffect(Unit) {
         logEvent(context, "BusArriveScreen")
         //stationViewModel.getLikeStationList()
     }
@@ -71,6 +74,7 @@ fun BusArriveScreen(
     val stationModel by busArriveViewModel.stationInfo.collectAsStateWithLifecycle()
 
     BusArriveScreenContent(
+        state = state,
         busArriveViewModel = busArriveViewModel,
         stationModel = stationModel,
         arsId = arsId,
@@ -83,6 +87,7 @@ fun BusArriveScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BusArriveScreenContent(
+    state: BusArriveState,
     busArriveViewModel: BusArriveViewModel,
     stationModel: StationModel,
     arsId: String,
@@ -99,9 +104,6 @@ fun BusArriveScreenContent(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.SemiBold,
                     )
-                    /*BusArriveScreenTitle(
-                        stationInfo = stationModel,
-                    )*/
                 },
                 navigationIcon = {
                     IconButton(
@@ -110,12 +112,6 @@ fun BusArriveScreenContent(
                         ScaffoldBackIcon()
                     }
                 },
-                /*actions = {
-                    StationFavoriteIcon(
-                        stationModel = stationModel,
-                        onFavoriteIconClick = onFavoriteIconClick,
-                    )
-                },*/
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.White,
                 )
@@ -163,9 +159,7 @@ fun BusArriveScreenContent(
                 Spacer(modifier = Modifier.height(12.dp))
 
                 BusArriveListArea(
-                    arsId = arsId,
-                    busArriveViewModel = busArriveViewModel,
-                    snackBarHostState = snackBarHostState,
+                    busArriveList = state.arriveList,
                 )
             }
 

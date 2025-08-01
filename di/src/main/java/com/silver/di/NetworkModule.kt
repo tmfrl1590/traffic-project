@@ -2,8 +2,8 @@ package com.silver.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.skydoves.sandwich.retrofit.adapters.ApiResponseCallAdapterFactory
-import com.traffic.common.Constants.BASE_URL
-import com.traffic.data.remote.service.TrafficService
+import com.system.traffic.remote.RemoteConstants
+import com.system.traffic.remote.service.TrafficService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,7 +46,7 @@ object NetworkModule {
     @Provides
     fun provideTrafficApi(): TrafficService {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(RemoteConstants.BASE_URL)
             .client(logging())
             .addConverterFactory(
                 json.asConverterFactory("application/json".toMediaType())

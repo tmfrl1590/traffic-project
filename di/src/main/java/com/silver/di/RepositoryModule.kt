@@ -5,19 +5,20 @@ import com.traffic.data.local.dataSource.FileDataSource
 import com.traffic.data.local.db.dao.LikeStationDao
 import com.traffic.data.local.db.dao.LineDao
 import com.traffic.data.local.db.dao.StationDao
-import com.traffic.data.repository.BusArriveRepositoryImpl
+import com.traffic.data.remote.RemoteDataSource
+import com.traffic.data.repository.RemoteRepositoryImpl
 import com.traffic.data.repository.DataStoreRepositoryImpl
 import com.traffic.data.repository.FileRepositoryImpl
 import com.traffic.data.repository.LineRepositoryImpl
 import com.traffic.data.repository.StationRepositoryImpl
-import com.traffic.domain.repository.BusArriveRepository
+import com.traffic.domain.repository.RemoteRepository
 import com.traffic.domain.repository.FileRepository
 import com.traffic.domain.repository.LineRepository
 import com.traffic.domain.repository.StationRepository
-import com.traffic.data.remote.service.TrafficService
 import com.traffic.data.repository.LikeStationRepositoryImpl
 import com.traffic.domain.repository.DataStoreRepository
 import com.traffic.domain.repository.LikeStationRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -47,11 +48,7 @@ object RepositoryModule {
         return FileRepositoryImpl(stationDao, lineDao, dataSource)
     }
 
-    @Provides
-    @Singleton
-    fun provideBusArriveRepository(trafficApi: TrafficService): BusArriveRepository {
-        return BusArriveRepositoryImpl(trafficApi)
-    }
+
 
     @Provides
     @Singleton
@@ -66,3 +63,10 @@ object RepositoryModule {
     }
 }
 
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class Repository2Module {
+    @Binds
+    @Singleton
+    abstract fun bindBusArriveRepository(remoteRepositoryImpl: RemoteRepositoryImpl): RemoteRepository
+}

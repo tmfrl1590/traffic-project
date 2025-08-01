@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.daggerHilt)
     alias(libs.plugins.ksp)
     id("kotlinx-serialization")
-    id("kotlin-parcelize")
 }
 
 android {
@@ -37,6 +36,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core"))
     implementation(project(":domain"))
     implementation(project(":common"))
 
@@ -49,19 +49,6 @@ dependencies {
     // hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
-
-    // retrofit
-    implementation(libs.retrofit)
-
-    // kotlinx-serialization-converter
-    implementation(libs.retrofit2.kotlinx.serialization.converter)
-
-    //Okhttp3
-    implementation(libs.okhttp)
-    implementation(libs.logging.interceptor)
-
-    // Sandwich
-    implementation(libs.sandwich.retrofit)
 
     // Kotlin Serialization
     implementation(libs.kotlin.stdlib)

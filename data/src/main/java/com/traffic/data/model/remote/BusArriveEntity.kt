@@ -1,20 +1,29 @@
-package com.traffic.data.remote.dto
+package com.traffic.data.model.remote
 
+import com.traffic.data.DataMapper
+import com.traffic.domain.model.BusArrive
+import com.traffic.domain.model.BusArriveItem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class BusArriveDto(
+data class BusArriveEntity(
     @SerialName("RESULT")
     val result : Map<String, String>,
     @SerialName("BUSSTOP_LIST")
-    val itemList : List<BusArriveItemDto>,
+    val itemList : List<BusArriveItemEntity>,
     @SerialName("ROW_COUNT")
     val rowCount : String
-)
+): DataMapper<BusArrive>{
+    override fun toDomain(): BusArrive {
+        return BusArrive(
+            itemList = itemList.map { it.toDomain() }
+        )
+    }
+}
 
 @Serializable
-data class BusArriveItemDto(
+data class BusArriveItemEntity(
     @SerialName("ARRIVE")
     val arrive : String?,
 
@@ -64,4 +73,26 @@ data class BusArriveItemDto(
     val lineName : String?,
 
     var lineKind : String? = null,
-)
+): DataMapper<BusArriveItem>{
+    override fun toDomain(): BusArriveItem {
+        return BusArriveItem(
+            arrive = arrive,
+            remainStop = remainStop,
+            shortLineName = shortLineName,
+            busId = busId,
+            metroFlag = metroFlag,
+            busStopName = busStopName,
+            currStopId = currStopId,
+            lineId = lineId,
+            remainMin = remainMin,
+            engBusStopName = engBusStopName,
+            dirStart = dirStart,
+            dir = dir,
+            dirEnd = dirEnd,
+            lowBus = lowBus,
+            arriveFlag = arriveFlag,
+            lineName = lineName,
+            lineKind = lineKind,
+        )
+    }
+}

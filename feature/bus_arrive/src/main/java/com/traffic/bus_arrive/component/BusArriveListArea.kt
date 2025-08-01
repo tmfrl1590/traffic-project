@@ -17,13 +17,8 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,55 +27,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.traffic.bus_arrive.viewmodel.BusArriveViewModel
+import com.traffic.bus_arrive.model.BusArriveItemModel
 import com.traffic.common.R
-import com.traffic.common.UIState
 import com.traffic.common.lineTestColor
-import com.traffic.common.snackBarMessage
-import com.traffic.domain.model.BusArriveItem
 
 @Composable
 fun BusArriveListArea(
-    arsId: String,
-    busArriveViewModel: BusArriveViewModel,
-    snackBarHostState: SnackbarHostState,
+    busArriveList: List<BusArriveItemModel>,
 ) {
-    LaunchedEffect(key1 = true) {
-        busArriveViewModel.getBusArriveList(arsId)
-    }
 
-    val busArriveListState by busArriveViewModel.busArriveListState.collectAsState()
-    val resultBusArriveList = busArriveListState.data?.data ?: emptyList()
-    val resultMessage = busArriveListState.data?.message ?: "aaa"
-
-    LaunchedEffect(true) {
-        /*busArriveViewModel.errorFlow.collectLatest {
-            snackBarMessage(
-                snackBarHostState,
-                it
-            )
-        }*/
-    }
-
-    when (busArriveListState) {
-        is UIState.Idle -> {}
-        is UIState.Loading -> CircularProgressIndicator()
-        is UIState.Success -> {
-            if (resultBusArriveList.isEmpty()) {
-                NoBusArrive()
-            } else {
-                BusArriveListArea(
-                    busArriveList = resultBusArriveList,
-                )
-            }
-        }
-        is UIState.Error -> {
-            snackBarMessage(
-                snackBarHostState = snackBarHostState,
-                message = resultMessage
-            )
-        }
-        is UIState.Exception -> {}
+    if(busArriveList.isEmpty()){
+        NoBusArrive()
+    } else {
+        BusArriveList(
+            busArriveList = busArriveList
+        )
     }
 }
 
@@ -101,8 +62,8 @@ fun NoBusArrive() {
 }
 
 @Composable
-fun BusArriveListArea(
-    busArriveList: List<BusArriveItem>,
+private fun BusArriveList(
+    busArriveList: List<BusArriveItemModel>,
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -120,11 +81,9 @@ fun BusArriveListArea(
     }
 }
 
-
-
 @Composable
-fun BusArriveCard(
-    busArriveModel: BusArriveItem,
+private fun BusArriveCard(
+    busArriveModel: BusArriveItemModel,
 ) {
     Card(
         modifier = Modifier
@@ -176,7 +135,6 @@ fun BusArriveCard(
                         )
                     }
                 }
-
 
                 Text(
                     text = "${busArriveModel.remainMin}분",

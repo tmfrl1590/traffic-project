@@ -1,5 +1,9 @@
 package com.traffic.domain.model
 
+data class BusArrive(
+    val itemList: List<BusArriveItem>
+)
+
 data class BusArriveItem(
     val arrive : String?,
     val remainStop : String?,

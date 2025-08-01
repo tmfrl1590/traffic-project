@@ -2,14 +2,11 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.daggerHilt)
-    alias(libs.plugins.compose.compiler) // 추가
     alias(libs.plugins.ksp)
     id("kotlinx-serialization")
-    id("kotlin-parcelize")
 }
-
 android {
-    namespace = "com.silver.di"
+    namespace = "com.system.traffic.remote"
     compileSdk = 34
 
     defaultConfig {
@@ -38,34 +35,15 @@ android {
 }
 
 dependencies {
-    implementation(project(":data"))
-    implementation(project(":remote"))
-    implementation(project(":domain"))
+    implementation(project(":core"))
     implementation(project(":common"))
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-
+    implementation(project(":data"))
     // hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
-
-    // room
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
 
     // retrofit
     implementation(libs.retrofit)
-
-    // Kotlin Serialization
-    implementation(libs.kotlin.stdlib)
-    implementation(libs.kotlinx.serialization.json)
 
     // kotlinx-serialization-converter
     implementation(libs.retrofit2.kotlinx.serialization.converter)
@@ -76,4 +54,8 @@ dependencies {
 
     // Sandwich
     implementation(libs.sandwich.retrofit)
+
+    // Kotlin Serialization
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlinx.serialization.json)
 }

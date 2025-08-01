@@ -5,10 +5,12 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -75,8 +77,10 @@ fun AppNavHost() {
         composable<Screens.BusArrive> { backStackEntry ->
             val busArriveViewModel = hiltViewModel<BusArriveViewModel>()
             val arsId = backStackEntry.toRoute<Screens.BusArrive>().arsId
+            val state by busArriveViewModel.state.collectAsStateWithLifecycle()
             BusArriveScreen(
                 context = context,
+                state = state,
                 arsId = arsId,
                 snackBarHostState = snackBarHostState,
                 busArriveViewModel = busArriveViewModel,

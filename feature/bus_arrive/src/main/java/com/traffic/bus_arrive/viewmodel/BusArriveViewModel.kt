@@ -2,10 +2,9 @@ package com.traffic.bus_arrive.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.traffic.common.BaseResponse
-import com.traffic.common.ResultCode
-import com.traffic.common.UIState
-import com.traffic.domain.model.BusArriveItem
+import com.system.traffic.core.domain.onSuccess
+import com.traffic.bus_arrive.BusArriveState
+import com.traffic.bus_arrive.model.toPresentation
 import com.traffic.domain.model.StationModel
 import com.traffic.domain.useCase.arrive.BusArriveUseCase
 import com.traffic.domain.useCase.like.AddLikeStationUseCase
@@ -19,8 +18,10 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,9 +34,9 @@ class BusArriveViewModel @Inject constructor(
     private val addLikeStationUseCase: AddLikeStationUseCase,
     private val deleteLikeStationUseCase: DeleteLikeStationUseCase,
 ): ViewModel() {
-
-    private val _busArriveListState = MutableStateFlow<UIState<BaseResponse<List<BusArriveItem>>>>(UIState.Idle)
-    val busArriveListState: StateFlow<UIState<BaseResponse<List<BusArriveItem>>>> = _busArriveListState
+    
+    private val _state = MutableStateFlow(BusArriveState())
+    val state: StateFlow<BusArriveState> = _state.asStateFlow()
 
     private val _errorFlow = MutableSharedFlow<String>()
     val errorFlow = _errorFlow.asSharedFlow()
@@ -46,23 +47,12 @@ class BusArriveViewModel @Inject constructor(
     // 버스 도착 정보 조회
     fun getBusArriveList(arsId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _busArriveListState.value = UIState.Loading
-            val result = busArriveUseCase(arsId)
-            result.data?.map {
-                it.lineKind = getLineKindUseCase(it.lineId ?: "")
-            }
-
-            when (result.code) {
-                ResultCode.BUS_ARRIVE_GET_SUCCESS.code -> _busArriveListState.value = UIState.Success(data = result)
-                ResultCode.BUS_ARRIVE_GET_FAILURE.code -> {
-                    _busArriveListState.value = UIState.Idle
-                    _errorFlow.emit(result.message)
+            busArriveUseCase(arsId)
+                .onSuccess { result ->
+                    val arriveList = result.itemList.map { it.toPresentation() }
+                    arriveList.map { it.lineKind = getLineKindUseCase(it.lineId ?: "")} // 색상 설정 추후에 수정 필요
+                    _state.update { it.copy(arriveList = arriveList) }
                 }
-                ResultCode.COMMON_EXCEPTION.code -> {
-                    _busArriveListState.value = UIState.Exception
-                    _errorFlow.emit(result.message)
-                }
-            }
         }
     }
 
