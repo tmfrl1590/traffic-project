@@ -73,9 +73,11 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.serialization.json)
 
-    implementation(libs.google.firebase.analytics.ktx)
-    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
+    implementation(libs.firebase.analytics.ktx)
+    implementation(platform("com.google.firebase:firebase-bom:34.0.0"))
 
     // Admob
     implementation(libs.play.services.ads)
+
+
 }

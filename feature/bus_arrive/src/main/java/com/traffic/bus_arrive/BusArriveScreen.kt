@@ -38,6 +38,7 @@ import com.traffic.common.AdBannerView
 import com.traffic.common.R
 import com.traffic.common.ScaffoldBackIcon
 import com.traffic.common.firebase.logEvent
+import com.traffic.common.noRippleClickable
 import com.traffic.domain.model.StationModel
 
 @Composable
@@ -131,7 +132,8 @@ fun BusArriveScreenContent(
             ) {
                 BusStopAndFavoriteArea(
                     busStopName = stationModel.busStopName ?: "",
-                    selected = stationModel.selected
+                    selected = stationModel.selected,
+                    onClickFavorite = { onFavoriteIconClick(stationModel) }
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -176,6 +178,7 @@ fun BusArriveScreenContent(
 private fun BusStopAndFavoriteArea(
     busStopName: String,
     selected: Boolean,
+    onClickFavorite: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -195,7 +198,11 @@ private fun BusStopAndFavoriteArea(
             painter = painterResource(id = if (selected) R.drawable.icon_selected_star else R.drawable.icon_unselected_star),
             contentDescription = "Favorite",
             tint = Color.Unspecified,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier
+                .size(24.dp)
+                .noRippleClickable {
+                    onClickFavorite()
+                }
         )
     }
 }

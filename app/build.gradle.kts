@@ -32,19 +32,19 @@ android {
     }
 
     signingConfigs {
-        /*create("release") {
+        create("release") {
             storeFile = file(properties.getProperty("RELEASE_STORE_FILE"))
             storePassword = properties.getProperty("RELEASE_STORE_PASSWORD")
             keyAlias = properties.getProperty("RELEASE_KEY_ALIAS")
             keyPassword = properties.getProperty("RELEASE_STORE_PASSWORD")
-        }*/
+        }
     }
     buildTypes {
         debug {
             // 애드몹 앱 id
-            //manifestPlaceholders["ADMOB_APP_ID"] = properties.getProperty("DEBUG_ADMOB_APP_ID")
+            manifestPlaceholders["ADMOB_APP_ID"] = properties.getProperty("DEBUG_ADMOB_APP_ID")
             // 광고단위 id
-            //buildConfigField("String", "AD_UNIT_ID", "\"${properties.getProperty("DEBUG_AD_UNIT_ID")}\"")
+            buildConfigField("String", "AD_UNIT_ID", "\"${properties.getProperty("DEBUG_AD_UNIT_ID")}\"")
         }
         release {
             isMinifyEnabled = false
@@ -52,10 +52,10 @@ android {
                     getDefaultProguardFile("proguard-android-optimize.txt"),
                     "proguard-rules.pro"
             )
-            //manifestPlaceholders["ADMOB_APP_ID"] = properties.getProperty("RELEASE_ADMOB_APP_ID")
-            //buildConfigField("String", "AD_UNIT_ID", "\"${properties.getProperty("RELEASE_AD_UNIT_ID")}\"")
+            manifestPlaceholders["ADMOB_APP_ID"] = properties.getProperty("RELEASE_ADMOB_APP_ID")
+            buildConfigField("String", "AD_UNIT_ID", "\"${properties.getProperty("RELEASE_AD_UNIT_ID")}\"")
 
-            //signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     composeCompiler {
@@ -114,11 +114,6 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    // OpenSource License
-    implementation(libs.oss.licenses)
-
-    implementation(libs.google.firebase.analytics.ktx)
-    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
-
+    // Admob
     implementation(libs.play.services.ads)
 }
