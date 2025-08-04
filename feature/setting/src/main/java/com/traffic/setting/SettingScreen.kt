@@ -65,7 +65,7 @@ private fun SettingScreenContent(
 
         AdBannerView(
             modifier = Modifier
-                .padding(vertical = 16.dp)
+                .padding(vertical = 20.dp)
         )
     }
 }

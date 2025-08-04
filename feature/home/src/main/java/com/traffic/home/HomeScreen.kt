@@ -76,10 +76,10 @@ fun HomeScreen(
             )
         }
 
-        AdBannerView(
+        /*AdBannerView(
             modifier = Modifier
                 .padding(vertical = 16.dp)
-        )
+        )*/
     }
 }
 
