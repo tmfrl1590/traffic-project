@@ -59,7 +59,6 @@ android {
         }
     }
     composeCompiler {
-        enableStrongSkippingMode = true
         includeSourceInformation = true
     }
     compileOptions {
@@ -86,7 +85,8 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":data"))
     implementation(project(":domain"))
-    implementation(project(":di"))
+    implementation(project(":remote"))
+    implementation(project(":local"))
     implementation(project(":feature:main"))
     implementation(project(":feature:home"))
     implementation(project(":feature:station"))

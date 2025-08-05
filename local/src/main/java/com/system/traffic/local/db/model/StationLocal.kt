@@ -2,10 +2,11 @@ package com.system.traffic.local.db.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.system.traffic.local.LocalConstants.STATION_LOCAL
+import com.system.traffic.local.LocalMapper
+import com.system.traffic.local.RoomConstant
 import com.traffic.data.model.local.StationEntity
 
-@Entity(tableName = STATION_LOCAL)
+@Entity(tableName = RoomConstant.Table.STATION_LOCAL)
 data class StationLocal (
     @PrimaryKey
     val stationNum : String,
@@ -15,17 +16,15 @@ data class StationLocal (
     val arsId : String?,
     val longitude: String?,
     val latitude: String?,
-)
-
-fun StationEntity.toStationEntity(): StationLocal {
-    return StationLocal(
+): LocalMapper<StationEntity>{
+    override fun toData(): StationEntity = StationEntity(
         stationNum = stationNum,
-        busStopName = busStopName,
-        nextBusStop = nextBusStop,
-        busStopId = busStopId,
-        arsId = arsId,
-        longitude = longitude,
-        latitude = latitude,
+        busStopName = busStopName ?: "",
+        nextBusStop = nextBusStop ?: "",
+        busStopId = busStopId ?: "",
+        arsId = arsId ?: "",
+        longitude = longitude ?: "",
+        latitude = latitude ?: "",
     )
 }
 

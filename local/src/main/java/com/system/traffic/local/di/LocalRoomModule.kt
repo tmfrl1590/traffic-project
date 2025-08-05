@@ -2,7 +2,7 @@ package com.system.traffic.local.di
 
 import android.content.Context
 import androidx.room.Room
-import com.system.traffic.local.TrafficDatabase
+import com.system.traffic.local.db.TrafficDatabase
 import com.system.traffic.local.db.dao.LikeStationDao
 import com.system.traffic.local.db.dao.LineDao
 import com.system.traffic.local.db.dao.StationDao

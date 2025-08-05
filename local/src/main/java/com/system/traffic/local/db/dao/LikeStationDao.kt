@@ -15,10 +15,10 @@ interface LikeStationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addLikeStation(likeStationLocal: LikeStationLocal)
 
-    @Query("DELETE FROM station_like_local WHERE ars_id = :arsId")
+    @Query("DELETE FROM station_like_entity WHERE ars_id = :arsId")
     suspend fun deleteLikeStation(arsId : String)
 
     // 즐겨찾기 목록 조회
-    @Query("SELECT * FROM station_like_local")
+    @Query("SELECT * FROM station_like_entity")
     fun getLikeStationList() : Flow<List<LikeStationLocal>>
 }

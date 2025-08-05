@@ -2,7 +2,6 @@ package com.traffic.data.impl
 
 import com.traffic.data.local.LocalDataSource
 import com.traffic.data.model.local.toEntity
-import com.traffic.data.model.local.toModel
 import com.traffic.domain.model.LineModel
 import com.traffic.domain.model.StationModel
 import com.traffic.domain.repository.FileRepository
@@ -13,7 +12,7 @@ class FileRepositoryImpl @Inject constructor(
 ): FileRepository {
     override fun getStationFileData(): List<StationModel> {
         return localDataSource.getStationFileData().map {
-            it.toModel()
+            it.toDomain()
         }
     }
 
@@ -23,7 +22,7 @@ class FileRepositoryImpl @Inject constructor(
 
     override fun getLineFileData(): List<LineModel> {
         return localDataSource.getLineFileData().map {
-            it.toModel()
+            it.toDomain()
         }
     }
 

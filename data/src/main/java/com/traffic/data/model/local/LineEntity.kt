@@ -1,5 +1,6 @@
 package com.traffic.data.model.local
 
+import com.traffic.data.DataMapper
 import com.traffic.domain.model.LineModel
 
 data class LineEntity(
@@ -13,7 +14,21 @@ data class LineEntity(
     val line_kind : String?,
     val line_name : String?,
     var selected : Boolean
-)
+): DataMapper<LineModel>{
+    override fun toDomain(): LineModel {
+        return LineModel(
+            lineId = line_id,
+            dirDownName = dir_down_name,
+            runInterval = run_interval,
+            lastRunTime = last_run_time,
+            lineNum = line_num,
+            firstRunTime = first_run_time,
+            dirUpName = dir_up_name,
+            lineKind = line_kind,
+            lineName = line_name
+        )
+    }
+}
 
 fun LineModel.toEntity() = LineEntity(
     line_id = lineId ?: "",
@@ -26,16 +41,4 @@ fun LineModel.toEntity() = LineEntity(
     line_kind = lineKind,
     line_name = lineName,
     selected = false
-)
-
-fun LineEntity.toModel() = LineModel(
-    lineId = line_id,
-    dirDownName = dir_down_name,
-    runInterval = run_interval,
-    lastRunTime = last_run_time,
-    lineNum = line_num,
-    firstRunTime = first_run_time,
-    dirUpName = dir_up_name,
-    lineKind = line_kind,
-    lineName = line_name
 )

@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -5,6 +7,10 @@ plugins {
     alias(libs.plugins.ksp)
     id("kotlinx-serialization")
 }
+
+val properties = Properties()
+properties.load(project.rootProject.file("local.properties").inputStream())
+
 android {
     namespace = "com.system.traffic.remote"
     compileSdk = 34
@@ -14,6 +20,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField("String", "BAES_URL", "\"${properties.getProperty("BAES_URL")}\"")
+        buildConfigField("String", "SERVICE_KEY", "\"${properties.getProperty("SERVICE_KEY")}\"")
     }
 
     buildTypes {
@@ -31,6 +40,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+    }
+    buildFeatures {
+        buildConfig = true
     }
 }
 

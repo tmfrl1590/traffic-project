@@ -2,7 +2,6 @@ package com.traffic.data.impl
 
 import com.traffic.common.Resource
 import com.traffic.data.local.LocalDataSource
-import com.traffic.data.model.local.toModel
 import com.traffic.domain.model.StationModel
 import kotlinx.coroutines.channels.awaitClose
 import com.traffic.domain.repository.StationRepository
@@ -19,21 +18,20 @@ class StationRepositoryImpl @Inject constructor(
     override fun getSearchedStationList(keyword: String): Flow<Resource<List<StationModel>>> = callbackFlow {
         try {
             trySend(Resource.Loading())
-            // TODO: 실제 검색 로직 구현 필요 - 현재는 빈 리스트 반환
             val searchedStationList =
-                localDataSource.getSearchedStationList(keyword).map { it.toModel() }
+                localDataSource.getSearchedStationList(keyword).map { it.toDomain() }
             trySend(Resource.Success(searchedStationList))
         } catch (e: Exception) {
             e.printStackTrace()
             trySend(Resource.Error())
         }
-        awaitClose { /* cleanup if needed */ }
+        awaitClose {}
     }
 
     override fun getStationInfo(arsId: String): Flow<Resource<StationModel>> {
         return localDataSource.getStationInfo(arsId = arsId).map { stationEntity ->
             try {
-                Resource.Success(stationEntity.toModel())
+                Resource.Success(stationEntity.toDomain())
             } catch (e: Exception) {
                 e.printStackTrace()
                 Resource.Error()

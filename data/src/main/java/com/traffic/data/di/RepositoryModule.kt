@@ -1,4 +1,4 @@
-package com.silver.di
+package com.traffic.data.di
 
 import com.traffic.data.impl.DataStoreRepositoryImpl
 import com.traffic.data.impl.FileRepositoryImpl
@@ -20,7 +20,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-@Module
+/*@Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
@@ -55,12 +55,32 @@ object RepositoryModule {
     fun provideDataStoreRepository(localDataSource: LocalDataSource): DataStoreRepository {
         return DataStoreRepositoryImpl(localDataSource = localDataSource)
     }
-}
+}*/
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class Repository2Module {
+abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindBusArriveRepository(remoteRepositoryImpl: RemoteRepositoryImpl): RemoteRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindStationRepository(stationRepositoryImpl: StationRepositoryImpl): StationRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindLineRepository(lineRepositoryImpl: LineRepositoryImpl): LineRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindLikeStationRepository(likeStationRepositoryImpl: LikeStationRepositoryImpl): LikeStationRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindFileRepository(fileRepositoryImpl: FileRepositoryImpl): FileRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindDataStoreRepository(dataStoreRepositoryImpl: DataStoreRepositoryImpl): DataStoreRepository
 }

@@ -39,8 +39,8 @@ class StationViewModel @Inject constructor(
         currentKeyword = keyword
 
         combine(
-            getSearchStationUseCase(keyword = "%$keyword%"),
-            getLikeStationListUseCase()
+            flow = getSearchStationUseCase(keyword = "%$keyword%"),
+            flow2 = getLikeStationListUseCase()
         ) { searchedStationList, likeStationList ->
             // 좋아요 정류장의 arsId Set 생성
             val likeStationSet = likeStationList.map { it.arsId }.toSet()
@@ -61,8 +61,6 @@ class StationViewModel @Inject constructor(
             }
         }
     }
-
-
 
     // 즐겨찾기 추가
     fun insertLikeStation(stationModel: StationModel) = viewModelScope.launch(Dispatchers.IO) {

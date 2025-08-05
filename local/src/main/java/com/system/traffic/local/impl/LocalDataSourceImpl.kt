@@ -6,14 +6,13 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
-import com.system.traffic.local.LocalConstants.IS_FIRST_LOGIN
-import com.system.traffic.local.LocalConstants.TRAFFIC_PREFERENCES
+import com.system.traffic.local.DataStoreConstants
 import com.system.traffic.local.db.FileDataSource
 import com.system.traffic.local.db.dao.LikeStationDao
-import com.system.traffic.local.db.dao.StationDao
 import com.system.traffic.local.db.dao.LineDao
-import com.system.traffic.local.db.model.StationLocal
+import com.system.traffic.local.db.dao.StationDao
 import com.system.traffic.local.db.model.LineLocal
+import com.system.traffic.local.db.model.StationLocal
 import com.system.traffic.local.db.model.toLikeStationEntity
 import com.system.traffic.local.db.model.toLikeStationModel
 import com.traffic.data.local.LocalDataSource
@@ -25,7 +24,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = TRAFFIC_PREFERENCES)
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = DataStoreConstants.TRAFFIC_PREFERENCES)
 
 class LocalDataSourceImpl @Inject constructor(
     @ApplicationContext context: Context,
@@ -41,7 +40,7 @@ class LocalDataSourceImpl @Inject constructor(
 
     private val myDataStore : DataStore<Preferences> = context.dataStore
 
-    private val isFirstLogin = booleanPreferencesKey(IS_FIRST_LOGIN)
+    private val isFirstLogin = booleanPreferencesKey(DataStoreConstants.IS_FIRST_LOGIN)
 
     override suspend fun setUpIsFirstLogin() {
         myDataStore.edit { preferences ->

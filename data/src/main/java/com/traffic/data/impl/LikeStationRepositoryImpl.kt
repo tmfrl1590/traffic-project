@@ -2,7 +2,6 @@ package com.traffic.data.impl
 
 import com.traffic.data.local.LocalDataSource
 import com.traffic.data.model.local.toEntity
-import com.traffic.data.model.local.toModel
 import com.traffic.domain.model.StationModel
 import com.traffic.domain.repository.LikeStationRepository
 import kotlinx.coroutines.flow.Flow
@@ -22,7 +21,7 @@ class LikeStationRepositoryImpl @Inject constructor(
 
     override fun getLikeStationList(): Flow<List<StationModel>> {
         return localDataSource.getLikeStationList().map { list ->
-            list.map { it.toModel() }
+            list.map { it.toDomain() }
         }
     }
 }

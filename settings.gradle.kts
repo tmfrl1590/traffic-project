@@ -19,7 +19,6 @@ rootProject.name = "traffic"
 include(":app")
 include(":common")
 include(":navigation")
-include(":di")
 include(":data")
 include(":domain")
 include(":feature:main")

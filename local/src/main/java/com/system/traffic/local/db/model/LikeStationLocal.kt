@@ -2,10 +2,10 @@ package com.system.traffic.local.db.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.system.traffic.local.LocalConstants.STATION_LIKE_LOCAL
+import com.system.traffic.local.RoomConstant
 import com.traffic.data.model.local.StationEntity
 
-@Entity(tableName = STATION_LIKE_LOCAL)
+@Entity(tableName = RoomConstant.Table.STATION_LIKE_LOCAL)
 data class LikeStationLocal(
     @PrimaryKey
     val station_num : String,
