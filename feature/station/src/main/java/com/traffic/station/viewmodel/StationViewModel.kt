@@ -4,11 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.traffic.common.Resource
 import com.traffic.domain.model.StationModel
-import com.traffic.domain.useCase.like.AddLikeStationUseCase
-import com.traffic.domain.useCase.like.DeleteLikeStationUseCase
-import com.traffic.domain.useCase.like.GetLikeStationListUseCase
-import com.traffic.domain.useCase.station.GetSearchStationUseCase
-import com.traffic.domain.useCase.station.GetStationInfoUseCase
+import com.traffic.domain.usecase.like.AddLikeStationUseCase
+import com.traffic.domain.usecase.like.DeleteLikeStationUseCase
+import com.traffic.domain.usecase.like.GetLikeStationListUseCase
+import com.traffic.domain.usecase.station.GetSearchStationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -78,8 +77,10 @@ class StationViewModel @Inject constructor(
     // 즐겨찾기 리스트 조회
     fun getLikeStationList() {
         viewModelScope.launch(Dispatchers.IO) {
-            getLikeStationListUseCase().collectLatest {
-                _likeStationList.emit(it)
+            getLikeStationListUseCase().collectLatest { likeStations ->
+                // 즐겨찾기 리스트의 모든 항목은 selected = true로 설정
+                val updatedList = likeStations.map { it.copy(selected = true) }
+                _likeStationList.emit(updatedList)
             }
         }
     }

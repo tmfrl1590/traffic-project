@@ -11,13 +11,13 @@ import com.traffic.station.viewmodel.StationViewModel
 
 fun NavGraphBuilder.stationNavGraph(
     snackBarHostState: SnackbarHostState,
-    onStationCardClick: (String) -> Unit
+    onStationCardClick: (String, String) -> Unit
 ) {
     composable<Screens.Station> {
         val stationViewModel = hiltViewModel<StationViewModel>()
         StationScreen(
             snackBarHostState = snackBarHostState,
-            onStationCardClick = { onStationCardClick(it) },
+            onStationCardClick = onStationCardClick,
             onSearchStation = { stationViewModel.onStationUIEvents(StationUIEvents.OnSearchStationList(it)) },
             onFavoriteIconClick = { stationViewModel.onStationUIEvents(StationUIEvents.OnFavoriteIconClick(it)) }
         )

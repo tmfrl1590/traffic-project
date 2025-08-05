@@ -27,7 +27,7 @@ fun BottomBarGraph(
     navController: NavHostController,
     snackBarHostState: SnackbarHostState,
     paddingValues: PaddingValues,
-    onStationCardClick: (String) -> Unit
+    onStationCardClick: (String, String) -> Unit,
 ) {
     NavHost(
         modifier = Modifier

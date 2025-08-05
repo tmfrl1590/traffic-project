@@ -46,6 +46,7 @@ fun BusArriveScreen(
     context: Context,
     state: BusArriveState,
     arsId: String,
+    busStopId: String,
     snackBarHostState: SnackbarHostState,
     busArriveViewModel: BusArriveViewModel,
     onBackClick: () -> Unit,
@@ -57,7 +58,7 @@ fun BusArriveScreen(
     }
 
     LaunchedEffect(key1 = Unit) {
-        busArriveViewModel.getBusArriveList(arsId)
+        busArriveViewModel.getBusArriveList(busStopId)
     }
 
     LaunchedEffect(Unit) {

@@ -35,7 +35,7 @@ fun LikeStationArea(
     modifier: Modifier = Modifier,
     likeStationList: List<StationModel>,
     stationViewModel: StationViewModel,
-    onStationCardClick: (String) -> Unit,
+    onStationCardClick: (String, String) -> Unit,
 ) {
     if(likeStationList.isNotEmpty()){
         LazyColumn(
@@ -60,7 +60,7 @@ fun LikeStationArea(
 private fun StationInfo(
     stationModel: StationModel,
     stationViewModel: StationViewModel,
-    onStationCardClick: (String) -> Unit,
+    onStationCardClick: (String, String) -> Unit,
 ){
     Card(
         modifier = Modifier
@@ -70,7 +70,10 @@ private fun StationInfo(
         border = BorderStroke(1.dp, Color.LightGray),
         shape = RoundedCornerShape(12.dp),
         onClick = {
-            onStationCardClick(stationModel.busStopId ?: "")
+            onStationCardClick(
+                stationModel.arsId ?: "",
+                stationModel.busStopId ?: "",
+            )
         }
     ){
         Box(

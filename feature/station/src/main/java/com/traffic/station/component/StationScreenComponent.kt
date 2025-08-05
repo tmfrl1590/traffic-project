@@ -46,7 +46,7 @@ import com.traffic.station.util.currentBusStopNameAndArsId
 fun SearchedStationListArea(
     snackBarHostState: SnackbarHostState,
     searchedStationList: Resource<List<StationModel>>,
-    onStationCardClick: (String) -> Unit,
+    onStationCardClick: (String, String) -> Unit,
     onFavoriteIconClick: (StationModel) -> Unit,
 ) {
     Box(
@@ -97,11 +97,11 @@ fun SearchedStationListArea(
 private fun SearchedStationInfo(
     busStopName: String,
     stationModel: StationModel,
-    onStationCardClick: (String) -> Unit,
+    onStationCardClick: (String, String) -> Unit,
     onFavoriteIconClick: (StationModel) -> Unit,
 ) {
     Card(
-        onClick = { onStationCardClick(stationModel.busStopId ?: "") },
+        onClick = { onStationCardClick(stationModel.arsId ?: "", stationModel.busStopId ?: "") },
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -246,7 +246,7 @@ fun SearchedStationInfoPreview() {
             longitude = null,
             latitude = null,
         ),
-        onStationCardClick = {},
+        onStationCardClick = {_, _ -> },
         onFavoriteIconClick = {}
     )
 }

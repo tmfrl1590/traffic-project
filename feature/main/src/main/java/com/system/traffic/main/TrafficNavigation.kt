@@ -68,8 +68,8 @@ fun AppNavHost() {
         composable<Screens.Main> {
             MainScreen(
                 snackBarHostState = snackBarHostState,
-                onStationCardClick = { stationId ->
-                    navController.navigate(Screens.BusArrive(arsId = stationId))
+                onStationCardClick = { arsId, busStopId ->
+                    navController.navigate(Screens.BusArrive(arsId = arsId, busStopId = busStopId))
                 }
             )
         }
@@ -77,11 +77,13 @@ fun AppNavHost() {
         composable<Screens.BusArrive> { backStackEntry ->
             val busArriveViewModel = hiltViewModel<BusArriveViewModel>()
             val arsId = backStackEntry.toRoute<Screens.BusArrive>().arsId
+            val busStopId = backStackEntry.toRoute<Screens.BusArrive>().busStopId
             val state by busArriveViewModel.state.collectAsStateWithLifecycle()
             BusArriveScreen(
                 context = context,
                 state = state,
                 arsId = arsId,
+                busStopId = busStopId,
                 snackBarHostState = snackBarHostState,
                 busArriveViewModel = busArriveViewModel,
                 onBackClick = { navController.popBackStack() },

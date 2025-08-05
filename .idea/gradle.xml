@@ -26,6 +26,7 @@
             <option value="$PROJECT_DIR$/feature/setting" />
             <option value="$PROJECT_DIR$/feature/splash" />
             <option value="$PROJECT_DIR$/feature/station" />
+            <option value="$PROJECT_DIR$/local" />
             <option value="$PROJECT_DIR$/navigation" />
             <option value="$PROJECT_DIR$/remote" />
           </set>

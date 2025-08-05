@@ -3,7 +3,7 @@ package com.traffic.line.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.traffic.domain.model.LineModel
-import com.traffic.domain.useCase.line.GetSearchLineUseCase
+import com.traffic.domain.usecase.line.GetSearchLineUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

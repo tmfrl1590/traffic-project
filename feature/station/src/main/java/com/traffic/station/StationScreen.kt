@@ -35,7 +35,7 @@ import com.traffic.station.viewmodel.StationViewModel
 fun StationScreen(
     snackBarHostState: SnackbarHostState,
     stationViewModel: StationViewModel = hiltViewModel(),
-    onStationCardClick: (String) -> Unit,
+    onStationCardClick: (String, String) -> Unit,
     onSearchStation: (String) -> Unit,
     onFavoriteIconClick: (StationModel) -> Unit,
 ) {
@@ -59,7 +59,7 @@ fun StationScreen(
 private fun StationContent(
     snackBarHostState: SnackbarHostState,
     searchedStationList: Resource<List<StationModel>>,
-    onStationCardClick: (String) -> Unit,
+    onStationCardClick: (String, String) -> Unit,
     onSearchStation: (String) -> Unit,
     onFavoriteIconClick: (StationModel) -> Unit,
 ) {

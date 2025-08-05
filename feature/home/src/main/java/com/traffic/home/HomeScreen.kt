@@ -35,7 +35,7 @@ import com.traffic.station.viewmodel.StationViewModel
 fun HomeScreen(
     context: Context,
     stationViewModel: StationViewModel = hiltViewModel(),
-    onStationCardClick: (String) -> Unit
+    onStationCardClick: (String, String) -> Unit,
 ) {
     LaunchedEffect(Unit){
         stationViewModel.getLikeStationList()

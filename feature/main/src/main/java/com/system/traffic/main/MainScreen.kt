@@ -25,7 +25,7 @@ import com.system.traffic.main.navigation.BottomBarGraph
 @Composable
 fun MainScreen(
     snackBarHostState: SnackbarHostState,
-    onStationCardClick: (String) -> Unit
+    onStationCardClick: (String, String) -> Unit,
 ) {
     val context = LocalContext.current
     val navController = rememberNavController()
