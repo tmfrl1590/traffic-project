@@ -3,6 +3,7 @@ package com.system.traffic.local.di
 import android.content.Context
 import androidx.room.Room
 import com.system.traffic.local.db.TrafficDatabase
+import com.system.traffic.local.db.dao.KeywordDao
 import com.system.traffic.local.db.dao.LikeStationDao
 import com.system.traffic.local.db.dao.LineDao
 import com.system.traffic.local.db.dao.StationDao
@@ -25,8 +26,7 @@ internal object DatabaseModule {
             context.applicationContext,
             TrafficDatabase::class.java,
             TrafficDatabase.DB_NAME
-        ).fallbackToDestructiveMigration()
-            .build()
+        ).build()
     }
 
     @Provides
@@ -45,5 +45,11 @@ internal object DatabaseModule {
     @Singleton
     fun provideLikeStationDao(database: TrafficDatabase): LikeStationDao {
         return database.likeStationDAO()
+    }
+
+    @Provides
+    @Singleton
+    fun provideKeywordDao(database: TrafficDatabase): KeywordDao {
+        return database.keywordDAO()
     }
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.traffic.common.Resource
 import com.traffic.domain.model.StationModel
+import com.traffic.domain.usecase.keyword.InsertKeywordUseCase
 import com.traffic.domain.usecase.like.AddLikeStationUseCase
 import com.traffic.domain.usecase.like.DeleteLikeStationUseCase
 import com.traffic.domain.usecase.like.GetLikeStationListUseCase
@@ -23,6 +24,7 @@ class StationViewModel @Inject constructor(
     private val addLikeStationUseCase: AddLikeStationUseCase,
     private val deleteLikeStationUseCase: DeleteLikeStationUseCase,
     private val getLikeStationListUseCase: GetLikeStationListUseCase,
+    private val insertKeywordUseCase: InsertKeywordUseCase,
 ) : ViewModel() {
 
     private val _likeStationList = MutableStateFlow<List<StationModel>>(listOf())
@@ -37,6 +39,9 @@ class StationViewModel @Inject constructor(
     // 정류장 검색
     private fun getSearchedStationList(keyword: String) = viewModelScope.launch(Dispatchers.IO) {
         currentKeyword = keyword
+
+        // 키워드 저장
+        insertKeywordUseCase(keyword = keyword)
 
         combine(
             flow = getSearchStationUseCase(keyword = "%$keyword%"),

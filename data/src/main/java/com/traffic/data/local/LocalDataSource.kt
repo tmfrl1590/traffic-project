@@ -1,5 +1,6 @@
 package com.traffic.data.local
 
+import com.traffic.data.model.local.KeywordEntity
 import com.traffic.data.model.local.LineEntity
 import com.traffic.data.model.local.StationEntity
 import kotlinx.coroutines.flow.Flow
@@ -35,4 +36,10 @@ interface LocalDataSource {
 
     // 노선 데이터 DB에 저장
     fun insertLine(lineEntity: LineEntity)
+
+    // 키워드 저장
+    suspend fun insertKeyword(keyword: String)
+
+    // 키워드 가져오기
+    fun getKeywordList(): Flow<List<KeywordEntity>>
 }

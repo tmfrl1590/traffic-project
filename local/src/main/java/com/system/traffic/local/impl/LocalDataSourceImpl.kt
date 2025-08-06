@@ -8,14 +8,18 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import com.system.traffic.local.DataStoreConstants
 import com.system.traffic.local.db.FileDataSource
+import com.system.traffic.local.db.dao.KeywordDao
 import com.system.traffic.local.db.dao.LikeStationDao
 import com.system.traffic.local.db.dao.LineDao
 import com.system.traffic.local.db.dao.StationDao
+import com.system.traffic.local.db.model.KeywordLocal
 import com.system.traffic.local.db.model.LineLocal
 import com.system.traffic.local.db.model.StationLocal
 import com.system.traffic.local.db.model.toLikeStationEntity
 import com.system.traffic.local.db.model.toLikeStationModel
+import com.system.traffic.local.toData
 import com.traffic.data.local.LocalDataSource
+import com.traffic.data.model.local.KeywordEntity
 import com.traffic.data.model.local.LineEntity
 import com.traffic.data.model.local.StationEntity
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -31,6 +35,7 @@ class LocalDataSourceImpl @Inject constructor(
     private val likeStationDao: LikeStationDao,
     private val stationDao: StationDao,
     private val lineDao: LineDao,
+    private val keywordDao: KeywordDao,
     private val fileDataSource: FileDataSource,
 ): LocalDataSource {
 
@@ -121,5 +126,16 @@ class LocalDataSourceImpl @Inject constructor(
             selected = lineEntity.selected
         )
         lineDao.insertLine(lineLocal)
+    }
+
+    override suspend fun insertKeyword(keyword: String) {
+        val keywordLocal = KeywordLocal(
+            keyword = keyword
+        )
+        keywordDao.insertKeyword(keywordLocal)
+    }
+
+    override fun getKeywordList(): Flow<List<KeywordEntity>> {
+        return keywordDao.getKeywordList().map { it.toData() }
     }
 }
