@@ -3,7 +3,9 @@ package com.traffic.station.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.traffic.common.Resource
+import com.traffic.domain.model.KeywordModel
 import com.traffic.domain.model.StationModel
+import com.traffic.domain.usecase.keyword.GetKeywordListUseCase
 import com.traffic.domain.usecase.keyword.InsertKeywordUseCase
 import com.traffic.domain.usecase.like.AddLikeStationUseCase
 import com.traffic.domain.usecase.like.DeleteLikeStationUseCase
@@ -25,6 +27,7 @@ class StationViewModel @Inject constructor(
     private val deleteLikeStationUseCase: DeleteLikeStationUseCase,
     private val getLikeStationListUseCase: GetLikeStationListUseCase,
     private val insertKeywordUseCase: InsertKeywordUseCase,
+    private val getKeywordListUseCase: GetKeywordListUseCase,
 ) : ViewModel() {
 
     private val _likeStationList = MutableStateFlow<List<StationModel>>(listOf())
@@ -34,7 +37,23 @@ class StationViewModel @Inject constructor(
     private val _searchedStationList = MutableStateFlow<Resource<List<StationModel>>>(Resource.Idle())
     val searchedStationList: StateFlow<Resource<List<StationModel>>> = _searchedStationList
 
+    private val _keywordList = MutableStateFlow<List<KeywordModel>>(listOf())
+    val keywordList: StateFlow<List<KeywordModel>> = _keywordList
+
     private var currentKeyword: String? = null
+
+    init {
+        getKeywordList()
+    }
+
+    // 키워드 리스트 조회
+    private fun getKeywordList() {
+        viewModelScope.launch(Dispatchers.IO) {
+            getKeywordListUseCase().collectLatest { keywords ->
+                _keywordList.emit(keywords)
+            }
+        }
+    }
 
     // 정류장 검색
     private fun getSearchedStationList(keyword: String) = viewModelScope.launch(Dispatchers.IO) {

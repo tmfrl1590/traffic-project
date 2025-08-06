@@ -26,7 +26,9 @@ import com.traffic.common.AdBannerView
 import com.traffic.common.R
 import com.traffic.common.Resource
 import com.traffic.common.SearchArea
+import com.traffic.domain.model.KeywordModel
 import com.traffic.domain.model.StationModel
+import com.traffic.station.component.KeywordArea
 import com.traffic.station.component.SearchedStationListArea
 import com.traffic.station.viewmodel.StationViewModel
 
@@ -46,12 +48,15 @@ fun StationScreen(
 
     val searchedStationList by stationViewModel.searchedStationList.collectAsStateWithLifecycle(initialValue = Resource.Idle())
 
+    val keywordList by stationViewModel.keywordList.collectAsStateWithLifecycle(initialValue = listOf())
+
     StationContent(
         snackBarHostState = snackBarHostState,
         searchedStationList = searchedStationList,
         onStationCardClick = onStationCardClick,
         onSearchStation = onSearchStation,
-        onFavoriteIconClick = onFavoriteIconClick
+        onFavoriteIconClick = onFavoriteIconClick,
+        keywordList = keywordList,
     )
 }
 
@@ -62,6 +67,7 @@ private fun StationContent(
     onStationCardClick: (String, String) -> Unit,
     onSearchStation: (String) -> Unit,
     onFavoriteIconClick: (StationModel) -> Unit,
+    keywordList: List<KeywordModel>,
 ) {
     var keyword by remember { mutableStateOf("") }
 
@@ -78,6 +84,15 @@ private fun StationContent(
                 keyword = keyword,
                 onValueChange = { keyword = it },
                 searchAction = { onSearchStation(keyword) },
+            )
+
+            Spacer(
+                modifier = Modifier
+                    .height(12.dp)
+            )
+
+            KeywordArea(
+                keywordList = keywordList,
             )
 
             Spacer(
@@ -110,4 +125,3 @@ private fun StationContent(
 
     }
 }
-
