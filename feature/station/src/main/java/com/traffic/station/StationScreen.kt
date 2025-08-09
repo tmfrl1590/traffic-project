@@ -71,6 +71,13 @@ private fun StationContent(
 ) {
     var keyword by remember { mutableStateOf("") }
 
+    LaunchedEffect(keywordList) {
+        if (keyword.isEmpty() && keywordList.isNotEmpty()) {
+            keyword = keywordList.first().keyword
+            onSearchStation(keyword)
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -93,6 +100,9 @@ private fun StationContent(
 
             KeywordArea(
                 keywordList = keywordList,
+                onKeywordClick = { clickedKeyword ->
+                    onSearchStation(clickedKeyword)
+                }
             )
 
             Spacer(

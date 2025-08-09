@@ -24,7 +24,7 @@ import com.traffic.domain.model.KeywordModel
 @Composable
 fun KeywordArea(
     keywordList: List<KeywordModel>,
-    onKeywordClick: (String) -> Unit = {}
+    onKeywordClick: (String) -> Unit,
 ) {
     if (keywordList.isNotEmpty()) {
         Column {
@@ -41,7 +41,7 @@ fun KeywordArea(
                 contentPadding = PaddingValues(vertical = 8.dp)
             ) {
                 items(
-                    items = keywordList,
+                    items = keywordList.sortedByDescending { it.id },
                     key = { it.id }
                 ) { keyword ->
                     KeywordChip(
