@@ -49,13 +49,13 @@ fun BottomBarGraph(
         },
         popEnterTransition = {
             slideIntoContainer(
-                AnimatedContentTransitionScope.SlideDirection.Up,
+                AnimatedContentTransitionScope.SlideDirection.Right,
                 animationSpec = tween(ANIMATION_DURATION)
             )
         },
         popExitTransition = {
             slideOutOfContainer(
-                AnimatedContentTransitionScope.SlideDirection.Up,
+                AnimatedContentTransitionScope.SlideDirection.Right,
                 animationSpec = tween(ANIMATION_DURATION)
             )
         },

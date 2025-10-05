@@ -23,7 +23,7 @@ import com.traffic.splash.navigation.splashGraph
 import com.traffic.station.viewmodel.StationUIEvents
 import com.traffic.station.viewmodel.StationViewModel
 
-const val ANIMATION_DURATION = 500
+const val ANIMATION_DURATION = 200
 
 @Composable
 fun AppNavHost() {
@@ -38,28 +38,28 @@ fun AppNavHost() {
             .fillMaxSize(),
         enterTransition = {
             slideIntoContainer(
-                AnimatedContentTransitionScope.SlideDirection.Left,
-                animationSpec = tween(ANIMATION_DURATION)
+                towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                animationSpec = tween(durationMillis = ANIMATION_DURATION)
             )
         },
         exitTransition = {
             slideOutOfContainer(
-                AnimatedContentTransitionScope.SlideDirection.Left,
-                animationSpec = tween(ANIMATION_DURATION)
+                towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                animationSpec = tween(durationMillis = ANIMATION_DURATION)
             )
         },
         popEnterTransition = {
             slideIntoContainer(
-                AnimatedContentTransitionScope.SlideDirection.Up,
-                animationSpec = tween(ANIMATION_DURATION)
+                towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                animationSpec = tween(durationMillis = ANIMATION_DURATION)
             )
         },
         popExitTransition = {
             slideOutOfContainer(
-                AnimatedContentTransitionScope.SlideDirection.Up,
-                animationSpec = tween(ANIMATION_DURATION)
+                towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                animationSpec = tween(durationMillis = ANIMATION_DURATION)
             )
-        },
+        }
     ){
         splashGraph(
             navHostController = navController
