@@ -30,6 +30,7 @@
     <!--Setting Screen-->
     <string name="setting">설정</string>
     <string name="setting_app_version">앱버전</string>
+    <string name="setting_inquire">건의하기</string>
     <string name="setting_open_source_list">오픈소스 목록 보기</string>
 
     <!--Bus Arrive Screen-->

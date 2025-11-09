@@ -3,6 +3,7 @@ package com.traffic.setting
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
+import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -44,6 +45,25 @@ private fun SettingScreenContent(
             SettingRowContent(
                 title = stringResource(R.string.setting_app_version),
                 content = version,
+            )
+
+            SettingRowContent(
+                title = stringResource(R.string.setting_inquire),
+                content = "",
+                onClick = {
+                    val emailAddress = "tmfrl1590@gmail.com"
+                    val emailSubject = "광주 버스 앱 건의"
+
+                    val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+                        data = Uri.fromParts("mailto", emailAddress, null)
+                        putExtra(Intent.EXTRA_SUBJECT, emailSubject)
+                        putExtra(Intent.EXTRA_EMAIL, arrayOf(emailAddress))
+                    }
+
+                    runCatching {
+                        context.startActivity(Intent.createChooser(emailIntent, context.getString(R.string.setting_inquire)))
+                    }
+                },
             )
 
             SettingRowContent(
