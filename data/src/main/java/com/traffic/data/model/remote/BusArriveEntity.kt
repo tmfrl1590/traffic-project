@@ -8,91 +8,104 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class BusArriveEntity(
-    @SerialName("RESULT")
-    val result : Map<String, String>,
-    @SerialName("BUSSTOP_LIST")
-    val itemList : List<BusArriveItemEntity>,
-    @SerialName("ROW_COUNT")
-    val rowCount : String
-): DataMapper<BusArrive>{
+    @SerialName("RESPONSE")
+    val response: BusArriveResponsePayload,
+) : DataMapper<BusArrive> {
     override fun toDomain(): BusArrive {
         return BusArrive(
-            itemList = itemList.map { it.toDomain() }
+            itemList = response.arriveList?.items.orEmpty().map { it.toDomain() },
         )
     }
 }
 
 @Serializable
+data class BusArriveResponsePayload(
+    @SerialName("RESULT")
+    val result: Map<String, String> = emptyMap(),
+    @SerialName("ARRIVE_LIST")
+    val arriveList: BusArriveItemListHolder? = null,
+    @SerialName("ROW_COUNT")
+    val rowCount: Int = 0,
+)
+
+@Serializable
+data class BusArriveItemListHolder(
+    @SerialName("ITEM")
+    val items: List<BusArriveItemEntity> = emptyList(),
+)
+
+@Serializable
 data class BusArriveItemEntity(
     @SerialName("ARRIVE")
-    val arrive : String?,
+    val arrive: String?,
 
     @SerialName("REMAIN_STOP")
-    val remainStop : String?,
+    val remainStop: Int?,
 
     @SerialName("SHORT_LINE_NAME")
-    val shortLineName : String?,
+    val shortLineName: String?,
 
     @SerialName("BUS_ID")
-    val busId : String?,
+    val busId: String?,
 
     @SerialName("METRO_FLAG")
-    val metroFlag : String?,
+    val metroFlag: Int?,
 
     @SerialName("BUSSTOP_NAME")
-    val busStopName : String?,
+    val busStopName: String?,
 
     @SerialName("CURR_STOP_ID")
-    val currStopId : String?,
+    val currStopId: Int?,
 
     @SerialName("LINE_ID")
-    val lineId : String?,
+    val lineId: Int?,
 
     @SerialName("REMAIN_MIN")
-    val remainMin : String?,
+    val remainMin: Int?,
 
     @SerialName("ENG_BUSSTOP_NAME")
-    val engBusStopName : String?,
+    val engBusStopName: String?,
 
     @SerialName("DIR_START")
-    val dirStart : String?,
-
-    @SerialName("DIR")
-    val dir : String?,
+    val dirStart: String?,
 
     @SerialName("DIR_END")
-    val dirEnd : String?,
+    val dirEnd: String?,
+
+    @SerialName("DIR")
+    val dir: String? = null,
 
     @SerialName("LOW_BUS")
-    val lowBus : String?,
+    val lowBus: String?,
 
     @SerialName("ARRIVE_FLAG")
-    val arriveFlag : String?,
+    val arriveFlag: Int?,
 
     @SerialName("LINE_NAME")
-    val lineName : String?,
+    val lineName: String?,
 
-    var lineKind : String? = null,
-): DataMapper<BusArriveItem>{
+    @SerialName("LINE_KIND")
+    val lineKind: Int? = null,
+) : DataMapper<BusArriveItem> {
     override fun toDomain(): BusArriveItem {
         return BusArriveItem(
             arrive = arrive,
-            remainStop = remainStop,
+            remainStop = remainStop?.toString(),
             shortLineName = shortLineName,
             busId = busId,
-            metroFlag = metroFlag,
+            metroFlag = metroFlag?.toString(),
             busStopName = busStopName,
-            currStopId = currStopId,
-            lineId = lineId,
-            remainMin = remainMin,
+            currStopId = currStopId?.toString(),
+            lineId = lineId?.toString(),
+            remainMin = remainMin?.toString(),
             engBusStopName = engBusStopName,
             dirStart = dirStart,
             dir = dir,
             dirEnd = dirEnd,
             lowBus = lowBus,
-            arriveFlag = arriveFlag,
+            arriveFlag = arriveFlag?.toString(),
             lineName = lineName,
-            lineKind = lineKind,
+            lineKind = lineKind?.toString(),
         )
     }
 }

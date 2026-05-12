@@ -11,7 +11,7 @@ interface TrafficService {
     // 버스 도착정보
     @GET("arriveInfo")
     suspend fun getBusArriveList(
-        @Query("serviceKey") serviceKey: String = RemoteConstants.SERVICE_KEY,
+        @Query("serviceKey", encoded = true) serviceKey: String = RemoteConstants.SERVICE_KEY,
         @Query("BUSSTOP_ID") busStopId : String,
     ): Response<BusArriveEntity>
 
