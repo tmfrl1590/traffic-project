@@ -11,11 +11,27 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface KeywordDao {
 
-    @Transaction
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertKeyword(keywordLocal: KeywordLocal)
+    @Query("DELETE FROM keyword_entity WHERE keyword = :keyword")
+    suspend fun deleteByKeyword(keyword: String)
 
-    // 키워드 리스트 조회 (최근 입력 순)
-    @Query("SELECT * FROM keyword_entity ORDER BY id DESC LIMIT 5")
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertKeywordRow(keywordLocal: KeywordLocal)
+
+    /** 같은 검색어는 한 줄만 두고, 다시 검색하면 최신 순으로 갱신합니다. */
+    @Transaction
+    suspend fun insertKeyword(keywordLocal: KeywordLocal) {
+        deleteByKeyword(keywordLocal.keyword)
+        insertKeywordRow(keywordLocal)
+    }
+
+    // 키워드당 가장 최근 행만 남긴 뒤, 최근 입력 순으로 최대 5개
+    @Query(
+        """
+        SELECT * FROM keyword_entity
+        WHERE id IN (SELECT MAX(id) FROM keyword_entity GROUP BY keyword)
+        ORDER BY id DESC
+        LIMIT 5
+        """,
+    )
     fun getKeywordList(): Flow<List<KeywordLocal>>
 }

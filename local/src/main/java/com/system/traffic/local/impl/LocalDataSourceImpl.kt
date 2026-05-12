@@ -129,10 +129,9 @@ class LocalDataSourceImpl @Inject constructor(
     }
 
     override suspend fun insertKeyword(keyword: String) {
-        val keywordLocal = KeywordLocal(
-            keyword = keyword
-        )
-        keywordDao.insertKeyword(keywordLocal)
+        val trimmed = keyword.trim()
+        if (trimmed.isEmpty()) return
+        keywordDao.insertKeyword(KeywordLocal(keyword = trimmed))
     }
 
     override fun getKeywordList(): Flow<List<KeywordEntity>> {
