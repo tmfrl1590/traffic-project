@@ -126,49 +126,44 @@ fun BusArriveScreenContent(
                 .padding(it)
                 .background(Color.White),
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-            ) {
-                BusStopAndFavoriteArea(
-                    busStopName = stationModel.busStopName ?: "",
-                    selected = stationModel.selected,
-                    onClickFavorite = { onFavoriteIconClick(stationModel) }
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                Text(
-                    text = "ID : ${stationModel.arsId}",
-                    fontSize = 14.sp,
-                    modifier = Modifier
-                        .padding(start = 20.dp)
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                NextBusStopArea(
-                    nextBusStopName = stationModel.nextBusStop ?: "",
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                HorizontalDivider(
-                    thickness = 1.dp,
-                    color = Color(0xFFE5E7EB)
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                BusArriveListArea(
-                    busArriveList = state.arriveList,
-                )
-            }
-
             AdBannerView(
                 modifier = Modifier
-                    .padding(vertical = 20.dp)
+                    .padding(top = 12.dp)
+                    .padding(bottom = 20.dp)
+            )
+
+            BusStopAndFavoriteArea(
+                busStopName = stationModel.busStopName ?: "",
+                selected = stationModel.selected,
+                onClickFavorite = { onFavoriteIconClick(stationModel) }
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Text(
+                text = "ID : ${stationModel.arsId}",
+                fontSize = 14.sp,
+                modifier = Modifier
+                    .padding(start = 20.dp)
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            NextBusStopArea(
+                nextBusStopName = stationModel.nextBusStop ?: "",
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = Color(0xFFE5E7EB)
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            BusArriveListArea(
+                busArriveList = state.arriveList,
             )
         }
     }
