@@ -7,20 +7,25 @@ import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.traffic.common.R
-import com.traffic.setting.component.SettingRowContent
+import com.traffic.setting.component.SettingRowItem
 
 @Composable
 internal fun SettingScreen(
     context: Context = LocalContext.current
 ){
     val info: PackageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-    val version = info.versionName
+    val version = info.versionName.orEmpty()
 
     SettingScreenContent(
         context = context,
@@ -42,14 +47,20 @@ private fun SettingScreenContent(
                 .fillMaxWidth()
                 .weight(1f)
         ) {
-            SettingRowContent(
+            SettingRowItem(
                 title = stringResource(R.string.setting_app_version),
-                content = version,
+                content =  { Text(version) },
             )
 
-            SettingRowContent(
+            SettingRowItem(
                 title = stringResource(R.string.setting_inquire),
-                content = "",
+                content = {
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowRight,
+                        contentDescription = null,
+                        tint = Color(0xFFA0A0A0)
+                    )
+                },
                 onClick = {
                     val emailAddress = "tmfrl1590@gmail.com"
                     val emailSubject = "광주 버스 앱 건의"
@@ -66,9 +77,15 @@ private fun SettingScreenContent(
                 },
             )
 
-            SettingRowContent(
+            SettingRowItem(
                 title = stringResource(id = R.string.setting_open_source_list),
-                content = "",
+                content = {
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowRight,
+                        contentDescription = null,
+                        tint = Color(0xFFA0A0A0)
+                    )
+                },
                 onClick = {
                     context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
                 }
