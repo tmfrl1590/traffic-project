@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,15 +34,26 @@ import com.traffic.common.lineTestColor
 
 @Composable
 fun BusArriveListArea(
+    isLoading: Boolean,
     busArriveList: List<BusArriveItemModel>,
 ) {
 
-    if(busArriveList.isEmpty()){
-        NoBusArrive()
-    } else {
-        BusArriveList(
-            busArriveList = busArriveList
-        )
+    if(isLoading){
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+            , contentAlignment = Alignment.Center
+        ){
+            CircularProgressIndicator()
+        }
+    }else {
+        if(busArriveList.isEmpty()){
+            NoBusArrive()
+        } else {
+            BusArriveList(
+                busArriveList = busArriveList
+            )
+        }
     }
 }
 

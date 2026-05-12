@@ -163,6 +163,7 @@ fun BusArriveScreenContent(
             Spacer(modifier = Modifier.height(12.dp))
 
             BusArriveListArea(
+                isLoading = state.isLoading,
                 busArriveList = state.arriveList,
             )
         }

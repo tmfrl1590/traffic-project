@@ -59,11 +59,12 @@ class BusArriveViewModel @Inject constructor(
     // 버스 도착 정보 조회
     fun getBusArriveList(arsId: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            _state.update { it.copy(isLoading = true) }
             busArriveUseCase(arsId)
                 .onSuccess { result ->
                     val arriveList = result.itemList.map { it.toPresentation() }
                     arriveList.map { it.lineKind = getLineKindUseCase(it.lineId ?: "")} // 색상 설정 추후에 수정 필요
-                    _state.update { it.copy(arriveList = arriveList) }
+                    _state.update { it.copy(arriveList = arriveList, isLoading = false) }
                 }
         }
     }
