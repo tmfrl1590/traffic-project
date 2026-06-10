@@ -41,8 +41,6 @@ dependencies {
     implementation(project(":feature:splash"))
     implementation(project(":feature:home"))
     implementation(project(":feature:station"))
-    implementation(project(":feature:line"))
-    implementation(project(":feature:map"))
     implementation(project(":feature:setting"))
     implementation(project(":feature:bus_arrive"))
 
@@ -58,9 +56,6 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 
     // hilt
     implementation(libs.hilt.android)

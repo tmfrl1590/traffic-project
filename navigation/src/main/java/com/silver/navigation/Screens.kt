@@ -20,10 +20,6 @@ sealed interface Screens {
     @Serializable
     data object Station: Screens
     @Serializable
-    data object Line: Screens
-    @Serializable
-    data object Map: Screens
-    @Serializable
     data object Setting: Screens
     @Serializable
     data class BusArrive(val arsId: String, val busStopId: String): Screens

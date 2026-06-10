@@ -16,8 +16,6 @@ import androidx.navigation.compose.navigation
 import com.silver.navigation.Screens
 import com.system.traffic.main.ANIMATION_DURATION
 import com.traffic.home.navigation.homeNavGraph
-import com.traffic.line.navigation.lineNavGraph
-import com.traffic.map.navigation.mapNavGraph
 import com.traffic.setting.navigation.settingNavGraph
 import com.traffic.station.navigation.stationNavGraph
 
@@ -71,12 +69,6 @@ fun BottomBarGraph(
             stationNavGraph(
                 snackBarHostState = snackBarHostState,
                 onStationCardClick = onStationCardClick
-            )
-            lineNavGraph()
-
-            mapNavGraph(
-                context = context,
-                snackBarHostState = snackBarHostState
             )
             settingNavGraph()
         }
