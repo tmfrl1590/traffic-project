@@ -12,7 +12,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven("https://repository.map.naver.com/archive/maven") // naver map
     }
 }
 rootProject.name = "traffic"
@@ -21,12 +20,7 @@ include(":common")
 include(":navigation")
 include(":data")
 include(":domain")
-include(":feature:main")
-include(":feature:splash")
-include(":feature:home")
-include(":feature:station")
-include(":feature:setting")
-include(":feature:bus_arrive")
 include(":remote")
 include(":core")
 include(":local")
+include(":presentation")

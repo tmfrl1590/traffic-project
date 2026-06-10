@@ -85,12 +85,9 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":data"))
     implementation(project(":domain"))
+    implementation(project(":presentation"))
     implementation(project(":remote"))
     implementation(project(":local"))
-    implementation(project(":feature:main"))
-    implementation(project(":feature:home"))
-    implementation(project(":feature:station"))
-    implementation(project(":feature:setting"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
