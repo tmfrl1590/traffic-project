@@ -84,14 +84,6 @@ dependencies {
     // Custom Progress Indicator
     implementation(libs.msz.progress.indicator)
 
-    debugImplementation(libs.ui.tooling)
-
-    // 네이버 지도 SDK
-    implementation(libs.map.sdk)
-    implementation(libs.naver.map.compose)
-    implementation(libs.play.services.location)
-    implementation(libs.naver.map.location)
-
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics.ktx)
