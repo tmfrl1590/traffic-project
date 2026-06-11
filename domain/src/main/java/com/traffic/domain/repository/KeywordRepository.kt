@@ -10,4 +10,7 @@ interface KeywordRepository {
 
     // 키워드 가져오기
     fun getKeywordList(): Flow<List<KeywordModel>>
+
+    // 키워드 삭제하기
+    suspend fun deleteKeyword(keyword: String)
 }

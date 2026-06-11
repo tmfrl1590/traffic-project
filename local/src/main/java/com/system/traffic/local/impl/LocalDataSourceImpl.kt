@@ -137,4 +137,8 @@ class LocalDataSourceImpl @Inject constructor(
     override fun getKeywordList(): Flow<List<KeywordEntity>> {
         return keywordDao.getKeywordList().map { it.toData() }
     }
+
+    override suspend fun deleteKeyword(keyword: String) {
+        keywordDao.deleteKeyword(keyword = keyword)
+    }
 }

@@ -42,4 +42,7 @@ interface LocalDataSource {
 
     // 키워드 가져오기
     fun getKeywordList(): Flow<List<KeywordEntity>>
+
+    // 키워드 삭제하기
+    suspend fun deleteKeyword(keyword: String)
 }

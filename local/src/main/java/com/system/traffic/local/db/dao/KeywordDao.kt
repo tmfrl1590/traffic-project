@@ -34,4 +34,12 @@ interface KeywordDao {
         """,
     )
     fun getKeywordList(): Flow<List<KeywordLocal>>
+
+    // 키워드 1개 삭제하기
+    @Query(
+        """
+            DELETE FROM keyword_entity WHERE keyword = :keyword
+        """
+    )
+    suspend fun deleteKeyword(keyword: String)
 }

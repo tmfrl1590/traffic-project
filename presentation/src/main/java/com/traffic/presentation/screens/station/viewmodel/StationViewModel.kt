@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.traffic.common.Resource
 import com.traffic.domain.model.StationModel
+import com.traffic.domain.usecase.keyword.DeleteKeywordUseCase
 import com.traffic.domain.usecase.keyword.GetKeywordListUseCase
 import com.traffic.domain.usecase.keyword.InsertKeywordUseCase
 import com.traffic.domain.usecase.like.GetLikeStationListUseCase
@@ -30,6 +31,7 @@ class StationViewModel @Inject constructor(
     private val insertKeywordUseCase: InsertKeywordUseCase,
     private val getKeywordListUseCase: GetKeywordListUseCase,
     private val toggleLikeStationUseCase: ToggleLikeStationUseCase,
+    private val deleteKeywordUseCase: DeleteKeywordUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(value = StationState())
@@ -81,12 +83,20 @@ class StationViewModel @Inject constructor(
         _state.update { it.copy(keyword = keyword) }
     }
 
+    // 키워드 1개 삭제
+    fun deleteKeyword(keyword: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteKeywordUseCase(keyword = keyword)
+        }
+    }
+
     fun onAction(action: StationAction){
         when(action){
             is StationAction.OnInputKeyword -> onInputKeyword(keyword = action.keyword)
             is StationAction.OnSearchStation -> getSearchedStationList(keyword = _state.value.keyword)
             is StationAction.OnClickFavoriteIcon -> toggleLikeStation(stationModel = action.stationModel)
             is StationAction.OnClickKeyword -> getSearchedStationList(keyword = action.keyword)
+            is StationAction.OnDeleteKeyword -> deleteKeyword(keyword = action.keyword)
         }
     }
 }
