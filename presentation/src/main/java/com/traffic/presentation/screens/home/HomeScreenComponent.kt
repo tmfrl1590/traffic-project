@@ -79,10 +79,7 @@ private fun StationInfo(
         ){
             IconButton(
                 onClick = {
-                    insertOrDeleteStationInfo(
-                        stationModel = stationModel,
-                        stationViewModel = stationViewModel
-                    )
+                    stationViewModel.toggleLikeStation(stationModel)
                 },
                 modifier = Modifier
                     .align(Alignment.TopEnd)
@@ -114,16 +111,5 @@ private fun StationInfo(
                 )
             }
         }
-    }
-}
-
-private fun insertOrDeleteStationInfo(
-    stationModel: StationModel,
-    stationViewModel: StationViewModel,
-){
-    if(stationModel.selected){
-        stationViewModel.deleteLikeStation(stationModel.busStopId ?: "")
-    }else {
-        stationViewModel.insertLikeStation(stationModel)
     }
 }

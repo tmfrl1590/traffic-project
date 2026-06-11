@@ -8,9 +8,8 @@ import com.traffic.common.Resource
 import com.traffic.common.lineKindToColor
 import com.traffic.domain.model.StationModel
 import com.traffic.domain.usecase.arrive.BusArriveUseCase
-import com.traffic.domain.usecase.like.AddLikeStationUseCase
-import com.traffic.domain.usecase.like.DeleteLikeStationUseCase
 import com.traffic.domain.usecase.like.GetLikeStationListUseCase
+import com.traffic.domain.usecase.like.ToggleLikeStationUseCase
 import com.traffic.domain.usecase.line.GetLineKindUseCase
 import com.traffic.domain.usecase.station.GetStationInfoUseCase
 import com.traffic.presentation.screens.bus_arrive.action.BusArriveAction
@@ -35,8 +34,7 @@ class BusArriveViewModel @Inject constructor(
     private val getLineKindUseCase: GetLineKindUseCase,
     private val getStationInfoUseCase: GetStationInfoUseCase,
     private val getLikeStationListUseCase: GetLikeStationListUseCase,
-    private val addLikeStationUseCase: AddLikeStationUseCase,
-    private val deleteLikeStationUseCase: DeleteLikeStationUseCase,
+    private val toggleLikeStationUseCase: ToggleLikeStationUseCase,
 ): ViewModel() {
     
     private val _state = MutableStateFlow(value = BusArriveState())
@@ -90,26 +88,14 @@ class BusArriveViewModel @Inject constructor(
         }
     }
 
-    // 즐겨찾기 추가
-    fun insertLikeStation(stationModel: StationModel) = viewModelScope.launch(Dispatchers.IO) {
-        addLikeStationUseCase(stationModel)
-    }
-
-    // 즐겨찾기 삭제
-    fun deleteLikeStation(arsId: String) = viewModelScope.launch(Dispatchers.IO) {
-        deleteLikeStationUseCase(arsId)
+    fun toggleLikeStation(stationModel: StationModel) = viewModelScope.launch(Dispatchers.IO) {
+        toggleLikeStationUseCase(stationModel)
     }
 
 
     fun onAction(action: BusArriveAction){
         when(action){
-            is BusArriveAction.OnFavoriteIconClick -> {
-                if(action.stationModel.selected){
-                    deleteLikeStation(action.stationModel.arsId ?: "")
-                } else {
-                    insertLikeStation(action.stationModel)
-                }
-            }
+            is BusArriveAction.OnFavoriteIconClick -> toggleLikeStation(action.stationModel)
         }
     }
 }

@@ -7,9 +7,8 @@ import com.traffic.domain.model.KeywordModel
 import com.traffic.domain.model.StationModel
 import com.traffic.domain.usecase.keyword.GetKeywordListUseCase
 import com.traffic.domain.usecase.keyword.InsertKeywordUseCase
-import com.traffic.domain.usecase.like.AddLikeStationUseCase
-import com.traffic.domain.usecase.like.DeleteLikeStationUseCase
 import com.traffic.domain.usecase.like.GetLikeStationListUseCase
+import com.traffic.domain.usecase.like.ToggleLikeStationUseCase
 import com.traffic.domain.usecase.station.GetSearchStationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,11 +22,10 @@ import javax.inject.Inject
 @HiltViewModel
 class StationViewModel @Inject constructor(
     private val getSearchStationUseCase: GetSearchStationUseCase,
-    private val addLikeStationUseCase: AddLikeStationUseCase,
-    private val deleteLikeStationUseCase: DeleteLikeStationUseCase,
     private val getLikeStationListUseCase: GetLikeStationListUseCase,
     private val insertKeywordUseCase: InsertKeywordUseCase,
     private val getKeywordListUseCase: GetKeywordListUseCase,
+    private val toggleLikeStationUseCase: ToggleLikeStationUseCase,
 ) : ViewModel() {
 
     private val _likeStationList = MutableStateFlow<List<StationModel>>(listOf())
@@ -86,16 +84,6 @@ class StationViewModel @Inject constructor(
         }
     }
 
-    // 즐겨찾기 추가
-    fun insertLikeStation(stationModel: StationModel) = viewModelScope.launch(Dispatchers.IO) {
-        addLikeStationUseCase(stationModel)
-    }
-
-    // 즐겨찾기 삭제
-    fun deleteLikeStation(arsId: String) = viewModelScope.launch(Dispatchers.IO) {
-        deleteLikeStationUseCase(arsId)
-    }
-
     // 즐겨찾기 리스트 조회
     fun getLikeStationList() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -107,17 +95,15 @@ class StationViewModel @Inject constructor(
         }
     }
 
+    fun toggleLikeStation(stationModel: StationModel) = viewModelScope.launch(Dispatchers.IO) {
+        toggleLikeStationUseCase(stationModel)
+    }
+
     fun onStationUIEvents(stationUIEvents: StationUIEvents){
         when(stationUIEvents){
             StationUIEvents.OnStationCardClick -> {}
             is StationUIEvents.OnSearchStationList -> getSearchedStationList(stationUIEvents.keyword)
-            is StationUIEvents.OnFavoriteIconClick -> {
-                if(stationUIEvents.stationModel.selected){
-                    deleteLikeStation(stationUIEvents.stationModel.busStopId ?: "")
-                }else {
-                    insertLikeStation(stationUIEvents.stationModel)
-                }
-            }
+            is StationUIEvents.OnFavoriteIconClick -> toggleLikeStation(stationUIEvents.stationModel)
         }
     }
 }
