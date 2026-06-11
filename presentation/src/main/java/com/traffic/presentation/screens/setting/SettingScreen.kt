@@ -3,7 +3,6 @@ package com.traffic.presentation.screens.setting
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
-import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,25 +19,41 @@ import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.traffic.common.R
 import com.traffic.common.firebase.ScreenName
 import com.traffic.common.firebase.TrackScreenView
-import com.traffic.presentation.screens.setting.component.SettingRowItem
+import com.traffic.presentation.PresentationConstants
+import com.traffic.presentation.screens.setting.action.SettingAction
+import com.traffic.presentation.screens.setting.component.SettingItem
+import com.traffic.presentation.screens.setting.component.sendEmail
 
 @Composable
-internal fun SettingScreen(
+fun SettingScreenRoute(
     context: Context = LocalContext.current
 ){
     val info: PackageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-    val version = info.versionName.orEmpty()
+    val appVersion = info.versionName.orEmpty()
 
-    SettingScreenContent(
-        context = context,
-        version = version,
+    SettingScreen(
+        appVersion = appVersion,
+        onAction = { action ->
+            when(action){
+                is SettingAction.OnClickInquire -> {
+                    context.sendEmail(
+                        to = PresentationConstants.INQUIRE_EMAIL,
+                        subject = PresentationConstants.INQUIRE_SUBJECT,
+                        chooserTitle = context.getString(R.string.setting_inquire)
+                    )
+                }
+                is SettingAction.OnClickOpenSource -> {
+                    context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
+                }
+            }
+        }
     )
 }
 
 @Composable
-private fun SettingScreenContent(
-    context: Context,
-    version: String,
+private fun SettingScreen(
+    appVersion: String,
+    onAction: (SettingAction) -> Unit,
 ) {
     TrackScreenView(screenName = ScreenName.Setting)
 
@@ -51,12 +66,12 @@ private fun SettingScreenContent(
                 .fillMaxWidth()
                 .weight(1f)
         ) {
-            SettingRowItem(
+            SettingItem(
                 title = stringResource(R.string.setting_app_version),
-                content = { Text(version) },
+                content = { Text(appVersion) },
             )
 
-            SettingRowItem(
+            SettingItem(
                 title = stringResource(R.string.setting_inquire),
                 content = {
                     Icon(
@@ -65,28 +80,10 @@ private fun SettingScreenContent(
                         tint = Color(0xFFA0A0A0)
                     )
                 },
-                onClick = {
-                    val emailAddress = "tmfrl1590@gmail.com"
-                    val emailSubject = "광주 버스 앱 건의"
-
-                    val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-                        data = Uri.fromParts("mailto", emailAddress, null)
-                        putExtra(Intent.EXTRA_SUBJECT, emailSubject)
-                        putExtra(Intent.EXTRA_EMAIL, arrayOf(emailAddress))
-                    }
-
-                    runCatching {
-                        context.startActivity(
-                            Intent.createChooser(
-                                emailIntent,
-                                context.getString(R.string.setting_inquire)
-                            )
-                        )
-                    }
-                },
+                onClick = { onAction(SettingAction.OnClickInquire) },
             )
 
-            SettingRowItem(
+            SettingItem(
                 title = stringResource(id = R.string.setting_open_source_list),
                 content = {
                     Icon(
@@ -95,9 +92,7 @@ private fun SettingScreenContent(
                         tint = Color(0xFFA0A0A0)
                     )
                 },
-                onClick = {
-                    context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
-                }
+                onClick = { onAction(SettingAction.OnClickOpenSource) }
             )
         }
     }
