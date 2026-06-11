@@ -19,7 +19,7 @@ import com.silver.navigation.BottomBarScreen
 import com.silver.navigation.BottomNavigationBar
 import com.silver.navigation.Screens
 import com.silver.navigation.fromBottomRoute
-import com.system.traffic.main.navigation.BottomBarGraph
+import com.traffic.presentation.screens.main.navigation.BottomBarGraph
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

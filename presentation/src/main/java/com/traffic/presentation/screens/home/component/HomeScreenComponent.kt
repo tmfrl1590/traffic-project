@@ -1,4 +1,4 @@
-package com.traffic.presentation.screens.home
+package com.traffic.presentation.screens.home.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -24,39 +25,38 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.traffic.common.R
 import com.traffic.domain.model.StationModel
-import com.traffic.presentation.screens.station.viewmodel.StationViewModel
+import com.traffic.presentation.screens.home.EmptyLikeStation
 
 @Composable
-fun LikeStationArea(
+fun LikeStationSection(
     modifier: Modifier = Modifier,
     likeStationList: List<StationModel>,
-    stationViewModel: StationViewModel,
     onStationCardClick: (String, String) -> Unit,
+    onClickFavorite: (StationModel) -> Unit,
 ) {
-    if(likeStationList.isNotEmpty()){
-        LazyColumn(
-            modifier = modifier
-        ) {
-            items(likeStationList.size){ index ->
-                StationInfo(
-                    stationModel = likeStationList[index],
-                    stationViewModel = stationViewModel,
-                    onStationCardClick = onStationCardClick
-                )
+    when {
+        likeStationList.isNotEmpty() -> {
+            LazyColumn(
+                modifier = modifier
+            ) {
+                items(likeStationList) { stationModel ->
+                    StationCard(
+                        stationModel = stationModel,
+                        onStationCardClick = onStationCardClick,
+                        onClickFavorite = onClickFavorite,
+                    )
+                }
             }
         }
-    }else {
-        NoLikeContent(
-            modifier = modifier
-        )
+        else -> EmptyLikeStation(modifier = modifier)
     }
 }
 
 @Composable
-private fun StationInfo(
+private fun StationCard(
     stationModel: StationModel,
-    stationViewModel: StationViewModel,
     onStationCardClick: (String, String) -> Unit,
+    onClickFavorite: (StationModel) -> Unit,
 ){
     Card(
         modifier = Modifier
@@ -79,7 +79,7 @@ private fun StationInfo(
         ){
             IconButton(
                 onClick = {
-                    stationViewModel.toggleLikeStation(stationModel)
+                    onClickFavorite(stationModel)
                 },
                 modifier = Modifier
                     .align(Alignment.TopEnd)

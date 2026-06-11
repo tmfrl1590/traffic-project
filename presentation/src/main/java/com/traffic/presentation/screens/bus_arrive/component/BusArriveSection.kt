@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -73,12 +73,12 @@ private fun BusArriveList(
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        itemsIndexed(
+        items(
             items = busArriveList,
-            key = { _, busArriveItem ->
+            key = { busArriveItem ->
                 busArriveItem.busId!!
             }
-        ) { _, item ->
+        ) { item ->
             BusArriveCard(
                 busArriveModel = item,
             )

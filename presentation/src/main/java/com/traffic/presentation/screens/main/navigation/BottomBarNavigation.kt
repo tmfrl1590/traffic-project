@@ -1,4 +1,4 @@
-package com.system.traffic.main.navigation
+package com.traffic.presentation.screens.main.navigation
 
 import android.content.Context
 import androidx.compose.animation.AnimatedContentTransitionScope

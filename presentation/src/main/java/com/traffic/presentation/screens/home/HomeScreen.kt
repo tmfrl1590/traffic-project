@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,25 +20,29 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.traffic.common.CommonTitleComponent
 import com.traffic.common.R
 import com.traffic.common.firebase.ScreenName
 import com.traffic.common.firebase.TrackScreenView
-import com.traffic.presentation.screens.station.viewmodel.StationViewModel
+import com.traffic.domain.model.StationModel
+import com.traffic.presentation.screens.home.action.HomeAction
+import com.traffic.presentation.screens.home.component.LikeStationSection
+import com.traffic.presentation.screens.home.viewmodel.HomeViewModel
 
 @Composable
-fun HomeScreen(
+fun HomeScreenRoute(
     context: Context,
-    stationViewModel: StationViewModel = hiltViewModel(),
+    homeViewModel: HomeViewModel = hiltViewModel(),
     onStationCardClick: (String, String) -> Unit,
 ) {
     TrackScreenView(screenName = ScreenName.Home)
 
-    LaunchedEffect(Unit){
-        stationViewModel.getLikeStationList()
-    }
+    val state by homeViewModel.state.collectAsStateWithLifecycle()
 
-    val likeStationList by stationViewModel.likeStationList.collectAsState(initial = listOf())
+    LaunchedEffect(key1 = Unit){
+        homeViewModel.getLikeStationList()
+    }
 
     BackHandler(
         enabled = true,
@@ -48,6 +51,19 @@ fun HomeScreen(
         }
     )
 
+    HomeScreen(
+        likeStationList = state.likeStationList,
+        onStationCardClick = onStationCardClick,
+        onAction = homeViewModel::onAction
+    )
+}
+
+@Composable
+private fun HomeScreen(
+    likeStationList: List<StationModel>,
+    onStationCardClick: (String, String) -> Unit,
+    onAction: (HomeAction) -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -66,28 +82,25 @@ fun HomeScreen(
                     .height(12.dp)
             )
 
-            LikeStationArea(
+            LikeStationSection(
                 modifier = Modifier.weight(0.9f),
-                stationViewModel = stationViewModel,
                 likeStationList = likeStationList,
-                onStationCardClick = onStationCardClick
+                onStationCardClick = onStationCardClick,
+                onClickFavorite = { onAction(HomeAction.OnClickFavoriteIcon(stationModel = it))}
             )
         }
-
-        /*AdBannerView(
-            modifier = Modifier
-                .padding(vertical = 16.dp)
-        )*/
     }
 }
 
 @Composable
-fun NoLikeContent(
+fun EmptyLikeStation(
     modifier: Modifier = Modifier
 ){
     Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
+        ,
+        contentAlignment = Alignment.Center
     ) {
         Text(
             text = stringResource(R.string.like_no_data),
