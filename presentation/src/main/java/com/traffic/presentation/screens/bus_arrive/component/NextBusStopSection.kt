@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.sp
 import com.traffic.common.R
 
 @Composable
-fun NextBusStopArea(
+fun NextBusStopSection(
     nextBusStopName: String,
 ) {
     Text(

@@ -6,78 +6,46 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.traffic.common.AdBannerView
-import com.traffic.common.R
-import com.traffic.common.Resource
-import com.traffic.common.SearchArea
+import com.traffic.common.SearchBarSection
 import com.traffic.common.firebase.ScreenName
 import com.traffic.common.firebase.TrackScreenView
-import com.traffic.domain.model.KeywordModel
-import com.traffic.domain.model.StationModel
+import com.traffic.presentation.screens.station.action.StationAction
+import com.traffic.presentation.screens.station.component.KeywordListSection
+import com.traffic.presentation.screens.station.component.SearchedStationListSection
+import com.traffic.presentation.screens.station.state.StationState
+import com.traffic.presentation.screens.station.viewmodel.StationViewModel
 
 
 @Composable
-fun StationScreen(
-    snackBarHostState: SnackbarHostState,
-    stationViewModel: com.traffic.presentation.screens.station.viewmodel.StationViewModel = hiltViewModel(),
+fun StationScreenRoute(
+    stationViewModel: StationViewModel = hiltViewModel(),
     onStationCardClick: (String, String) -> Unit,
-    onSearchStation: (String) -> Unit,
-    onFavoriteIconClick: (StationModel) -> Unit,
 ) {
-    TrackScreenView(screenName = ScreenName.BusArrive)
+    TrackScreenView(screenName = ScreenName.Station)
 
-    LaunchedEffect(Unit) {
-        stationViewModel.getLikeStationList()
-    }
+    val state by stationViewModel.state.collectAsStateWithLifecycle()
 
-    val searchedStationList by stationViewModel.searchedStationList.collectAsStateWithLifecycle(initialValue = Resource.Idle())
-
-    val keywordList by stationViewModel.keywordList.collectAsStateWithLifecycle(initialValue = listOf())
-
-    StationContent(
-        snackBarHostState = snackBarHostState,
-        searchedStationList = searchedStationList,
+    StationScreen(
+        state = state,
         onStationCardClick = onStationCardClick,
-        onSearchStation = onSearchStation,
-        onFavoriteIconClick = onFavoriteIconClick,
-        keywordList = keywordList,
+        onAction = stationViewModel::onAction
     )
 }
 
 @Composable
-private fun StationContent(
-    snackBarHostState: SnackbarHostState,
-    searchedStationList: Resource<List<StationModel>>,
+private fun StationScreen(
+    state: StationState,
     onStationCardClick: (String, String) -> Unit,
-    onSearchStation: (String) -> Unit,
-    onFavoriteIconClick: (StationModel) -> Unit,
-    keywordList: List<KeywordModel>,
+    onAction: (StationAction) -> Unit,
 ) {
-    var keyword by remember { mutableStateOf("") }
-
-    LaunchedEffect(keywordList) {
-        if (keyword.isEmpty() && keywordList.isNotEmpty()) {
-            keyword = keywordList.first().keyword
-            onSearchStation(keyword)
-        }
-    }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -87,10 +55,10 @@ private fun StationContent(
                 .fillMaxWidth()
                 .weight(1f)
         ) {
-            SearchArea(
-                keyword = keyword,
-                onValueChange = { keyword = it },
-                searchAction = { onSearchStation(keyword) },
+            SearchBarSection(
+                keyword = state.keyword,
+                onValueChange = { onAction(StationAction.OnInputKeyword(keyword = it)) },
+                searchAction = { onAction(StationAction.OnSearchStation) },
             )
 
             Spacer(
@@ -98,40 +66,22 @@ private fun StationContent(
                     .height(12.dp)
             )
 
-            _root_ide_package_.com.traffic.presentation.screens.station.component.KeywordArea(
-                keywordList = keywordList,
-                onKeywordClick = { clickedKeyword ->
-                    onSearchStation(clickedKeyword)
-                }
-            )
-
-            Spacer(
-                modifier = Modifier
-                    .height(12.dp)
+            KeywordListSection(
+                keywordList = state.keywordList,
+                onClickKeyword = { onAction(StationAction.OnClickKeyword(keyword = it)) }
             )
 
             HorizontalDivider(
                 thickness = 1.dp,
-                color = Color(0xFFE5E7EB)
+                color = Color(0xFFE5E7EB),
+                modifier = Modifier.padding(vertical = 12.dp)
             )
 
-            Spacer(
-                modifier = Modifier
-                    .height(12.dp)
-            )
-
-            _root_ide_package_.com.traffic.presentation.screens.station.component.SearchedStationListArea(
-                snackBarHostState = snackBarHostState,
-                searchedStationList = searchedStationList,
-                onStationCardClick = onStationCardClick,
-                onFavoriteIconClick = onFavoriteIconClick
+            SearchedStationListSection(
+                searchedStationList = state.searchedStationList,
+                onClickStationCard = onStationCardClick,
+                onClickFavoriteIcon = { onAction(StationAction.OnClickFavoriteIcon(stationModel = it))}
             )
         }
-
-        /*AdBannerView(
-            modifier = Modifier
-                .padding(vertical = 16.dp)
-        )*/
-
     }
 }

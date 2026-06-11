@@ -18,7 +18,6 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -37,10 +36,6 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @SuppressLint("ModifierFactoryUnreferencedReceiver")
 inline fun Modifier.noRippleClickable(crossinline onClick: () -> Unit): Modifier = composed {
@@ -120,22 +115,8 @@ fun ScaffoldBackIcon() {
     )
 }
 
-fun snackBarMessage(
-    snackBarHostState: SnackbarHostState,
-    message: String,
-    durationTime: Long = 2000L
-) {
-    CoroutineScope(Dispatchers.Main).launch {
-        val job = launch {
-            snackBarHostState.showSnackbar(message)
-        }
-        delay(durationTime)
-        job.cancel()
-    }
-}
-
 @Composable
-fun SearchArea(
+fun SearchBarSection(
     keyword: String,
     onValueChange: (String) -> Unit,
     searchAction: () -> Unit,

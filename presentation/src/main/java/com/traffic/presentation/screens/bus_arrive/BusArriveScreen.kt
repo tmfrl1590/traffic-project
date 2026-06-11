@@ -39,7 +39,7 @@ import com.traffic.common.firebase.TrackScreenView
 import com.traffic.common.noRippleClickable
 import com.traffic.presentation.screens.bus_arrive.action.BusArriveAction
 import com.traffic.presentation.screens.bus_arrive.component.BusArriveSection
-import com.traffic.presentation.screens.bus_arrive.component.NextBusStopArea
+import com.traffic.presentation.screens.bus_arrive.component.NextBusStopSection
 import com.traffic.presentation.screens.bus_arrive.state.BusArriveState
 import com.traffic.presentation.screens.bus_arrive.viewmodel.BusArriveViewModel
 
@@ -51,7 +51,7 @@ fun BusArriveScreenRoute(
     busArriveViewModel: BusArriveViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
 ) {
-    TrackScreenView(screenName = ScreenName.Station)
+    TrackScreenView(screenName = ScreenName.BusArrive)
 
     val state by busArriveViewModel.state.collectAsStateWithLifecycle()
 
@@ -121,7 +121,7 @@ private fun BusArriveScreen(
                     .padding(bottom = 20.dp)
             )
 
-            BusStopAndFavoriteArea(
+            BusStopAndFavoriteSection(
                 busStopName = state.stationInfo.busStopName ?: "",
                 selected = state.stationInfo.selected,
                 onClickFavorite = { onAction(BusArriveAction.OnClickFavoriteIcon(state.stationInfo))}
@@ -138,7 +138,7 @@ private fun BusArriveScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            NextBusStopArea(
+            NextBusStopSection(
                 nextBusStopName = state.stationInfo.nextBusStop ?: "",
             )
 
@@ -160,7 +160,7 @@ private fun BusArriveScreen(
 }
 
 @Composable
-private fun BusStopAndFavoriteArea(
+private fun BusStopAndFavoriteSection(
     busStopName: String,
     selected: Boolean,
     onClickFavorite: () -> Unit

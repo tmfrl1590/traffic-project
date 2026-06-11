@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,9 +27,12 @@ class HomeViewModel @Inject constructor(
     private val _state = MutableStateFlow(value = HomeState())
     val state: StateFlow<HomeState> = _state.asStateFlow()
 
+    private var likeStationJob: Job? = null
+
     // 즐겨찾기 리스트 조회
     fun getLikeStationList() {
-        viewModelScope.launch(Dispatchers.IO) {
+        likeStationJob?.cancel()
+        likeStationJob = viewModelScope.launch(Dispatchers.IO) {
             getLikeStationListUseCase().collectLatest { likeStations ->
                 // 즐겨찾기 리스트의 모든 항목은 selected = true로 설정
                 val updatedList = likeStations.map { it.copy(selected = true) }

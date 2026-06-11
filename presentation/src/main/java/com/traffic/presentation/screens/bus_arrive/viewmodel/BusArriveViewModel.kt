@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -61,9 +62,12 @@ class BusArriveViewModel @Inject constructor(
         }
     }
 
+    private var stationInfoJob: Job? = null
+
     // 정류장 정보 조회
     fun getStationInfo(arsId: String) {
-        viewModelScope.launch {
+        stationInfoJob?.cancel()
+        stationInfoJob = viewModelScope.launch {
             combine(
                 getStationInfoUseCase(arsId),   // Flow<Resource<StationModel>>
                 getLikeStationListUseCase()      // Flow<List<StationModel>>

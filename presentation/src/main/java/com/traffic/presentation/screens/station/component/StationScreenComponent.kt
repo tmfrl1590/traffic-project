@@ -1,7 +1,6 @@
 package com.traffic.presentation.screens.station.component
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,16 +13,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,63 +30,46 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.traffic.common.NoDataComponent
 import com.traffic.common.R
-import com.traffic.common.Resource
-import com.traffic.common.snackBarMessage
 import com.traffic.domain.model.StationModel
 
 @Composable
-fun SearchedStationListArea(
-    snackBarHostState: SnackbarHostState,
-    searchedStationList: Resource<List<StationModel>>,
-    onStationCardClick: (String, String) -> Unit,
-    onFavoriteIconClick: (StationModel) -> Unit,
+fun SearchedStationListSection(
+    searchedStationList: List<StationModel>,
+    onClickStationCard: (String, String) -> Unit,
+    onClickFavoriteIcon: (StationModel) -> Unit,
 ) {
     Box(
         modifier = Modifier
     ){
-        when(searchedStationList){
-            is Resource.Idle -> {}
-            is Resource.Loading -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ){
-                    CircularProgressIndicator()
-                }
-            }
-            is Resource.Success -> {
-                if(searchedStationList.data.isEmpty()){
-                    NoDataComponent(
-                        modifier = Modifier.fillMaxSize(),
-                        text = stringResource(R.string.searched_station_no_data)
-                    )
-                }else {
-                    LazyColumn(
-                        modifier = Modifier
-                    ){
-                        items(
-                            items = searchedStationList.data,
-                            key = { item ->
-                                item.arsId ?: ""
-                            }
-                        ){ item ->
-                            SearchedStationInfo(
-                                busStopName = item.busStopName ?: "",
-                                stationModel = item,
-                                onStationCardClick = onStationCardClick,
-                                onFavoriteIconClick = {onFavoriteIconClick(it)},
-                            )
-                        }
+        if(searchedStationList.isEmpty()){
+            NoDataComponent(
+                modifier = Modifier.fillMaxSize(),
+                text = stringResource(R.string.searched_station_no_data)
+            )
+        } else {
+            LazyColumn(
+                modifier = Modifier
+            ){
+                items(
+                    items = searchedStationList,
+                    key = { item ->
+                        item.arsId ?: ""
                     }
+                ){ item ->
+                    SearchedStationCard(
+                        busStopName = item.busStopName ?: "",
+                        stationModel = item,
+                        onStationCardClick = onClickStationCard,
+                        onFavoriteIconClick = {onClickFavoriteIcon(it)},
+                    )
                 }
             }
-            is Resource.Error -> snackBarMessage(snackBarHostState, stringResource(R.string.common2))
         }
     }
 }
 
 @Composable
-private fun SearchedStationInfo(
+private fun SearchedStationCard(
     busStopName: String,
     stationModel: StationModel,
     onStationCardClick: (String, String) -> Unit,
@@ -116,7 +92,7 @@ private fun SearchedStationInfo(
                 .fillMaxSize()
                 .padding(12.dp)
         ) {
-            SearchedStationInfoTopArea(
+            SearchedStationInfoTopSection(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
@@ -125,7 +101,7 @@ private fun SearchedStationInfo(
                 onFavoriteIconClick = onFavoriteIconClick,
             )
 
-            SearchedStationInfoBottomArea(
+            SearchedStationInfoBottomSection(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
@@ -137,7 +113,7 @@ private fun SearchedStationInfo(
 }
 
 @Composable
-private fun SearchedStationInfoTopArea(
+private fun SearchedStationInfoTopSection(
     modifier: Modifier,
     busStopName: String,
     stationModel: StationModel,
@@ -161,7 +137,7 @@ private fun SearchedStationInfoTopArea(
 }
 
 @Composable
-private fun SearchedStationInfoBottomArea(
+private fun SearchedStationInfoBottomSection(
     modifier: Modifier,
     nextBusStop: String,
     arsId: String
@@ -236,8 +212,8 @@ private fun CurrentBusStopNameAndArsId(
 
 @Preview(showBackground = true)
 @Composable
-fun SearchedStationInfoPreview() {
-    SearchedStationInfo(
+fun SearchedStationCardPreview() {
+    SearchedStationCard(
         busStopName = "서울역",
         stationModel = StationModel(
             stationNum = "11",

@@ -22,9 +22,9 @@ import androidx.compose.ui.unit.sp
 import com.traffic.domain.model.KeywordModel
 
 @Composable
-fun KeywordArea(
+fun KeywordListSection(
     keywordList: List<KeywordModel>,
-    onKeywordClick: (String) -> Unit,
+    onClickKeyword: (String) -> Unit,
 ) {
     if (keywordList.isNotEmpty()) {
         Column {
@@ -44,9 +44,9 @@ fun KeywordArea(
                     items = keywordList.sortedByDescending { it.id },
                     key = { it.id }
                 ) { keyword ->
-                    KeywordChip(
+                    KeywordCard(
                         keywordModel = keyword,
-                        onKeywordClick = onKeywordClick
+                        onKeywordClick = onClickKeyword
                     )
                 }
             }
@@ -55,7 +55,7 @@ fun KeywordArea(
 }
 
 @Composable
-private fun KeywordChip(
+private fun KeywordCard(
     keywordModel: KeywordModel,
     onKeywordClick: (String) -> Unit
 ) {

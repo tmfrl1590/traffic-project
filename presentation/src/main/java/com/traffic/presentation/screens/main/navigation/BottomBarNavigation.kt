@@ -68,7 +68,6 @@ fun BottomBarGraph(
                 onStationCardClick = onStationCardClick
             )
             stationNavGraph(
-                snackBarHostState = snackBarHostState,
                 onStationCardClick = onStationCardClick
             )
             settingNavGraph()
