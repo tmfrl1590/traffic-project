@@ -26,6 +26,8 @@ import com.traffic.common.AdBannerView
 import com.traffic.common.R
 import com.traffic.common.Resource
 import com.traffic.common.SearchArea
+import com.traffic.common.firebase.ScreenName
+import com.traffic.common.firebase.TrackScreenView
 import com.traffic.domain.model.KeywordModel
 import com.traffic.domain.model.StationModel
 
@@ -38,8 +40,9 @@ fun StationScreen(
     onSearchStation: (String) -> Unit,
     onFavoriteIconClick: (StationModel) -> Unit,
 ) {
+    TrackScreenView(screenName = ScreenName.BusArrive)
+
     LaunchedEffect(Unit) {
-        //logEvent(context, "StationScreen")
         stationViewModel.getLikeStationList()
     }
 

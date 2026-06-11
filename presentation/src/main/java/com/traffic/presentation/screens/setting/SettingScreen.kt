@@ -18,6 +18,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.traffic.common.R
+import com.traffic.common.firebase.ScreenName
+import com.traffic.common.firebase.TrackScreenView
 import com.traffic.presentation.screens.setting.component.SettingRowItem
 
 @Composable
@@ -38,6 +40,8 @@ private fun SettingScreenContent(
     context: Context,
     version: String,
 ) {
+    TrackScreenView(screenName = ScreenName.Setting)
+
     Column(
         modifier = Modifier
             .fillMaxSize()

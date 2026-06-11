@@ -95,7 +95,7 @@ class BusArriveViewModel @Inject constructor(
 
     fun onAction(action: BusArriveAction){
         when(action){
-            is BusArriveAction.OnFavoriteIconClick -> toggleLikeStation(action.stationModel)
+            is BusArriveAction.OnClickFavoriteIcon -> toggleLikeStation(action.stationModel)
         }
     }
 }

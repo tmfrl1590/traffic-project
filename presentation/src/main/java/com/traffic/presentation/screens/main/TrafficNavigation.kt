@@ -72,7 +72,6 @@ fun AppNavHost() {
             val arsId = backStackEntry.toRoute<Screens.BusArrive>().arsId
             val busStopId = backStackEntry.toRoute<Screens.BusArrive>().busStopId
             BusArriveScreenRoute(
-                context = context,
                 arsId = arsId,
                 busStopId = busStopId,
                 snackBarHostState = snackBarHostState,

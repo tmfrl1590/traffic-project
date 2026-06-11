@@ -31,6 +31,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.traffic.common.R
+import com.traffic.common.firebase.ScreenName
+import com.traffic.common.firebase.TrackScreenView
 import com.traffic.presentation.screens.splash.component.saveStationAndLineJsonData
 import com.traffic.presentation.screens.splash.viewmodel.DataLoadingState
 import com.traffic.presentation.screens.splash.viewmodel.SplashViewModel
@@ -40,6 +42,8 @@ fun SplashScreen(
     onGoHomeScreen: () -> Unit,
     splashViewModel: SplashViewModel = hiltViewModel()
 ) {
+    TrackScreenView(screenName = ScreenName.Splash)
+
     val scale = remember { Animatable(0f) }
     val loadingState by splashViewModel.loadingState.collectAsState()
 

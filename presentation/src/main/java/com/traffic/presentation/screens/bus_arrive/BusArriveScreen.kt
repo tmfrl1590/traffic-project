@@ -1,6 +1,5 @@
 package com.traffic.presentation.screens.bus_arrive
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,7 +34,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.traffic.common.AdBannerView
 import com.traffic.common.R
 import com.traffic.common.ScaffoldBackIcon
-import com.traffic.common.firebase.logEvent
+import com.traffic.common.firebase.ScreenName
+import com.traffic.common.firebase.TrackScreenView
 import com.traffic.common.noRippleClickable
 import com.traffic.presentation.screens.bus_arrive.action.BusArriveAction
 import com.traffic.presentation.screens.bus_arrive.component.BusArriveSection
@@ -45,13 +45,14 @@ import com.traffic.presentation.screens.bus_arrive.viewmodel.BusArriveViewModel
 
 @Composable
 fun BusArriveScreenRoute(
-    context: Context,
     arsId: String,
     busStopId: String,
     snackBarHostState: SnackbarHostState,
     busArriveViewModel: BusArriveViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
 ) {
+    TrackScreenView(screenName = ScreenName.Station)
+
     val state by busArriveViewModel.state.collectAsStateWithLifecycle()
 
     // 해당 arsId 정류장 조회
@@ -62,10 +63,6 @@ fun BusArriveScreenRoute(
     // 해당 정류장 버스 도착 정보 조회
     LaunchedEffect(key1 = Unit) {
         busArriveViewModel.getBusArriveList(arsId = busStopId)
-    }
-
-    LaunchedEffect(Unit) {
-        logEvent(context, "BusArriveScreen")
     }
 
     val error by busArriveViewModel.errorFlow.collectAsStateWithLifecycle("")
@@ -127,7 +124,7 @@ private fun BusArriveScreen(
             BusStopAndFavoriteArea(
                 busStopName = state.stationInfo.busStopName ?: "",
                 selected = state.stationInfo.selected,
-                onClickFavorite = { onAction(BusArriveAction.OnFavoriteIconClick(state.stationInfo))}
+                onClickFavorite = { onAction(BusArriveAction.OnClickFavoriteIcon(state.stationInfo))}
             )
 
             Spacer(modifier = Modifier.height(12.dp))

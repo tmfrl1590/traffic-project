@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.traffic.common.CommonTitleComponent
 import com.traffic.common.R
+import com.traffic.common.firebase.ScreenName
+import com.traffic.common.firebase.TrackScreenView
 import com.traffic.presentation.screens.station.viewmodel.StationViewModel
 
 @Composable
@@ -31,6 +33,8 @@ fun HomeScreen(
     stationViewModel: StationViewModel = hiltViewModel(),
     onStationCardClick: (String, String) -> Unit,
 ) {
+    TrackScreenView(screenName = ScreenName.Home)
+
     LaunchedEffect(Unit){
         stationViewModel.getLikeStationList()
     }
