@@ -1,5 +1,6 @@
 package com.traffic.presentation.screens.bus_arrive.model
 
+import androidx.compose.ui.graphics.Color
 import com.traffic.domain.model.BusArrive
 import com.traffic.domain.model.BusArriveItem
 
@@ -24,14 +25,16 @@ data class BusArriveItemModel(
     val lowBus : String?,
     val arriveFlag : String?,
     val lineName : String?,
-    var lineKind : String? = null,
+    val lineColor: Color = Color.Transparent,
 )
 
 fun BusArrive.toPresentation(): BusArriveModel = BusArriveModel(
     itemList = itemList.map { it.toPresentation() }
 )
 
-fun BusArriveItem.toPresentation(): BusArriveItemModel = BusArriveItemModel(
+fun BusArriveItem.toPresentation(
+    lineColor: Color = Color.Transparent,
+): BusArriveItemModel = BusArriveItemModel(
     arrive = arrive,
     remainStop = remainStop,
     shortLineName = shortLineName,
@@ -47,5 +50,6 @@ fun BusArriveItem.toPresentation(): BusArriveItemModel = BusArriveItemModel(
     dirEnd = dirEnd,
     lowBus = lowBus,
     arriveFlag = arriveFlag,
-    lineName = lineName
+    lineName = lineName,
+    lineColor = lineColor,
 )

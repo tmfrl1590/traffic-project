@@ -2,7 +2,10 @@ package com.traffic.presentation.screens.bus_arrive.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.system.traffic.core.domain.onError
 import com.system.traffic.core.domain.onSuccess
+import com.traffic.common.Resource
+import com.traffic.common.lineKindToColor
 import com.traffic.domain.model.StationModel
 import com.traffic.domain.usecase.arrive.BusArriveUseCase
 import com.traffic.domain.usecase.like.AddLikeStationUseCase
@@ -10,6 +13,9 @@ import com.traffic.domain.usecase.like.DeleteLikeStationUseCase
 import com.traffic.domain.usecase.like.GetLikeStationListUseCase
 import com.traffic.domain.usecase.line.GetLineKindUseCase
 import com.traffic.domain.usecase.station.GetStationInfoUseCase
+import com.traffic.presentation.screens.bus_arrive.action.BusArriveAction
+import com.traffic.presentation.screens.bus_arrive.model.toPresentation
+import com.traffic.presentation.screens.bus_arrive.state.BusArriveState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -22,9 +28,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.traffic.common.Resource
-import com.traffic.presentation.screens.bus_arrive.BusArriveState
-import com.traffic.presentation.screens.bus_arrive.model.toPresentation
 
 @HiltViewModel
 class BusArriveViewModel @Inject constructor(
@@ -36,25 +39,11 @@ class BusArriveViewModel @Inject constructor(
     private val deleteLikeStationUseCase: DeleteLikeStationUseCase,
 ): ViewModel() {
     
-    private val _state = MutableStateFlow(BusArriveState())
+    private val _state = MutableStateFlow(value = BusArriveState())
     val state: StateFlow<BusArriveState> = _state.asStateFlow()
 
     private val _errorFlow = MutableSharedFlow<String>()
     val errorFlow = _errorFlow.asSharedFlow()
-
-    private val _stationInfo = MutableStateFlow(
-        StationModel(
-            stationNum = "",
-            busStopName = "정류장 정보 로딩 중...",
-            nextBusStop = "",
-            busStopId = "",
-            arsId = "",
-            longitude = "",
-            latitude = "",
-            selected = false
-        )
-    )
-    val stationInfo: StateFlow<StationModel> = _stationInfo
 
     // 버스 도착 정보 조회
     fun getBusArriveList(arsId: String) {
@@ -62,44 +51,42 @@ class BusArriveViewModel @Inject constructor(
             _state.update { it.copy(isLoading = true) }
             busArriveUseCase(arsId)
                 .onSuccess { result ->
-                    val arriveList = result.itemList.map { it.toPresentation() }
-                    arriveList.map { it.lineKind = getLineKindUseCase(it.lineId ?: "")} // 색상 설정 추후에 수정 필요
-                    _state.update { it.copy(arriveList = arriveList, isLoading = false) }
+                    val arriveList = result.itemList.map { it.toPresentation(lineColor = lineKindToColor(lineKind = getLineKindUseCase(lineId = it.lineId ?: ""))) }
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            arriveList = arriveList,
+                        )
+                    }
                 }
+                .onError { _state.update { it.copy(isLoading = false) } }
         }
     }
 
-    fun getStationInfo(arsId: String) = viewModelScope.launch(Dispatchers.IO) {
-        combine(
-            getStationInfoUseCase(arsId), // Flow<Resource<StationModel>>
-            getLikeStationListUseCase()   // Flow<List<StationModel>>
-        ) { stationRes, likeStationList ->
-            val likeStationSet = likeStationList.map { it.arsId }.toSet()
-
-            when (stationRes) {
-                is Resource.Success -> {
-                    val stationModel = stationRes.data
-                    stationModel.copy(selected = likeStationSet.contains(stationModel.arsId))
-                }
-
-                is Resource.Error -> {
-                    // 에러 시 기본값 유지하되 에러 메시지 발송
-                    _errorFlow.emit("정류장 정보를 불러올 수 없습니다.")
-                    _stationInfo.value
-                }
-
-                is Resource.Loading -> {
-                    // 로딩 중일 때는 기존 상태 유지
-                    _stationInfo.value
-                }
-
-                else -> {
-                    // Idle 상태일 때도 기존 상태 유지
-                    _stationInfo.value
-                }
+    // 정류장 정보 조회
+    fun getStationInfo(arsId: String) {
+        viewModelScope.launch {
+            combine(
+                getStationInfoUseCase(arsId),   // Flow<Resource<StationModel>>
+                getLikeStationListUseCase()      // Flow<List<StationModel>>
+            ) { stationRes, likeStationList ->
+                // combine 블록은 순수 변환만 담당
+                val likeStationSet = likeStationList.mapTo(HashSet()) { it.arsId }
+                stationRes to likeStationSet
             }
-        }.collectLatest { updatedStation ->
-            _stationInfo.emit(updatedStation)
+                .collectLatest { (stationRes, likeStationSet) -> // 구조분해
+                    when (stationRes) {
+                        is Resource.Success -> {
+                            val updatedStation = stationRes.data.copy(
+                                selected = stationRes.data.arsId in likeStationSet
+                            )
+                            _state.update { it.copy(stationInfo = updatedStation) }
+                        }
+                        is Resource.Error -> _errorFlow.emit("정류장 정보를 불러올 수 없습니다.")
+                        is Resource.Loading -> Unit
+                        is Resource.Idle -> Unit
+                    }
+                }
         }
     }
 
@@ -113,13 +100,14 @@ class BusArriveViewModel @Inject constructor(
         deleteLikeStationUseCase(arsId)
     }
 
-    fun onBusArriveUIEvents(busArriveUIEvents: BusArriveUIEvents){
-        when(busArriveUIEvents){
-            is BusArriveUIEvents.OnFavoriteIconClick -> {
-                if(busArriveUIEvents.stationModel.selected){
-                    deleteLikeStation(busArriveUIEvents.stationModel.arsId ?: "")
+
+    fun onAction(action: BusArriveAction){
+        when(action){
+            is BusArriveAction.OnFavoriteIconClick -> {
+                if(action.stationModel.selected){
+                    deleteLikeStation(action.stationModel.arsId ?: "")
                 } else {
-                    insertLikeStation(busArriveUIEvents.stationModel)
+                    insertLikeStation(action.stationModel)
                 }
             }
         }

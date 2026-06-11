@@ -1,12 +1,9 @@
 package com.traffic.common
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,7 +15,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -73,52 +69,8 @@ fun NoDataComponent(
     }
 }
 
-@Composable
-fun LineInfo(
-    lineKind: String,
-    lineName: String,
-    dirDownName: String,
-    dirUpName: String
-){
-    Card(
-        modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .height(100.dp)
-            .fillMaxWidth(),
-        border = BorderStroke(1.dp, Color.LightGray),
-        shape = RoundedCornerShape(12.dp),
-    ){
-        val lineColor = lineTestColor(lineKind)
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White),
-        ){
-            Column(
-                modifier = Modifier
-                    .padding(12.dp)
-                    .fillMaxSize()
-            ) {
-                Text(
-                    text = lineName,
-                    modifier = Modifier.height(52.dp),
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = lineColor
-                )
-
-                Text(
-                    text = "$dirDownName ~ $dirUpName",
-                    modifier = Modifier.weight(5f)
-                )
-            }
-        }
-    }
-}
-
-fun lineTestColor(lienKind: String): Color {
-    return when (lienKind) {
+fun lineKindToColor(lineKind: String): Color {
+    return when (lineKind) {
         "1" -> Color(0xFFDC2626)
         "2" -> Color(0xFF16A34A)
         "3" -> Color(0xFF2563EB)
@@ -158,26 +110,6 @@ fun CommonTitleComponent(
     )
 }
 
-/*@Composable
-fun CustomLoadingBar(){
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White),
-        contentAlignment = Alignment.Center
-    ){
-        BallPulseSyncProgressIndicator(
-            modifier = Modifier,
-            color = Color.Gray,
-            animationDuration = 800,
-            animationDelay = 200,
-            startDelay = 0,
-            ballDiameter = 12.dp,
-            ballJumpHeight = 42.dp,
-            ballCount = 4
-        )
-    }
-}*/
 
 @Composable
 fun ScaffoldBackIcon() {

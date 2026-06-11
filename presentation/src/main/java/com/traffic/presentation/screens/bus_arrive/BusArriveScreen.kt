@@ -30,40 +30,42 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.traffic.common.AdBannerView
 import com.traffic.common.R
 import com.traffic.common.ScaffoldBackIcon
 import com.traffic.common.firebase.logEvent
 import com.traffic.common.noRippleClickable
-import com.traffic.domain.model.StationModel
-import com.traffic.presentation.screens.bus_arrive.component.BusArriveListArea
+import com.traffic.presentation.screens.bus_arrive.action.BusArriveAction
+import com.traffic.presentation.screens.bus_arrive.component.BusArriveSection
 import com.traffic.presentation.screens.bus_arrive.component.NextBusStopArea
+import com.traffic.presentation.screens.bus_arrive.state.BusArriveState
 import com.traffic.presentation.screens.bus_arrive.viewmodel.BusArriveViewModel
 
 @Composable
-fun BusArriveScreen(
+fun BusArriveScreenRoute(
     context: Context,
-    state: BusArriveState,
     arsId: String,
     busStopId: String,
     snackBarHostState: SnackbarHostState,
-    busArriveViewModel: BusArriveViewModel,
+    busArriveViewModel: BusArriveViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onFavoriteIconClick: (StationModel) -> Unit,
 ) {
+    val state by busArriveViewModel.state.collectAsStateWithLifecycle()
+
     // 해당 arsId 정류장 조회
     LaunchedEffect(key1 = arsId) {
         busArriveViewModel.getStationInfo(arsId)
     }
 
+    // 해당 정류장 버스 도착 정보 조회
     LaunchedEffect(key1 = Unit) {
-        busArriveViewModel.getBusArriveList(busStopId)
+        busArriveViewModel.getBusArriveList(arsId = busStopId)
     }
 
     LaunchedEffect(Unit) {
         logEvent(context, "BusArriveScreen")
-        //stationViewModel.getLikeStationList()
     }
 
     val error by busArriveViewModel.errorFlow.collectAsStateWithLifecycle("")
@@ -73,29 +75,19 @@ fun BusArriveScreen(
         }
     }
 
-    val stationModel by busArriveViewModel.stationInfo.collectAsStateWithLifecycle()
-
-    BusArriveScreenContent(
+    BusArriveScreen(
         state = state,
-        busArriveViewModel = busArriveViewModel,
-        stationModel = stationModel,
-        arsId = arsId,
-        snackBarHostState = snackBarHostState,
         onBackClick = onBackClick,
-        onFavoriteIconClick = onFavoriteIconClick,
+        onAction = busArriveViewModel::onAction,
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BusArriveScreenContent(
+private fun BusArriveScreen(
     state: BusArriveState,
-    busArriveViewModel: BusArriveViewModel,
-    stationModel: StationModel,
-    arsId: String,
-    snackBarHostState: SnackbarHostState,
     onBackClick: () -> Unit,
-    onFavoriteIconClick: (StationModel) -> Unit,
+    onAction: (BusArriveAction) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -133,15 +125,15 @@ fun BusArriveScreenContent(
             )
 
             BusStopAndFavoriteArea(
-                busStopName = stationModel.busStopName ?: "",
-                selected = stationModel.selected,
-                onClickFavorite = { onFavoriteIconClick(stationModel) }
+                busStopName = state.stationInfo.busStopName ?: "",
+                selected = state.stationInfo.selected,
+                onClickFavorite = { onAction(BusArriveAction.OnFavoriteIconClick(state.stationInfo))}
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
             Text(
-                text = "ID : ${stationModel.arsId}",
+                text = "ID : ${state.stationInfo.arsId}",
                 fontSize = 14.sp,
                 modifier = Modifier
                     .padding(start = 20.dp)
@@ -150,7 +142,7 @@ fun BusArriveScreenContent(
             Spacer(modifier = Modifier.height(12.dp))
 
             NextBusStopArea(
-                nextBusStopName = stationModel.nextBusStop ?: "",
+                nextBusStopName = state.stationInfo.nextBusStop ?: "",
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -162,7 +154,7 @@ fun BusArriveScreenContent(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            BusArriveListArea(
+            BusArriveSection(
                 isLoading = state.isLoading,
                 busArriveList = state.arriveList,
             )

@@ -29,37 +29,30 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.traffic.common.R
-import com.traffic.common.lineTestColor
 import com.traffic.presentation.screens.bus_arrive.model.BusArriveItemModel
 
 @Composable
-fun BusArriveListArea(
+fun BusArriveSection(
     isLoading: Boolean,
     busArriveList: List<BusArriveItemModel>,
 ) {
-
-    if(isLoading){
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-            , contentAlignment = Alignment.Center
-        ){
-            CircularProgressIndicator()
+    when {
+        isLoading -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
         }
-    }else {
-        if(busArriveList.isEmpty()){
-            NoBusArrive()
-        } else {
-            BusArriveList(
-                busArriveList = busArriveList
-            )
-        }
+        busArriveList.isEmpty() -> BusArriveEmptyContent()
+        else -> BusArriveList(busArriveList = busArriveList)
     }
+
 }
 
-
 @Composable
-fun NoBusArrive() {
+private fun BusArriveEmptyContent() {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -126,7 +119,7 @@ private fun BusArriveCard(
                         .wrapContentWidth()
                     ,
                     colors = CardDefaults.cardColors(
-                        containerColor = lineTestColor(busArriveModel.lineKind ?: "1")
+                        containerColor = busArriveModel.lineColor
                     ),
                     shape = RoundedCornerShape(12.dp)
                 ) {
