@@ -33,19 +33,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.traffic.common.R
 import com.traffic.common.firebase.ScreenName
 import com.traffic.common.firebase.TrackScreenView
-import com.traffic.presentation.screens.splash.component.saveStationAndLineJsonData
-import com.traffic.presentation.screens.splash.viewmodel.DataLoadingState
+import com.traffic.presentation.screens.splash.state.SplashState
 import com.traffic.presentation.screens.splash.viewmodel.SplashViewModel
 
 @Composable
-fun SplashScreen(
+fun SplashScreenRoute(
     onGoHomeScreen: () -> Unit,
     splashViewModel: SplashViewModel = hiltViewModel()
 ) {
     TrackScreenView(screenName = ScreenName.Splash)
 
     val scale = remember { Animatable(0f) }
-    val loadingState by splashViewModel.loadingState.collectAsState()
+    val state by splashViewModel.state.collectAsState()
 
     LaunchedEffect(key1 = true) {
         scale.animateTo(
@@ -56,24 +55,19 @@ fun SplashScreen(
             )
         )
 
-        val isCheckFirstLogin = splashViewModel.getIsFirstLogin()
-        if (isCheckFirstLogin) {
-            splashViewModel.setUpIsFirstLogin()
-            saveStationAndLineJsonData(splashViewModel)
-        }
-        onGoHomeScreen()
+        splashViewModel.initializeData(onComplete = onGoHomeScreen)
     }
 
-    SplashScreenContent(
+    SplashScreen(
         scale = scale,
-        loadingState = loadingState
+        state = state
     )
 }
 
 @Composable
-private fun SplashScreenContent(
+private fun SplashScreen(
     scale: Animatable<Float, AnimationVector1D>,
-    loadingState: DataLoadingState
+    state: SplashState
 ) {
     Box(
         modifier = Modifier
@@ -92,11 +86,11 @@ private fun SplashScreenContent(
                 contentDescription = "main_logo"
             )
 
-            if (loadingState.isLoading) {
+            if (state.isLoading) {
                 Spacer(modifier = Modifier.height(32.dp))
 
                 LinearProgressIndicator(
-                    progress = { loadingState.progress },
+                    progress = { state.progress },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 48.dp),
@@ -106,7 +100,7 @@ private fun SplashScreenContent(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = loadingState.message,
+                    text = state.message,
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onBackground

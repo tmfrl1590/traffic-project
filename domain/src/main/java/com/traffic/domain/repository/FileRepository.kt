@@ -9,7 +9,11 @@ interface FileRepository {
 
     fun insertStation(stationModel: StationModel)
 
+    fun insertStations(stations: List<StationModel>)
+
     fun getLineFileData(): List<LineModel>
 
     fun insertLine(lineModel: LineModel)
+
+    fun insertLines(lines: List<LineModel>)
 }

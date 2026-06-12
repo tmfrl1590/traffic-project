@@ -15,6 +15,9 @@ interface LineDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertLine(lineLocal: LineLocal)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllLines(lines: List<LineLocal>)
+
     /*@Query("SELECT * FROM line_local WHERE line_name LIKE :text")
     fun getSearchedLineList(text: String): Flow<List<LineLocal>>
 

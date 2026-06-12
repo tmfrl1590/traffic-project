@@ -4,13 +4,13 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.silver.navigation.Screens
-import com.traffic.presentation.screens.splash.SplashScreen
+import com.traffic.presentation.screens.splash.SplashScreenRoute
 
 fun NavGraphBuilder.splashGraph(
     navHostController: NavHostController,
 ){
     composable<Screens.Splash> {
-        SplashScreen(
+        SplashScreenRoute(
             onGoHomeScreen = {
                 navHostController.popBackStack()
                 navHostController.navigate(Screens.Main)

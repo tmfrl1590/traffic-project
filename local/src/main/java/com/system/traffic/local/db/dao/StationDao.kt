@@ -15,6 +15,9 @@ interface StationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertStation(stationEntity: StationLocal)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllStations(stations: List<StationLocal>)
+
     // 검색어에 해당하는 정류장 리스트와 즐겨찾기 테이블에 저장되있는 정류장 리스트를 합쳐서 가져옴
     @Query("SELECT * FROM  station_entity WHERE busStopName LIKE :text")
     fun getSearchedStationList(text : String) : List<StationLocal>

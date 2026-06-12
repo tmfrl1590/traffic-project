@@ -20,6 +20,10 @@ class FileRepositoryImpl @Inject constructor(
         localDataSource.insertStation(stationModel.toEntity())
     }
 
+    override fun insertStations(stations: List<StationModel>) {
+        localDataSource.insertStations(stations.map { it.toEntity() })
+    }
+
     override fun getLineFileData(): List<LineModel> {
         return localDataSource.getLineFileData().map {
             it.toDomain()
@@ -28,5 +32,9 @@ class FileRepositoryImpl @Inject constructor(
 
     override fun insertLine(lineModel: LineModel) {
         localDataSource.insertLine(lineModel.toEntity())
+    }
+
+    override fun insertLines(lines: List<LineModel>) {
+        localDataSource.insertLines(lines.map { it.toEntity() })
     }
 }
