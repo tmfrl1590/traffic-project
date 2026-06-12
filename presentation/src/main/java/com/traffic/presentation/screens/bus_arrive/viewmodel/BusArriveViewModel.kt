@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -97,9 +98,46 @@ class BusArriveViewModel @Inject constructor(
     }
 
 
+    private var timerJob: Job? = null
+
+    // 타이머 시작 (30초 카운트다운)
+    fun startTimer(busStopId: String) {
+        timerJob?.cancel()
+        timerJob = viewModelScope.launch {
+            _state.update { it.copy(remainingSeconds = 30) }
+            while (true) {
+                delay(1000L)
+                val currentSeconds = _state.value.remainingSeconds
+                if (currentSeconds > 1) {
+                    _state.update { it.copy(remainingSeconds = currentSeconds - 1) }
+                } else {
+                    _state.update { it.copy(remainingSeconds = 30) }
+                    getBusArriveList(busStopId)
+                }
+            }
+        }
+    }
+
+    // 타이머 정지 및 상태 리셋
+    fun stopTimer() {
+        timerJob?.cancel()
+        timerJob = null
+        _state.update { it.copy(remainingSeconds = 30) }
+    }
+
+    // 도착정보 새로고침
+    fun onClickRefresh(){
+        val busStopId = _state.value.stationInfo.busStopId ?: "0"
+        if (busStopId.isNotEmpty()) {
+            startTimer(busStopId)
+            getBusArriveList(busStopId)
+        }
+    }
+
     fun onAction(action: BusArriveAction){
         when(action){
             is BusArriveAction.OnClickFavoriteIcon -> toggleLikeStation(action.stationModel)
+            is BusArriveAction.OnClickRefresh -> onClickRefresh()
         }
     }
 }

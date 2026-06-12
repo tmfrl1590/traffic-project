@@ -2,6 +2,7 @@ package com.traffic.presentation.screens.bus_arrive
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,8 +11,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -20,6 +24,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -27,9 +32,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.traffic.common.AdBannerView
 import com.traffic.common.R
@@ -54,6 +62,28 @@ fun BusArriveScreenRoute(
     TrackScreenView(screenName = ScreenName.BusArrive)
 
     val state by busArriveViewModel.state.collectAsStateWithLifecycle()
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner, busStopId) {
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_RESUME -> {
+                    if (busStopId.isNotEmpty()) {
+                        busArriveViewModel.startTimer(busStopId)
+                    }
+                }
+                Lifecycle.Event.ON_PAUSE -> {
+                    busArriveViewModel.stopTimer()
+                }
+                else -> {}
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+            busArriveViewModel.stopTimer()
+        }
+    }
 
     // 해당 arsId 정류장 조회
     LaunchedEffect(key1 = arsId) {
@@ -106,6 +136,12 @@ private fun BusArriveScreen(
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.White,
                 )
+            )
+        },
+        floatingActionButton = {
+            RefreshButton(
+                remainingSeconds = state.remainingSeconds,
+                onClickRefresh = {onAction(BusArriveAction.OnClickRefresh)}
             )
         }
     ) {
@@ -189,5 +225,40 @@ private fun BusStopAndFavoriteSection(
                     onClickFavorite()
                 }
         )
+    }
+}
+
+@Composable
+private fun RefreshButton(
+    remainingSeconds: Int,
+    onClickRefresh: () -> Unit,
+) {
+    FloatingActionButton(
+        onClick = onClickRefresh,
+        containerColor = Color(0xFF2563EB), // 프리미엄 딥블루
+        contentColor = Color.White,
+        shape = CircleShape,
+        modifier = Modifier.size(52.dp)
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            val progress = remainingSeconds / 30f
+            CircularProgressIndicator(
+                progress = { progress },
+                color = Color.White,
+                trackColor = Color.White.copy(alpha = 0.2f),
+                strokeWidth = 3.dp,
+                modifier = Modifier.size(44.dp)
+            )
+            Text(
+                text = "$remainingSeconds",
+                color = Color.White,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }

@@ -4,4 +4,5 @@ import com.traffic.domain.model.StationModel
 
 sealed interface BusArriveAction {
     data class OnClickFavoriteIcon(val stationModel: StationModel) : BusArriveAction
+    data object OnClickRefresh : BusArriveAction
 }

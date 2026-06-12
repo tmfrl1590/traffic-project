@@ -15,5 +15,6 @@ data class BusArriveState(
         longitude = "",
         latitude = "",
         selected = false
-    )
+    ),
+    val remainingSeconds: Int = 30
 )
