@@ -26,7 +26,9 @@ internal object DatabaseModule {
             context.applicationContext,
             TrafficDatabase::class.java,
             TrafficDatabase.DB_NAME
-        ).build()
+        )
+        .fallbackToDestructiveMigration(dropAllTables = true)
+        .build()
     }
 
     @Provides
