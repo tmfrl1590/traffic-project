@@ -108,4 +108,7 @@ dependencies {
 
     // Admob
     implementation(libs.play.services.ads)
+
+    // Firebase
+    implementation(libs.firebase.messaging)
 }
