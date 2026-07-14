@@ -23,7 +23,7 @@ interface LocalDataSource {
     suspend fun getSearchedStationList(keyword: String): List<StationEntity>
 
     // 정류장 정보
-    fun getStationInfo(arsId: String): StationEntity
+    suspend fun getStationInfo(arsId: String): StationEntity
 
     // JSON 파일에서 정류장 데이터 읽기
     fun getStationFileData(): List<StationEntity>

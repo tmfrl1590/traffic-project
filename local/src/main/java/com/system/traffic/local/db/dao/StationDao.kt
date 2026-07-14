@@ -24,6 +24,6 @@ interface StationDao {
 
     // 정류장1개 정보 가져오기 - nullable로 변경
     @Query("SELECT * FROM station_entity WHERE arsId = :arsId LIMIT 1")
-    fun getStationInfo(arsId: String): StationLocal?
+    suspend fun getStationInfo(arsId: String): StationLocal?
 
 }

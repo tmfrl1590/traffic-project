@@ -57,7 +57,7 @@ class StationViewModel @Inject constructor(
             insertKeywordUseCase(keyword = keyword)
 
             combine(
-                getSearchStationUseCase(keyword = "%$keyword%"),
+                getSearchStationUseCase(keyword = keyword),
                 getLikeStationListUseCase()
             ){ searchedStation, likes ->
                 val likeIds = likes.map { it.arsId }.toSet()

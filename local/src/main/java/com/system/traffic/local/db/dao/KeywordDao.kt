@@ -11,16 +11,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface KeywordDao {
 
-    @Query("DELETE FROM keyword_entity WHERE keyword = :keyword")
-    suspend fun deleteByKeyword(keyword: String)
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertKeywordRow(keywordLocal: KeywordLocal)
 
     /** 같은 검색어는 한 줄만 두고, 다시 검색하면 최신 순으로 갱신합니다. */
     @Transaction
     suspend fun insertKeyword(keywordLocal: KeywordLocal) {
-        deleteByKeyword(keywordLocal.keyword)
+        deleteKeyword(keywordLocal.keyword)
         insertKeywordRow(keywordLocal)
     }
 

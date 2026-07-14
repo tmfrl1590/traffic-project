@@ -64,9 +64,6 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
 
-    // Sandwich
-    implementation(libs.sandwich.retrofit)
-
     // Kotlin Serialization
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.serialization.json)

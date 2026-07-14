@@ -39,10 +39,6 @@ class LocalDataSourceImpl @Inject constructor(
     private val fileDataSource: FileDataSource,
 ): LocalDataSource {
 
-    companion object {
-        private val Context.dataStore : DataStore<Preferences> by preferencesDataStore("pref")
-    }
-
     private val myDataStore : DataStore<Preferences> = context.dataStore
 
     private val isFirstLogin = booleanPreferencesKey(DataStoreConstants.IS_FIRST_LOGIN)
@@ -77,7 +73,7 @@ class LocalDataSourceImpl @Inject constructor(
             .map { it.toLikeStationModel() }
     }
 
-    override fun getStationInfo(arsId: String): StationEntity {
+    override suspend fun getStationInfo(arsId: String): StationEntity {
         return stationDao.getStationInfo(arsId)?.toLikeStationModel() ?: StationEntity(
             stationNum = "",
             busStopName = "정류장 정보 없음",

@@ -1,7 +1,6 @@
 package com.system.traffic.remote.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.skydoves.sandwich.retrofit.adapters.ApiResponseCallAdapterFactory
 import com.system.traffic.remote.RemoteConstants
 import com.system.traffic.remote.service.TrafficService
 import dagger.Module
@@ -56,7 +55,6 @@ internal object NetworkModule {
             .addConverterFactory(
                 json.asConverterFactory("application/json".toMediaType())
             )
-            .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
             .build()
             .create(TrafficService::class.java)
     }

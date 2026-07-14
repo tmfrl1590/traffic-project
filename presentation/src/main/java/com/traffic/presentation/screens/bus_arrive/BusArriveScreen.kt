@@ -24,7 +24,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -37,14 +36,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.traffic.design.AdBannerView
 import com.traffic.design.R
 import com.traffic.design.ScaffoldBackIcon
+import com.traffic.design.noRippleClickable
 import com.traffic.presentation.firebase.ScreenName
 import com.traffic.presentation.firebase.TrackScreenView
-import com.traffic.design.noRippleClickable
 import com.traffic.presentation.screens.bus_arrive.action.BusArriveAction
 import com.traffic.presentation.screens.bus_arrive.component.BusArriveSection
 import com.traffic.presentation.screens.bus_arrive.component.NextBusStopSection
@@ -63,26 +62,13 @@ fun BusArriveScreenRoute(
 
     val state by busArriveViewModel.state.collectAsStateWithLifecycle()
 
-    val lifecycleOwner = LocalLifecycleOwner.current
-    DisposableEffect(lifecycleOwner, busStopId) {
-        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
-            when (event) {
-                Lifecycle.Event.ON_RESUME -> {
-                    if (busStopId.isNotEmpty()) {
-                        busArriveViewModel.startTimer(busStopId)
-                    }
-                }
-                Lifecycle.Event.ON_PAUSE -> {
-                    busArriveViewModel.stopTimer()
-                }
-                else -> {}
-            }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        if (busStopId.isNotEmpty()) {
+            busArriveViewModel.startTimer(busStopId)
         }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
-            busArriveViewModel.stopTimer()
-        }
+    }
+    LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) {
+        busArriveViewModel.stopTimer()
     }
 
     // 해당 arsId 정류장 조회

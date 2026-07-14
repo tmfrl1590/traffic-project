@@ -12,8 +12,9 @@ fun NavGraphBuilder.splashGraph(
     composable<Screens.Splash> {
         SplashScreenRoute(
             onGoHomeScreen = {
-                navHostController.popBackStack()
-                navHostController.navigate(Screens.Main)
+                navHostController.navigate(Screens.Main) {
+                    popUpTo<Screens.Splash> { inclusive = true }
+                }
             }
         )
     }
