@@ -21,37 +21,42 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 internal object NetworkModule {
 
-    private val json = Json {
-        isLenient = true // Json 큰 따옴표 느슨하게 체크
-        ignoreUnknownKeys = true // Filed 값이 없는 경우 무시
-        coerceInputValues = true // "null이 들어간 경우 dafault 값으로 변경"
+    @Singleton
+    @Provides
+    fun provideJson(): Json = Json {
+        isLenient = true
+        ignoreUnknownKeys = true
+        coerceInputValues = true
     }
 
     @Singleton
     @Provides
-    fun logging(): OkHttpClient {
+    fun provideOkHttpClient(): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
             .addInterceptor(interceptor)
             .addNetworkInterceptor(interceptor)
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
             .build()
     }
 
     @OptIn(ExperimentalSerializationApi::class)
     @Singleton
     @Provides
-    fun provideTrafficApi(): TrafficService {
+    fun provideTrafficApi(
+        okHttpClient: OkHttpClient, // Hilt로부터 OkHttpClient를 주입받음
+        json: Json                  // Hilt로부터 Json을 주입받음
+    ): TrafficService {
         return Retrofit.Builder()
             .baseUrl(RemoteConstants.BASE_URL)
-            .client(logging())
+            .client(okHttpClient)
             .addConverterFactory(
                 json.asConverterFactory("application/json".toMediaType())
             )
-            .addCallAdapterFactory(ApiResponseCallAdapterFactory.Companion.create())
+            .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
             .build()
             .create(TrafficService::class.java)
     }

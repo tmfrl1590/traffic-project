@@ -1,9 +1,9 @@
 package com.system.traffic
 
 import android.app.Application
-import android.content.Context
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import android.os.Build
 import com.google.android.gms.ads.MobileAds
 import com.traffic.design.CommonConfig
@@ -11,9 +11,6 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class App : Application(){
-    init {
-        instance = this
-    }
 
     override fun onCreate() {
         super.onCreate()
@@ -35,16 +32,8 @@ class App : Application(){
             val channel = NotificationChannel(channelId, channelName, importance).apply {
                 description = channelDescription
             }
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
-        }
-    }
-
-    companion object {
-        private var instance : Application? = null
-
-        fun context() : Context {
-            return instance!!.applicationContext
         }
     }
 }
