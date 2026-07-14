@@ -127,15 +127,15 @@ class LocalDataSourceImpl @Inject constructor(
 
     override fun insertLine(lineEntity: LineEntity) {
         val lineLocal = LineLocal(
-            line_id = lineEntity.line_id,
-            dir_down_name = lineEntity.dir_down_name,
-            run_interval = lineEntity.run_interval,
-            last_run_time = lineEntity.last_run_time,
-            line_num = lineEntity.line_num,
-            first_run_time = lineEntity.first_run_time,
-            dir_up_name = lineEntity.dir_up_name,
-            line_kind = lineEntity.line_kind,
-            line_name = lineEntity.line_name,
+            line_id = lineEntity.lineId,
+            dir_down_name = lineEntity.dirDownName,
+            run_interval = lineEntity.runInterval,
+            last_run_time = lineEntity.lastRunTime,
+            line_num = lineEntity.lineNum,
+            first_run_time = lineEntity.firstRunTime,
+            dir_up_name = lineEntity.dirUpName,
+            line_kind = lineEntity.lineKind,
+            line_name = lineEntity.lineName,
             selected = lineEntity.selected
         )
         lineDao.insertLine(lineLocal)
@@ -144,15 +144,15 @@ class LocalDataSourceImpl @Inject constructor(
     override fun insertLines(lines: List<LineEntity>) {
         val lineLocals = lines.map { entity ->
             LineLocal(
-                line_id = entity.line_id,
-                dir_down_name = entity.dir_down_name,
-                run_interval = entity.run_interval,
-                last_run_time = entity.last_run_time,
-                line_num = entity.line_num,
-                first_run_time = entity.first_run_time,
-                dir_up_name = entity.dir_up_name,
-                line_kind = entity.line_kind,
-                line_name = entity.line_name,
+                line_id = entity.lineId,
+                dir_down_name = entity.dirDownName,
+                run_interval = entity.runInterval,
+                last_run_time = entity.lastRunTime,
+                line_num = entity.lineNum,
+                first_run_time = entity.firstRunTime,
+                dir_up_name = entity.dirUpName,
+                line_kind = entity.lineKind,
+                line_name = entity.lineName,
                 selected = entity.selected
             )
         }

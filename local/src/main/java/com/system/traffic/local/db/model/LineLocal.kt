@@ -23,15 +23,15 @@ data class LineLocal (
     var selected : Boolean
 ): LocalMapper<LineEntity>{
     override fun toData(): LineEntity = LineEntity(
-        line_id = line_id,
-        dir_down_name = dir_down_name,
-        run_interval = run_interval,
-        last_run_time = last_run_time,
-        line_num = line_num,
-        first_run_time = first_run_time,
-        dir_up_name = dir_up_name,
-        line_kind = line_kind,
-        line_name = line_name,
+        lineId = line_id,
+        dirDownName = dir_down_name,
+        runInterval = run_interval,
+        lastRunTime = last_run_time,
+        lineNum = line_num,
+        firstRunTime = first_run_time,
+        dirUpName = dir_up_name,
+        lineKind = line_kind,
+        lineName = line_name,
         selected = selected,
     )
 }

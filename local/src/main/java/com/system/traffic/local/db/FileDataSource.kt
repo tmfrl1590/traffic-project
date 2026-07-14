@@ -1,58 +1,35 @@
 package com.system.traffic.local.db
 
 import android.content.Context
+import com.traffic.data.model.local.LineDataWrapper
 import com.traffic.data.model.local.LineEntity
+import com.traffic.data.model.local.StationDataWrapper
 import com.traffic.data.model.local.StationEntity
 import dagger.hilt.android.qualifiers.ApplicationContext
-import org.json.JSONObject
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 class FileDataSource @Inject constructor(
     @ApplicationContext private val context: Context,
 ){
-    private val stationList = ArrayList<StationEntity>()
-    private val lineList = ArrayList<LineEntity>()
-
-    fun getStationDataFromFile(): List<StationEntity> {
-
-        val jsonString = context.assets.open("station.json").reader().readText()
-        val resultList = JSONObject(jsonString).getJSONArray("STATION_LIST")
-
-        for(i in 0 until resultList.length()){
-            val jsonObject = resultList.getJSONObject(i)
-            val stationNum = jsonObject.getString("STATION_NUM").toString()
-            val busStopName = jsonObject.getString("BUSSTOP_NAME").toString()
-            val arsId = jsonObject.getString("ARS_ID").toString()
-            val nextBusStop = jsonObject.getString("NEXT_BUSSTOP").toString()
-            val busStopId = jsonObject.getString("BUSSTOP_ID").toString()
-            val longitude = jsonObject.getString("LONGITUDE").toString()
-            val latitude = jsonObject.getString("LATITUDE").toString()
-
-            val station = StationEntity(stationNum, busStopName, nextBusStop, busStopId, arsId, longitude, latitude)
-            stationList.add(station)
-        }
-        return stationList
+    private val json = Json {
+        ignoreUnknownKeys = true // JSON에 정의되었으나 Entity 클래스엔 없는 필드가 있어도 예외없이 무시
+        coerceInputValues = true // null 값이 들어와도 에러를 내지 않고 기본값으로 유연하게 처리
     }
 
-    fun getLineDataFromFile(): List<LineEntity>{
+    // 정류장 파일 파싱
+    fun getStationDataFromFile(): List<StationEntity> {
+        val jsonString = context.assets.open("station.json").reader().readText()
+        // 단 한 줄로 파싱 완료 (자동으로 List<StationEntity>로 역직렬화됨)
+        val wrapper = json.decodeFromString<StationDataWrapper>(jsonString)
+        return wrapper.stationList // 지역 변수만 반환하므로 함수가 끝난 후 GC에 의해 자동 소멸
+    }
+
+    // 노선 파일 파싱
+    fun getLineDataFromFile(): List<LineEntity> {
         val jsonString = context.assets.open("line.json").reader().readText()
-        val resultList = JSONObject(jsonString).getJSONArray("LINE_LIST")
-
-        for(i in 0 until resultList.length()){
-            val jsonObject = resultList.getJSONObject(i)
-            val dirDownName = jsonObject.getString("DIR_DOWN_NAME").toString()
-            val runInterval = jsonObject.getString("RUN_INTERVAL").toString()
-            val lastRunTime = jsonObject.getString("LAST_RUN_TIME").toString()
-            val lineNum = jsonObject.getString("LINE_NUM").toString()
-            val firstRunTime = jsonObject.getString("FIRST_RUN_TIME").toString()
-            val dirUpName = jsonObject.getString("DIR_UP_NAME").toString()
-            val lineId = jsonObject.getString("LINE_ID").toString()
-            val lineKind = jsonObject.getString("LINE_KIND").toString()
-            val lineName = jsonObject.getString("LINE_NAME").toString()
-
-            val line = LineEntity(dirDownName, runInterval, lastRunTime, lineNum, firstRunTime, dirUpName, lineId, lineKind, lineName, selected = false)
-            lineList.add(line)
-        }
-        return lineList
+        // 단 한 줄로 파싱 완료
+        val wrapper = json.decodeFromString<LineDataWrapper>(jsonString)
+        return wrapper.lineList
     }
 }
