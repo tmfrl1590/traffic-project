@@ -9,37 +9,30 @@ import com.traffic.presentation.screens.home.action.HomeAction
 import com.traffic.presentation.screens.home.state.HomeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getLikeStationListUseCase: GetLikeStationListUseCase,
+    getLikeStationListUseCase: GetLikeStationListUseCase,
     private val toggleLikeStationUseCase: ToggleLikeStationUseCase,
 ): ViewModel(){
 
-    private val _state = MutableStateFlow(value = HomeState())
-    val state: StateFlow<HomeState> = _state.asStateFlow()
-
-    private var likeStationJob: Job? = null
-
-    // 즐겨찾기 리스트 조회
-    fun getLikeStationList() {
-        likeStationJob?.cancel()
-        likeStationJob = viewModelScope.launch(Dispatchers.IO) {
-            getLikeStationListUseCase().collectLatest { likeStations ->
-                // 즐겨찾기 리스트의 모든 항목은 selected = true로 설정
-                val updatedList = likeStations.map { it.copy(selected = true) }
-                _state.update { it.copy(likeStationList = updatedList) }
-            }
+    val state: StateFlow<HomeState> = getLikeStationListUseCase()
+        .map { likeStations ->
+            val updatedList = likeStations.map { it.copy(selected = true) }
+            HomeState(likeStationList = updatedList)
         }
-    }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 3000),
+            initialValue = HomeState()
+        )
 
     fun toggleLikeStation(stationModel: StationModel) = viewModelScope.launch(Dispatchers.IO) {
         toggleLikeStationUseCase(stationModel)
@@ -47,7 +40,7 @@ class HomeViewModel @Inject constructor(
 
     fun onAction(action: HomeAction){
         when(action){
-            is HomeAction.OnClickFavoriteIcon -> toggleLikeStation(action.stationModel)
+            is HomeAction.OnClickFavoriteIcon -> toggleLikeStation(stationModel = action.stationModel)
         }
     }
 }

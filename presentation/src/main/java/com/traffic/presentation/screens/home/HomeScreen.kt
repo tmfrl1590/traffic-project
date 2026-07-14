@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,10 +38,6 @@ fun HomeScreenRoute(
     TrackScreenView(screenName = ScreenName.Home)
 
     val state by homeViewModel.state.collectAsStateWithLifecycle()
-
-    LaunchedEffect(key1 = Unit){
-        homeViewModel.getLikeStationList()
-    }
 
     BackHandler(
         enabled = true,
