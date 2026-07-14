@@ -2,7 +2,7 @@ package com.traffic.domain.repository
 
 import com.traffic.domain.model.StationModel
 import kotlinx.coroutines.flow.Flow
-import com.traffic.common.Resource
+import com.system.traffic.core.Resource
 
 /**
  * StationRepository 는 도메인 계층의 추상화로, 데이터 접근 세부사항을 모르게 함.

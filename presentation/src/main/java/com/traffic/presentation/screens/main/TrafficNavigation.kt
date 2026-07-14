@@ -1,4 +1,4 @@
-package com.system.traffic.main
+package com.traffic.presentation.screens.main
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
@@ -12,7 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.silver.navigation.Screens
+import com.traffic.navigation.Screens
 import com.traffic.presentation.screens.bus_arrive.BusArriveScreenRoute
 import com.traffic.presentation.screens.splash.navigation.splashGraph
 

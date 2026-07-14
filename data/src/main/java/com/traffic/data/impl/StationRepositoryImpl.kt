@@ -1,6 +1,6 @@
 package com.traffic.data.impl
 
-import com.traffic.common.Resource
+import com.system.traffic.core.Resource
 import com.traffic.data.local.LocalDataSource
 import com.traffic.domain.model.StationModel
 import kotlinx.coroutines.channels.awaitClose

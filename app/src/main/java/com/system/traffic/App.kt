@@ -6,7 +6,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
 import com.google.android.gms.ads.MobileAds
-import com.traffic.common.CommonConfig
+import com.traffic.design.CommonConfig
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

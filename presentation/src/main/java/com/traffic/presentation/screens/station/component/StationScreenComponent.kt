@@ -28,8 +28,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.traffic.common.NoDataComponent
-import com.traffic.common.R
+import com.traffic.design.NoDataComponent
+import com.traffic.design.R
 import com.traffic.domain.model.StationModel
 
 @Composable

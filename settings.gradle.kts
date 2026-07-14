@@ -16,7 +16,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "traffic"
 include(":app")
-include(":common")
 include(":navigation")
 include(":data")
 include(":domain")
@@ -24,3 +23,6 @@ include(":remote")
 include(":core")
 include(":local")
 include(":presentation")
+include(":design")
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

@@ -2,7 +2,7 @@ package com.traffic.presentation.screens.station.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.silver.navigation.Screens
+import com.traffic.navigation.Screens
 import com.traffic.presentation.screens.station.StationScreenRoute
 
 fun NavGraphBuilder.stationNavGraph(

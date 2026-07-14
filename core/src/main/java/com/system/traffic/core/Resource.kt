@@ -1,4 +1,4 @@
-package com.traffic.common
+package com.system.traffic.core
 
 sealed class Resource<T>{
     class Idle<T>:Resource<T>()

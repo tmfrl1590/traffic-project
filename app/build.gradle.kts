@@ -82,12 +82,12 @@ android {
 }
 
 dependencies {
-    implementation(project(":common"))
-    implementation(project(":data"))
-    implementation(project(":domain"))
-    implementation(project(":presentation"))
-    implementation(project(":remote"))
-    implementation(project(":local"))
+    implementation(projects.data)
+    implementation(projects.domain)
+    implementation(projects.presentation)
+    implementation(projects.remote)
+    implementation(projects.local)
+    implementation(projects.design)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

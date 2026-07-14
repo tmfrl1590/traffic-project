@@ -1,4 +1,4 @@
-package com.traffic.common.ui.theme
+package com.traffic.design.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

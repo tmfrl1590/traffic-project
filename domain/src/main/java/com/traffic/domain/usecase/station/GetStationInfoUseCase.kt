@@ -1,6 +1,6 @@
 package com.traffic.domain.usecase.station
 
-import com.traffic.common.Resource
+import com.system.traffic.core.Resource
 import com.traffic.domain.model.StationModel
 import com.traffic.domain.repository.StationRepository
 import kotlinx.coroutines.flow.Flow

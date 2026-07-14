@@ -11,12 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.traffic.common.SearchBarSection
-import com.traffic.common.firebase.ScreenName
-import com.traffic.common.firebase.TrackScreenView
+import com.traffic.design.R
+import com.traffic.design.SearchBarSection
+import com.traffic.presentation.firebase.ScreenName
+import com.traffic.presentation.firebase.TrackScreenView
 import com.traffic.presentation.screens.station.action.StationAction
 import com.traffic.presentation.screens.station.component.KeywordListSection
 import com.traffic.presentation.screens.station.component.SearchedStationListSection
@@ -57,6 +59,7 @@ private fun StationScreen(
         ) {
             SearchBarSection(
                 keyword = state.keyword,
+                placeholder = stringResource(id = R.string.common1),
                 onValueChange = { onAction(StationAction.OnInputKeyword(keyword = it)) },
                 searchAction = { onAction(StationAction.OnSearchStation) },
             )

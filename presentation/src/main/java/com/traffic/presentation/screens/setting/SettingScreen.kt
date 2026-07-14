@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,9 +16,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
-import com.traffic.common.R
-import com.traffic.common.firebase.ScreenName
-import com.traffic.common.firebase.TrackScreenView
+import com.traffic.design.R
+import com.traffic.presentation.firebase.ScreenName
+import com.traffic.presentation.firebase.TrackScreenView
 import com.traffic.presentation.PresentationConstants
 import com.traffic.presentation.screens.setting.action.SettingAction
 import com.traffic.presentation.screens.setting.component.SettingItem
@@ -75,7 +75,7 @@ private fun SettingScreen(
                 title = stringResource(R.string.setting_inquire),
                 content = {
                     Icon(
-                        imageVector = Icons.Default.KeyboardArrowRight,
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                         contentDescription = null,
                         tint = Color(0xFFA0A0A0)
                     )
@@ -87,7 +87,7 @@ private fun SettingScreen(
                 title = stringResource(id = R.string.setting_open_source_list),
                 content = {
                     Icon(
-                        imageVector = Icons.Default.KeyboardArrowRight,
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                         contentDescription = null,
                         tint = Color(0xFFA0A0A0)
                     )

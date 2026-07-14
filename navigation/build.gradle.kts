@@ -2,21 +2,17 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.daggerHilt)
-    alias(libs.plugins.compose.compiler) // 추가
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
     id("kotlinx-serialization")
-    id("kotlin-parcelize")
 }
 
 android {
-    namespace = "com.silver.navigation"
-    compileSdk = 34
+    namespace = "com.traffic.navigation"
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 28
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -38,7 +34,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":common"))
+    implementation(projects.design)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

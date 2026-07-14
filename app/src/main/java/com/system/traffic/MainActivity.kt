@@ -10,8 +10,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.system.traffic.main.AppNavHost
-import com.traffic.common.ui.theme.TrafficTheme
+import com.traffic.design.ui.theme.TrafficTheme
+import com.traffic.presentation.screens.main.AppNavHost
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

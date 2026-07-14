@@ -30,9 +30,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.traffic.common.R
-import com.traffic.common.firebase.ScreenName
-import com.traffic.common.firebase.TrackScreenView
+import com.traffic.design.R
+import com.traffic.presentation.firebase.ScreenName
+import com.traffic.presentation.firebase.TrackScreenView
 import com.traffic.presentation.screens.splash.state.SplashState
 import com.traffic.presentation.screens.splash.viewmodel.SplashViewModel
 

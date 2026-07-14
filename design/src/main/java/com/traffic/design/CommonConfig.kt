@@ -1,4 +1,4 @@
-package com.traffic.common
+package com.traffic.design
 
 object CommonConfig {
     var adUnitId: String = ""

@@ -23,7 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.traffic.common.noRippleClickable
+import com.traffic.design.noRippleClickable
 import com.traffic.domain.model.KeywordModel
 
 @Composable

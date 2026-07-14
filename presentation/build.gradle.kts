@@ -11,9 +11,6 @@ android {
 
     defaultConfig {
         minSdk = 26
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -23,13 +20,18 @@ android {
         jvmTarget = "17"
     }
 
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
+
 }
 
 dependencies {
-    implementation(project(":navigation"))
-    implementation(project(":domain"))
-    implementation(project(":common"))
-    implementation(project(":core"))
+    implementation(projects.navigation)
+    implementation(projects.domain)
+    implementation(projects.core)
+    implementation(projects.design)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -54,4 +56,7 @@ dependencies {
     implementation(libs.firebase.messaging)
 
     implementation(libs.oss.licenses)
+
+    implementation(libs.androidx.material.icons.extended)
+
 }

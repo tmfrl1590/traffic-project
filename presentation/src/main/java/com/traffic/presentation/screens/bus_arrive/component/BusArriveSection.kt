@@ -28,8 +28,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.traffic.common.R
 import com.traffic.presentation.screens.bus_arrive.model.BusArriveItemModel
+import com.traffic.design.R
 
 @Composable
 fun BusArriveSection(

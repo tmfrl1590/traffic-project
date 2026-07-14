@@ -1,56 +1,28 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
-    id("kotlinx-serialization")
-    id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "com.traffic.common"
-    compileSdk = 34
+    namespace = "com.traffic.design"
+    compileSdk = 35
 
     defaultConfig {
-        minSdk = 28
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    composeCompiler {
-        enableStrongSkippingMode = true
-        includeSourceInformation = true
+        minSdk = 26
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
+    kotlinOptions {
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
-        buildConfig = true
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+
 }
 
 dependencies {
@@ -67,15 +39,11 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.material)
 
-    // Kotlin Serialization
-    implementation(libs.kotlin.stdlib)
-    implementation(libs.kotlinx.serialization.json)
 
-    implementation(libs.firebase.analytics.ktx)
+    implementation(libs.androidx.material.icons.extended)
+
     implementation(platform("com.google.firebase:firebase-bom:34.0.0"))
 
     // Admob
     implementation(libs.play.services.ads)
-
-
 }

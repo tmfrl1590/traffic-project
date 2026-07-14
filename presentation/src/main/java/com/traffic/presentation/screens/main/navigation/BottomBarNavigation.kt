@@ -13,8 +13,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.navigation
-import com.silver.navigation.Screens
-import com.system.traffic.main.ANIMATION_DURATION
+import com.traffic.navigation.Screens
+import com.traffic.presentation.screens.main.ANIMATION_DURATION
 import com.traffic.presentation.screens.home.navigation.homeNavGraph
 import com.traffic.presentation.screens.setting.navigation.settingNavGraph
 import com.traffic.presentation.screens.station.navigation.stationNavGraph

@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.system.traffic.core.domain.onError
 import com.system.traffic.core.domain.onSuccess
-import com.traffic.common.Resource
-import com.traffic.common.lineKindToColor
+import com.system.traffic.core.Resource
+import com.traffic.design.lineKindToColor
 import com.traffic.domain.model.StationModel
 import com.traffic.domain.usecase.arrive.BusArriveUseCase
 import com.traffic.domain.usecase.like.GetLikeStationListUseCase

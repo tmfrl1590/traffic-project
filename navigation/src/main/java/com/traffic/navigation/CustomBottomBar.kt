@@ -1,7 +1,6 @@
-package com.silver.navigation
+package com.traffic.navigation
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,9 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
-import com.traffic.common.noRippleClickable
-import com.traffic.common.ui.theme.MainColor
+import com.traffic.design.ui.theme.MainColor
+import com.traffic.design.noRippleClickable
 
 @Composable
 fun BottomNavigationBar(

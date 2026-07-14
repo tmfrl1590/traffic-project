@@ -6,11 +6,11 @@
 
 ---
 ### 기술스택
-언어 : kotlin 2.0
+언어 : kotlin 2.1.0
 
 안드로이드 : Jetpack Compose, Hilt, Retrofit2, Room, DataStore, Navigation
 
-멀티모듈 : app, feature, domain, data, di, navigation, common
+멀티모듈 : app, feature, domain, data, di, navigation, design
 
 ---
 ### 기능

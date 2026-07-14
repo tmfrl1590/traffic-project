@@ -21,10 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.traffic.common.CommonTitleComponent
-import com.traffic.common.R
-import com.traffic.common.firebase.ScreenName
-import com.traffic.common.firebase.TrackScreenView
+import com.traffic.design.CommonTitleComponent
+import com.traffic.design.R
+import com.traffic.presentation.firebase.ScreenName
+import com.traffic.presentation.firebase.TrackScreenView
 import com.traffic.domain.model.StationModel
 import com.traffic.presentation.screens.home.action.HomeAction
 import com.traffic.presentation.screens.home.component.LikeStationSection

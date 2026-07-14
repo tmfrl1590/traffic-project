@@ -1,4 +1,4 @@
-package com.traffic.common.firebase
+package com.traffic.presentation.firebase
 
 import android.content.Context
 import androidx.compose.runtime.Composable
@@ -6,7 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.logEvent
-import com.traffic.common.BuildConfig
+import com.traffic.presentation.BuildConfig
 
 fun logEvent(context: Context, screenName: String) {
     if (BuildConfig.DEBUG) return

@@ -2,7 +2,7 @@ package com.traffic.presentation.screens.station.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.traffic.common.Resource
+import com.system.traffic.core.Resource
 import com.traffic.domain.model.StationModel
 import com.traffic.domain.usecase.keyword.DeleteKeywordUseCase
 import com.traffic.domain.usecase.keyword.GetKeywordListUseCase

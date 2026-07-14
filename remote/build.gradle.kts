@@ -13,7 +13,7 @@ properties.load(project.rootProject.file("local.properties").inputStream())
 
 android {
     namespace = "com.system.traffic.remote"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 28
@@ -47,9 +47,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":core"))
-    implementation(project(":common"))
-    implementation(project(":data"))
+    implementation(projects.core)
+    implementation(projects.data)
+
     // hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)

@@ -1,4 +1,4 @@
-package com.system.traffic.main
+package com.traffic.presentation.screens.main
 
 import android.app.Activity
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -15,10 +15,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.silver.navigation.BottomBarScreen
-import com.silver.navigation.BottomNavigationBar
-import com.silver.navigation.Screens
-import com.silver.navigation.fromBottomRoute
+import com.traffic.navigation.BottomBarScreen
+import com.traffic.navigation.BottomNavigationBar
+import com.traffic.navigation.Screens
+import com.traffic.navigation.fromBottomRoute
 import com.traffic.presentation.screens.main.navigation.BottomBarGraph
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,7 +44,7 @@ fun MainScreen(
                             fontWeight = FontWeight.SemiBold
                         )
                     },
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color.White
                     )
                 )
@@ -57,7 +57,7 @@ fun MainScreen(
                             fontWeight = FontWeight.SemiBold
                         )
                     },
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color.White
                     )
                 )
@@ -70,7 +70,7 @@ fun MainScreen(
                             fontWeight = FontWeight.SemiBold
                         )
                     },
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color.White
                     )
                 )

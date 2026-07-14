@@ -1,4 +1,4 @@
-package com.silver.navigation
+package com.traffic.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EvStation

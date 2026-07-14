@@ -1,4 +1,4 @@
-package com.traffic.common
+package com.traffic.design
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
@@ -25,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -118,6 +117,7 @@ fun ScaffoldBackIcon() {
 @Composable
 fun SearchBarSection(
     keyword: String,
+    placeholder: String,
     onValueChange: (String) -> Unit,
     searchAction: () -> Unit,
 ) {
@@ -133,7 +133,7 @@ fun SearchBarSection(
             onValueChange = onValueChange,
             placeholder = {
                 Text(
-                    text = stringResource(id = R.string.common1),
+                    text = placeholder,
                     color = Color(0xFFADAEBC),
                 )
             },
