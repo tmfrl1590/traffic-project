@@ -7,7 +7,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -23,7 +22,6 @@ const val ANIMATION_DURATION = 200
 fun AppNavHost() {
     val navController = rememberNavController()
     val snackBarHostState = remember { SnackbarHostState() }
-    val context = LocalContext.current
 
     NavHost(
         navController = navController,
@@ -61,7 +59,6 @@ fun AppNavHost() {
 
         composable<Screens.Main> {
             MainScreen(
-                snackBarHostState = snackBarHostState,
                 onStationCardClick = { arsId, busStopId ->
                     navController.navigate(Screens.BusArrive(arsId = arsId, busStopId = busStopId))
                 }

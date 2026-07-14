@@ -72,23 +72,21 @@ class LocalDataSourceImpl @Inject constructor(
         }
     }
 
-    override fun getSearchedStationList(keyword: String): List<StationEntity> {
+    override suspend fun getSearchedStationList(keyword: String): List<StationEntity> {
         return stationDao.getSearchedStationList("%$keyword%")
             .map { it.toLikeStationModel() }
     }
 
-    override fun getStationInfo(arsId: String): Flow<StationEntity> {
-        return stationDao.getStationInfo(arsId).map { stationLocal ->
-            stationLocal?.toLikeStationModel() ?: StationEntity(
-                stationNum = "",
-                busStopName = "정류장 정보 없음",
-                nextBusStop = "",
-                busStopId = "",
-                arsId = arsId,
-                longitude = "",
-                latitude = ""
-            )
-        }
+    override fun getStationInfo(arsId: String): StationEntity {
+        return stationDao.getStationInfo(arsId)?.toLikeStationModel() ?: StationEntity(
+            stationNum = "",
+            busStopName = "정류장 정보 없음",
+            nextBusStop = "",
+            busStopId = "",
+            arsId = arsId,
+            longitude = "",
+            latitude = ""
+        )
     }
 
     override fun getStationFileData(): List<StationEntity> {

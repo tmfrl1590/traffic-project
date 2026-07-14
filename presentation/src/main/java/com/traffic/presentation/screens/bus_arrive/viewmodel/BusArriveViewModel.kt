@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.system.traffic.core.domain.onError
 import com.system.traffic.core.domain.onSuccess
-import com.system.traffic.core.Resource
 import com.traffic.design.lineKindToColor
 import com.traffic.domain.model.StationModel
 import com.traffic.domain.usecase.arrive.BusArriveUseCase
@@ -17,6 +16,8 @@ import com.traffic.presentation.screens.bus_arrive.model.toPresentation
 import com.traffic.presentation.screens.bus_arrive.state.BusArriveState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,8 +26,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -47,7 +46,7 @@ class BusArriveViewModel @Inject constructor(
 
     // 버스 도착 정보 조회
     fun getBusArriveList(arsId: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(context = Dispatchers.IO) {
             _state.update { it.copy(isLoading = true) }
             busArriveUseCase(arsId)
                 .onSuccess { result ->
@@ -68,27 +67,20 @@ class BusArriveViewModel @Inject constructor(
     // 정류장 정보 조회
     fun getStationInfo(arsId: String) {
         stationInfoJob?.cancel()
-        stationInfoJob = viewModelScope.launch {
+        stationInfoJob = viewModelScope.launch(context = Dispatchers.IO) {
             combine(
-                getStationInfoUseCase(arsId),   // Flow<Resource<StationModel>>
-                getLikeStationListUseCase()      // Flow<List<StationModel>>
+                getStationInfoUseCase(arsId),
+                getLikeStationListUseCase()
             ) { stationRes, likeStationList ->
                 // combine 블록은 순수 변환만 담당
                 val likeStationSet = likeStationList.mapTo(HashSet()) { it.arsId }
                 stationRes to likeStationSet
             }
                 .collectLatest { (stationRes, likeStationSet) -> // 구조분해
-                    when (stationRes) {
-                        is Resource.Success -> {
-                            val updatedStation = stationRes.data.copy(
-                                selected = stationRes.data.arsId in likeStationSet
-                            )
-                            _state.update { it.copy(stationInfo = updatedStation) }
-                        }
-                        is Resource.Error -> _errorFlow.emit("정류장 정보를 불러올 수 없습니다.")
-                        is Resource.Loading -> Unit
-                        is Resource.Idle -> Unit
-                    }
+                    val updatedStation = stationRes.copy(
+                        selected = stationRes.arsId in likeStationSet
+                    )
+                    _state.update { it.copy(stationInfo = updatedStation) }
                 }
         }
     }

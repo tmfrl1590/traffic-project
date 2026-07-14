@@ -23,9 +23,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.traffic.design.CommonTitleComponent
 import com.traffic.design.R
+import com.traffic.domain.model.StationModel
 import com.traffic.presentation.firebase.ScreenName
 import com.traffic.presentation.firebase.TrackScreenView
-import com.traffic.domain.model.StationModel
 import com.traffic.presentation.screens.home.action.HomeAction
 import com.traffic.presentation.screens.home.component.LikeStationSection
 import com.traffic.presentation.screens.home.viewmodel.HomeViewModel

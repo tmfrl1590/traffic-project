@@ -2,7 +2,6 @@ package com.traffic.presentation.screens.station.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.system.traffic.core.Resource
 import com.traffic.domain.model.StationModel
 import com.traffic.domain.usecase.keyword.DeleteKeywordUseCase
 import com.traffic.domain.usecase.keyword.GetKeywordListUseCase
@@ -60,13 +59,9 @@ class StationViewModel @Inject constructor(
             combine(
                 getSearchStationUseCase(keyword = "%$keyword%"),
                 getLikeStationListUseCase()
-            ) { searchedStation, likes ->
+            ){ searchedStation, likes ->
                 val likeIds = likes.map { it.arsId }.toSet()
-                if (searchedStation is Resource.Success) {
-                    searchedStation.data.map { it.copy(selected = it.arsId in likeIds) }
-                } else {
-                    emptyList()
-                }
+                searchedStation.map { it.copy(selected = it.arsId in likeIds) }
             }.collectLatest { updatedList ->
                 _state.update { it.copy(searchedStationList = updatedList) }
             }

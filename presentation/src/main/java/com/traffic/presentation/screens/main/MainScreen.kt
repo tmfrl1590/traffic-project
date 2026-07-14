@@ -4,7 +4,6 @@ import android.app.Activity
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -24,7 +23,6 @@ import com.traffic.presentation.screens.main.navigation.BottomBarGraph
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    snackBarHostState: SnackbarHostState,
     onStationCardClick: (String, String) -> Unit,
 ) {
     val context = LocalContext.current
@@ -35,45 +33,49 @@ fun MainScreen(
 
     Scaffold(
         topBar = {
-            if(currentScreen == BottomBarScreen.Home){
-                CenterAlignedTopAppBar(
-                    title = {
-                        Text(
-                            text = "광주버스",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.SemiBold
+            when (currentScreen) {
+                BottomBarScreen.Home -> {
+                    CenterAlignedTopAppBar(
+                        title = {
+                            Text(
+                                text = "광주버스",
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        },
+                        colors = TopAppBarDefaults.topAppBarColors(
+                            containerColor = Color.White
                         )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color.White
                     )
-                )
-            } else if(currentScreen == BottomBarScreen.Station){
-                CenterAlignedTopAppBar(
-                    title = {
-                        Text(
-                            text = "정류장 검색",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.SemiBold
+                }
+                BottomBarScreen.Station -> {
+                    CenterAlignedTopAppBar(
+                        title = {
+                            Text(
+                                text = "정류장 검색",
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        },
+                        colors = TopAppBarDefaults.topAppBarColors(
+                            containerColor = Color.White
                         )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color.White
                     )
-                )
-            } else if(currentScreen == BottomBarScreen.Setting){
-                CenterAlignedTopAppBar(
-                    title = {
-                        Text(
-                            text = "설정",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.SemiBold
+                }
+                BottomBarScreen.Setting -> {
+                    CenterAlignedTopAppBar(
+                        title = {
+                            Text(
+                                text = "설정",
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        },
+                        colors = TopAppBarDefaults.topAppBarColors(
+                            containerColor = Color.White
                         )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color.White
                     )
-                )
+                }
             }
         },
         bottomBar = {
@@ -101,7 +103,6 @@ fun MainScreen(
     ) { paddingValues ->
         BottomBarGraph(
             context = context,
-            snackBarHostState = snackBarHostState,
             navController = navController,
             paddingValues = paddingValues,
             onStationCardClick = onStationCardClick

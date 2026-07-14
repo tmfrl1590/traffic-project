@@ -6,7 +6,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -14,8 +13,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.navigation
 import com.traffic.navigation.Screens
-import com.traffic.presentation.screens.main.ANIMATION_DURATION
 import com.traffic.presentation.screens.home.navigation.homeNavGraph
+import com.traffic.presentation.screens.main.ANIMATION_DURATION
 import com.traffic.presentation.screens.setting.navigation.settingNavGraph
 import com.traffic.presentation.screens.station.navigation.stationNavGraph
 
@@ -24,7 +23,6 @@ import com.traffic.presentation.screens.station.navigation.stationNavGraph
 fun BottomBarGraph(
     context: Context,
     navController: NavHostController,
-    snackBarHostState: SnackbarHostState,
     paddingValues: PaddingValues,
     onStationCardClick: (String, String) -> Unit,
 ) {
