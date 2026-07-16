@@ -13,4 +13,7 @@ interface KeywordRepository {
 
     // 키워드 삭제하기
     suspend fun deleteKeyword(keyword: String)
+
+    // 전체 키워드 삭제하기
+    suspend fun allDeleteKeyword()
 }

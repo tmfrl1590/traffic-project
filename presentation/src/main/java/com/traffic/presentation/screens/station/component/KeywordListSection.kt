@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
@@ -31,15 +32,34 @@ fun KeywordListSection(
     keywordList: List<KeywordModel>,
     onClickKeyword: (String) -> Unit,
     onClickDeleteKeyword: (String) -> Unit,
+    onClickAllDeleteKeywordList: () -> Unit,
 ) {
     if (keywordList.isNotEmpty()) {
         Column {
-            Text(
-                text = "최근 검색어",
+            Row(
                 modifier = Modifier
-                    .padding(start = 20.dp)
-                    .padding(bottom = 4.dp)
-            )
+                    .fillMaxWidth()
+                ,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = "최근 검색어",
+                    modifier = Modifier
+                        .padding(start = 20.dp)
+                        .padding(bottom = 4.dp)
+                )
+
+                Text(
+                    text = "전체 삭제",
+                    modifier = Modifier
+                        .padding(end = 20.dp)
+                        .noRippleClickable{ onClickAllDeleteKeywordList() }
+                    ,
+                    fontSize = 12.sp
+                )
+            }
+
 
             LazyRow(
                 modifier = Modifier.padding(horizontal = 16.dp),

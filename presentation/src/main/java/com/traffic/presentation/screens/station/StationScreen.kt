@@ -72,7 +72,8 @@ private fun StationScreen(
             KeywordListSection(
                 keywordList = state.keywordList,
                 onClickKeyword = { keyword ->onAction(StationAction.OnClickKeyword(keyword = keyword)) },
-                onClickDeleteKeyword = { keyword -> onAction(StationAction.OnDeleteKeyword(keyword = keyword))}
+                onClickDeleteKeyword = { keyword -> onAction(StationAction.OnDeleteKeyword(keyword = keyword))},
+                onClickAllDeleteKeywordList = { onAction(StationAction.OnAllDeleteKeywordList) }
             )
 
             HorizontalDivider(

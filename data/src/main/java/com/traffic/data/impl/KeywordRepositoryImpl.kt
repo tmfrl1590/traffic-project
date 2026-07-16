@@ -25,4 +25,8 @@ class KeywordRepositoryImpl @Inject constructor(
     override suspend fun deleteKeyword(keyword: String) {
         localDataSource.deleteKeyword(keyword = keyword)
     }
+
+    override suspend fun allDeleteKeyword() {
+        localDataSource.allDeleteKeyword()
+    }
 }

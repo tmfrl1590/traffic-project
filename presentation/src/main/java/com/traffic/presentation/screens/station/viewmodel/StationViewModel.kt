@@ -3,6 +3,7 @@ package com.traffic.presentation.screens.station.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.traffic.domain.model.StationModel
+import com.traffic.domain.usecase.keyword.AllDeleteKeywordUseCase
 import com.traffic.domain.usecase.keyword.DeleteKeywordUseCase
 import com.traffic.domain.usecase.keyword.GetKeywordListUseCase
 import com.traffic.domain.usecase.keyword.InsertKeywordUseCase
@@ -31,6 +32,7 @@ class StationViewModel @Inject constructor(
     private val getKeywordListUseCase: GetKeywordListUseCase,
     private val toggleLikeStationUseCase: ToggleLikeStationUseCase,
     private val deleteKeywordUseCase: DeleteKeywordUseCase,
+    private val allDeleteKeywordUseCase: AllDeleteKeywordUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(value = StationState())
@@ -85,6 +87,13 @@ class StationViewModel @Inject constructor(
         }
     }
 
+    // 전체 키워드 삭제하기
+    fun allDeleteKeyword(){
+        viewModelScope.launch {
+            allDeleteKeywordUseCase()
+        }
+    }
+
     fun onAction(action: StationAction){
         when(action){
             is StationAction.OnInputKeyword -> onInputKeyword(keyword = action.keyword)
@@ -92,6 +101,7 @@ class StationViewModel @Inject constructor(
             is StationAction.OnClickFavoriteIcon -> toggleLikeStation(stationModel = action.stationModel)
             is StationAction.OnClickKeyword -> getSearchedStationList(keyword = action.keyword)
             is StationAction.OnDeleteKeyword -> deleteKeyword(keyword = action.keyword)
+            StationAction.OnAllDeleteKeywordList -> allDeleteKeyword()
         }
     }
 }

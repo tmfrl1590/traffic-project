@@ -8,4 +8,5 @@ sealed interface StationAction {
     data class OnClickFavoriteIcon(val stationModel: StationModel) : StationAction
     data class OnClickKeyword(val keyword: String): StationAction
     data class OnDeleteKeyword(val keyword: String): StationAction
+    data object OnAllDeleteKeywordList: StationAction
 }
