@@ -26,6 +26,8 @@ data class BusArriveItemModel(
     val arriveFlag : String?,
     val lineName : String?,
     val lineColor: Color = Color.Transparent,
+    val busLatitude: Double?,
+    val busLongitude: Double?,
 )
 
 fun BusArrive.toPresentation(): BusArriveModel = BusArriveModel(
@@ -52,4 +54,6 @@ fun BusArriveItem.toPresentation(
     arriveFlag = arriveFlag,
     lineName = lineName,
     lineColor = lineColor,
+    busLatitude = busLatitude,
+    busLongitude = busLongitude,
 )

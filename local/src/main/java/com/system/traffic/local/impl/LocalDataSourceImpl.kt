@@ -21,6 +21,7 @@ import com.system.traffic.local.toData
 import com.traffic.data.local.LocalDataSource
 import com.traffic.data.model.local.KeywordEntity
 import com.traffic.data.model.local.LineEntity
+import com.traffic.data.model.local.StationCoordinates
 import com.traffic.data.model.local.StationEntity
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -167,5 +168,9 @@ class LocalDataSourceImpl @Inject constructor(
 
     override suspend fun deleteKeyword(keyword: String) {
         keywordDao.deleteKeyword(keyword = keyword)
+    }
+
+    override suspend fun getLocationInfo(ids: List<String?>): List<StationCoordinates> {
+        return stationDao.getStationsByIds(ids = ids)
     }
 }

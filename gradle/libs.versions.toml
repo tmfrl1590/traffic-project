@@ -30,6 +30,9 @@ ksp = "2.1.0-1.0.29" # KSP
 material = "1.12.0" # Google Services
 playServicesAds = "24.5.0"
 analytics="22.5.0"
+mapSdk = "3.16.1"
+naverMapCompose = "1.9.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -97,6 +100,10 @@ material = { group = "com.google.android.material", name = "material", version.r
 
 # admob
 play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
+
+# map
+map-sdk = { module = "com.naver.maps:map-sdk", version.ref = "mapSdk" }
+naver-map-compose = { module = "io.github.fornewid:naver-map-compose", version.ref = "naverMapCompose" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

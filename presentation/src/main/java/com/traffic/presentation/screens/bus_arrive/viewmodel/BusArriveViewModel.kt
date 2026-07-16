@@ -58,7 +58,10 @@ class BusArriveViewModel @Inject constructor(
                         )
                     }
                 }
-                .onError { _state.update { it.copy(isLoading = false) } }
+                .onError {
+                    _errorFlow.emit("오류가 발생하였습니다.")
+                    _state.update { it.copy(isLoading = false) }
+                }
         }
     }
 

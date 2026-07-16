@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.system.traffic.local.db.model.StationLocal
+import com.traffic.data.model.local.StationCoordinates
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -26,4 +27,6 @@ interface StationDao {
     @Query("SELECT * FROM station_entity WHERE arsId = :arsId LIMIT 1")
     suspend fun getStationInfo(arsId: String): StationLocal?
 
+    @Query("SELECT latitude, longitude, busStopId FROM station_entity WHERE busStopId IN (:ids)")
+    suspend fun getStationsByIds(ids: List<String?>): List<StationCoordinates>
 }

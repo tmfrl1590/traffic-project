@@ -106,6 +106,8 @@ data class BusArriveItemEntity(
             arriveFlag = arriveFlag?.toString(),
             lineName = lineName,
             lineKind = lineKind?.toString(),
+            busLatitude = 0.0,
+            busLongitude = 0.0,
         )
     }
 }

@@ -72,7 +72,6 @@ fun AppNavHost() {
                 arsId = arsId,
                 busStopId = busStopId,
                 snackBarHostState = snackBarHostState,
-                onBackClick = { navController.popBackStack() },
             )
         }
     }

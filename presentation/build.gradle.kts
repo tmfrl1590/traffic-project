@@ -59,4 +59,7 @@ dependencies {
 
     implementation(libs.androidx.material.icons.extended)
 
+    implementation(libs.map.sdk) // 네이버 맵 공식 SDK
+    implementation(libs.naver.map.compose) // Compose 래퍼
+
 }

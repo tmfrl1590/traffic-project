@@ -1,6 +1,7 @@
 package com.traffic.data.impl
 
 import com.traffic.data.local.LocalDataSource
+import com.traffic.domain.model.StationCoordinateModel
 import com.traffic.domain.model.StationModel
 import com.traffic.domain.repository.StationRepository
 import kotlinx.coroutines.flow.Flow
@@ -26,6 +27,10 @@ class StationRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    override suspend fun getLocationInfo(ids: List<String?>): List<StationCoordinateModel> {
+        return localDataSource.getLocationInfo(ids = ids).map { it.toDomain() }
     }
 }
 

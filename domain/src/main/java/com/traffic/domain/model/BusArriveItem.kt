@@ -22,4 +22,6 @@ data class BusArriveItem(
     val arriveFlag : String?,
     val lineName : String?,
     var lineKind : String? = null,
+    val busLatitude: Double?,
+    val busLongitude: Double?,
 )
