@@ -14,6 +14,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -100,22 +101,13 @@ fun CommonTitleComponent(
     )
 }
 
-
-@Composable
-fun ScaffoldBackIcon() {
-    Icon(
-        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-        contentDescription = "back",
-        tint = Color.Black
-    )
-}
-
 @Composable
 fun SearchBarSection(
     keyword: String,
     placeholder: String,
     onValueChange: (String) -> Unit,
     searchAction: () -> Unit,
+    onDeleteInputText: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -156,6 +148,14 @@ fun SearchBarSection(
                 focusedTextColor = Color.Black,
                 cursorColor = Color.Gray,
             ),
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.Close,
+                    contentDescription = "close",
+                    modifier = Modifier
+                        .noRippleClickable { onDeleteInputText() }
+                )
+            }
         )
     }
 }

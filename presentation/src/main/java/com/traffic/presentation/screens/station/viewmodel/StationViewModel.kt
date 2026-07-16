@@ -94,6 +94,11 @@ class StationViewModel @Inject constructor(
         }
     }
 
+    // 입력된 텍스트 전체 삭제
+    fun deleteInputText(){
+        _state.update { it.copy(keyword = "") }
+    }
+
     fun onAction(action: StationAction){
         when(action){
             is StationAction.OnInputKeyword -> onInputKeyword(keyword = action.keyword)
@@ -102,6 +107,7 @@ class StationViewModel @Inject constructor(
             is StationAction.OnClickKeyword -> getSearchedStationList(keyword = action.keyword)
             is StationAction.OnDeleteKeyword -> deleteKeyword(keyword = action.keyword)
             StationAction.OnAllDeleteKeywordList -> allDeleteKeyword()
+            StationAction.OnDeleteInputText -> deleteInputText()
         }
     }
 }

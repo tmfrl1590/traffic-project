@@ -62,6 +62,7 @@ private fun StationScreen(
                 placeholder = stringResource(id = R.string.common1),
                 onValueChange = { onAction(StationAction.OnInputKeyword(keyword = it)) },
                 searchAction = { onAction(StationAction.OnSearchStation) },
+                onDeleteInputText = { onAction(StationAction.OnDeleteInputText) }
             )
 
             Spacer(
