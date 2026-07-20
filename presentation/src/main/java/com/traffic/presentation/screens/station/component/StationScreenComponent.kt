@@ -53,7 +53,7 @@ fun SearchedStationListSection(
                 items(
                     items = searchedStationList,
                     key = { item ->
-                        item.arsId ?: ""
+                        item.busStopId ?: ""
                     }
                 ){ item ->
                     SearchedStationCard(
