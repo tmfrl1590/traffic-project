@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import com.traffic.design.NoDataComponent
 import com.traffic.design.R
 import com.traffic.domain.model.StationModel
+import com.traffic.presentation.screens.station.util.currentBusStopNameAndArsId
 
 @Composable
 fun SearchedStationListSection(
@@ -202,17 +203,21 @@ private fun CurrentBusStopNameAndArsId(
         contentAlignment = Alignment.CenterStart
     ){
         Text(
-            text = _root_ide_package_.com.traffic.presentation.screens.station.util.currentBusStopNameAndArsId(
-                nextBusStop = nextBusStop,
-                arsId = arsId
-            )
+            text = if(arsId.isEmpty()){
+                ""
+            } else {
+                currentBusStopNameAndArsId(
+                    nextBusStop = nextBusStop,
+                    arsId = arsId
+                )
+            }
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun SearchedStationCardPreview() {
+fun PreviewSearchedStationCard() {
     SearchedStationCard(
         busStopName = "서울역",
         stationModel = StationModel(
@@ -221,6 +226,25 @@ fun SearchedStationCardPreview() {
             nextBusStop = "서울역",
             busStopId = "100100001",
             arsId = "100001",
+            longitude = null,
+            latitude = null,
+        ),
+        onStationCardClick = {_, _ -> },
+        onFavoriteIconClick = {}
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewSearchedStationCardNoArdId() {
+    SearchedStationCard(
+        busStopName = "서울역",
+        stationModel = StationModel(
+            stationNum = "11",
+            busStopName = "서울역",
+            nextBusStop = "서울역",
+            busStopId = "100100001",
+            arsId = "",
             longitude = null,
             latitude = null,
         ),
