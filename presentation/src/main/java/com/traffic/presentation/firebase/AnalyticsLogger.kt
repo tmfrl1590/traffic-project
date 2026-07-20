@@ -12,7 +12,8 @@ fun logEvent(context: Context, screenName: String) {
     if (BuildConfig.DEBUG) return
     val firebaseAnalytics = FirebaseAnalytics.getInstance(context)
     firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-        param("screen_name", screenName)
+        param(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
+        param(FirebaseAnalytics.Param.SCREEN_CLASS, screenName)
     }
 }
 
