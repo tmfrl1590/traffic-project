@@ -9,11 +9,13 @@ import com.traffic.presentation.screens.home.HomeScreenRoute
 fun NavGraphBuilder.homeNavGraph(
     context: Context,
     onStationCardClick: (String, String) -> Unit,
+    onGotoStation: () -> Unit,
 ) {
     composable<Screens.Home> {
         HomeScreenRoute(
             context = context,
-            onStationCardClick = onStationCardClick
+            onStationCardClick = onStationCardClick,
+            onGotoStation = onGotoStation,
         )
     }
 }

@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -22,6 +23,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.traffic.design.CommonTitleComponent
 import com.traffic.design.R
+import com.traffic.design.noRippleClickable
+import com.traffic.design.ui.theme.MainColor
 import com.traffic.domain.model.StationModel
 import com.traffic.presentation.firebase.ScreenName
 import com.traffic.presentation.firebase.TrackScreenView
@@ -34,6 +37,7 @@ fun HomeScreenRoute(
     context: Context,
     homeViewModel: HomeViewModel = hiltViewModel(),
     onStationCardClick: (String, String) -> Unit,
+    onGotoStation: () -> Unit,
 ) {
     TrackScreenView(screenName = ScreenName.Home)
 
@@ -49,7 +53,8 @@ fun HomeScreenRoute(
     HomeScreen(
         likeStationList = state.likeStationList,
         onStationCardClick = onStationCardClick,
-        onAction = homeViewModel::onAction
+        onAction = homeViewModel::onAction,
+        onGotoStation = onGotoStation,
     )
 }
 
@@ -58,6 +63,7 @@ private fun HomeScreen(
     likeStationList: List<StationModel>,
     onStationCardClick: (String, String) -> Unit,
     onAction: (HomeAction) -> Unit,
+    onGotoStation: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -81,7 +87,8 @@ private fun HomeScreen(
                 modifier = Modifier.weight(0.9f),
                 likeStationList = likeStationList,
                 onStationCardClick = onStationCardClick,
-                onClickFavorite = { onAction(HomeAction.OnClickFavoriteIcon(stationModel = it))}
+                onClickFavorite = { onAction(HomeAction.OnClickFavoriteIcon(stationModel = it))},
+                onGotoStation = onGotoStation,
             )
         }
     }
@@ -89,7 +96,8 @@ private fun HomeScreen(
 
 @Composable
 fun EmptyLikeStation(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onGotoStation: () -> Unit,
 ){
     Box(
         modifier = modifier
@@ -97,11 +105,27 @@ fun EmptyLikeStation(
         ,
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = stringResource(R.string.like_no_data),
-            lineHeight = 24.sp,
-            fontSize = 24.sp,
-            textAlign = TextAlign.Center,
-        )
+        Column {
+            Text(
+                text = stringResource(R.string.like_no_data),
+                lineHeight = 24.sp,
+                fontSize = 24.sp,
+                textAlign = TextAlign.Center,
+            )
+
+            Spacer(
+                modifier = Modifier
+                    .height(20.dp)
+            )
+            Text(
+                text = stringResource(R.string.home_empty_action_search),
+                fontSize = 16.sp,
+                textAlign = TextAlign.Center,
+                color = MainColor,
+                modifier = Modifier
+                    .noRippleClickable { onGotoStation() }
+            )
+        }
+
     }
 }

@@ -9,9 +9,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.navigation
+import com.traffic.navigation.BottomBarScreen
 import com.traffic.navigation.Screens
 import com.traffic.presentation.screens.home.navigation.homeNavGraph
 import com.traffic.presentation.screens.main.ANIMATION_DURATION
@@ -63,7 +65,16 @@ fun BottomBarGraph(
 
             homeNavGraph(
                 context = context,
-                onStationCardClick = onStationCardClick
+                onStationCardClick = onStationCardClick,
+                onGotoStation = {
+                    navController.navigate(Screens.Station){
+                        popUpTo(navController.graph.findStartDestination().route!!){
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
             )
             stationNavGraph(
                 onStationCardClick = onStationCardClick

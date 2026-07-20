@@ -33,6 +33,7 @@ fun LikeStationSection(
     likeStationList: List<StationModel>,
     onStationCardClick: (String, String) -> Unit,
     onClickFavorite: (StationModel) -> Unit,
+    onGotoStation: () -> Unit,
 ) {
     when {
         likeStationList.isNotEmpty() -> {
@@ -48,7 +49,10 @@ fun LikeStationSection(
                 }
             }
         }
-        else -> EmptyLikeStation(modifier = modifier)
+        else -> EmptyLikeStation(
+            modifier = modifier,
+            onGotoStation = onGotoStation,
+        )
     }
 }
 
