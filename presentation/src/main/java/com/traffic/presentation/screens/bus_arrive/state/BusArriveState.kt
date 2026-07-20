@@ -1,7 +1,7 @@
 package com.traffic.presentation.screens.bus_arrive.state
 
 import com.traffic.domain.model.StationModel
-import com.traffic.presentation.screens.bus_arrive.model.BusArriveItemModel
+import com.traffic.presentation.model.BusArriveItemModel
 
 data class BusArriveState(
     val isLoading: Boolean = false,

@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.traffic.navigation.Screens
 import com.traffic.presentation.screens.bus_arrive.BusArriveScreenRoute
+import com.traffic.presentation.screens.line_station.LineStationScreenRoute
 import com.traffic.presentation.screens.splash.navigation.splashGraph
 
 
@@ -71,6 +72,15 @@ fun AppNavHost() {
             BusArriveScreenRoute(
                 arsId = arsId,
                 busStopId = busStopId,
+                snackBarHostState = snackBarHostState,
+                onClickBusArriveCard = { navController.navigate(route = Screens.LineStation(lineId = it))}
+            )
+        }
+
+        composable<Screens.LineStation> { backStackEntry ->
+            val lineId = backStackEntry.toRoute<Screens.LineStation>().lineId
+            LineStationScreenRoute(
+                lineId = lineId,
                 snackBarHostState = snackBarHostState,
             )
         }

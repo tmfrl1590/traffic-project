@@ -1,4 +1,4 @@
-package com.traffic.presentation.screens.bus_arrive.model
+package com.traffic.presentation.model
 
 import androidx.compose.ui.graphics.Color
 import com.traffic.domain.model.BusArrive

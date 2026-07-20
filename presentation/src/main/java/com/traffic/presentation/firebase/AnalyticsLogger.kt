@@ -30,5 +30,6 @@ sealed class ScreenName(val value: String) {
     data object Home: ScreenName(value = "HomeScreen")
     data object Station: ScreenName(value = "StationScreen")
     data object BusArrive: ScreenName(value = "BusArriveScreen")
+    data object LineStation: ScreenName(value = "LineStationScreen")
     data object Setting: ScreenName(value = "SettingScreen")
 }

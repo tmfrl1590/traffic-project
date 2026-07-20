@@ -28,13 +28,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.traffic.presentation.screens.bus_arrive.model.BusArriveItemModel
+import com.traffic.presentation.model.BusArriveItemModel
 import com.traffic.design.R
 
 @Composable
 fun BusArriveSection(
     isLoading: Boolean,
     busArriveList: List<BusArriveItemModel>,
+    onClickBusArriveCard: (String) -> Unit,
 ) {
     when {
         isLoading -> {
@@ -46,7 +47,7 @@ fun BusArriveSection(
             }
         }
         busArriveList.isEmpty() -> BusArriveEmptyContent()
-        else -> BusArriveList(busArriveList = busArriveList)
+        else -> BusArriveList(busArriveList = busArriveList, onClickBusArriveCard = onClickBusArriveCard)
     }
 
 }
@@ -69,6 +70,7 @@ private fun BusArriveEmptyContent() {
 @Composable
 private fun BusArriveList(
     busArriveList: List<BusArriveItemModel>,
+    onClickBusArriveCard: (String) -> Unit,
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -81,6 +83,7 @@ private fun BusArriveList(
         ) { item ->
             BusArriveCard(
                 busArriveModel = item,
+                onClickBusArriveCard = onClickBusArriveCard
             )
         }
     }
@@ -89,8 +92,12 @@ private fun BusArriveList(
 @Composable
 private fun BusArriveCard(
     busArriveModel: BusArriveItemModel,
+    onClickBusArriveCard: (String) -> Unit,
 ) {
     Card(
+        onClick = {
+            busArriveModel.lineId?.let(onClickBusArriveCard)
+        },
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .height(100.dp)

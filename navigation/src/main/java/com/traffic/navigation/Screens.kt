@@ -23,6 +23,8 @@ sealed interface Screens {
     data object Setting: Screens
     @Serializable
     data class BusArrive(val arsId: String, val busStopId: String): Screens
+    @Serializable
+    data class LineStation(val lineId: String): Screens
 }
 
 sealed class BottomBarScreen (

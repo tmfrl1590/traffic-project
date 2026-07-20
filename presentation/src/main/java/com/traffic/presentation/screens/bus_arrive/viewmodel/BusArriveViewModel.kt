@@ -12,7 +12,7 @@ import com.traffic.domain.usecase.like.ToggleLikeStationUseCase
 import com.traffic.domain.usecase.line.GetLineKindUseCase
 import com.traffic.domain.usecase.station.GetStationInfoUseCase
 import com.traffic.presentation.screens.bus_arrive.action.BusArriveAction
-import com.traffic.presentation.screens.bus_arrive.model.toPresentation
+import com.traffic.presentation.model.toPresentation
 import com.traffic.presentation.screens.bus_arrive.state.BusArriveState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

@@ -64,6 +64,7 @@ fun BusArriveScreenRoute(
     busStopId: String,
     snackBarHostState: SnackbarHostState,
     busArriveViewModel: BusArriveViewModel = hiltViewModel(),
+    onClickBusArriveCard: (String) -> Unit,
 ) {
     TrackScreenView(screenName = ScreenName.BusArrive)
 
@@ -99,6 +100,7 @@ fun BusArriveScreenRoute(
         state = state,
         snackBarHostState = snackBarHostState,
         onAction = busArriveViewModel::onAction,
+        onClickBusArriveCard = onClickBusArriveCard,
     )
 }
 
@@ -108,6 +110,7 @@ private fun BusArriveScreen(
     state: BusArriveState,
     snackBarHostState: SnackbarHostState,
     onAction: (BusArriveAction) -> Unit,
+    onClickBusArriveCard: (String) -> Unit,
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberStandardBottomSheetState(
@@ -183,6 +186,7 @@ private fun BusArriveScreen(
                     BusArriveSection(
                         isLoading = state.isLoading,
                         busArriveList = state.arriveList,
+                        onClickBusArriveCard = onClickBusArriveCard
                     )
                 }
             },
