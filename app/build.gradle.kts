@@ -22,8 +22,8 @@ android {
         applicationId = "com.system.traffic"
         minSdk = 28
         targetSdk = 35
-        versionCode = 44
-        versionName = "2.1.4"
+        versionCode = 45
+        versionName = "2.1.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
