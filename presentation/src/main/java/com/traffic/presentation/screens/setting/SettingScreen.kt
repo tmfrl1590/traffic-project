@@ -3,26 +3,28 @@ package com.traffic.presentation.screens.setting
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
+import android.net.Uri
+import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.traffic.design.R
+import com.traffic.presentation.PresentationConstants
 import com.traffic.presentation.firebase.ScreenName
 import com.traffic.presentation.firebase.TrackScreenView
-import com.traffic.presentation.PresentationConstants
 import com.traffic.presentation.screens.setting.action.SettingAction
-import com.traffic.presentation.screens.setting.component.SettingItem
-import com.traffic.presentation.screens.setting.component.sendEmail
+import com.traffic.presentation.screens.setting.component.AppVersionSection
+import com.traffic.presentation.screens.setting.component.InquireSection
+import com.traffic.presentation.screens.setting.component.LicenseSection
 
 @Composable
 fun SettingScreenRoute(
@@ -60,40 +62,41 @@ private fun SettingScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color(0xFFF5F7FA))
+            .padding(horizontal = 20.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-        ) {
-            SettingItem(
-                title = stringResource(R.string.setting_app_version),
-                content = { Text(appVersion) },
-            )
+        AppVersionSection(
+            appVersion = appVersion,
+        )
 
-            SettingItem(
-                title = stringResource(R.string.setting_inquire),
-                content = {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                        contentDescription = null,
-                        tint = Color(0xFFA0A0A0)
-                    )
-                },
-                onClick = { onAction(SettingAction.OnClickInquire) },
-            )
+        InquireSection(
+            onClickInquire = { onAction(SettingAction.OnClickInquire) }
+        )
 
-            SettingItem(
-                title = stringResource(id = R.string.setting_open_source_list),
-                content = {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                        contentDescription = null,
-                        tint = Color(0xFFA0A0A0)
-                    )
-                },
-                onClick = { onAction(SettingAction.OnClickOpenSource) }
-            )
-        }
+        LicenseSection(
+            onClickOpenSource = { onAction(SettingAction.OnClickOpenSource) }
+        )
     }
+}
+
+
+fun Context.sendEmail(to: String, subject: String, chooserTitle: String) {
+    val intent = Intent(Intent.ACTION_SENDTO).apply {
+        data = "mailto:$to?subject=${Uri.encode(subject)}".toUri()
+    }
+
+    runCatching {
+        startActivity(Intent.createChooser(intent, chooserTitle))
+    }.onFailure {
+        Toast.makeText(this, "이메일을 보낼 수 있는 앱이 설치되어 있지 않습니다.", Toast.LENGTH_SHORT).show()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewSettingScreen() {
+    SettingScreen(
+        appVersion = "1.0.0",
+        onAction = {}
+    )
 }
