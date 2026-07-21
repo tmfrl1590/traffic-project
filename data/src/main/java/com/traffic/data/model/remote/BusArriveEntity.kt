@@ -108,6 +108,7 @@ data class BusArriveItemEntity(
             lineKind = lineKind?.toString(),
             busLatitude = 0.0,
             busLongitude = 0.0,
+            isPinned = false,
         )
     }
 }

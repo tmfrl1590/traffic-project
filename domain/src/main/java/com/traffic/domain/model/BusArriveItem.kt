@@ -24,4 +24,5 @@ data class BusArriveItem(
     var lineKind : String? = null,
     val busLatitude: Double?,
     val busLongitude: Double?,
+    val isPinned: Boolean
 )

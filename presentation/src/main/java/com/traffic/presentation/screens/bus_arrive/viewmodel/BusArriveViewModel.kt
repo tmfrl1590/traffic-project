@@ -10,21 +10,30 @@ import com.traffic.domain.usecase.arrive.BusArriveUseCase
 import com.traffic.domain.usecase.like.GetLikeStationListUseCase
 import com.traffic.domain.usecase.like.ToggleLikeStationUseCase
 import com.traffic.domain.usecase.line.GetLineKindUseCase
+import com.traffic.domain.usecase.pinned_bus.DeletePinnedBusUseCase
+import com.traffic.domain.usecase.pinned_bus.GetPinnedBusUseCase
+import com.traffic.domain.usecase.pinned_bus.InsertPinnedBusUseCase
 import com.traffic.domain.usecase.station.GetStationInfoUseCase
-import com.traffic.presentation.screens.bus_arrive.action.BusArriveAction
 import com.traffic.presentation.model.toPresentation
+import com.traffic.presentation.screens.bus_arrive.action.BusArriveAction
 import com.traffic.presentation.screens.bus_arrive.state.BusArriveState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,19 +45,46 @@ class BusArriveViewModel @Inject constructor(
     private val getStationInfoUseCase: GetStationInfoUseCase,
     private val getLikeStationListUseCase: GetLikeStationListUseCase,
     private val toggleLikeStationUseCase: ToggleLikeStationUseCase,
+    private val insertPinnedBusUseCase: InsertPinnedBusUseCase,
+    private val deletePinnedBusUseCase: DeletePinnedBusUseCase,
+    private val getPinnedBusUseCase: GetPinnedBusUseCase,
 ): ViewModel() {
-    
+
     private val _state = MutableStateFlow(value = BusArriveState())
-    val state: StateFlow<BusArriveState> = _state.asStateFlow()
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val state: StateFlow<BusArriveState> = _state
+        .map { it.stationInfo.busStopId }
+        .distinctUntilChanged()
+        .flatMapLatest { busStopId ->
+            if (busStopId.isNullOrEmpty()) {
+                flowOf(emptyList())
+            } else {
+                getPinnedBusUseCase(busStopId = busStopId)
+            }
+        }
+        .combine(flow = _state) { pinnedList, currentState ->
+            val pinnedLineIds = pinnedList.map { it.lineId }.toSet()
+            val processedList = currentState.arriveList.map { item ->
+                item.copy(isPinned = pinnedLineIds.contains(item.lineId))
+            }.sortedByDescending { it.isPinned }
+            
+            currentState.copy(arriveList = processedList)
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
+            initialValue = BusArriveState()
+        )
 
     private val _errorFlow = MutableSharedFlow<String>()
     val errorFlow = _errorFlow.asSharedFlow()
 
     // 버스 도착 정보 조회
-    fun getBusArriveList(arsId: String) {
+    fun getBusArriveList(busStopId: String) {
         viewModelScope.launch(context = Dispatchers.IO) {
             _state.update { it.copy(isLoading = true) }
-            busArriveUseCase(arsId)
+            busArriveUseCase(busStopId = busStopId)
                 .onSuccess { result ->
                     val arriveList = result.itemList.map { it.toPresentation(lineColor = lineKindToColor(lineKind = getLineKindUseCase(lineId = it.lineId ?: ""))) }
                     _state.update {
@@ -107,7 +143,7 @@ class BusArriveViewModel @Inject constructor(
                     _state.update { it.copy(remainingSeconds = currentSeconds - 1) }
                 } else {
                     _state.update { it.copy(remainingSeconds = 30) }
-                    getBusArriveList(busStopId)
+                    getBusArriveList(busStopId = busStopId)
                 }
             }
         }
@@ -125,14 +161,28 @@ class BusArriveViewModel @Inject constructor(
         val busStopId = _state.value.stationInfo.busStopId ?: "0"
         if (busStopId.isNotEmpty()) {
             startTimer(busStopId)
-            getBusArriveList(busStopId)
+            getBusArriveList(busStopId = busStopId)
+        }
+    }
+
+    // 핀 아이콘 클릭
+    fun onClickPinnedIcon(lineId: String, isPinned: Boolean){
+        val busStopId = _state.value.stationInfo.busStopId ?: "0"
+
+        viewModelScope.launch(Dispatchers.IO) {
+            if(isPinned){
+                deletePinnedBusUseCase(busStopId = busStopId, lineId = lineId)
+            } else {
+                insertPinnedBusUseCase(busStopId = busStopId, lineId = lineId)
+            }
         }
     }
 
     fun onAction(action: BusArriveAction){
         when(action){
             is BusArriveAction.OnClickFavoriteIcon -> toggleLikeStation(action.stationModel)
-            is BusArriveAction.OnClickRefresh -> onClickRefresh()
+            BusArriveAction.OnClickRefresh -> onClickRefresh()
+            is BusArriveAction.OnCLickPinnedIcon -> onClickPinnedIcon(lineId = action.lineId, isPinned = action.isPinned)
         }
     }
 }

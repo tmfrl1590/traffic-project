@@ -12,8 +12,8 @@ class BusArriveUseCase @Inject constructor(
     private val busArriveRepository: RemoteRepository,
     private val stationRepository: StationRepository,
 ) {
-    suspend operator fun invoke(arsId: String): Result<BusArrive, DataError.Remote> {
-        return busArriveRepository.getBusArriveList(arsId = arsId).map { busArrive ->
+    suspend operator fun invoke(busStopId: String): Result<BusArrive, DataError.Remote> {
+        return busArriveRepository.getBusArriveList(busStopId = busStopId).map { busArrive ->
             // 1. 도착 예정인 버스들의 현재 정류장 ID 목록 추출 (중복 제거)
             val stopIds = busArrive.itemList.mapNotNull { it.currStopId }.distinct()
 

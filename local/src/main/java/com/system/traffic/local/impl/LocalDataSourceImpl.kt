@@ -11,9 +11,11 @@ import com.system.traffic.local.db.FileDataSource
 import com.system.traffic.local.db.dao.KeywordDao
 import com.system.traffic.local.db.dao.LikeStationDao
 import com.system.traffic.local.db.dao.LineDao
+import com.system.traffic.local.db.dao.PinnedBusDao
 import com.system.traffic.local.db.dao.StationDao
 import com.system.traffic.local.db.model.KeywordLocal
 import com.system.traffic.local.db.model.LineLocal
+import com.system.traffic.local.db.model.PinnedBusLocal
 import com.system.traffic.local.db.model.StationLocal
 import com.system.traffic.local.db.model.toLikeStationEntity
 import com.system.traffic.local.db.model.toLikeStationModel
@@ -21,6 +23,7 @@ import com.system.traffic.local.toData
 import com.traffic.data.local.LocalDataSource
 import com.traffic.data.model.local.KeywordEntity
 import com.traffic.data.model.local.LineEntity
+import com.traffic.data.model.local.PinnedBusEntity
 import com.traffic.data.model.local.StationCoordinates
 import com.traffic.data.model.local.StationEntity
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -37,6 +40,7 @@ class LocalDataSourceImpl @Inject constructor(
     private val stationDao: StationDao,
     private val lineDao: LineDao,
     private val keywordDao: KeywordDao,
+    private val pinnedBusDao: PinnedBusDao,
     private val fileDataSource: FileDataSource,
 ): LocalDataSource {
 
@@ -176,5 +180,22 @@ class LocalDataSourceImpl @Inject constructor(
 
     override suspend fun getLocationInfo(ids: List<String?>): List<StationCoordinates> {
         return stationDao.getStationsByIds(ids = ids)
+    }
+
+    override suspend fun addPinnedBus(busStopId: String, lineId: String) {
+        val pinnedBusLocal = PinnedBusLocal(
+            busStopId = busStopId,
+            lineId = lineId,
+            createdAt = System.currentTimeMillis()
+        )
+        pinnedBusDao.insertPinnedBus(pinnedBusLocal = pinnedBusLocal)
+    }
+
+    override suspend fun deletePinnedBus(busStopId: String, lineId: String) {
+        pinnedBusDao.deletePinnedBus(busStopId = busStopId, lineId = lineId)
+    }
+
+    override fun getPinnedBusList(busStopId: String): Flow<List<PinnedBusEntity>> {
+        return pinnedBusDao.getPinnedBus(busStopId = busStopId).map { it.toData() }
     }
 }

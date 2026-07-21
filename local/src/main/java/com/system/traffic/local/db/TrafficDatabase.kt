@@ -6,15 +6,17 @@ import com.system.traffic.local.RoomConstant
 import com.system.traffic.local.db.dao.KeywordDao
 import com.system.traffic.local.db.dao.LikeStationDao
 import com.system.traffic.local.db.dao.LineDao
+import com.system.traffic.local.db.dao.PinnedBusDao
 import com.system.traffic.local.db.dao.StationDao
 import com.system.traffic.local.db.model.KeywordLocal
 import com.system.traffic.local.db.model.LikeStationLocal
 import com.system.traffic.local.db.model.LineLocal
+import com.system.traffic.local.db.model.PinnedBusLocal
 import com.system.traffic.local.db.model.StationLocal
 
 @Database(
-    entities = [StationLocal::class, LineLocal::class, LikeStationLocal::class, KeywordLocal::class],
-    version = 4,
+    entities = [StationLocal::class, LineLocal::class, LikeStationLocal::class, KeywordLocal::class, PinnedBusLocal::class],
+    version = 5,
     exportSchema = false
 )
 abstract class TrafficDatabase: RoomDatabase() {
@@ -30,6 +32,8 @@ abstract class TrafficDatabase: RoomDatabase() {
     abstract fun likeStationDAO() : LikeStationDao
 
     abstract fun keywordDAO() : KeywordDao
+
+    abstract fun pinnedBusDAO() : PinnedBusDao
 
 
 }

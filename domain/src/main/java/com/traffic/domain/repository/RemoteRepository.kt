@@ -7,7 +7,7 @@ import com.traffic.domain.model.LineStation
 
 interface RemoteRepository {
 
-    suspend fun getBusArriveList(arsId : String): Result<BusArrive, DataError.Remote>
+    suspend fun getBusArriveList(busStopId : String): Result<BusArrive, DataError.Remote>
 
     suspend fun getLineStationList(lineId: String): Result<LineStation, DataError.Remote>
 }

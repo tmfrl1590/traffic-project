@@ -2,24 +2,35 @@ package com.traffic.presentation.screens.bus_arrive.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PushPin
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,14 +39,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.traffic.presentation.model.BusArriveItemModel
 import com.traffic.design.R
+import com.traffic.design.noRippleClickable
+import androidx.compose.ui.tooling.preview.Preview
+import com.traffic.design.ui.theme.MainColor
+import com.traffic.presentation.model.BusArriveItemModel
 
 @Composable
 fun BusArriveSection(
     isLoading: Boolean,
     busArriveList: List<BusArriveItemModel>,
     onClickBusArriveCard: (String) -> Unit,
+    onClickPinned: (String, Boolean) -> Unit,
 ) {
     when {
         isLoading -> {
@@ -47,7 +62,7 @@ fun BusArriveSection(
             }
         }
         busArriveList.isEmpty() -> BusArriveEmptyContent()
-        else -> BusArriveList(busArriveList = busArriveList, onClickBusArriveCard = onClickBusArriveCard)
+        else -> BusArriveList(busArriveList = busArriveList, onClickBusArriveCard = onClickBusArriveCard, onClickPinned = onClickPinned)
     }
 
 }
@@ -71,19 +86,16 @@ private fun BusArriveEmptyContent() {
 private fun BusArriveList(
     busArriveList: List<BusArriveItemModel>,
     onClickBusArriveCard: (String) -> Unit,
+    onClickPinned: (String, Boolean) -> Unit,
 ) {
     LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(
-            items = busArriveList,
-            key = { busArriveItem ->
-                busArriveItem.busId!!
-            }
-        ) { item ->
+        itemsIndexed(busArriveList) { index, item ->
             BusArriveCard(
                 busArriveModel = item,
-                onClickBusArriveCard = onClickBusArriveCard
+                onClickBusArriveCard = onClickBusArriveCard,
+                onClickPinned = onClickPinned,
             )
         }
     }
@@ -93,76 +105,109 @@ private fun BusArriveList(
 private fun BusArriveCard(
     busArriveModel: BusArriveItemModel,
     onClickBusArriveCard: (String) -> Unit,
+    onClickPinned: (String, Boolean) -> Unit,
 ) {
     Card(
-        onClick = {
-            busArriveModel.lineId?.let(onClickBusArriveCard)
-        },
+        onClick = { busArriveModel.lineId?.let(onClickBusArriveCard) },
         modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .height(100.dp)
+            .padding(horizontal = 16.dp, vertical = 6.dp)
             .fillMaxWidth(),
-        border = BorderStroke(
-            width = 1.dp,
-            color = Color.LightGray
-        ),
-        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp), // 미세한 그림자 효과
+        shape = RoundedCornerShape(16.dp), // 라운딩 확장
+        border = BorderStroke(1.dp, Color(0xFFF3F4F6)) // 아주 연한 경계선
     ) {
-        Column(
+        Row(
             modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White)
+                .fillMaxWidth()
+                .padding(16.dp), // 내부 패딩 확대
+            verticalAlignment = Alignment.CenterVertically, // 세로축 가운데 정렬
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Row(
-                modifier = Modifier
-                    .height(52.dp)
-                    .padding(8.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Top
+            // [1] 왼쪽: 버스 노선 캡슐형 배지
+            Card(
+                colors = CardDefaults.cardColors(containerColor = busArriveModel.lineColor),
+                shape = RoundedCornerShape(20.dp), // 타원 캡슐형태
+                modifier = Modifier.wrapContentSize()
             ) {
-                Card(
-                    modifier = Modifier
-                        .wrapContentWidth()
-                    ,
-                    colors = CardDefaults.cardColors(
-                        containerColor = busArriveModel.lineColor
-                    ),
-                    shape = RoundedCornerShape(12.dp)
+                Box(
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .wrapContentSize()
-                            .padding(horizontal = 12.dp)
-                            .padding(vertical = 8.dp)
-                        ,
-                        contentAlignment = Alignment.Center
-                    ){
-                        Text(
-                            text = busArriveModel.lineName!!,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.height(40.dp),
-                            color = Color.White
-                        )
-                    }
+                    Text(
+                        text = busArriveModel.lineName.orEmpty(),
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
                 }
-
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            // [2] 가운데: 실시간 도착 정보 (세로 계층 구조)
+            Column(
+                modifier = Modifier.weight(1f) // 가운데 영역이 남은 공간을 차지하도록 설정
+            ) {
                 Text(
-                    text = "${busArriveModel.remainMin}분",
-                    modifier = Modifier.wrapContentWidth(),
-                    textAlign = TextAlign.End,
-                    color = Color.Red,
-                    fontWeight = FontWeight.SemiBold
+                    text = "${busArriveModel.remainMin}분 후 도착",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFFD32F2F) // 버스 앱 표준 짙은 빨간색
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "현재: ${busArriveModel.busStopName} (${busArriveModel.remainStop}정거장 전)",
+                    fontSize = 13.sp,
+                    color = Color.Gray
                 )
             }
-
-            Text(
-                text = "${stringResource(id = R.string.bus_arrive_now)} : ${busArriveModel.busStopName} (${busArriveModel.remainStop} 정거장 전)",
+            Spacer(modifier = Modifier.width(12.dp))
+            // [3] 오른쪽: 독립된 핀 고정 버튼
+            IconButton(
+                onClick = {
+                    busArriveModel.lineId?.let { onClickPinned(it, busArriveModel.isPinned) }
+                },
                 modifier = Modifier
-                    .wrapContentWidth()
-                    .padding(8.dp)
-            )
+                    .size(40.dp)
+                    .background(Color(0xFFF3F4F6), shape = RoundedCornerShape(10.dp))
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.PushPin,
+                    contentDescription = null,
+                    tint = if (busArriveModel.isPinned) MainColor else Color.LightGray,
+                    modifier = Modifier.size(22.dp)
+                )
+            }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun BusArriveCardPreview() {
+    BusArriveCard(
+        busArriveModel = BusArriveItemModel(
+            arrive = "0",
+            remainStop = "2",
+            shortLineName = "순환01A",
+            busId = "1001",
+            metroFlag = "0",
+            busStopName = "세하동",
+            currStopId = "3609",
+            lineId = "1",
+            remainMin = "5",
+            engBusStopName = "Sehadong",
+            dirStart = "기점",
+            dir = "방향",
+            dirEnd = "종점",
+            lowBus = "0",
+            arriveFlag = "0",
+            lineName = "순환01A",
+            lineColor = Color(0xFF1E88E5),
+            busLatitude = 35.11957758,
+            busLongitude = 126.83257001,
+            isPinned = true
+        ),
+        onClickBusArriveCard = {},
+        onClickPinned = { _, _ -> }
+    )
 }

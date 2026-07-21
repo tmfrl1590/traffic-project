@@ -12,9 +12,9 @@ import javax.inject.Inject
 class RemoteDataSourceImpl @Inject constructor(
     private val trafficService: TrafficService,
 ): RemoteDataSource{
-    override suspend fun getBusArriveList(arsId: String): Result<BusArriveEntity, DataError.Remote> {
+    override suspend fun getBusArriveList(busStopId: String): Result<BusArriveEntity, DataError.Remote> {
         return safeCall<BusArriveEntity> {
-            trafficService.getBusArriveList(busStopId = arsId)
+            trafficService.getBusArriveList(busStopId = busStopId)
         }
     }
 

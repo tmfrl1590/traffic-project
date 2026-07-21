@@ -12,8 +12,8 @@ import javax.inject.Inject
 class RemoteRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
 ): RemoteRepository {
-    override suspend fun getBusArriveList(arsId: String): Result<BusArrive, DataError.Remote> {
-        return remoteDataSource.getBusArriveList(arsId = arsId).map { it.toDomain() }
+    override suspend fun getBusArriveList(busStopId: String): Result<BusArrive, DataError.Remote> {
+        return remoteDataSource.getBusArriveList(busStopId = busStopId).map { it.toDomain() }
     }
 
     override suspend fun getLineStationList(lineId: String): Result<LineStation, DataError.Remote> {

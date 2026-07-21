@@ -7,7 +7,7 @@ import com.traffic.data.model.remote.LineStationInfoEntity
 
 interface RemoteDataSource {
 
-    suspend fun getBusArriveList(arsId : String): Result<BusArriveEntity, DataError.Remote>
+    suspend fun getBusArriveList(busStopId : String): Result<BusArriveEntity, DataError.Remote>
 
     suspend fun getLineStationList(lineId: String): Result<LineStationInfoEntity, DataError.Remote>
 }

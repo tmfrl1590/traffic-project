@@ -9,5 +9,6 @@ object RoomConstant {
         const val STATION_LIKE_LOCAL = "station_like_entity"
         const val LINE_LIKE_LOCAL = "line_like_entity"
         const val KEYWORD_LOCAL = "keyword_entity"
+        const val PINNED_BUS_LOCAL = "pinned_bus_entity"
     }
 }

@@ -86,7 +86,7 @@ fun BusArriveScreenRoute(
 
     // 해당 정류장 버스 도착 정보 조회
     LaunchedEffect(key1 = Unit) {
-        busArriveViewModel.getBusArriveList(arsId = busStopId)
+        busArriveViewModel.getBusArriveList(busStopId = busStopId)
     }
 
     val error by busArriveViewModel.errorFlow.collectAsStateWithLifecycle("")
@@ -186,7 +186,8 @@ private fun BusArriveScreen(
                     BusArriveSection(
                         isLoading = state.isLoading,
                         busArriveList = state.arriveList,
-                        onClickBusArriveCard = onClickBusArriveCard
+                        onClickBusArriveCard = onClickBusArriveCard,
+                        onClickPinned = { lineId, isPinned -> onAction(BusArriveAction.OnCLickPinnedIcon(lineId = lineId, isPinned = isPinned)) },
                     )
                 }
             },

@@ -2,6 +2,7 @@ package com.traffic.data.local
 
 import com.traffic.data.model.local.KeywordEntity
 import com.traffic.data.model.local.LineEntity
+import com.traffic.data.model.local.PinnedBusEntity
 import com.traffic.data.model.local.StationCoordinates
 import com.traffic.data.model.local.StationEntity
 import com.traffic.domain.model.StationCoordinateModel
@@ -59,4 +60,13 @@ interface LocalDataSource {
 
     // 특정 정류장의 위치 정보 가져오기
     suspend fun getLocationInfo(ids: List<String?>): List<StationCoordinates>
+
+    // 특정 정류장에 핀 버스 정보 추가
+    suspend fun addPinnedBus(busStopId: String, lineId: String)
+
+    // 특정 정류장에 핀 버스 정보 삭제
+    suspend fun deletePinnedBus(busStopId: String, lineId: String)
+
+    // 특정 정류장에 핀 버스 정보 가져오기
+    fun getPinnedBusList(busStopId: String): Flow<List<PinnedBusEntity>>
 }

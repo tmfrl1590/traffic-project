@@ -28,6 +28,7 @@ data class BusArriveItemModel(
     val lineColor: Color = Color.Transparent,
     val busLatitude: Double?,
     val busLongitude: Double?,
+    val isPinned: Boolean,
 )
 
 fun BusArrive.toPresentation(): BusArriveModel = BusArriveModel(
@@ -56,4 +57,5 @@ fun BusArriveItem.toPresentation(
     lineColor = lineColor,
     busLatitude = busLatitude,
     busLongitude = busLongitude,
+    isPinned = isPinned,
 )
