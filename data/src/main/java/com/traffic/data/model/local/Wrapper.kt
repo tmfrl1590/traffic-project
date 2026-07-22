@@ -1,5 +1,6 @@
 package com.traffic.data.model.local
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -44,6 +45,7 @@ object NullableAnyToStringSerializer : KSerializer<String?> {
         val element = jsonDecoder.decodeJsonElement() as? JsonPrimitive
         return element?.contentOrNull
     }
+    @OptIn(ExperimentalSerializationApi::class)
     override fun serialize(encoder: Encoder, value: String?) {
         if (value == null) {
             encoder.encodeNull()
