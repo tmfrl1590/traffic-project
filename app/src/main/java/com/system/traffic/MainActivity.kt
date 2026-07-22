@@ -8,6 +8,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Density
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.traffic.design.ui.theme.TrafficTheme
@@ -24,9 +27,19 @@ class MainActivity : ComponentActivity() {
 
         requestNotificationPermission()
 
+
         setContent {
             TrafficTheme {
-                AppNavHost()
+                val currentDensity = LocalDensity.current
+
+                CompositionLocalProvider(
+                    value = LocalDensity provides Density(
+                        density = currentDensity.density,
+                        fontScale = 1f
+                    )
+                ) {
+                    AppNavHost()
+                }
             }
         }
     }
