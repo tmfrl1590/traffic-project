@@ -16,12 +16,12 @@ properties.load(project.rootProject.file("local.properties").inputStream())
 
 android {
     namespace= "com.system.traffic"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.system.traffic"
         minSdk = 28
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 45
         versionName = "2.1.5"
 
