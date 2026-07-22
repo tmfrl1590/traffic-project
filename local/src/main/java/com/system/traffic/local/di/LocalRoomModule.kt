@@ -30,6 +30,12 @@ private val MIGRATION_4_5 = object : Migration(4, 5) {
             )
             """.trimIndent()
         )
+        db.execSQL(
+            """
+            CREATE UNIQUE INDEX IF NOT EXISTS `index_pinned_bus_entity_busStopId_lineId` 
+            ON `${RoomConstant.Table.PINNED_BUS_LOCAL}` (`busStopId`, `lineId`)
+            """.trimIndent()
+        )
     }
 }
 
