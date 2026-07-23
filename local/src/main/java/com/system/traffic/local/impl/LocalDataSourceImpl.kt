@@ -5,7 +5,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.system.traffic.core.enum.AppFontSize
 import com.system.traffic.local.DataStoreConstants
 import com.system.traffic.local.db.FileDataSource
 import com.system.traffic.local.db.dao.KeywordDao
@@ -47,6 +49,7 @@ class LocalDataSourceImpl @Inject constructor(
     private val myDataStore : DataStore<Preferences> = context.dataStore
 
     private val isFirstLogin = booleanPreferencesKey(DataStoreConstants.IS_FIRST_LOGIN)
+    private val appFontSize = stringPreferencesKey(DataStoreConstants.APP_FONT_SIZE)
 
     override suspend fun setUpIsFirstLogin() {
         myDataStore.edit { preferences ->
@@ -58,6 +61,22 @@ class LocalDataSourceImpl @Inject constructor(
         val preferences = myDataStore.data.first()
         return preferences[isFirstLogin] ?: true
     }
+
+    override suspend fun setAppFontSize(fontSize: String) {
+        val enumName = AppFontSize.fromFontSizeText(fontSize).name
+        myDataStore.edit { preferences ->
+            preferences[appFontSize] = enumName
+        }
+    }
+
+    override fun getAppFontSize(): Flow<String> {
+        return myDataStore.data.map { preferences ->
+            val name = preferences[appFontSize] ?: AppFontSize.MEDIUM.name
+            val appFontSize = runCatching { AppFontSize.valueOf(name) }.getOrDefault(defaultValue = AppFontSize.MEDIUM)
+            appFontSize.fontSizeText
+        }
+    }
+
 
     override suspend fun addLikeStation(stationEntity: StationEntity) {
         likeStationDao.addLikeStation(likeStationLocal = stationEntity.toLikeStationEntity())

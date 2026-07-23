@@ -39,7 +39,7 @@ fun InquireSection(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 20.dp)
+            .padding(vertical = 20.dp)
     ) {
         Column(
             modifier = Modifier.padding(20.dp)

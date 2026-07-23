@@ -8,17 +8,22 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.presentation.screens.main.AppNavHost
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,11 +36,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             TrafficTheme {
                 val currentDensity = LocalDensity.current
-
+                val selectedFontSize by mainViewModel.savedFontScale.collectAsStateWithLifecycle()
                 CompositionLocalProvider(
                     value = LocalDensity provides Density(
                         density = currentDensity.density,
-                        fontScale = 1f
+                        fontScale = selectedFontSize
                     )
                 ) {
                     AppNavHost()

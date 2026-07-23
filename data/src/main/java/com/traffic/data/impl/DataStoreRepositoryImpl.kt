@@ -2,39 +2,8 @@ package com.traffic.data.impl
 
 import com.traffic.data.local.LocalDataSource
 import com.traffic.domain.repository.DataStoreRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
-
-/*
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = TRAFFIC_PREFERENCES)
-
-class DataStoreRepositoryImpl @Inject constructor(
-    context: Context
-): DataStoreRepository{
-    companion object {
-        private val Context.dataStore : DataStore<Preferences> by preferencesDataStore("pref")
-    }
-
-    private val myDataStore : DataStore<Preferences> = context.dataStore
-
-    private val isFirstLogin = booleanPreferencesKey(IS_FIRST_LOGIN)
-
-    override suspend fun setUpIsFirstLogin() {
-        myDataStore.edit { preferences ->
-            preferences[isFirstLogin] = false
-        }
-    }
-
-    override suspend fun getIsFirstLogin(): Boolean {
-
-        var value = false
-
-        myDataStore.edit { preferences ->
-            value = preferences[isFirstLogin] ?: true
-        }
-        return value
-    }
-}*/
-
 
 class DataStoreRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
@@ -45,5 +14,13 @@ class DataStoreRepositoryImpl @Inject constructor(
 
     override suspend fun getIsFirstLogin(): Boolean {
         return localDataSource.getIsFirstLogin()
+    }
+
+    override suspend fun setAppFontSize(fontSize: String) {
+        localDataSource.setAppFontSize(fontSize)
+    }
+
+    override fun getAppFontSize(): Flow<String> {
+        return localDataSource.getAppFontSize()
     }
 }

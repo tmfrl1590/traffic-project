@@ -13,6 +13,10 @@ interface LocalDataSource {
 
     suspend fun getIsFirstLogin(): Boolean
 
+    suspend fun setAppFontSize(fontSize: String)
+
+    fun getAppFontSize(): Flow<String>
+
     // 즐겨찾기 추가
     suspend fun addLikeStation(stationEntity: StationEntity)
 

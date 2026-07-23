@@ -65,7 +65,6 @@ fun AppVersionSection(
                 thickness = 1.dp
             )
 
-            // 실제 항목 행
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
