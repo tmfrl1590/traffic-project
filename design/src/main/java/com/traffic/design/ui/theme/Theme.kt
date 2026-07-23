@@ -1,12 +1,16 @@
 package com.traffic.design.ui.theme
 
+import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 
 
 // 라이트 모드용 커스텀 색상 세트
@@ -64,6 +68,18 @@ fun TrafficTheme(
     content: @Composable () -> Unit,
 ) {
     val customColors = if (darkTheme) DarkTrafficColors else LightTrafficColors
+
+    // 상단 상태바(시계, 배터리, 와이파이) 아이콘 색상 자동 제어
+    val view = LocalView.current
+    if (!view.isInEditMode) { // 프리뷰(Preview) 화면이 아닐 때만 실행
+        SideEffect {
+            val window = (view.context as Activity).window // 현재 앱이 동작하고 있는 실제 액티비티의 창(Window) 객체를 구함 -> 상단 상태바의 배경 투명도, 와이파이/배터리 아이콘 색상은 전부 액티비티의 Window가 총괄
+            // 다크모드일 때(!darkTheme == false) ➔ 상태바 아이콘이 흰색으로 바뀜
+            // 라이트모드일 때(!darkTheme == true) ➔ 상태바 아이콘이 검은색으로 바뀜
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+        }
+    }
+
     CompositionLocalProvider(
         value = LocalTrafficColors provides customColors,
     ){
