@@ -23,4 +23,12 @@ class DataStoreRepositoryImpl @Inject constructor(
     override fun getAppFontSize(): Flow<String> {
         return localDataSource.getAppFontSize()
     }
+
+    override suspend fun setAppThemeType(themeType: String) {
+        localDataSource.setAppThemeType(themeType)
+    }
+
+    override fun getAppThemeType(): Flow<String> {
+        return localDataSource.getAppThemeType()
+    }
 }

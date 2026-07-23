@@ -20,12 +20,14 @@ import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import com.system.traffic.core.enum.AppThemeType
 import com.traffic.design.R
 import com.traffic.presentation.PresentationConstants
 import com.traffic.presentation.firebase.ScreenName
 import com.traffic.presentation.firebase.TrackScreenView
 import com.traffic.presentation.screens.setting.action.SettingAction
 import com.traffic.presentation.screens.setting.component.AppFontSizeSection
+import com.traffic.presentation.screens.setting.component.AppThemeSection
 import com.traffic.presentation.screens.setting.component.AppVersionSection
 import com.traffic.presentation.screens.setting.component.InquireSection
 import com.traffic.presentation.screens.setting.component.LicenseSection
@@ -61,6 +63,10 @@ fun SettingScreenRoute(
                 is SettingAction.OnClickFontSize -> {
                     viewModel.selectFontSize(fontSizeText = action.fontSizeText)
                 }
+
+                is SettingAction.OnClickTheme -> {
+                    viewModel.selectTheme(themeType = action.themeType)
+                }
             }
         }
     )
@@ -87,6 +93,11 @@ private fun SettingScreen(
         AppFontSizeSection(
             selectedFontSize = state.selectedFontSize,
             onClickFontSize = { onAction(SettingAction.OnClickFontSize(fontSizeText = it)) }
+        )
+
+        AppThemeSection(
+            selectedTheme = state.selectedTheme,
+            onClickTheme = { onAction(SettingAction.OnClickTheme(themeType = it)) }
         )
 
         AppVersionSection(

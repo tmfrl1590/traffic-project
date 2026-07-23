@@ -3,6 +3,8 @@ package com.traffic.presentation.screens.setting.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.traffic.domain.usecase.datastore.GetAppFontSizeUseCase
+import com.traffic.domain.usecase.datastore.GetAppThemeTypeUseCase
+import com.traffic.domain.usecase.datastore.SetAppThemeTypeUseCase
 import com.traffic.domain.usecase.datastore.SetFontSizeUseCase
 import com.traffic.presentation.screens.setting.state.SettingState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +20,8 @@ import javax.inject.Inject
 class SettingViewModel @Inject constructor(
     private val setFontSizeUseCase: SetFontSizeUseCase,
     private val getAppFontSizeUseCase: GetAppFontSizeUseCase,
+    private val setAppThemeTypeUseCase: SetAppThemeTypeUseCase,
+    private val getAppThemeTypeUseCase: GetAppThemeTypeUseCase,
 ): ViewModel(){
 
     private val _state = MutableStateFlow(value = SettingState())
@@ -29,11 +33,23 @@ class SettingViewModel @Inject constructor(
                 _state.update { it.copy(selectedFontSize = fontSize) }
             }
         }
+
+        viewModelScope.launch {
+            getAppThemeTypeUseCase().collectLatest { appThemeType ->
+                _state.update { it.copy(selectedTheme = appThemeType) }
+            }
+        }
     }
 
     fun selectFontSize(fontSizeText: String){
         viewModelScope.launch {
             setFontSizeUseCase(fontSizeText = fontSizeText)
+        }
+    }
+
+    fun selectTheme(themeType: String){
+        viewModelScope.launch {
+            setAppThemeTypeUseCase(themeType = themeType)
         }
     }
 }

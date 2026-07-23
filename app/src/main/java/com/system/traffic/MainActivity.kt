@@ -9,6 +9,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalDensity
@@ -16,9 +17,11 @@ import androidx.compose.ui.unit.Density
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.system.traffic.core.enum.AppThemeType
 import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.presentation.screens.main.AppNavHost
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.tan
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -34,9 +37,15 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
-            TrafficTheme {
-                val currentDensity = LocalDensity.current
-                val selectedFontSize by mainViewModel.savedFontScale.collectAsStateWithLifecycle()
+            val currentDensity = LocalDensity.current
+            val selectedFontSize by mainViewModel.savedFontScale.collectAsStateWithLifecycle()
+            val selectedTheme by mainViewModel.savedThemeType.collectAsStateWithLifecycle()
+
+            TrafficTheme(
+                darkTheme = AppThemeType.fromThemeName(selectedTheme).isDarkTheme(
+                    isSystemInDark = isSystemInDarkTheme()
+                )
+            ) {
                 CompositionLocalProvider(
                     value = LocalDensity provides Density(
                         density = currentDensity.density,

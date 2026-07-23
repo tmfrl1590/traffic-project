@@ -17,6 +17,10 @@ interface LocalDataSource {
 
     fun getAppFontSize(): Flow<String>
 
+    suspend fun setAppThemeType(themeType: String)
+
+    fun getAppThemeType(): Flow<String>
+
     // 즐겨찾기 추가
     suspend fun addLikeStation(stationEntity: StationEntity)
 

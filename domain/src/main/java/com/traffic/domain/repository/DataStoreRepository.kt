@@ -11,4 +11,8 @@ interface DataStoreRepository {
     suspend fun setAppFontSize(fontSize: String)
 
     fun getAppFontSize(): Flow<String>
+
+    suspend fun setAppThemeType(themeType: String)
+
+    fun getAppThemeType(): Flow<String>
 }
