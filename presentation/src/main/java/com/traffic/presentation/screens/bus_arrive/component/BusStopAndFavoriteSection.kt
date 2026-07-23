@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.traffic.design.R
 import com.traffic.design.noRippleClickable
+import com.traffic.design.ui.theme.TrafficTheme
 
 @Composable
 fun BusStopAndFavoriteSection(
@@ -35,7 +36,8 @@ fun BusStopAndFavoriteSection(
         Text(
             text = busStopName,
             fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = TrafficTheme.colors.textPrimary
         )
 
         Icon(

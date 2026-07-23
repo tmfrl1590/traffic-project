@@ -1,5 +1,6 @@
 package com.traffic.presentation.screens.setting.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.system.traffic.core.enum.AppFontSize
 import com.traffic.design.ui.theme.MainColor
+import com.traffic.design.ui.theme.TrafficTheme
 
 @Composable
 fun AppFontSizeSection(
@@ -30,7 +32,10 @@ fun AppFontSizeSection(
 ) {
     Card(
         shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        border = BorderStroke(1.dp, color = TrafficTheme.colors.cardBorder),
+        colors = CardDefaults.cardColors(
+            containerColor = TrafficTheme.colors.mainBackground
+        ),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         modifier = Modifier
             .fillMaxWidth()
@@ -42,12 +47,12 @@ fun AppFontSizeSection(
                 text = "글자 크기 설정",
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
-                color = Color(0xFF0F172A)
+                color = TrafficTheme.colors.textPrimary
             )
 
             HorizontalDivider(
                 modifier = Modifier.padding(vertical = 16.dp),
-                color = Color(0xFFF1F5F9), // 얇고 깨끗한 구분선
+                color = TrafficTheme.colors.divider,
                 thickness = 1.dp
             )
 
@@ -63,8 +68,8 @@ fun AppFontSizeSection(
                             .weight(1f)
                         ,
                         fontSizeText = appFontSize.fontSizeText,
-                        fontColor = if (selectedFontSize == appFontSize.fontSizeText) Color.White else Color.Black,
-                        containerColor = if (selectedFontSize == appFontSize.fontSizeText) MainColor else Color.LightGray,
+                        fontColor = if (selectedFontSize == appFontSize.fontSizeText) Color.White else TrafficTheme.colors.unselectedChipText,
+                        containerColor = if (selectedFontSize == appFontSize.fontSizeText) MainColor else TrafficTheme.colors.unselectedChipBackground,
                         onClickFontSize = { onClickFontSize(appFontSize.fontSizeText) }
                     )
                 }

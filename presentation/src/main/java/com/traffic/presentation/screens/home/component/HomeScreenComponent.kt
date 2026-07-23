@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -24,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.traffic.design.R
+import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.domain.model.StationModel
 import com.traffic.presentation.screens.home.EmptyLikeStation
 
@@ -63,23 +65,26 @@ private fun StationCard(
     onClickFavorite: (StationModel) -> Unit,
 ){
     Card(
-        modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .height(100.dp)
-            .fillMaxWidth(),
-        border = BorderStroke(1.dp, Color.LightGray),
-        shape = RoundedCornerShape(12.dp),
         onClick = {
             onStationCardClick(
                 stationModel.arsId ?: "",
                 stationModel.busStopId ?: "",
             )
-        }
+        },
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .height(100.dp)
+            .fillMaxWidth(),
+        border = BorderStroke(1.dp, color = TrafficTheme.colors.cardBorder),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = TrafficTheme.colors.cardBackground
+        )
     ){
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White),
+            ,
         ){
             IconButton(
                 onClick = {
@@ -105,13 +110,16 @@ private fun StationCard(
                     modifier = Modifier
                         .height(52.dp),
                     fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = TrafficTheme.colors.textPrimary
                 )
 
                 Text(
                     text = "${stationModel.nextBusStop} | ${stationModel.arsId}",
                     modifier = Modifier
                         .weight(5f)
+                    ,
+                    color = TrafficTheme.colors.textPrimary
                 )
             }
         }

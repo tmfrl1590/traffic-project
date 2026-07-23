@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.navigation.BottomBarScreen
 import com.traffic.navigation.BottomNavigationBar
 import com.traffic.navigation.Screens
@@ -33,50 +34,24 @@ fun MainScreen(
 
     Scaffold(
         topBar = {
-            when (currentScreen) {
-                BottomBarScreen.Home -> {
-                    CenterAlignedTopAppBar(
-                        title = {
-                            Text(
-                                text = "광주버스",
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.SemiBold
-                            )
-                        },
-                        colors = TopAppBarDefaults.topAppBarColors(
-                            containerColor = Color.White
-                        )
-                    )
-                }
-                BottomBarScreen.Station -> {
-                    CenterAlignedTopAppBar(
-                        title = {
-                            Text(
-                                text = "정류장 검색",
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.SemiBold
-                            )
-                        },
-                        colors = TopAppBarDefaults.topAppBarColors(
-                            containerColor = Color.White
-                        )
-                    )
-                }
-                BottomBarScreen.Setting -> {
-                    CenterAlignedTopAppBar(
-                        title = {
-                            Text(
-                                text = "설정",
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.SemiBold
-                            )
-                        },
-                        colors = TopAppBarDefaults.topAppBarColors(
-                            containerColor = Color.White
-                        )
-                    )
-                }
+            val title = when (currentScreen) {
+                BottomBarScreen.Home -> "광주버스"
+                BottomBarScreen.Station -> "정류장 검색"
+                BottomBarScreen.Setting -> "설정"
             }
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = title,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = TrafficTheme.colors.textPrimary
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = TrafficTheme.colors.mainBackground
+                )
+            )
         },
         bottomBar = {
             BottomNavigationBar(

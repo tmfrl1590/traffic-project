@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.presentation.model.LineStationItemModel
 
 @Composable
@@ -51,7 +52,8 @@ fun LineStationListSection(
                     Text(
                         text = station.busStopName,
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
+                        color = TrafficTheme.colors.textPrimary
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(

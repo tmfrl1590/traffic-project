@@ -1,5 +1,6 @@
 package com.traffic.presentation.screens.station
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.traffic.design.R
 import com.traffic.design.SearchBarSection
+import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.presentation.firebase.ScreenName
 import com.traffic.presentation.firebase.TrackScreenView
 import com.traffic.presentation.screens.station.action.StationAction
@@ -51,43 +53,38 @@ private fun StationScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(color = TrafficTheme.colors.mainBackground)
     ) {
-        Column(
+        SearchBarSection(
+            keyword = state.keyword,
+            placeholder = stringResource(id = R.string.common1),
+            onValueChange = { onAction(StationAction.OnInputKeyword(keyword = it)) },
+            searchAction = { onAction(StationAction.OnSearchStation) },
+            onDeleteInputText = { onAction(StationAction.OnDeleteInputText) }
+        )
+
+        Spacer(
             modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-        ) {
-            SearchBarSection(
-                keyword = state.keyword,
-                placeholder = stringResource(id = R.string.common1),
-                onValueChange = { onAction(StationAction.OnInputKeyword(keyword = it)) },
-                searchAction = { onAction(StationAction.OnSearchStation) },
-                onDeleteInputText = { onAction(StationAction.OnDeleteInputText) }
-            )
+                .height(12.dp)
+        )
 
-            Spacer(
-                modifier = Modifier
-                    .height(12.dp)
-            )
+        KeywordListSection(
+            keywordList = state.keywordList,
+            onClickKeyword = { keyword ->onAction(StationAction.OnClickKeyword(keyword = keyword)) },
+            onClickDeleteKeyword = { keyword -> onAction(StationAction.OnDeleteKeyword(keyword = keyword))},
+            onClickAllDeleteKeywordList = { onAction(StationAction.OnAllDeleteKeywordList) }
+        )
 
-            KeywordListSection(
-                keywordList = state.keywordList,
-                onClickKeyword = { keyword ->onAction(StationAction.OnClickKeyword(keyword = keyword)) },
-                onClickDeleteKeyword = { keyword -> onAction(StationAction.OnDeleteKeyword(keyword = keyword))},
-                onClickAllDeleteKeywordList = { onAction(StationAction.OnAllDeleteKeywordList) }
-            )
+        HorizontalDivider(
+            thickness = 1.dp,
+            color = Color(0xFFE5E7EB),
+            modifier = Modifier.padding(vertical = 12.dp)
+        )
 
-            HorizontalDivider(
-                thickness = 1.dp,
-                color = Color(0xFFE5E7EB),
-                modifier = Modifier.padding(vertical = 12.dp)
-            )
-
-            SearchedStationListSection(
-                searchedStationList = state.searchedStationList,
-                onClickStationCard = onStationCardClick,
-                onClickFavoriteIcon = { onAction(StationAction.OnClickFavoriteIcon(stationModel = it))}
-            )
-        }
+        SearchedStationListSection(
+            searchedStationList = state.searchedStationList,
+            onClickStationCard = onStationCardClick,
+            onClickFavoriteIcon = { onAction(StationAction.OnClickFavoriteIcon(stationModel = it))}
+        )
     }
 }

@@ -18,15 +18,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import com.traffic.design.ui.theme.MainColor
 import com.traffic.design.noRippleClickable
+import com.traffic.design.ui.theme.TrafficTheme
 
 @Composable
 fun BottomNavigationBar(
@@ -57,7 +56,7 @@ fun AppBottomNavigationBar(
     content: @Composable (RowScope.() -> Unit),
 ) {
     Surface(
-        color = Color.White,
+        color = TrafficTheme.colors.mainBackground,
         modifier = modifier.windowInsetsPadding(BottomAppBarDefaults.windowInsets)
     ) {
         if (show) {
@@ -108,7 +107,7 @@ fun RowScope.AppBottomNavigationBarItem(
         Icon(
             imageVector = icon!!,
             contentDescription = "",
-            tint = if (selected) MainColor else Color.Gray
+            tint = if (selected) TrafficTheme.colors.selectedBottomColor else TrafficTheme.colors.unSelectedBottomColor
         )
 
         Text(
@@ -116,7 +115,7 @@ fun RowScope.AppBottomNavigationBarItem(
             fontSize = 12.sp,
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal,
-            color = if (selected) MainColor else Color.Black
+            color = if (selected) TrafficTheme.colors.selectedBottomColor else TrafficTheme.colors.unSelectedBottomColor
         )
     }
 }
@@ -125,8 +124,6 @@ private val NavController.shouldShowBottomBar
     get() = when (this.currentBackStackEntry.fromBottomRoute()) {
         BottomBarScreen.Home,
         BottomBarScreen.Station,
-        //BottomBarScreen.Line,
-        //BottomBarScreen.Map,
         BottomBarScreen.Setting,
         -> true
     }

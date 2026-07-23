@@ -1,5 +1,6 @@
 package com.traffic.presentation.screens.setting.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,18 +29,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.traffic.design.R
+import com.traffic.design.ui.theme.TrafficTheme
 
 @Composable
 fun InquireSection(
     onClickInquire: () -> Unit,
 ) {
     Card(
-        shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 20.dp)
+            .padding(vertical = 20.dp),
+        shape = RoundedCornerShape(20.dp),
+        border = BorderStroke(1.dp, color = TrafficTheme.colors.cardBorder),
+        colors = CardDefaults.cardColors(
+            containerColor = TrafficTheme.colors.mainBackground
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
         Column(
             modifier = Modifier.padding(20.dp)
@@ -58,22 +63,22 @@ fun InquireSection(
                     text = "문의 및 피드백",
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
-                    color = Color(0xFF0F172A)
+                    color = TrafficTheme.colors.textPrimary
                 )
             }
 
             HorizontalDivider(
                 modifier = Modifier.padding(vertical = 16.dp),
-                color = Color(0xFFF1F5F9),
+                color = TrafficTheme.colors.divider,
                 thickness = 1.dp
             )
 
-            // 실제 항목 행
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { onClickInquire() }
-                    .padding(vertical = 2.dp),
+                    .padding(vertical = 2.dp)
+                ,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -81,7 +86,7 @@ fun InquireSection(
                     Text(
                         text = stringResource(R.string.setting_inquire),
                         fontSize = 15.sp,
-                        color = Color(0xFF334155),
+                        color = TrafficTheme.colors.textPrimary,
                         fontWeight = FontWeight.Medium
                     )
                     Spacer(modifier = Modifier.height(4.dp))

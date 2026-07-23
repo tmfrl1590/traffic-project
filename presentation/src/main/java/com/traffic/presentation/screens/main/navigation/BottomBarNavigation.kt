@@ -3,17 +3,14 @@ package com.traffic.presentation.screens.main.navigation
 import android.content.Context
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.navigation
-import com.traffic.navigation.BottomBarScreen
 import com.traffic.navigation.Screens
 import com.traffic.presentation.screens.home.navigation.homeNavGraph
 import com.traffic.presentation.screens.main.ANIMATION_DURATION
@@ -30,7 +27,6 @@ fun BottomBarGraph(
 ) {
     NavHost(
         modifier = Modifier
-            .background(Color.White)
             .padding(paddingValues),
         navController = navController,
         startDestination = Screens.Main,

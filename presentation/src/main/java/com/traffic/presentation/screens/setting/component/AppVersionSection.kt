@@ -1,5 +1,6 @@
 package com.traffic.presentation.screens.setting.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.traffic.design.R
+import com.traffic.design.ui.theme.TrafficTheme
 
 @Composable
 fun AppVersionSection(
@@ -32,7 +34,10 @@ fun AppVersionSection(
 ) {
     Card(
         shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        border = BorderStroke(1.dp, color = TrafficTheme.colors.cardBorder),
+        colors = CardDefaults.cardColors(
+            containerColor = TrafficTheme.colors.mainBackground
+        ),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         modifier = Modifier
             .fillMaxWidth()
@@ -55,13 +60,13 @@ fun AppVersionSection(
                     text = "앱 정보",
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
-                    color = Color(0xFF0F172A)
+                    color = TrafficTheme.colors.textPrimary
                 )
             }
 
             HorizontalDivider(
                 modifier = Modifier.padding(vertical = 16.dp),
-                color = Color(0xFFF1F5F9), // 얇고 깨끗한 구분선
+                color = TrafficTheme.colors.divider,
                 thickness = 1.dp
             )
 
@@ -73,13 +78,13 @@ fun AppVersionSection(
                 Text(
                     text = stringResource(R.string.setting_app_version),
                     fontSize = 15.sp,
-                    color = Color(0xFF334155),
+                    color = TrafficTheme.colors.textPrimary,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
                     text = "v $appVersion",
                     fontSize = 15.sp,
-                    color = Color(0xFF64748B),
+                    color = TrafficTheme.colors.textPrimary,
                     fontWeight = FontWeight.Normal
                 )
             }

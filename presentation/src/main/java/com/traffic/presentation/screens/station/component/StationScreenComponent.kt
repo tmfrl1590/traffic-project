@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.traffic.design.NoDataComponent
 import com.traffic.design.R
+import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.domain.model.StationModel
 import com.traffic.presentation.screens.station.util.currentBusStopNameAndArsId
 
@@ -81,11 +82,12 @@ private fun SearchedStationCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
-            .height(100.dp),
-        shape = RoundedCornerShape(12.dp),
-        border = BorderStroke(1.dp, Color.LightGray),
+            .height(100.dp)
+        ,
+        shape = RoundedCornerShape(size = 12.dp),
+        border = BorderStroke(1.dp, color = TrafficTheme.colors.cardBorder),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = TrafficTheme.colors.cardBackground
         )
     ){
         Column(
@@ -168,7 +170,8 @@ private fun BusStationName(
         Text(
             text = busStopName,
             fontSize = 16.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = TrafficTheme.colors.textPrimary
         )
     }
 
@@ -210,7 +213,8 @@ private fun CurrentBusStopNameAndArsId(
                     nextBusStop = nextBusStop,
                     arsId = arsId
                 )
-            }
+            },
+            color = TrafficTheme.colors.textPrimary
         )
     }
 }

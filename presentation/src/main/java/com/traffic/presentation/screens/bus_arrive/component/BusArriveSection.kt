@@ -43,6 +43,8 @@ import com.traffic.design.R
 import com.traffic.design.noRippleClickable
 import androidx.compose.ui.tooling.preview.Preview
 import com.traffic.design.ui.theme.MainColor
+import com.traffic.design.ui.theme.TrafficTheme
+import com.traffic.design.ui.theme.White
 import com.traffic.presentation.model.BusArriveItemModel
 
 @Composable
@@ -77,7 +79,8 @@ private fun BusArriveEmptyContent() {
             text = stringResource(R.string.bus_arrive_no_data),
             fontSize = 32.sp,
             textAlign = TextAlign.Center,
-            lineHeight = 40.sp
+            lineHeight = 40.sp,
+            color = TrafficTheme.colors.textPrimary
         )
     }
 }
@@ -111,11 +114,12 @@ private fun BusArriveCard(
         onClick = { busArriveModel.lineId?.let(onClickBusArriveCard) },
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 6.dp)
-            .fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+            .fillMaxWidth()
+        ,
+        colors = CardDefaults.cardColors(containerColor = TrafficTheme.colors.cardBackground),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp), // 미세한 그림자 효과
         shape = RoundedCornerShape(16.dp), // 라운딩 확장
-        border = BorderStroke(1.dp, Color(0xFFF3F4F6)) // 아주 연한 경계선
+        border = BorderStroke(1.dp, TrafficTheme.colors.cardBorder) // 아주 연한 경계선
     ) {
         Row(
             modifier = Modifier
@@ -138,7 +142,7 @@ private fun BusArriveCard(
                         text = busArriveModel.lineName.orEmpty(),
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = White
                     )
                 }
             }
@@ -151,13 +155,13 @@ private fun BusArriveCard(
                     text = "${busArriveModel.remainMin}분 후 도착",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFFD32F2F) // 버스 앱 표준 짙은 빨간색
+                    color = TrafficTheme.colors.textPrimary
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = "현재: ${busArriveModel.busStopName} (${busArriveModel.remainStop}정거장 전)",
                     fontSize = 13.sp,
-                    color = Color.Gray
+                    color = TrafficTheme.colors.textPrimary
                 )
             }
             Spacer(modifier = Modifier.width(12.dp))

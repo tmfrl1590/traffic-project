@@ -40,6 +40,7 @@ import com.naver.maps.map.compose.MarkerState
 import com.naver.maps.map.compose.NaverMap
 import com.naver.maps.map.compose.rememberCameraPositionState
 import com.system.traffic.core.enum.LineType
+import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.presentation.PresentationConstants.DEFAULT_LATITUDE
 import com.traffic.presentation.PresentationConstants.DEFAULT_LONGITUDE
 import com.traffic.presentation.firebase.ScreenName
@@ -130,7 +131,7 @@ private fun LineStationScreen(
     )
 
     BottomSheetScaffold(
-        sheetContainerColor = Color.White,
+        sheetContainerColor = TrafficTheme.colors.mainBackground,
         scaffoldState = scaffoldState,
         sheetPeekHeight = 100.dp, // 하단 최소 노출 높이
         sheetDragHandle = {
@@ -150,7 +151,8 @@ private fun LineStationScreen(
                     text = lineName,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(vertical = 12.dp)
+                    modifier = Modifier.padding(vertical = 12.dp),
+                    color = TrafficTheme.colors.textPrimary
                 )
 
                 // 상행, 하행 선택 탭
@@ -168,7 +170,10 @@ private fun LineStationScreen(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(text = "경유하는 정류소 정보가 없습니다.", color = Color.Gray)
+                        Text(
+                            text = "경유하는 정류소 정보가 없습니다.",
+                            color = TrafficTheme.colors.textPrimary
+                        )
                     }
                 } else {
                     LineStationListSection(

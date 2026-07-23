@@ -45,6 +45,7 @@ import com.naver.maps.map.compose.rememberCameraPositionState
 import com.naver.maps.map.overlay.OverlayImage
 import com.traffic.design.AdBannerView
 import com.traffic.design.R
+import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.presentation.PresentationConstants.DEFAULT_LATITUDE
 import com.traffic.presentation.PresentationConstants.DEFAULT_LONGITUDE
 import com.traffic.presentation.firebase.ScreenName
@@ -135,7 +136,7 @@ private fun BusArriveScreen(
             .navigationBarsPadding()
     ){
         BottomSheetScaffold(
-            sheetContainerColor = Color.White,
+            sheetContainerColor = TrafficTheme.colors.mainBackground,
             scaffoldState = scaffoldState,
             sheetPeekHeight = 100.dp, // 하단 최소 노출 높이
             sheetDragHandle = {
@@ -166,6 +167,8 @@ private fun BusArriveScreen(
                         fontSize = 14.sp,
                         modifier = Modifier
                             .padding(start = 20.dp)
+                        ,
+                        color = TrafficTheme.colors.textPrimary
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
@@ -178,7 +181,7 @@ private fun BusArriveScreen(
 
                     HorizontalDivider(
                         thickness = 1.dp,
-                        color = Color(0xFFE5E7EB)
+                        color = TrafficTheme.colors.divider
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))

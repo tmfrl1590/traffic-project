@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.traffic.design.noRippleClickable
+import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.domain.model.KeywordModel
 
 @Composable
@@ -92,7 +93,7 @@ private fun KeywordCard(
             .clickable { onKeywordClick(keywordModel.keyword) },
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFF5F5F5)
+            containerColor = TrafficTheme.colors.unselectedChipBackground
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 2.dp
@@ -107,7 +108,7 @@ private fun KeywordCard(
                 text = keywordModel.keyword,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-                color = Color.DarkGray
+                color = TrafficTheme.colors.unselectedChipText
             )
             Icon(
                 imageVector = Icons.Default.Clear,

@@ -34,6 +34,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
+import com.traffic.design.ui.theme.TrafficTheme
 
 @Composable
 fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier = this.clickable(
@@ -55,7 +56,7 @@ fun NoDataComponent(
         Text(
             text = text,
             fontSize = 24.sp,
-            color = Color.Black
+            color = TrafficTheme.colors.textPrimary
         )
     }
 }
@@ -97,7 +98,7 @@ fun CommonTitleComponent(
         fontWeight = FontWeight.Bold,
         modifier = Modifier
             .padding(start = 16.dp),
-        color = Color.Black
+        color = TrafficTheme.colors.textPrimary,
     )
 }
 
@@ -122,7 +123,7 @@ fun SearchBarSection(
             placeholder = {
                 Text(
                     text = placeholder,
-                    color = Color(0xFFADAEBC),
+                    color = TrafficTheme.colors.searchBarPlaceholder,
                 )
             },
             shape = RoundedCornerShape(8.dp),
@@ -141,11 +142,11 @@ fun SearchBarSection(
                 .weight(1f)
                 .fillMaxHeight(),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color(0xFFE5E7EB),
-                unfocusedBorderColor = Color(0xFFE5E7EB),
-                focusedContainerColor = Color(0xFFF9FAFB),
-                unfocusedContainerColor = Color(0xFFF9FAFB),
-                focusedTextColor = Color.Black,
+                focusedBorderColor = TrafficTheme.colors.searchBarBackground,
+                unfocusedBorderColor = TrafficTheme.colors.searchBarBackground,
+                focusedContainerColor = TrafficTheme.colors.searchBarBackground,
+                unfocusedContainerColor = TrafficTheme.colors.searchBarBackground,
+                focusedTextColor = TrafficTheme.colors.searchBarText,
                 cursorColor = Color.Gray,
             ),
             trailingIcon = {
@@ -153,7 +154,8 @@ fun SearchBarSection(
                     imageVector = Icons.Filled.Close,
                     contentDescription = "close",
                     modifier = Modifier
-                        .noRippleClickable { onDeleteInputText() }
+                        .noRippleClickable { onDeleteInputText() },
+                    tint = TrafficTheme.colors.searchBarClearIcon
                 )
             }
         )

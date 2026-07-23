@@ -22,6 +22,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.system.traffic.core.enum.AppThemeType
 import com.traffic.design.R
+import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.presentation.PresentationConstants
 import com.traffic.presentation.firebase.ScreenName
 import com.traffic.presentation.firebase.TrackScreenView
@@ -83,7 +84,7 @@ private fun SettingScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF5F7FA))
+            .background(TrafficTheme.colors.mainBackground)
             .padding(horizontal = 20.dp)
     ) {
         InquireSection(

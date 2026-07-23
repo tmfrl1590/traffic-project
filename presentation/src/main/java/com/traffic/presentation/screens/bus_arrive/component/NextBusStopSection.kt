@@ -9,6 +9,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.traffic.design.R
+import com.traffic.design.ui.theme.TrafficTheme
 
 @Composable
 fun NextBusStopSection(
@@ -18,6 +19,7 @@ fun NextBusStopSection(
         text = "${nextBusStopName}${stringResource(R.string.bus_arrive_direction)}",
         fontSize = 16.sp,
         textAlign = TextAlign.Start,
-        modifier = Modifier.padding(start = 20.dp)
+        modifier = Modifier.padding(start = 20.dp),
+        color = TrafficTheme.colors.textPrimary
     )
 }
