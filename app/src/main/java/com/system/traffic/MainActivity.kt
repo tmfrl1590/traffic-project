@@ -9,19 +9,39 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.system.traffic.core.enum.AppThemeType
+import com.traffic.design.ui.theme.MainColor
 import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.presentation.screens.main.AppNavHost
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.tan
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -54,7 +74,23 @@ class MainActivity : ComponentActivity() {
                         fontScale = selectedFontSize
                     )
                 ) {
-                    AppNavHost()
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .statusBarsPadding()
+                    ) {
+                        AnimatedVisibility(
+                            visible = !isNetworkConnected,
+                            enter = expandVertically() + fadeIn(),
+                            exit = shrinkVertically() + fadeOut()
+                        ) {
+                            NetworkOfflineBanner()
+                        }
+
+                        Box(modifier = Modifier.weight(1f)) {
+                            AppNavHost()
+                        }
+                    }
                 }
             }
         }
@@ -78,3 +114,28 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
+@Composable
+private fun NetworkOfflineBanner() {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(40.dp)
+        ,
+        color = MainColor
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+            ,
+            contentAlignment = Alignment.Center
+        ){
+            Text(
+                text = "네트워크 연결이 원활하지 않습니다.",
+                color = Color.White,
+                fontSize = 13.sp,
+                fontWeight = FontWeight.Medium
+            )
+        }
+    }
+}
