@@ -1,6 +1,7 @@
 package com.traffic.design.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
@@ -60,12 +61,15 @@ object TrafficTheme {
 @Composable
 fun TrafficTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
-    // darkTheme 여부에 따라 내 커스텀 색상표 교체!
     val customColors = if (darkTheme) DarkTrafficColors else LightTrafficColors
     CompositionLocalProvider(
-        LocalTrafficColors provides customColors,
-        content = content
-    )
+        value = LocalTrafficColors provides customColors,
+    ){
+        MaterialTheme(
+            typography = TrafficTypography,
+            content = content
+        )
+    }
 }
