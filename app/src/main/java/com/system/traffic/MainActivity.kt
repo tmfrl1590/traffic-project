@@ -38,6 +38,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val currentDensity = LocalDensity.current
+
+            val isNetworkConnected by mainViewModel.isNetworkConnected.collectAsStateWithLifecycle()
             val selectedFontSize by mainViewModel.savedFontScale.collectAsStateWithLifecycle()
             val selectedTheme by mainViewModel.savedThemeType.collectAsStateWithLifecycle()
 

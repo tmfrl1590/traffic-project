@@ -6,6 +6,7 @@ import com.system.traffic.core.enum.AppFontSize
 import com.system.traffic.core.enum.AppThemeType
 import com.traffic.domain.usecase.datastore.GetAppFontSizeUseCase
 import com.traffic.domain.usecase.datastore.GetAppThemeTypeUseCase
+import com.traffic.domain.usecase.network.GetNetworkStatusUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -16,7 +17,16 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     getAppFontSizeUseCase: GetAppFontSizeUseCase,
     getAppThemeTypeUseCase: GetAppThemeTypeUseCase,
+    getNetworkStatusUseCase: GetNetworkStatusUseCase,
 ): ViewModel(){
+
+    val isNetworkConnected = getNetworkStatusUseCase()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
+            initialValue = true,
+        )
+
 
     val savedFontScale = getAppFontSizeUseCase()
         .map { AppFontSize.getScaleFromText(fontSizeText = it) }

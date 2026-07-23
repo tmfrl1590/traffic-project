@@ -5,6 +5,7 @@ import com.traffic.data.impl.FileRepositoryImpl
 import com.traffic.data.impl.KeywordRepositoryImpl
 import com.traffic.data.impl.LikeStationRepositoryImpl
 import com.traffic.data.impl.LineRepositoryImpl
+import com.traffic.data.impl.NetworkRepositoryImpl
 import com.traffic.data.impl.PinnedBusRepositoryImpl
 import com.traffic.data.impl.RemoteRepositoryImpl
 import com.traffic.data.impl.StationRepositoryImpl
@@ -13,6 +14,7 @@ import com.traffic.domain.repository.FileRepository
 import com.traffic.domain.repository.KeywordRepository
 import com.traffic.domain.repository.LikeStationRepository
 import com.traffic.domain.repository.LineRepository
+import com.traffic.domain.repository.NetworkRepository
 import com.traffic.domain.repository.PinnedBusRepository
 import com.traffic.domain.repository.RemoteRepository
 import com.traffic.domain.repository.StationRepository
@@ -56,4 +58,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindDataStoreRepository(dataStoreRepositoryImpl: DataStoreRepositoryImpl): DataStoreRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindNetworkRepository(networkRepositoryImpl: NetworkRepositoryImpl): NetworkRepository
 }

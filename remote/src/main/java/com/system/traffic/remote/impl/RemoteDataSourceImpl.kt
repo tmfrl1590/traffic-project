@@ -3,14 +3,17 @@ package com.system.traffic.remote.impl
 import com.system.traffic.core.data.safeCall
 import com.system.traffic.core.domain.DataError
 import com.system.traffic.core.domain.Result
+import com.system.traffic.remote.network.NetworkObserver
 import com.system.traffic.remote.service.TrafficService
 import com.traffic.data.model.remote.BusArriveEntity
 import com.traffic.data.model.remote.LineStationInfoEntity
 import com.traffic.data.remote.RemoteDataSource
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class RemoteDataSourceImpl @Inject constructor(
     private val trafficService: TrafficService,
+    private val networkObserver: NetworkObserver,
 ): RemoteDataSource{
     override suspend fun getBusArriveList(busStopId: String): Result<BusArriveEntity, DataError.Remote> {
         return safeCall<BusArriveEntity> {
@@ -24,4 +27,7 @@ class RemoteDataSourceImpl @Inject constructor(
         }
     }
 
+    override fun getNetworkStatus(): Flow<Boolean> {
+        return networkObserver.isConnected
+    }
 }
