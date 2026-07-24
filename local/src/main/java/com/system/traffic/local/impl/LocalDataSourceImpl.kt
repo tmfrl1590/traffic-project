@@ -234,4 +234,8 @@ class LocalDataSourceImpl @Inject constructor(
     override fun getPinnedBusList(busStopId: String): Flow<List<PinnedBusEntity>> {
         return pinnedBusDao.getPinnedBus(busStopId = busStopId).map { it.toData() }
     }
+
+    override suspend fun resetPinnedBus() {
+        pinnedBusDao.resetPinnedBus()
+    }
 }

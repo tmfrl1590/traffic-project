@@ -10,4 +10,6 @@ interface PinnedBusRepository {
     suspend fun deletePinnedBus(busStopId: String, lineId: String)
 
     fun getPinnedBusList(busStopId: String): Flow<List<PinnedBusModel>>
+
+    suspend fun resetPinnedBus()
 }

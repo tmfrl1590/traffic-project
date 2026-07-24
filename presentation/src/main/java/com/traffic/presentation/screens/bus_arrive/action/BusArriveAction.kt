@@ -5,5 +5,5 @@ import com.traffic.domain.model.StationModel
 sealed interface BusArriveAction {
     data class OnClickFavoriteIcon(val stationModel: StationModel) : BusArriveAction
     data object OnClickRefresh : BusArriveAction
-    data class OnCLickPinnedIcon(val lineId: String, val isPinned: Boolean) : BusArriveAction
+    data class OnClickPinnedIcon(val lineId: String, val isPinned: Boolean) : BusArriveAction
 }

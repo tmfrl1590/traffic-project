@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class RootViewModel @Inject constructor(
     getAppFontSizeUseCase: GetAppFontSizeUseCase,
     getAppThemeTypeUseCase: GetAppThemeTypeUseCase,
     getNetworkStatusUseCase: GetNetworkStatusUseCase,

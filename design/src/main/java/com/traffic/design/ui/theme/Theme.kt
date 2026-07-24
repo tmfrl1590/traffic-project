@@ -17,6 +17,7 @@ import androidx.core.view.WindowCompat
 val LightTrafficColors = TrafficColors(
     mainBackground = White,
     textPrimary = Black,
+    textSecondary = Color(0xFF64748B),
     selectedBottomColor = SelectedBottomColor,
     unSelectedBottomColor = UnSelectedBottomColor,
     searchBarBackground = Color(0xFFF1F5F9),
@@ -35,6 +36,7 @@ val LightTrafficColors = TrafficColors(
 val DarkTrafficColors = TrafficColors(
     mainBackground = Black,
     textPrimary = White,
+    textSecondary = Color(0xFF94A3B8),
     selectedBottomColor = SelectedBottomColor,
     unSelectedBottomColor = UnSelectedBottomColor,
     searchBarBackground = Color(0xFF1E1E1E),

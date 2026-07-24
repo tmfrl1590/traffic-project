@@ -46,7 +46,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val mainViewModel: MainViewModel by viewModels()
+    private val rootViewModel: RootViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,9 +59,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             val currentDensity = LocalDensity.current
 
-            val isNetworkConnected by mainViewModel.isNetworkConnected.collectAsStateWithLifecycle()
-            val selectedFontSize by mainViewModel.savedFontScale.collectAsStateWithLifecycle()
-            val selectedTheme by mainViewModel.savedThemeType.collectAsStateWithLifecycle()
+            val isNetworkConnected by rootViewModel.isNetworkConnected.collectAsStateWithLifecycle()
+            val selectedFontSize by rootViewModel.savedFontScale.collectAsStateWithLifecycle()
+            val selectedTheme by rootViewModel.savedThemeType.collectAsStateWithLifecycle()
 
             TrafficTheme(
                 darkTheme = AppThemeType.fromThemeName(selectedTheme).isDarkTheme(

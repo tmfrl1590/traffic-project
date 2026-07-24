@@ -190,7 +190,7 @@ private fun BusArriveScreen(
                         isLoading = state.isLoading,
                         busArriveList = state.arriveList,
                         onClickBusArriveCard = onClickBusArriveCard,
-                        onClickPinned = { lineId, isPinned -> onAction(BusArriveAction.OnCLickPinnedIcon(lineId = lineId, isPinned = isPinned)) },
+                        onClickPinned = { lineId, isPinned -> onAction(BusArriveAction.OnClickPinnedIcon(lineId = lineId, isPinned = isPinned)) },
                     )
                 }
             },

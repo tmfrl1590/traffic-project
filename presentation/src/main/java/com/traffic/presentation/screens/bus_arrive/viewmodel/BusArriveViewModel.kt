@@ -182,7 +182,7 @@ class BusArriveViewModel @Inject constructor(
         when(action){
             is BusArriveAction.OnClickFavoriteIcon -> toggleLikeStation(action.stationModel)
             BusArriveAction.OnClickRefresh -> onClickRefresh()
-            is BusArriveAction.OnCLickPinnedIcon -> onClickPinnedIcon(lineId = action.lineId, isPinned = action.isPinned)
+            is BusArriveAction.OnClickPinnedIcon -> onClickPinnedIcon(lineId = action.lineId, isPinned = action.isPinned)
         }
     }
 }

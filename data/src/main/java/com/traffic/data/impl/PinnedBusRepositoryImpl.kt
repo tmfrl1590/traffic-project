@@ -22,4 +22,8 @@ class PinnedBusRepositoryImpl @Inject constructor(
     override fun getPinnedBusList(busStopId: String): Flow<List<PinnedBusModel>> {
         return localDataSource.getPinnedBusList(busStopId = busStopId).map { it.map { it.toDomain() } }
     }
+
+    override suspend fun resetPinnedBus() {
+        localDataSource.resetPinnedBus()
+    }
 }

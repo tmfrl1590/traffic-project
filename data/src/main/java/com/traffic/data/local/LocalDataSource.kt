@@ -77,4 +77,7 @@ interface LocalDataSource {
 
     // 특정 정류장에 핀 버스 정보 가져오기
     fun getPinnedBusList(busStopId: String): Flow<List<PinnedBusEntity>>
+
+    // 저장된 핀 버스 리스트 삭제
+    suspend fun resetPinnedBus()
 }

@@ -15,6 +15,7 @@ data class TrafficColors(
 
     // 텍스트
     val textPrimary: Color,      // 주요 타이틀 및 강한 글자색
+    val textSecondary: Color,
 
     // 하단 네비게이션바 색상
     val selectedBottomColor: Color,

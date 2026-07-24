@@ -38,7 +38,7 @@ fun InquireSection(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 20.dp),
+            .padding(bottom = 20.dp),
         shape = RoundedCornerShape(20.dp),
         border = BorderStroke(1.dp, color = TrafficTheme.colors.cardBorder),
         colors = CardDefaults.cardColors(

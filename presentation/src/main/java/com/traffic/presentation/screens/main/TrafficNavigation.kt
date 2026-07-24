@@ -60,9 +60,10 @@ fun AppNavHost() {
 
         composable<Screens.Main> {
             MainScreen(
+                snackBarHostState = snackBarHostState,
                 onStationCardClick = { arsId, busStopId ->
                     navController.navigate(Screens.BusArrive(arsId = arsId, busStopId = busStopId))
-                }
+                },
             )
         }
 

@@ -28,4 +28,12 @@ interface PinnedBusDao  {
         """
     )
     fun getPinnedBus(busStopId: String): Flow<List<PinnedBusLocal>>
+
+    // 초기화
+    @Query(
+        value = """
+            DELETE FROM pinned_bus_entity
+        """
+    )
+    suspend fun resetPinnedBus()
 }
