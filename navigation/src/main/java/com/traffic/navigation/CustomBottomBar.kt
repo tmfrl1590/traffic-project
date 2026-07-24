@@ -19,12 +19,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.traffic.design.noRippleClickable
+import com.traffic.design.performAnd
 import com.traffic.design.ui.theme.TrafficTheme
 
 @Composable
@@ -89,6 +91,8 @@ fun RowScope.AppBottomNavigationBarItem(
     onTabClick: () -> Unit,
     onBack: () -> Unit,
 ) {
+    val haptic = LocalHapticFeedback.current
+
     BackHandler(
         enabled = true,
         onBack = { onBack() }
@@ -97,9 +101,9 @@ fun RowScope.AppBottomNavigationBarItem(
     Column(
         modifier = Modifier
             .weight(1f)
-            .noRippleClickable {
-                onTabClick()
-            }
+            .noRippleClickable(
+                onClick = haptic.performAnd { onTabClick() }
+            )
         ,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(6.dp)

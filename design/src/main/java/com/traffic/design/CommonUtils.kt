@@ -24,6 +24,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -42,6 +44,15 @@ fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier = this.clickable(
     interactionSource = remember { MutableInteractionSource() },
     onClick = onClick
 )
+
+// 햅틱을 치고 액션을 실행하는 1줄 확장 함수
+inline fun HapticFeedback.performAnd(
+    type: HapticFeedbackType = HapticFeedbackType.LongPress,
+    crossinline action: () -> Unit
+): () -> Unit = {
+    performHapticFeedback(type)
+    action()
+}
 
 @Composable
 fun NoDataComponent(

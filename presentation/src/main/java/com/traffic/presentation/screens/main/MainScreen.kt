@@ -40,7 +40,7 @@ fun MainScreen(
     val backStackEntry = navController.currentBackStackEntryAsState()
     val currentScreen = backStackEntry.value.fromBottomRoute()
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(key1 = Unit) {
         mainViewModel.uiEvent.collect { event ->
             when (event) {
                 is UiEvent.ShowSnackBar -> {
