@@ -1,36 +1,35 @@
 [versions]
-agp = "8.11.1"
-kotlin = "2.1.0"
+agp = "8.12.1"
+kotlin = "2.2.0"
 coreKtx = "1.16.0"
 kotlinxCoroutinesAndroid = "1.10.2"
-lifecycleRuntimeKtx = "2.9.2"
-activityCompose = "1.10.1"
+lifecycleRuntimeKtx = "2.10.0"
+activityCompose = "1.13.0"
 composeBom = "2026.06.01"
 appcompat = "1.7.1"
 
 # Add Library
 materialIconsExtended = "1.7.8" # Material Icons Extended
 navigationCompose = "2.9.3" # Navigation
-coilCompose = "2.7.0" # Coil
 hiltAndroid = "2.57" # Hilt
 hiltNavigationCompose = "1.2.0"
 okhttp = "4.12.0" # OkHttp
 retrofit = "3.0.0" # Retrofit
 retrofit2KotlinxSerializationConverter = "1.0.0" # Retrofit2 Kotlinx Serialization Converter
 kotlinxSerializationJson = "1.7.3" # Kotlinx Serialization
-datastorePreferences = "1.1.7" # Datastore Preferences
+datastore = "1.2.1" # Datastore Preferences
 roomRuntime = "2.7.2"
 activity = "1.10.1"
 constraintlayout = "2.2.1"
-firebaseMessaging = "25.0.0" # Firebase Messaging
-firebaseBom = "34.1.0" # Firebase BOM
-ossLicenses = "17.2.2" # OSS Licenses
-ossLicensesPlugin = "0.10.7" # OSS Licenses Plugin
-ksp = "2.1.0-1.0.29" # KSP
-material = "1.12.0" # Google Services
-playServicesAds = "24.5.0"
+firebaseMessaging = "25.1.1" # Firebase Messaging
+firebaseBom = "34.16.0" # Firebase BOM
+ossLicenses = "17.5.1" # OSS Licenses
+ossLicensesPlugin = "0.13.0" # OSS Licenses Plugin
+ksp = "2.2.0-2.0.2" # KSP
+material = "1.14.0"
+playServicesAds = "25.4.0"
 analytics="22.5.0"
-mapSdk = "3.16.1"
+mapSdk = "3.23.0"
 naverMapCompose = "1.9.0"
 
 
@@ -53,9 +52,6 @@ androidx-material-icons-extended = { module = "androidx.compose.material:materia
 # Navigation
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 
-# Coil
-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
-
 # Hilt
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
@@ -74,7 +70,7 @@ kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 
 # Datastore Preferences
-androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 
 # Room
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
