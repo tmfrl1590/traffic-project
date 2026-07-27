@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
@@ -60,7 +59,7 @@ private fun StationScreen(
             placeholder = stringResource(id = R.string.common1),
             onValueChange = { onAction(StationAction.OnInputKeyword(keyword = it)) },
             searchAction = { onAction(StationAction.OnSearchStation) },
-            onDeleteInputText = { onAction(StationAction.OnDeleteInputText) }
+            onDeleteInputText = { onAction(StationAction.OnClearInputText) }
         )
 
         Spacer(
@@ -72,7 +71,7 @@ private fun StationScreen(
             keywordList = state.keywordList,
             onClickKeyword = { keyword ->onAction(StationAction.OnClickKeyword(keyword = keyword)) },
             onClickDeleteKeyword = { keyword -> onAction(StationAction.OnDeleteKeyword(keyword = keyword))},
-            onClickAllDeleteKeywordList = { onAction(StationAction.OnAllDeleteKeywordList) }
+            onClickAllDeleteKeywordList = { onAction(StationAction.OnClearAllKeywordList) }
         )
 
         HorizontalDivider(

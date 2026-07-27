@@ -210,8 +210,8 @@ class LocalDataSourceImpl @Inject constructor(
         keywordDao.deleteKeyword(keyword = keyword)
     }
 
-    override suspend fun allDeleteKeyword() {
-        keywordDao.allDeleteKeyword()
+    override suspend fun clearAllKeyword() {
+        keywordDao.clearAllKeyword()
     }
 
     override suspend fun getLocationInfo(ids: List<String?>): List<StationCoordinates> {

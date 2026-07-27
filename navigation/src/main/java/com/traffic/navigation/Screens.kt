@@ -3,6 +3,7 @@ package com.traffic.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation3.runtime.NavKey
 import androidx.savedstate.serialization.SavedStateConfiguration
@@ -39,7 +40,7 @@ val TOP_LEVEL_DESTINATIONS = mapOf(
         title = "홈"
     ),
     Screens.Station to BottomNavItem(
-        icon = Icons.Default.Person,
+        icon = Icons.Default.Search,
         title = "검색"
     ),
     Screens.Setting to BottomNavItem(

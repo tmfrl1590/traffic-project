@@ -5,7 +5,6 @@ import com.traffic.data.model.local.LineEntity
 import com.traffic.data.model.local.PinnedBusEntity
 import com.traffic.data.model.local.StationCoordinates
 import com.traffic.data.model.local.StationEntity
-import com.traffic.domain.model.StationCoordinateModel
 import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {
@@ -64,7 +63,7 @@ interface LocalDataSource {
     suspend fun deleteKeyword(keyword: String)
 
     // 키워드 전체 삭제
-    suspend fun allDeleteKeyword()
+    suspend fun clearAllKeyword()
 
     // 특정 정류장의 위치 정보 가져오기
     suspend fun getLocationInfo(ids: List<String?>): List<StationCoordinates>

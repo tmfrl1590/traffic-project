@@ -46,5 +46,5 @@ interface KeywordDao {
             DELETE FROM keyword_entity
             """
     )
-    suspend fun allDeleteKeyword()
+    suspend fun clearAllKeyword()
 }

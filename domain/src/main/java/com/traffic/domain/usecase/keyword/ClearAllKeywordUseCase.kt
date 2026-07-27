@@ -3,8 +3,8 @@ package com.traffic.domain.usecase.keyword
 import com.traffic.domain.repository.KeywordRepository
 import javax.inject.Inject
 
-class AllDeleteKeywordUseCase @Inject constructor(
+class ClearAllKeywordUseCase @Inject constructor(
     private val keywordRepository: KeywordRepository
 ) {
-    suspend operator fun invoke() = keywordRepository.allDeleteKeyword()
+    suspend operator fun invoke() = keywordRepository.clearAllKeyword()
 }
