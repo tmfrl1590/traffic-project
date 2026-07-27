@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.traffic.domain.usecase.datastore.GetIsFirstLoginUseCase
 import com.traffic.domain.usecase.datastore.SetUpIsFirstLoginUseCase
-import com.traffic.domain.usecase.file.InitializeDataUseCase
 import com.traffic.domain.usecase.file.InitState
+import com.traffic.domain.usecase.file.InitializeDataUseCase
 import com.traffic.presentation.screens.splash.state.SplashState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

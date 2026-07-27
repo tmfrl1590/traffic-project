@@ -28,7 +28,6 @@ android {
 }
 
 dependencies {
-    implementation(projects.navigation)
     implementation(projects.domain)
     implementation(projects.core)
     implementation(projects.design)

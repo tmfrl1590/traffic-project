@@ -34,6 +34,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.presentation)
     implementation(projects.design)
 
     implementation(libs.androidx.core.ktx)
@@ -47,8 +48,6 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.activity)
 
-    // Navigation
-    implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
 
     // Material Icons Extended
@@ -58,4 +57,9 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    // navigation3
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.jetbrains.lifecycle.viewmodel.nav3)
 }

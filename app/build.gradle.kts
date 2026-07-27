@@ -90,6 +90,7 @@ dependencies {
     implementation(projects.remote)
     implementation(projects.local)
     implementation(projects.design)
+    implementation(projects.navigation)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

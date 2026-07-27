@@ -1,16 +1,17 @@
 package com.traffic.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.EvStation
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.LineAxis
-import androidx.compose.material.icons.filled.Map
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation3.runtime.NavKey
+import androidx.savedstate.serialization.SavedStateConfiguration
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.polymorphic
 
-sealed interface Screens {
+@Serializable
+sealed interface Screens: NavKey {
     @Serializable
     data object Splash: Screens
     @Serializable
@@ -27,30 +28,41 @@ sealed interface Screens {
     data class LineStation(val lineId: String): Screens
 }
 
-sealed class BottomBarScreen (
-    val screen: Screens,
-    val name: String,
+data class BottomNavItem(
     val icon: ImageVector,
-){
-    data object Home: BottomBarScreen(
-        screen = Screens.Home,
-        name = "홈",
-        icon = Icons.Filled.Home
-    )
-    data object Station: BottomBarScreen(
-        screen = Screens.Station,
-        name = "검색",
-        icon = Icons.Filled.Search
-    )
-    data object Setting: BottomBarScreen(
-        screen = Screens.Setting,
-        name = "설정",
-        icon = Icons.Filled.Settings
-    )
-}
-
-val bottomDestinations = listOf(
-    BottomBarScreen.Home,
-    BottomBarScreen.Station,
-    BottomBarScreen.Setting,
+    val title: String,
 )
+
+val TOP_LEVEL_DESTINATIONS = mapOf(
+    Screens.Home to BottomNavItem(
+        icon = Icons.Default.Home,
+        title = "홈"
+    ),
+    Screens.Station to BottomNavItem(
+        icon = Icons.Default.Person,
+        title = "검색"
+    ),
+    Screens.Setting to BottomNavItem(
+        icon = Icons.Default.Person,
+        title = "설정"
+    ),
+)
+
+val MAIN_LEVEL_ROUTES = setOf(
+    Screens.Splash,
+    Screens.Main,
+)
+
+val serializersConfig = SavedStateConfiguration {
+    serializersModule = SerializersModule {
+        polymorphic(baseClass = NavKey::class) {
+            subclass(Screens.Splash::class, serializer = Screens.Splash.serializer())
+            subclass(Screens.Main::class, serializer = Screens.Main.serializer())
+            subclass(Screens.Home::class, serializer = Screens.Home.serializer())
+            subclass(Screens.Station::class, serializer = Screens.Station.serializer())
+            subclass(Screens.Setting::class, serializer = Screens.Setting.serializer())
+            subclass(Screens.BusArrive::class, serializer = Screens.BusArrive.serializer())
+            subclass(Screens.LineStation::class, serializer = Screens.LineStation.serializer())
+        }
+    }
+}

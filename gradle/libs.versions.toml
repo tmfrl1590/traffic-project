@@ -9,8 +9,8 @@ composeBom = "2026.06.01"
 appcompat = "1.7.1"
 
 # Add Library
+navigation3 = "1.1.1"
 materialIconsExtended = "1.7.8" # Material Icons Extended
-navigationCompose = "2.9.3" # Navigation
 hiltAndroid = "2.57" # Hilt
 hiltNavigationCompose = "1.2.0"
 okhttp = "4.12.0" # OkHttp
@@ -31,6 +31,7 @@ playServicesAds = "25.4.0"
 analytics="22.5.0"
 mapSdk = "3.23.0"
 naverMapCompose = "1.9.0"
+androidx-lifecycle = "2.10.0"
 
 
 [libraries]
@@ -46,11 +47,16 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesAndroid" }
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 
+
+# navigation3
+androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
+androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
+jetbrains-lifecycle-viewmodel-nav3 = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "androidx-lifecycle" }
+
+
 # Material Icons Extended
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 
-# Navigation
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 
 # Hilt
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }

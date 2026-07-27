@@ -39,7 +39,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.system.traffic.core.enum.AppThemeType
 import com.traffic.design.ui.theme.MainColor
 import com.traffic.design.ui.theme.TrafficTheme
-import com.traffic.presentation.screens.main.AppNavHost
+import com.traffic.navigation.TrafficNavigationRoot
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -86,7 +86,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         Box(modifier = Modifier.weight(1f)) {
-                            AppNavHost()
+                            TrafficNavigationRoot()
                         }
                     }
                 }

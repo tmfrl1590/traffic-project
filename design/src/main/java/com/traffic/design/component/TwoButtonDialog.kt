@@ -16,9 +16,11 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -26,7 +28,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.traffic.design.ui.theme.Black
-import com.traffic.design.ui.theme.MainColor
 import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.design.ui.theme.White
 
@@ -38,77 +39,81 @@ fun TwoButtonDialog(
     onCancel: () -> Unit,
     onConfirm: () -> Unit,
 ) {
+    val currentDensity = LocalDensity.current
+
     Dialog(
         onDismissRequest = onCancel,
         properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {
-        Card(
-            modifier = modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(horizontal = 40.dp)
-            ,
-            border = BorderStroke(1.dp, TrafficTheme.colors.cardBorder),
-            colors = CardDefaults.cardColors(
-                containerColor = TrafficTheme.colors.cardBackground
-            ),
-            shape = RoundedCornerShape(16.dp),
-        ) {
-            Column(
-                modifier = Modifier
+        CompositionLocalProvider(LocalDensity provides currentDensity) {
+            Card(
+                modifier = modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .padding(24.dp)
+                    .padding(horizontal = 40.dp)
                 ,
-                horizontalAlignment = Alignment.CenterHorizontally
+                border = BorderStroke(1.dp, TrafficTheme.colors.cardBorder),
+                colors = CardDefaults.cardColors(
+                    containerColor = TrafficTheme.colors.cardBackground
+                ),
+                shape = RoundedCornerShape(16.dp),
             ) {
-                Text(
-                    text = dialogTitle,
-                    color = TrafficTheme.colors.textPrimary,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                )
-
-                Spacer(
-                    modifier = Modifier
-                        .height(12.dp)
-                )
-
-                Text(
-                    text = dialogDescription,
-                    color = TrafficTheme.colors.textSecondary,
-                    textAlign = TextAlign.Center,
-                )
-
-                Spacer(
-                    modifier = Modifier
-                        .height(20.dp)
-                )
-
-                Row(
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .wrapContentHeight()
+                        .padding(24.dp)
                     ,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    DialogButton(
-                        modifier = Modifier
-                            .weight(1f)
-                        ,
-                        buttonText = "취소",
-                        buttonColor = Black,
-                        containerColor = Color.LightGray,
-                        onClickButton = onCancel,
+                    Text(
+                        text = dialogTitle,
+                        color = TrafficTheme.colors.textPrimary,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
                     )
-                    DialogButton(
+
+                    Spacer(
                         modifier = Modifier
-                            .weight(1f)
-                        ,
-                        buttonText = "삭제",
-                        buttonColor = White,
-                        containerColor = Color.Red,
-                        onClickButton = onConfirm,
+                            .height(12.dp)
                     )
+
+                    Text(
+                        text = dialogDescription,
+                        color = TrafficTheme.colors.textSecondary,
+                        textAlign = TextAlign.Center,
+                    )
+
+                    Spacer(
+                        modifier = Modifier
+                            .height(20.dp)
+                    )
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                        ,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
+                        DialogButton(
+                            modifier = Modifier
+                                .weight(1f)
+                            ,
+                            buttonText = "취소",
+                            buttonColor = Black,
+                            containerColor = Color.LightGray,
+                            onClickButton = onCancel,
+                        )
+                        DialogButton(
+                            modifier = Modifier
+                                .weight(1f)
+                            ,
+                            buttonText = "삭제",
+                            buttonColor = White,
+                            containerColor = Color.Red,
+                            onClickButton = onConfirm,
+                        )
+                    }
                 }
             }
         }
