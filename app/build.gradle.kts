@@ -44,16 +44,17 @@ android {
             // 애드몹 앱 id
             manifestPlaceholders["ADMOB_APP_ID"] = properties.getProperty("DEBUG_ADMOB_APP_ID")
             // 광고단위 id
-            buildConfigField("String", "AD_UNIT_ID", "\"${properties.getProperty("DEBUG_AD_UNIT_ID")}\"")
+            buildConfigField(type = "String", name = "AD_UNIT_ID", value = "\"${properties.getProperty("DEBUG_AD_UNIT_ID")}\"")
         }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                     getDefaultProguardFile("proguard-android-optimize.txt"),
                     "proguard-rules.pro"
             )
             manifestPlaceholders["ADMOB_APP_ID"] = properties.getProperty("RELEASE_ADMOB_APP_ID")
-            buildConfigField("String", "AD_UNIT_ID", "\"${properties.getProperty("RELEASE_AD_UNIT_ID")}\"")
+            buildConfigField(type = "String", name = "AD_UNIT_ID", value = "\"${properties.getProperty("RELEASE_AD_UNIT_ID")}\"")
 
             signingConfig = signingConfigs.getByName("release")
         }
