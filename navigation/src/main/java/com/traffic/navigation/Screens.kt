@@ -32,21 +32,13 @@ sealed interface Screens: NavKey {
 data class BottomNavItem(
     val icon: ImageVector,
     val title: String,
+    val topBarTitle: String,
 )
 
 val TOP_LEVEL_DESTINATIONS = mapOf(
-    Screens.Home to BottomNavItem(
-        icon = Icons.Default.Home,
-        title = "홈"
-    ),
-    Screens.Station to BottomNavItem(
-        icon = Icons.Default.Search,
-        title = "검색"
-    ),
-    Screens.Setting to BottomNavItem(
-        icon = Icons.Default.Person,
-        title = "설정"
-    ),
+    Screens.Home to BottomNavItem(Icons.Default.Home, "홈", "광주버스"),
+    Screens.Station to BottomNavItem(Icons.Default.Search, "검색", "정류장 검색"),
+    Screens.Setting to BottomNavItem(Icons.Default.Person, "설정", "설정"),
 )
 
 val MAIN_LEVEL_ROUTES = setOf(

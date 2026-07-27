@@ -77,25 +77,8 @@ fun MainScreenRoute(
 
     Scaffold(
         topBar = {
-            val title = when (navigationState.topLevelRoute) {
-                Screens.Home -> "광주버스"
-                Screens.Station -> "정류장 검색"
-                Screens.Setting -> "설정"
-                else -> "광주버스"
-            }
-
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text = title,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = TrafficTheme.colors.textPrimary
-                    )
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = TrafficTheme.colors.mainBackground
-                )
+            MainTopBar(
+                title = TOP_LEVEL_DESTINATIONS[navigationState.topLevelRoute]?.topBarTitle ?: "광주버스"
             )
         },
         bottomBar = {
@@ -143,4 +126,21 @@ fun MainScreenRoute(
             )
         )
     }
+}
+
+@Composable
+private fun MainTopBar(title: String) {
+    CenterAlignedTopAppBar(
+        title = {
+            Text(
+                text = title,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = TrafficTheme.colors.textPrimary
+            )
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = TrafficTheme.colors.mainBackground
+        )
+    )
 }
