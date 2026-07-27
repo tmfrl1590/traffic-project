@@ -1,8 +1,5 @@
 package com.traffic.presentation.screens.home
 
-import android.app.Activity
-import android.content.Context
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,7 +33,6 @@ import com.traffic.presentation.screens.home.viewmodel.HomeViewModel
 
 @Composable
 fun HomeScreenRoute(
-    context: Context,
     homeViewModel: HomeViewModel = hiltViewModel(),
     onStationCardClick: (String, String) -> Unit,
     onGotoStation: () -> Unit,
@@ -45,13 +40,6 @@ fun HomeScreenRoute(
     TrackScreenView(screenName = ScreenName.Home)
 
     val state by homeViewModel.state.collectAsStateWithLifecycle()
-
-    BackHandler(
-        enabled = true,
-        onBack = {
-            (context as Activity).finish()
-        }
-    )
 
     HomeScreen(
         likeStationList = state.likeStationList,

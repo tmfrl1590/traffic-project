@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -128,7 +127,6 @@ fun MainScreenRoute(
                 entryProvider {
                     entry<Screens.Home> {
                         HomeScreenRoute(
-                            context = LocalContext.current,
                             onStationCardClick = onStationCardClick,
                             onGotoStation = { navigator.navigate(route = Screens.Station)}
                         )
