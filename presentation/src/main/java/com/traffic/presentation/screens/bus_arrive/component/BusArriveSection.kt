@@ -18,12 +18,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Accessible
 import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -118,21 +120,20 @@ private fun BusArriveCard(
             .fillMaxWidth()
         ,
         colors = CardDefaults.cardColors(containerColor = TrafficTheme.colors.cardBackground),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp), // 미세한 그림자 효과
-        shape = RoundedCornerShape(16.dp), // 라운딩 확장
-        border = BorderStroke(1.dp, TrafficTheme.colors.cardBorder) // 아주 연한 경계선
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        shape = RoundedCornerShape(size = 16.dp),
+        border = BorderStroke(width = 1.dp, color = TrafficTheme.colors.cardBorder)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp), // 내부 패딩 확대
-            verticalAlignment = Alignment.CenterVertically, // 세로축 가운데 정렬
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            // [1] 왼쪽: 버스 노선 캡슐형 배지
             Card(
                 colors = CardDefaults.cardColors(containerColor = busArriveModel.lineColor),
-                shape = RoundedCornerShape(20.dp), // 타원 캡슐형태
+                shape = RoundedCornerShape(size = 20.dp),
                 modifier = Modifier.wrapContentSize()
             ) {
                 Box(
@@ -148,16 +149,25 @@ private fun BusArriveCard(
                 }
             }
             Spacer(modifier = Modifier.width(16.dp))
-            // [2] 가운데: 실시간 도착 정보 (세로 계층 구조)
+
             Column(
-                modifier = Modifier.weight(1f) // 가운데 영역이 남은 공간을 차지하도록 설정
+                modifier = Modifier.weight(1f)
             ) {
-                Text(
-                    text = "${busArriveModel.remainMin}분 후 도착",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = TrafficTheme.colors.textPrimary
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "${busArriveModel.remainMin}분 후 도착",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TrafficTheme.colors.textPrimary
+                    )
+                    // 저상버스인 경우 태그 뱃지 표시
+                    if (busArriveModel.lowBus == "1") {
+                        Spacer(modifier = Modifier.width(6.dp))
+                        LowFloorBadge()
+                    }
+                }
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = "현재: ${busArriveModel.busStopName} (${busArriveModel.remainStop}정거장 전)",
@@ -166,7 +176,7 @@ private fun BusArriveCard(
                 )
             }
             Spacer(modifier = Modifier.width(12.dp))
-            // [3] 오른쪽: 독립된 핀 고정 버튼
+
             IconButton(
                 onClick = haptic.performAnd {
                     busArriveModel.lineId?.let { onClickPinned(it, busArriveModel.isPinned) }
@@ -182,6 +192,33 @@ private fun BusArriveCard(
                     modifier = Modifier.size(22.dp)
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun LowFloorBadge() {
+    Surface(
+        color = Color(0xFFE8F5E9),
+        shape = RoundedCornerShape(6.dp)
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Accessible,
+                contentDescription = "저상버스",
+                tint = Color(0xFF2E7D32),
+                modifier = Modifier.size(12.dp)
+            )
+            Spacer(modifier = Modifier.width(2.dp))
+            Text(
+                text = "저상",
+                fontSize = 11.sp,
+                color = Color(0xFF2E7D32),
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }
