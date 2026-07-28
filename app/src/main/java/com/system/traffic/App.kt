@@ -3,10 +3,8 @@ package com.system.traffic
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
 import android.os.Build
 import com.google.android.gms.ads.MobileAds
-import com.traffic.design.CommonConfig
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -15,10 +13,6 @@ class App : Application(){
     override fun onCreate() {
         super.onCreate()
         MobileAds.initialize(this)
-
-        CommonConfig.initialize(
-            adUnitId = BuildConfig.AD_UNIT_ID
-        )
 
         createNotificationChannel()
     }

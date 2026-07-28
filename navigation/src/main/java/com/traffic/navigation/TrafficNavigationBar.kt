@@ -18,7 +18,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation3.runtime.NavKey
-import com.traffic.design.noRippleClickable
+import com.traffic.design.component.noRippleClickable
 import com.traffic.design.ui.theme.TrafficTheme
 
 @Composable

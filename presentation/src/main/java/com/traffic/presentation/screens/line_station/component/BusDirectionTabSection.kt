@@ -17,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.system.traffic.core.enum.BusDirection
-import com.traffic.design.noRippleClickable
+import com.traffic.design.component.noRippleClickable
 
 @Composable
 fun BusDirectionTabSection(

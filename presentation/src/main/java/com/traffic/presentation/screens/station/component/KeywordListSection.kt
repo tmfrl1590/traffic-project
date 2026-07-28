@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.traffic.design.noRippleClickable
+import com.traffic.design.component.noRippleClickable
 import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.domain.model.KeywordModel
 

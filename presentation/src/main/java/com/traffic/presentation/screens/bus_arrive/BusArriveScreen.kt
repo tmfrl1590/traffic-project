@@ -43,8 +43,8 @@ import com.naver.maps.map.compose.MarkerState
 import com.naver.maps.map.compose.NaverMap
 import com.naver.maps.map.compose.rememberCameraPositionState
 import com.naver.maps.map.overlay.OverlayImage
-import com.traffic.design.AdBannerView
 import com.traffic.design.R
+import com.traffic.design.component.AdBannerView
 import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.presentation.PresentationConstants.DEFAULT_LATITUDE
 import com.traffic.presentation.PresentationConstants.DEFAULT_LONGITUDE
@@ -96,6 +96,7 @@ fun BusArriveScreenRoute(
             snackBarHostState.showSnackbar(message = error)
         }
     }
+
 
     BusArriveScreen(
         state = state,
@@ -152,6 +153,7 @@ private fun BusArriveScreen(
                         modifier = Modifier
                             .padding(top = 12.dp)
                             .padding(bottom = 20.dp)
+                        ,
                     )
 
                     BusStopAndFavoriteSection(

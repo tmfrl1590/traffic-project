@@ -37,15 +37,21 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.system.traffic.core.enum.AppThemeType
+import com.traffic.design.component.AdConfig
+import com.traffic.design.component.LocalAdConfig
 import com.traffic.design.ui.theme.MainColor
 import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.navigation.TrafficNavigationRoot
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val rootViewModel: RootViewModel by viewModels()
+
+    @Inject
+    lateinit var adConfig: AdConfig
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,10 +74,11 @@ class MainActivity : ComponentActivity() {
                 )
             ) {
                 CompositionLocalProvider(
-                    value = LocalDensity provides Density(
+                    LocalDensity provides Density(
                         density = currentDensity.density,
-                        fontScale = selectedFontSize
-                    )
+                        fontScale = selectedFontSize,
+                    ),
+                    LocalAdConfig provides adConfig
                 ) {
                     Column(
                         modifier = Modifier

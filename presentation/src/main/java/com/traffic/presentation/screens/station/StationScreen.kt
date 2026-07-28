@@ -16,12 +16,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.traffic.design.R
-import com.traffic.design.SearchBarSection
 import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.presentation.firebase.ScreenName
 import com.traffic.presentation.firebase.TrackScreenView
 import com.traffic.presentation.screens.station.action.StationAction
 import com.traffic.presentation.screens.station.component.KeywordListSection
+import com.traffic.presentation.screens.station.component.SearchBarSection
 import com.traffic.presentation.screens.station.component.SearchedStationListSection
 import com.traffic.presentation.screens.station.state.StationState
 import com.traffic.presentation.screens.station.viewmodel.StationViewModel

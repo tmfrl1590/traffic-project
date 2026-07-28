@@ -28,7 +28,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.traffic.design.NoDataComponent
 import com.traffic.design.R
 import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.domain.model.StationModel
@@ -44,10 +43,17 @@ fun SearchedStationListSection(
         modifier = Modifier
     ){
         if(searchedStationList.isEmpty()){
-            NoDataComponent(
-                modifier = Modifier.fillMaxSize(),
-                text = stringResource(R.string.searched_station_no_data)
-            )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(R.string.searched_station_no_data),
+                    fontSize = 24.sp,
+                    color = TrafficTheme.colors.textPrimary
+                )
+            }
         } else {
             LazyColumn(
                 modifier = Modifier

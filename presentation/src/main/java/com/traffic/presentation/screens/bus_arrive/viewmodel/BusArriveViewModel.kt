@@ -1,10 +1,10 @@
 package com.traffic.presentation.screens.bus_arrive.viewmodel
 
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.system.traffic.core.domain.onError
 import com.system.traffic.core.domain.onSuccess
-import com.traffic.design.lineKindToColor
 import com.traffic.domain.model.StationModel
 import com.traffic.domain.usecase.arrive.BusArriveUseCase
 import com.traffic.domain.usecase.like.GetLikeStationListUseCase
@@ -49,6 +49,7 @@ class BusArriveViewModel @Inject constructor(
     private val deletePinnedBusUseCase: DeletePinnedBusUseCase,
     private val getPinnedBusUseCase: GetPinnedBusUseCase,
 ): ViewModel() {
+
 
     private val _state = MutableStateFlow(value = BusArriveState())
 
@@ -183,6 +184,15 @@ class BusArriveViewModel @Inject constructor(
             is BusArriveAction.OnClickFavoriteIcon -> toggleLikeStation(action.stationModel)
             BusArriveAction.OnClickRefresh -> onClickRefresh()
             is BusArriveAction.OnClickPinnedIcon -> onClickPinnedIcon(lineId = action.lineId, isPinned = action.isPinned)
+        }
+    }
+
+    fun lineKindToColor(lineKind: String): Color {
+        return when (lineKind) {
+            "1" -> Color(0xFFDC2626)
+            "2" -> Color(0xFF16A34A)
+            "3" -> Color(0xFF2563EB)
+            else -> Color.Black
         }
     }
 }
