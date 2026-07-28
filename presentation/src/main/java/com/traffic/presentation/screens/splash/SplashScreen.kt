@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,7 +22,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -45,8 +48,10 @@ fun SplashScreenRoute(
 
     val scale = remember { Animatable(0f) }
     val state by splashViewModel.state.collectAsState()
+    var animationDone by remember { mutableStateOf(false) }
 
-    LaunchedEffect(key1 = true) {
+    // 애니메이션은 초기화와 분리해 병렬로 진행
+    LaunchedEffect(key1 = Unit) {
         scale.animateTo(
             targetValue = 0.5f,
             animationSpec = tween(
@@ -54,20 +59,29 @@ fun SplashScreenRoute(
                 easing = { OvershootInterpolator(8f).getInterpolation(it) }
             )
         )
+        animationDone = true
+    }
 
-        splashViewModel.initializeData(onComplete = onGoHomeScreen)
+    // 콜백 대신 상태 관찰: 초기화 완료 + 애니메이션 완료 시 Home으로 이동.
+    // 항상 "현재" ViewModel의 상태를 보므로 ViewModel이 재생성되어도 신호가 유실되지 않는다.
+    LaunchedEffect(key1 = state.isComplete, key2 = animationDone) {
+        if (state.isComplete && animationDone) {
+            onGoHomeScreen()
+        }
     }
 
     SplashScreen(
         scale = scale,
-        state = state
+        state = state,
+        onRetry = splashViewModel::retry
     )
 }
 
 @Composable
 private fun SplashScreen(
     scale: Animatable<Float, AnimationVector1D>,
-    state: SplashState
+    state: SplashState,
+    onRetry: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -86,7 +100,22 @@ private fun SplashScreen(
                 contentDescription = "main_logo"
             )
 
-            if (state.isLoading) {
+            if (state.isError) {
+                Spacer(modifier = Modifier.height(32.dp))
+
+                Text(
+                    text = "데이터를 불러오지 못했어요.\n다시 시도해 주세요.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Button(onClick = onRetry) {
+                    Text(text = "재시도")
+                }
+            } else if (state.isLoading) {
                 Spacer(modifier = Modifier.height(32.dp))
 
                 LinearProgressIndicator(

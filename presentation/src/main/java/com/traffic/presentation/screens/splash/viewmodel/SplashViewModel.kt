@@ -9,11 +9,13 @@ import com.traffic.domain.usecase.file.InitializeDataUseCase
 import com.traffic.presentation.screens.splash.state.SplashState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,45 +28,64 @@ class SplashViewModel @Inject constructor(
     private val _state = MutableStateFlow(SplashState())
     val state: StateFlow<SplashState> = _state
 
+    init {
+        // 생성 즉시 초기화 시작.
+        // 화면은 콜백이 아닌 state(isComplete)를 관찰하므로,
+        // ViewModel이 재생성되어도 새 인스턴스가 다시 시작해 신호가 유실되지 않는다.
+        initializeData()
+    }
 
-    fun initializeData(
-        onComplete: () -> Unit,
-    ) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val isFirst = getIsFirstLoginUseCase()
-            if (isFirst) {
-                setUpIsFirstLoginUseCase()
+    fun retry() {
+        _state.update { it.copy(isError = false) }
+        initializeData()
+    }
 
-                initializeDataUseCase().collect { state ->
-                    withContext(Dispatchers.Main) {
-                        when (state) {
-                            is InitState.Progress -> {
-                                _state.update {
-                                    it.copy(
-                                        isLoading = true,
-                                        message = state.message,
-                                        progress = state.progress
-                                    )
+    private fun initializeData() {
+        viewModelScope.launch(context = Dispatchers.IO) {
+            try {
+                withTimeout(timeMillis = INIT_TIMEOUT_MS) {
+                    if (getIsFirstLoginUseCase()) {
+                        initializeDataUseCase()
+                            .catch {
+                                _state.update { s -> s.copy(isLoading = false, isError = true) }
+                            }
+                            .collect { initState ->
+                                when (initState) {
+                                    is InitState.Progress -> {
+                                        _state.update {
+                                            it.copy(
+                                                isLoading = true,
+                                                message = initState.message,
+                                                progress = initState.progress
+                                            )
+                                        }
+                                    }
+                                    is InitState.Complete -> {
+                                        // 초기화가 "완료된 후"에만 최초 실행 플래그 저장
+                                        // (도중에 앱이 죽으면 다음 실행에서 다시 초기화)
+                                        setUpIsFirstLoginUseCase()
+                                        _state.update {
+                                            it.copy(
+                                                isLoading = false,
+                                                message = "완료",
+                                                progress = 1.0f,
+                                                isComplete = true
+                                            )
+                                        }
+                                    }
                                 }
                             }
-                            is InitState.Complete -> {
-                                _state.update {
-                                    it.copy(
-                                        isLoading = false,
-                                        message = "완료",
-                                        progress = 1.0f
-                                    )
-                                }
-                                onComplete()
-                            }
-                        }
+                    } else {
+                        _state.update { it.copy(isComplete = true) }
                     }
                 }
-            } else {
-                withContext(Dispatchers.Main) {
-                    onComplete()
-                }
+            } catch (e: TimeoutCancellationException) {
+                _state.update { it.copy(isLoading = false, isError = true) }
             }
         }
+    }
+
+    companion object {
+        private const val INIT_TIMEOUT_MS = 30_000L
     }
 }
