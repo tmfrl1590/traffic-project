@@ -6,6 +6,7 @@ import kotlinx.serialization.SerializationException
 import okio.IOException
 import retrofit2.HttpException
 import retrofit2.Response
+import java.net.SocketTimeoutException
 import java.util.logging.Level
 import java.util.logging.Logger
 import kotlin.coroutines.cancellation.CancellationException
@@ -20,6 +21,9 @@ suspend inline fun <reified T> safeCall(
         responseToResult(response)
     } catch (e: CancellationException) { // 코루틴 취소는 정상이므로 로그를 남기지 않고 다시 던짐, 취소는 정상 신호, 최우선 재전파
         throw e
+    } catch (e: SocketTimeoutException){
+        logger.log(Level.WARNING, "safeCall SERVER_TIMEOUT Error", e)
+        Result.Error(DataError.Remote.SERVER_TIMEOUT)
     } catch (e: IOException) {
         logger.log(Level.WARNING, "safeCall NO_INTERNET Error", e)
         Result.Error(DataError.Remote.NO_INTERNET)

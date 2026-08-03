@@ -8,6 +8,7 @@ sealed interface DataError: Error {
         TOO_MANY_REQUESTS,
         NO_INTERNET,
         SERVER,
+        SERVER_TIMEOUT,
         SERIALIZATION,
         UNKNOWN
     }

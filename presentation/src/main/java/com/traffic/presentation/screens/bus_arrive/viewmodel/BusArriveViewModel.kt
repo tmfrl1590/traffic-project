@@ -3,6 +3,7 @@ package com.traffic.presentation.screens.bus_arrive.viewmodel
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.system.traffic.core.domain.DataError
 import com.system.traffic.core.domain.onError
 import com.system.traffic.core.domain.onSuccess
 import com.traffic.domain.model.StationModel
@@ -95,9 +96,12 @@ class BusArriveViewModel @Inject constructor(
                         )
                     }
                 }
-                .onError {
-                    _errorFlow.emit("오류가 발생하였습니다.")
+                .onError { error ->
                     _state.update { it.copy(isLoading = false) }
+                    when(error){
+                        DataError.Remote.SERVER_TIMEOUT -> _errorFlow.emit("서버 연결이 지연되고 있습니다. 잠시 후 다시 시도해주세요.")
+                        else -> _errorFlow.emit("오류가 발생하였습니다.")
+                    }
                 }
         }
     }
