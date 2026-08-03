@@ -92,10 +92,11 @@ private fun BusArriveList(
 ) {
     val haptic = LocalHapticFeedback.current
 
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        itemsIndexed(busArriveList) { index, item ->
+    LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        itemsIndexed(
+            items = busArriveList,
+            key = { _, item -> "${item.lineId}_${item.busId}" }
+        ) { index, item ->
             BusArriveCard(
                 haptic = haptic,
                 busArriveModel = item,
