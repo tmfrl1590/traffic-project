@@ -1,7 +1,7 @@
 package com.traffic.presentation.screens.setting.state
 
-import com.system.traffic.core.enum.AppFontSize
-import com.system.traffic.core.enum.AppThemeType
+import com.system.traffic.core.enums.AppFontSize
+import com.system.traffic.core.enums.AppThemeType
 
 data class SettingState(
     val selectedFontSize: String = AppFontSize.MEDIUM.fontSizeText,

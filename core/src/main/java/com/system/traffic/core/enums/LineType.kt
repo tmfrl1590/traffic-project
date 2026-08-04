@@ -1,4 +1,4 @@
-package com.system.traffic.core.enum
+package com.system.traffic.core.enums
 
 enum class LineType {
     REGULAR,   // 1: 운행정류장

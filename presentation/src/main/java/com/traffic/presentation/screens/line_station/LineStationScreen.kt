@@ -37,7 +37,7 @@ import com.naver.maps.map.compose.Marker
 import com.naver.maps.map.compose.MarkerState
 import com.naver.maps.map.compose.NaverMap
 import com.naver.maps.map.compose.rememberCameraPositionState
-import com.system.traffic.core.enum.LineType
+import com.system.traffic.core.enums.LineType
 import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.presentation.PresentationConstants.DEFAULT_LATITUDE
 import com.traffic.presentation.PresentationConstants.DEFAULT_LONGITUDE

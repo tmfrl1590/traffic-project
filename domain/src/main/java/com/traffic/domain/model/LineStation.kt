@@ -1,6 +1,6 @@
 package com.traffic.domain.model
 
-import com.system.traffic.core.enum.LineType
+import com.system.traffic.core.enums.LineType
 
 data class LineStation(
     val resultCode: String,

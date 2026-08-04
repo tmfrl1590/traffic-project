@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.system.traffic.core.enum.BusDirection
+import com.system.traffic.core.enums.BusDirection
 import com.traffic.design.component.noRippleClickable
 import com.traffic.design.ui.theme.TrafficTheme
 

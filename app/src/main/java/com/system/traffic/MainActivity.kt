@@ -29,7 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.system.traffic.core.enum.AppThemeType
+import com.system.traffic.core.enums.AppThemeType
 import com.system.traffic.permission.PermissionManager
 import com.traffic.design.component.AdConfig
 import com.traffic.design.ui.theme.MainColor

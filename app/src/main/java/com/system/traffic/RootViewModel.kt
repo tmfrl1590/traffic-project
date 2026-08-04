@@ -2,8 +2,8 @@ package com.system.traffic
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.system.traffic.core.enum.AppFontSize
-import com.system.traffic.core.enum.AppThemeType
+import com.system.traffic.core.enums.AppFontSize
+import com.system.traffic.core.enums.AppThemeType
 import com.traffic.domain.usecase.datastore.GetAppFontSizeUseCase
 import com.traffic.domain.usecase.datastore.GetAppThemeTypeUseCase
 import com.traffic.domain.usecase.network.GetNetworkStatusUseCase

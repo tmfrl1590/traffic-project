@@ -1,6 +1,6 @@
 package com.traffic.presentation.model
 
-import com.system.traffic.core.enum.LineType
+import com.system.traffic.core.enums.LineType
 import com.traffic.domain.model.LineStation
 import com.traffic.domain.model.LineStationItem
 

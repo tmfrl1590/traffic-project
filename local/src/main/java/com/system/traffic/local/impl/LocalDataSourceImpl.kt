@@ -7,8 +7,8 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.system.traffic.core.enum.AppFontSize
-import com.system.traffic.core.enum.AppThemeType
+import com.system.traffic.core.enums.AppFontSize
+import com.system.traffic.core.enums.AppThemeType
 import com.system.traffic.local.DataStoreConstants
 import com.system.traffic.local.db.FileDataSource
 import com.system.traffic.local.db.dao.KeywordDao
