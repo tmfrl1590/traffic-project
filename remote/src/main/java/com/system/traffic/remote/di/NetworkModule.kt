@@ -1,6 +1,8 @@
 package com.system.traffic.remote.di
 
+import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.system.traffic.remote.BuildConfig
 import com.system.traffic.remote.RemoteConstants
 import com.system.traffic.remote.service.TrafficService
 import dagger.Module
@@ -31,11 +33,17 @@ internal object NetworkModule {
     @Singleton
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
-            .addInterceptor(interceptor)
-            .addNetworkInterceptor(interceptor)
+            .apply {
+                if (BuildConfig.DEBUG) {
+                    addInterceptor(
+                        HttpLoggingInterceptor { message ->
+                            // 로그에서도 API 키 마스킹
+                            Log.d("OkHttp", message.replace(oldValue = RemoteConstants.SERVICE_KEY, newValue = "***"))
+                        }.setLevel(HttpLoggingInterceptor.Level.BODY)
+                    )
+                }
+            }
             .connectTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
