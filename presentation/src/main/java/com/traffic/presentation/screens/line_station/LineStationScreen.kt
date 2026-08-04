@@ -29,7 +29,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.CameraUpdate
@@ -66,10 +69,12 @@ fun LineStationScreenRoute(
         lineStationViewModel.getLineStationList(lineId = lineId)
     }
 
-    val error by lineStationViewModel.errorFlow.collectAsStateWithLifecycle("")
-    LaunchedEffect(key1 = error) {
-        if (error.isNotEmpty()) {
-            snackBarHostState.showSnackbar(message = error)
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(key1 = Unit) {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            lineStationViewModel.errorFlow.collect { message ->
+                snackBarHostState.showSnackbar(message = message)
+            }
         }
     }
 
