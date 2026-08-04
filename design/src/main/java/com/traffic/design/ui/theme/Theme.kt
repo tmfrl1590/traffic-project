@@ -27,7 +27,7 @@ object TrafficTheme {
 fun TrafficTheme(
     isDarkTheme: Boolean,
     selectedFontSize: Float,
-    adConfig: AdConfig = AdConfig(),
+    adConfig: AdConfig,
     colors: TrafficColors = if (isDarkTheme) DarkTrafficColors else LightTrafficColors,
     typography: TrafficTypography = DefaultTypography,
     content: @Composable () -> Unit,

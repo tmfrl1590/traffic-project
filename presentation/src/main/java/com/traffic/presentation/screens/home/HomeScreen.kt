@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.traffic.design.R
+import com.traffic.design.component.AdConfig
 import com.traffic.design.component.noRippleClickable
 import com.traffic.design.ui.theme.MainColor
 import com.traffic.design.ui.theme.TrafficTheme
@@ -126,6 +127,7 @@ fun EmptyLikeStation(
 @Composable
 private fun PreviewHomeScreenLight() {
     TrafficTheme(
+        adConfig = AdConfig(),
         isDarkTheme = false,
         selectedFontSize = 1.0f
     ) {
@@ -152,6 +154,7 @@ private fun PreviewHomeScreenLight() {
 @Composable
 private fun PreviewHomeScreenDark() {
     TrafficTheme(
+        adConfig = AdConfig(),
         isDarkTheme = true,
         selectedFontSize = 1.0f
     ) {
@@ -178,6 +181,7 @@ private fun PreviewHomeScreenDark() {
 @Composable
 private fun PreviewEmptyLikeStation() {
     TrafficTheme(
+        adConfig = AdConfig(),
         isDarkTheme = false,
         selectedFontSize = 1.0f
     ) {
@@ -194,6 +198,7 @@ private fun PreviewEmptyLikeStation() {
 @Composable
 private fun PreviewEmptyLikeStationDark() {
     TrafficTheme(
+        adConfig = AdConfig(),
         isDarkTheme = true,
         selectedFontSize = 1.0f
     ) {
