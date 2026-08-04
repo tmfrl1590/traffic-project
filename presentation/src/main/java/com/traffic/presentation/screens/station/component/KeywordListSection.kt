@@ -21,10 +21,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.traffic.design.component.noRippleClickable
+import com.traffic.design.R
 import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.domain.model.KeywordModel
 
@@ -45,14 +47,14 @@ fun KeywordListSection(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = "최근 검색어",
+                    text = stringResource(R.string.recent_keywords),
                     modifier = Modifier
                         .padding(start = 20.dp)
                         .padding(bottom = 4.dp)
                 )
 
                 Text(
-                    text = "전체 삭제",
+                    text = stringResource(R.string.delete_all),
                     modifier = Modifier
                         .padding(end = 20.dp)
                         .noRippleClickable{ onClickAllDeleteKeywordList() }

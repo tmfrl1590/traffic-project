@@ -1,5 +1,6 @@
 package com.traffic.navigation
 
+import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -7,6 +8,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation3.runtime.NavKey
 import androidx.savedstate.serialization.SavedStateConfiguration
+import com.traffic.design.R
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
@@ -31,14 +33,14 @@ sealed interface Screens: NavKey {
 
 data class BottomNavItem(
     val icon: ImageVector,
-    val title: String,
-    val topBarTitle: String,
+    @StringRes val titleRes: Int,
+    @StringRes val topBarTitleRes: Int,
 )
 
 val TOP_LEVEL_DESTINATIONS = mapOf(
-    Screens.Home to BottomNavItem(Icons.Default.Home, "홈", "광주버스"),
-    Screens.Station to BottomNavItem(Icons.Default.Search, "검색", "정류장 검색"),
-    Screens.Setting to BottomNavItem(Icons.Default.Person, "설정", "설정"),
+    Screens.Home to BottomNavItem(Icons.Default.Home, R.string.nav_title_home, R.string.top_bar_title_home),
+    Screens.Station to BottomNavItem(Icons.Default.Search, R.string.nav_title_station, R.string.top_bar_title_station),
+    Screens.Setting to BottomNavItem(Icons.Default.Person, R.string.nav_title_setting, R.string.top_bar_title_setting),
 )
 
 val MAIN_LEVEL_ROUTES = setOf(

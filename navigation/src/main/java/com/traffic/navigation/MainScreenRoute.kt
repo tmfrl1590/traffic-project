@@ -13,11 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
+import com.traffic.design.R
 import com.traffic.design.component.TrafficSnackBar
 import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.presentation.event.UiEvent
@@ -78,7 +80,10 @@ fun MainScreenRoute(
     Scaffold(
         topBar = {
             MainTopBar(
-                title = TOP_LEVEL_DESTINATIONS[navigationState.topLevelRoute]?.topBarTitle ?: "광주버스"
+                title = stringResource(
+                    TOP_LEVEL_DESTINATIONS[navigationState.topLevelRoute]?.topBarTitleRes
+                        ?: R.string.top_bar_title_home
+                )
             )
         },
         bottomBar = {

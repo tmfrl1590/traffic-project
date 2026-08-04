@@ -17,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
@@ -126,8 +127,8 @@ private fun SettingScreen(
                 modifier = Modifier
                     .align(Alignment.Center)
                 ,
-                dialogTitle = "핀 데이터 초기화",
-                dialogDescription = "등록된 모든 핀 버스 목록을 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.",
+                dialogTitle = stringResource(R.string.setting_reset_pin_dialog_title),
+                dialogDescription = stringResource(R.string.setting_reset_pin_dialog_description),
                 onCancel = { onAction(SettingAction.OnDismissResetDialog) },
                 onConfirm = { onAction(SettingAction.OnClickResetConfirm) },
             )
@@ -144,7 +145,7 @@ fun Context.sendEmail(to: String, subject: String, chooserTitle: String) {
     runCatching {
         startActivity(Intent.createChooser(intent, chooserTitle))
     }.onFailure {
-        Toast.makeText(this, "이메일을 보낼 수 있는 앱이 설치되어 있지 않습니다.", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.email_app_not_found), Toast.LENGTH_SHORT).show()
     }
 }
 

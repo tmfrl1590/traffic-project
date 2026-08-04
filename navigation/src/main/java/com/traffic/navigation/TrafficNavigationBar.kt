@@ -15,6 +15,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,7 +53,7 @@ fun TrafficNavigationBar(
                 imageVector = data.icon,
                 iconColor = if(topLevelDestination == selectedKey) TrafficTheme.colors.selectedBottomColor else TrafficTheme.colors.unSelectedBottomColor,
                 contentDescription = "",
-                label = data.title,
+                label = stringResource(data.titleRes),
                 labelColor = if(topLevelDestination == selectedKey) TrafficTheme.colors.selectedBottomColor else TrafficTheme.colors.unSelectedBottomColor,
             )
         }

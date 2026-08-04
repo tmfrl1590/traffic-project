@@ -9,13 +9,15 @@ import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
+import com.traffic.design.R
 import kotlinx.coroutines.launch
 
 @Composable
 fun DoubleBackToExitHandler(
     enabled: Boolean,
     snackbarHostState: SnackbarHostState,
-    message: String = "한 번 더 누르면 앱이 종료됩니다.",
+    message: String = stringResource(R.string.double_back_to_exit),
     exitIntervalMs: Long = NavigationConstants.EXIT_BACK_PRESS_INTERVAL_MS,
     minIntervalMs: Long = NavigationConstants.EXIT_BACK_PRESS_MIN_INTERVAL_MS
 ) {

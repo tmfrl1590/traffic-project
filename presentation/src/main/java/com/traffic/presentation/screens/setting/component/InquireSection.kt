@@ -58,7 +58,7 @@ fun InquireSection(
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = "문의 및 피드백",
+                    text = stringResource(R.string.setting_inquire_title),
                     style = TrafficTheme.typography.sectionTitle,
                     color = TrafficTheme.colors.textPrimary
                 )
@@ -87,7 +87,7 @@ fun InquireSection(
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "궁금한 점이나 의견을 보내주세요",
+                        text = stringResource(R.string.setting_inquire_description),
                         style = TrafficTheme.typography.sectionBody2,
                         color = Color(0xFF94A3B8)
                     )

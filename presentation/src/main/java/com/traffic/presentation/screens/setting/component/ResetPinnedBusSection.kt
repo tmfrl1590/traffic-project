@@ -15,12 +15,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.traffic.design.ui.theme.MainColor
 import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.design.ui.theme.White
+import com.traffic.design.R
 
 @Composable
 fun ResetPinnedBusSection(
@@ -41,7 +43,7 @@ fun ResetPinnedBusSection(
             modifier = Modifier.padding(20.dp)
         ) {
             Text(
-                text = "저장된 핀 리스트 초기화",
+                text = stringResource(R.string.setting_reset_pinned_bus_title),
                 style = TrafficTheme.typography.sectionTitle,
                 color = TrafficTheme.colors.textPrimary
             )
@@ -80,7 +82,7 @@ private fun ResetButton(
             contentAlignment = Alignment.Center,
         ){
             Text(
-                text = "핀 초기화",
+                text = stringResource(R.string.setting_reset_pin_button),
                 style = TrafficTheme.typography.button,
                 color = White,
             )

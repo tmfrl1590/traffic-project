@@ -26,6 +26,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -39,6 +40,7 @@ import com.naver.maps.map.compose.NaverMap
 import com.naver.maps.map.compose.rememberCameraPositionState
 import com.system.traffic.core.enums.LineType
 import com.traffic.design.ui.theme.TrafficTheme
+import com.traffic.design.R
 import com.traffic.presentation.PresentationConstants.DEFAULT_LATITUDE
 import com.traffic.presentation.PresentationConstants.DEFAULT_LONGITUDE
 import com.traffic.presentation.firebase.ScreenName
@@ -143,7 +145,7 @@ private fun LineStationScreen(
                     .padding(horizontal = 16.dp)
             ) {
                 val firstStation = state.lineStationList.firstOrNull()
-                val lineName = firstStation?.lineName ?: "노선 정보"
+                val lineName = firstStation?.lineName ?: stringResource(R.string.line_info)
                 
                 Text(
                     modifier = Modifier.padding(vertical = 12.dp),
@@ -168,7 +170,7 @@ private fun LineStationScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "경유하는 정류소 정보가 없습니다.",
+                            text = stringResource(R.string.line_station_empty),
                             color = TrafficTheme.colors.textPrimary,
                             style = TrafficTheme.typography.empty
                         )

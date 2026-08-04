@@ -18,10 +18,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.system.traffic.core.enums.AppThemeType
 import com.traffic.design.ui.theme.MainColor
 import com.traffic.design.ui.theme.TrafficTheme
+import com.traffic.design.R
 
 @Composable
 fun AppThemeSection(
@@ -43,7 +45,7 @@ fun AppThemeSection(
             modifier = Modifier.padding(20.dp)
         ) {
             Text(
-                text = "앱 테마 설정",
+                text = stringResource(R.string.setting_theme_title),
                 style = TrafficTheme.typography.sectionTitle,
                 color = TrafficTheme.colors.textPrimary
             )

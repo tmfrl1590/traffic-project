@@ -15,8 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.traffic.design.ui.theme.TrafficTheme
+import com.traffic.design.R
 import com.traffic.presentation.model.LineStationItemModel
 
 @Composable
@@ -56,7 +58,7 @@ fun LineStationListSection(
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = station.arsId?.toString() ?: "번호 없음",
+                        text = station.arsId?.toString() ?: stringResource(R.string.no_station_number),
                         style = TrafficTheme.typography.sectionBody1,
                         color = Color.Gray
                     )

@@ -157,7 +157,7 @@ private fun BusArriveCard(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "${busArriveModel.remainMin}분 후 도착",
+                        text = stringResource(R.string.bus_arrive_minutes_later, busArriveModel.remainMin.orEmpty()),
                         style = TrafficTheme.typography.cardTitle,
                         color = TrafficTheme.colors.textPrimary
                     )
@@ -169,7 +169,11 @@ private fun BusArriveCard(
                 }
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "현재: ${busArriveModel.busStopName} (${busArriveModel.remainStop}정거장 전)",
+                    text = stringResource(
+                        R.string.bus_arrive_current_position,
+                        busArriveModel.busStopName.orEmpty(),
+                        busArriveModel.remainStop.orEmpty()
+                    ),
                     style = TrafficTheme.typography.cardBody,
                     color = TrafficTheme.colors.textPrimary
                 )
@@ -207,13 +211,13 @@ private fun LowFloorBadge() {
         ) {
             Icon(
                 imageVector = Icons.Filled.Accessible,
-                contentDescription = "저상버스",
+                contentDescription = stringResource(R.string.low_floor_bus),
                 tint = Color(0xFF2E7D32),
                 modifier = Modifier.size(12.dp)
             )
             Spacer(modifier = Modifier.width(2.dp))
             Text(
-                text = "저상",
+                text = stringResource(R.string.low_floor),
                 fontSize = 11.sp,
                 color = Color(0xFF2E7D32),
                 fontWeight = FontWeight.Bold

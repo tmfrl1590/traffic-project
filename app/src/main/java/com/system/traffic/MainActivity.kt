@@ -25,12 +25,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.system.traffic.permission.PermissionManager
+import com.traffic.design.R
 import com.traffic.design.component.AdConfig
 import com.traffic.design.ui.theme.MainColor
 import com.traffic.design.ui.theme.TrafficTheme
@@ -116,7 +118,7 @@ private fun NetworkOfflineBanner() {
             contentAlignment = Alignment.Center
         ){
             Text(
-                text = "네트워크 연결이 원활하지 않습니다.",
+                text = stringResource(R.string.network_offline),
                 color = Color.White,
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Medium

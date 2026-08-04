@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -104,7 +105,7 @@ private fun SplashScreen(
                 Spacer(modifier = Modifier.height(32.dp))
 
                 Text(
-                    text = "데이터를 불러오지 못했어요.\n다시 시도해 주세요.",
+                    text = stringResource(R.string.splash_load_error),
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onBackground
@@ -113,7 +114,7 @@ private fun SplashScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(onClick = onRetry) {
-                    Text(text = "재시도")
+                    Text(text = stringResource(R.string.retry))
                 }
             } else if (state.isLoading) {
                 Spacer(modifier = Modifier.height(32.dp))

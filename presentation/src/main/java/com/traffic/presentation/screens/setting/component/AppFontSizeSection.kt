@@ -18,10 +18,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.system.traffic.core.enums.AppFontSize
 import com.traffic.design.ui.theme.MainColor
 import com.traffic.design.ui.theme.TrafficTheme
+import com.traffic.design.R
 
 @Composable
 fun AppFontSizeSection(
@@ -42,7 +44,7 @@ fun AppFontSizeSection(
             modifier = Modifier.padding(20.dp)
         ) {
             Text(
-                text = "글자 크기 설정",
+                text = stringResource(R.string.setting_font_size_title),
                 style = TrafficTheme.typography.sectionTitle,
                 color = TrafficTheme.colors.textPrimary
             )

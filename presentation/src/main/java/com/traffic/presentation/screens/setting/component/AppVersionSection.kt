@@ -57,7 +57,7 @@ fun AppVersionSection(
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = "앱 정보",
+                    text = stringResource(R.string.setting_app_info_title),
                     style = TrafficTheme.typography.sectionTitle,
                     color = TrafficTheme.colors.textPrimary
                 )

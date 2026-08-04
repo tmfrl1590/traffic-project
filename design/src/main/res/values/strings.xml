@@ -23,6 +23,8 @@
     <!--Station Screen-->
     <string name="station">정류장</string>
     <string name="searched_station_no_data">정류장 정보가 없습니다</string>
+    <string name="recent_keywords">최근 검색어</string>
+    <string name="delete_all">전체 삭제</string>
 
     <!--Line Screen-->
     <string name="line">노선</string>
@@ -33,13 +35,56 @@
     <string name="setting_app_version">앱버전</string>
     <string name="setting_inquire">건의하기</string>
     <string name="setting_open_source_list">오픈소스 목록 보기</string>
+    <string name="setting_font_size_title">글자 크기 설정</string>
+    <string name="setting_theme_title">앱 테마 설정</string>
+    <string name="setting_reset_pinned_bus_title">저장된 핀 리스트 초기화</string>
+    <string name="setting_reset_pin_button">핀 초기화</string>
+    <string name="setting_reset_pin_dialog_title">핀 데이터 초기화</string>
+    <string name="setting_reset_pin_dialog_description">등록된 모든 핀 버스 목록을 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.</string>
+    <string name="setting_inquire_title">문의 및 피드백</string>
+    <string name="setting_inquire_description">궁금한 점이나 의견을 보내주세요</string>
+    <string name="setting_license_title">오픈소스 라이선스</string>
+    <string name="setting_license_description">앱에 사용된 라이선스 확인</string>
+    <string name="setting_app_info_title">앱 정보</string>
+    <string name="email_app_not_found">이메일을 보낼 수 있는 앱이 설치되어 있지 않습니다.</string>
 
     <!--Bus Arrive Screen-->
     <string name="bus_arrive_no_data">버스도착 정보가\n없습니다</string>
     <string name="bus_arrive_direction">방면</string>
     <string name="bus_arrive_now">현재</string>
+    <string name="bus_arrive_minutes_later">%1$s분 후 도착</string>
+    <string name="bus_arrive_current_position">현재: %1$s (%2$s정거장 전)</string>
+    <string name="low_floor_bus">저상버스</string>
+    <string name="low_floor">저상</string>
 
     <!--Common-->
     <string name="common1">정류장명을 입력하세요</string>
     <string name="common2">에러가 발생했습니다</string>
+
+    <!--App-->
+    <string name="network_offline">네트워크 연결이 원활하지 않습니다.</string>
+    <string name="notification_channel_name">Traffic Notifications</string>
+    <string name="notification_channel_description">Notifications for Traffic App</string>
+
+    <!--Bottom Navigation-->
+    <string name="nav_title_home">홈</string>
+    <string name="nav_title_station">검색</string>
+    <string name="nav_title_setting">설정</string>
+
+    <!--Top Bar-->
+    <string name="top_bar_title_home">광주버스</string>
+    <string name="top_bar_title_station">정류장 검색</string>
+    <string name="top_bar_title_setting">설정</string>
+
+    <!--Back Handler-->
+    <string name="double_back_to_exit">한 번 더 누르면 앱이 종료됩니다.</string>
+
+    <!--Splash Screen-->
+    <string name="splash_load_error">데이터를 불러오지 못했어요.\n다시 시도해 주세요.</string>
+    <string name="retry">재시도</string>
+
+    <!--Line Station Screen-->
+    <string name="line_info">노선 정보</string>
+    <string name="line_station_empty">경유하는 정류소 정보가 없습니다.</string>
+    <string name="no_station_number">번호 없음</string>
 </resources>
