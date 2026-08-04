@@ -38,28 +38,30 @@ data class LineStationInfoListHolder(
     val items: List<LineStationItemEntity> = emptyList(),
 )
 
+// 모든 필드에 기본값 지정 — 키 누락 시 MissingFieldException으로 응답 전체가 실패하는 것 방지
+// (coerceInputValues=true 덕분에 명시적 null도 기본값으로 대체됨)
 @Serializable
 data class LineStationItemEntity(
     @SerialName("BUSSTOP_NUM")
-    val busStopNum: Int,
+    val busStopNum: Int = 0,
     @SerialName("LINE_ID")
-    val lineId: Int,
+    val lineId: Int = 0,
     @SerialName("LINE_NAME")
-    val lineName: String,
+    val lineName: String = "",
     @SerialName("BUSSTOP_ID")
-    val busStopId: Int,
+    val busStopId: Int = 0,
     @SerialName("BUSSTOP_NAME")
-    val busStopName: String,
+    val busStopName: String = "",
     @SerialName("ARS_ID")
     val arsId: Int? = null,
     @SerialName("LONGITUDE")
-    val longitude: Double,
+    val longitude: Double = 0.0,
     @SerialName("LATITUDE")
-    val latitude: Double,
+    val latitude: Double = 0.0,
     @SerialName("RETURN_FLAG")
-    val returnFlag: Int,
+    val returnFlag: Int = 0,
     @SerialName("SEQ")
-    val seq: Int
+    val seq: Int = 0
 ): DataMapper<LineStationItem>{
     override fun toDomain(): LineStationItem {
         return LineStationItem(

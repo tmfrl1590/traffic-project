@@ -34,55 +34,57 @@ data class BusArriveItemListHolder(
     val items: List<BusArriveItemEntity> = emptyList(),
 )
 
+// nullable 필드는 반드시 기본값(= null)을 함께 지정한다.
+// 기본값이 없으면 서버 응답에서 해당 키가 누락될 때 MissingFieldException으로 응답 전체가 실패한다.
 @Serializable
 data class BusArriveItemEntity(
     @SerialName("ARRIVE")
-    val arrive: String?,
+    val arrive: String? = null,
 
     @SerialName("REMAIN_STOP")
-    val remainStop: Int?,
+    val remainStop: Int? = null,
 
     @SerialName("SHORT_LINE_NAME")
-    val shortLineName: String?,
+    val shortLineName: String? = null,
 
     @SerialName("BUS_ID")
-    val busId: String?,
+    val busId: String? = null,
 
     @SerialName("METRO_FLAG")
-    val metroFlag: Int?,
+    val metroFlag: Int? = null,
 
     @SerialName("BUSSTOP_NAME")
-    val busStopName: String?,
+    val busStopName: String? = null,
 
     @SerialName("CURR_STOP_ID")
-    val currStopId: Int?,
+    val currStopId: Int? = null,
 
     @SerialName("LINE_ID")
-    val lineId: Int?,
+    val lineId: Int? = null,
 
     @SerialName("REMAIN_MIN")
-    val remainMin: Int?,
+    val remainMin: Int? = null,
 
     @SerialName("ENG_BUSSTOP_NAME")
-    val engBusStopName: String?,
+    val engBusStopName: String? = null,
 
     @SerialName("DIR_START")
-    val dirStart: String?,
+    val dirStart: String? = null,
 
     @SerialName("DIR_END")
-    val dirEnd: String?,
+    val dirEnd: String? = null,
 
     @SerialName("DIR")
     val dir: String? = null,
 
     @SerialName("LOW_BUS")
-    val lowBus: String?,
+    val lowBus: String? = null,
 
     @SerialName("ARRIVE_FLAG")
-    val arriveFlag: Int?,
+    val arriveFlag: Int? = null,
 
     @SerialName("LINE_NAME")
-    val lineName: String?,
+    val lineName: String? = null,
 
     @SerialName("LINE_KIND")
     val lineKind: Int? = null,
