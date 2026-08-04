@@ -28,7 +28,9 @@ fun LineStationListSection(
     ) {
         itemsIndexed(
             items = currentList,
-            key = { _, item -> item.busStopId }
+            key = { index, item ->
+                "${item.busStopId}_$index"
+            }
         ) { index, station ->
             Row(
                 modifier = Modifier

@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -56,12 +56,12 @@ fun SearchedStationListSection(
             LazyColumn(
                 modifier = Modifier
             ){
-                items(
+                itemsIndexed(
                     items = searchedStationList,
-                    key = { item ->
-                        item.busStopId ?: ""
+                    key = { index, item ->
+                        "${item.busStopId}_$index"
                     }
-                ){ item ->
+                ){ index, item ->
                     SearchedStationCard(
                         busStopName = item.busStopName ?: "",
                         stationModel = item,
