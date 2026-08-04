@@ -61,8 +61,7 @@ fun LicenseSection(
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = "오픈소스 라이선스",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp,
+                    style = TrafficTheme.typography.sectionTitle,
                     color = TrafficTheme.colors.textPrimary
                 )
             }
@@ -84,14 +83,13 @@ fun LicenseSection(
                 Column {
                     Text(
                         text = stringResource(R.string.setting_open_source_list),
-                        fontSize = 15.sp,
+                        style = TrafficTheme.typography.sectionBody1,
                         color = TrafficTheme.colors.textPrimary,
-                        fontWeight = FontWeight.Medium
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = "앱에 사용된 라이선스 확인",
-                        fontSize = 12.sp,
+                        style = TrafficTheme.typography.sectionBody2,
                         color = Color(0xFF94A3B8)
                     )
                 }

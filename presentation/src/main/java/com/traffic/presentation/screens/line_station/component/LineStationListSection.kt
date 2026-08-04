@@ -15,9 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.presentation.model.LineStationItemModel
 
@@ -51,14 +49,13 @@ fun LineStationListSection(
                 ) {
                     Text(
                         text = station.busStopName,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold,
+                        style = TrafficTheme.typography.sectionTitle,
                         color = TrafficTheme.colors.textPrimary
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = station.arsId?.toString() ?: "번호 없음",
-                        fontSize = 12.sp,
+                        style = TrafficTheme.typography.sectionBody1,
                         color = Color.Gray
                     )
                 }

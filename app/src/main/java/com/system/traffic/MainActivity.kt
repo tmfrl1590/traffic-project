@@ -21,18 +21,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
@@ -40,7 +36,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.system.traffic.core.enum.AppThemeType
 import com.traffic.design.component.AdConfig
-import com.traffic.design.component.LocalAdConfig
 import com.traffic.design.ui.theme.MainColor
 import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.navigation.TrafficNavigationRoot
@@ -62,26 +57,19 @@ class MainActivity : ComponentActivity() {
 
         requestNotificationPermission()
 
-
         setContent {
-            val currentDensity = LocalDensity.current
-
             val isNetworkConnected by rootViewModel.isNetworkConnected.collectAsStateWithLifecycle()
             val selectedFontSize by rootViewModel.savedFontScale.collectAsStateWithLifecycle()
             val selectedTheme by rootViewModel.savedThemeType.collectAsStateWithLifecycle()
 
+            val isDarkTheme = AppThemeType.fromThemeName(selectedTheme).isDarkTheme(
+                isSystemInDark = isSystemInDarkTheme()
+            )
+
             TrafficTheme(
-                darkTheme = AppThemeType.fromThemeName(selectedTheme).isDarkTheme(
-                    isSystemInDark = isSystemInDarkTheme()
-                )
-            ) {
-                CompositionLocalProvider(
-                    LocalDensity provides Density(
-                        density = currentDensity.density,
-                        fontScale = selectedFontSize,
-                    ),
-                    LocalAdConfig provides adConfig
-                ) {
+                isDarkTheme = isDarkTheme,
+                selectedFontSize = selectedFontSize,
+                content = {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -91,10 +79,7 @@ class MainActivity : ComponentActivity() {
                             enter = expandVertically() + fadeIn(),
                             exit = shrinkVertically() + fadeOut()
                         ) {
-                            NetworkOfflineBanner(
-                                modifier = Modifier
-                                    .statusBarsPadding()
-                            )
+                            NetworkOfflineBanner()
                         }
 
                         Box(modifier = Modifier.weight(1f)) {
@@ -102,7 +87,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
-            }
+            )
         }
     }
 
@@ -126,11 +111,10 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-private fun NetworkOfflineBanner(
-    modifier: Modifier
-) {
+private fun NetworkOfflineBanner() {
     Surface(
-        modifier = modifier
+        modifier = Modifier
+            .statusBarsPadding()
             .fillMaxWidth()
             .height(40.dp)
         ,

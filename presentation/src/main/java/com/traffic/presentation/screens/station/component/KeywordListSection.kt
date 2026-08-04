@@ -106,8 +106,7 @@ private fun KeywordCard(
         ) {
             Text(
                 text = keywordModel.keyword,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium,
+                style = TrafficTheme.typography.chip,
                 color = TrafficTheme.colors.unselectedChipText
             )
             Icon(

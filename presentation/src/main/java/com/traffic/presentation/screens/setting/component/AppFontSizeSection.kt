@@ -45,8 +45,7 @@ fun AppFontSizeSection(
         ) {
             Text(
                 text = "글자 크기 설정",
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp,
+                style = TrafficTheme.typography.sectionTitle,
                 color = TrafficTheme.colors.textPrimary
             )
 
@@ -103,6 +102,7 @@ fun FontSizeCard(
         ){
             Text(
                 text = fontSizeText,
+                style = TrafficTheme.typography.button,
                 color = fontColor,
             )
         }

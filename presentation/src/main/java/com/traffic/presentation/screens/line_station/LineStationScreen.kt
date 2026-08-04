@@ -26,9 +26,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.naver.maps.geometry.LatLng
@@ -148,10 +146,9 @@ private fun LineStationScreen(
                 val lineName = firstStation?.lineName ?: "노선 정보"
                 
                 Text(
-                    text = lineName,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(vertical = 12.dp),
+                    text = lineName,
+                    style = TrafficTheme.typography.busArriveTitle,
                     color = TrafficTheme.colors.textPrimary
                 )
 
@@ -172,7 +169,8 @@ private fun LineStationScreen(
                     ) {
                         Text(
                             text = "경유하는 정류소 정보가 없습니다.",
-                            color = TrafficTheme.colors.textPrimary
+                            color = TrafficTheme.colors.textPrimary,
+                            style = TrafficTheme.typography.empty
                         )
                     }
                 } else {

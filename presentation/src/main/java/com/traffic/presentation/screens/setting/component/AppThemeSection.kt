@@ -46,8 +46,7 @@ fun AppThemeSection(
         ) {
             Text(
                 text = "앱 테마 설정",
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp,
+                style = TrafficTheme.typography.sectionTitle,
                 color = TrafficTheme.colors.textPrimary
             )
 
@@ -104,6 +103,7 @@ private fun AppThemeCard(
         ){
             Text(
                 text = themeText,
+                style = TrafficTheme.typography.button,
                 color = fontColor,
             )
         }

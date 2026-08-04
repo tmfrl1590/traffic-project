@@ -76,7 +76,7 @@ private fun BusArriveEmptyContent() {
     ) {
         Text(
             text = stringResource(R.string.bus_arrive_no_data),
-            fontSize = 32.sp,
+            style = TrafficTheme.typography.empty,
             textAlign = TextAlign.Center,
             lineHeight = 40.sp,
             color = TrafficTheme.colors.textPrimary
@@ -143,8 +143,7 @@ private fun BusArriveCard(
                 ) {
                     Text(
                         text = busArriveModel.lineName.orEmpty(),
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold,
+                        style = TrafficTheme.typography.lineName,
                         color = White
                     )
                 }
@@ -159,8 +158,7 @@ private fun BusArriveCard(
                 ) {
                     Text(
                         text = "${busArriveModel.remainMin}분 후 도착",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
+                        style = TrafficTheme.typography.cardTitle,
                         color = TrafficTheme.colors.textPrimary
                     )
                     // 저상버스인 경우 태그 뱃지 표시
@@ -172,7 +170,7 @@ private fun BusArriveCard(
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = "현재: ${busArriveModel.busStopName} (${busArriveModel.remainStop}정거장 전)",
-                    fontSize = 13.sp,
+                    style = TrafficTheme.typography.cardBody,
                     color = TrafficTheme.colors.textPrimary
                 )
             }

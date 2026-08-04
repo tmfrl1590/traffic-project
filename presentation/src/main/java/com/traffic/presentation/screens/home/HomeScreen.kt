@@ -64,10 +64,10 @@ private fun HomeScreen(
     ) {
         Text(
             text = stringResource(R.string.like_station),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
+            style = TrafficTheme.typography.title,
             modifier = Modifier
-                .padding(start = 16.dp),
+                .padding(start = 16.dp)
+            ,
             color = TrafficTheme.colors.textPrimary,
         )
 
@@ -101,8 +101,8 @@ fun EmptyLikeStation(
             Text(
                 text = stringResource(R.string.like_no_data),
                 lineHeight = 24.sp,
-                fontSize = 24.sp,
                 textAlign = TextAlign.Center,
+                style = TrafficTheme.typography.empty,
                 color = TrafficTheme.colors.textPrimary,
             )
 
@@ -125,7 +125,10 @@ fun EmptyLikeStation(
 @Preview(showBackground = true, name = "Light Mode")
 @Composable
 private fun PreviewHomeScreenLight() {
-    TrafficTheme(darkTheme = false) {
+    TrafficTheme(
+        isDarkTheme = false,
+        selectedFontSize = 1.0f
+    ) {
         HomeScreen(
             likeStationList = listOf(
                 StationModel(
@@ -148,7 +151,10 @@ private fun PreviewHomeScreenLight() {
 @Preview(showBackground = true, name = "Dark Mode")
 @Composable
 private fun PreviewHomeScreenDark() {
-    TrafficTheme(darkTheme = true) {
+    TrafficTheme(
+        isDarkTheme = true,
+        selectedFontSize = 1.0f
+    ) {
         HomeScreen(
             likeStationList = listOf(
                 StationModel(
@@ -171,7 +177,10 @@ private fun PreviewHomeScreenDark() {
 @Preview(showBackground = true, name = "Empty Like Station Light Mode")
 @Composable
 private fun PreviewEmptyLikeStation() {
-    TrafficTheme(darkTheme = false) {
+    TrafficTheme(
+        isDarkTheme = false,
+        selectedFontSize = 1.0f
+    ) {
         HomeScreen(
             likeStationList = emptyList(),
             onStationCardClick = { _, _ -> },
@@ -184,7 +193,10 @@ private fun PreviewEmptyLikeStation() {
 @Preview(showBackground = true, name = "Empty Like Station Dark Mode")
 @Composable
 private fun PreviewEmptyLikeStationDark() {
-    TrafficTheme(darkTheme = true) {
+    TrafficTheme(
+        isDarkTheme = true,
+        selectedFontSize = 1.0f
+    ) {
         HomeScreen(
             likeStationList = emptyList(),
             onStationCardClick = { _, _ -> },

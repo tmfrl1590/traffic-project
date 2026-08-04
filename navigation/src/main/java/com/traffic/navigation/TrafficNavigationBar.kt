@@ -88,9 +88,7 @@ private fun TrafficNavigationBarItem(
         Text(
             text = label,
             color = labelColor,
-            style = TextStyle(
-                fontSize = 14.sp
-            )
+            style = TrafficTheme.typography.bottomTab
         )
     }
 }

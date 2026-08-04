@@ -58,8 +58,7 @@ fun AppVersionSection(
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = "앱 정보",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp,
+                    style = TrafficTheme.typography.sectionTitle,
                     color = TrafficTheme.colors.textPrimary
                 )
             }
@@ -77,15 +76,13 @@ fun AppVersionSection(
             ) {
                 Text(
                     text = stringResource(R.string.setting_app_version),
-                    fontSize = 15.sp,
-                    color = TrafficTheme.colors.textPrimary,
-                    fontWeight = FontWeight.Medium
+                    style = TrafficTheme.typography.sectionBody1,
+                    color = TrafficTheme.colors.textPrimary
                 )
                 Text(
                     text = "v $appVersion",
-                    fontSize = 15.sp,
-                    color = TrafficTheme.colors.textPrimary,
-                    fontWeight = FontWeight.Normal
+                    style = TrafficTheme.typography.sectionBody1,
+                    color = TrafficTheme.colors.textPrimary
                 )
             }
         }

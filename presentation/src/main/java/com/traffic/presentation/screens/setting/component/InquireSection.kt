@@ -25,9 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.traffic.design.R
 import com.traffic.design.ui.theme.TrafficTheme
 
@@ -61,8 +59,7 @@ fun InquireSection(
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = "문의 및 피드백",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp,
+                    style = TrafficTheme.typography.sectionTitle,
                     color = TrafficTheme.colors.textPrimary
                 )
             }
@@ -85,14 +82,13 @@ fun InquireSection(
                 Column {
                     Text(
                         text = stringResource(R.string.setting_inquire),
-                        fontSize = 15.sp,
+                        style = TrafficTheme.typography.sectionBody1,
                         color = TrafficTheme.colors.textPrimary,
-                        fontWeight = FontWeight.Medium
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = "궁금한 점이나 의견을 보내주세요",
-                        fontSize = 12.sp,
+                        style = TrafficTheme.typography.sectionBody2,
                         color = Color(0xFF94A3B8)
                     )
                 }

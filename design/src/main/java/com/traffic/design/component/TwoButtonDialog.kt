@@ -21,10 +21,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.traffic.design.ui.theme.Black
@@ -68,9 +66,8 @@ fun TwoButtonDialog(
                 ) {
                     Text(
                         text = dialogTitle,
-                        color = TrafficTheme.colors.textPrimary,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
+                        style = TrafficTheme.typography.dialogTitle,
+                        color = TrafficTheme.colors.textPrimary
                     )
 
                     Spacer(
@@ -81,6 +78,7 @@ fun TwoButtonDialog(
                     Text(
                         text = dialogDescription,
                         color = TrafficTheme.colors.textSecondary,
+                        style = TrafficTheme.typography.dialogDescription,
                         textAlign = TextAlign.Center,
                     )
 
@@ -146,6 +144,7 @@ private fun DialogButton(
         ){
             Text(
                 text = buttonText,
+                style = TrafficTheme.typography.button,
                 color = buttonColor,
             )
         }

@@ -1,7 +1,6 @@
 package com.traffic.presentation.screens.home.component
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -108,9 +107,9 @@ private fun StationCard(
                 Text(
                     text = stationModel.busStopName ?: "",
                     modifier = Modifier
-                        .height(52.dp),
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
+                        .height(52.dp)
+                    ,
+                    style = TrafficTheme.typography.cardTitle,
                     color = TrafficTheme.colors.textPrimary
                 )
 
@@ -119,6 +118,7 @@ private fun StationCard(
                     modifier = Modifier
                         .weight(5f)
                     ,
+                    style = TrafficTheme.typography.cardBody,
                     color = TrafficTheme.colors.textPrimary
                 )
             }

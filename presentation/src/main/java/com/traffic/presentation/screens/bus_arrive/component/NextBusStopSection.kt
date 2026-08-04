@@ -16,10 +16,10 @@ fun NextBusStopSection(
     nextBusStopName: String,
 ) {
     Text(
-        text = "${nextBusStopName}${stringResource(R.string.bus_arrive_direction)}",
-        fontSize = 16.sp,
-        textAlign = TextAlign.Start,
         modifier = Modifier.padding(start = 20.dp),
+        text = "${nextBusStopName}${stringResource(R.string.bus_arrive_direction)}",
+        style = TrafficTheme.typography.busArriveBody,
+        textAlign = TextAlign.Start,
         color = TrafficTheme.colors.textPrimary
     )
 }

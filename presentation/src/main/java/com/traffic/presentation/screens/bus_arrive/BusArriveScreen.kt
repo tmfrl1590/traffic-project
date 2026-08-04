@@ -166,7 +166,7 @@ private fun BusArriveScreen(
 
                     Text(
                         text = "ID : ${state.stationInfo.arsId}",
-                        fontSize = 14.sp,
+                        style = TrafficTheme.typography.busArriveBody,
                         modifier = Modifier
                             .padding(start = 20.dp)
                         ,

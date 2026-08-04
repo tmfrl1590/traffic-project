@@ -13,11 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.system.traffic.core.enum.BusDirection
 import com.traffic.design.component.noRippleClickable
+import com.traffic.design.ui.theme.TrafficTheme
 
 @Composable
 fun BusDirectionTabSection(
@@ -50,8 +49,7 @@ fun BusDirectionTabSection(
                 Text(
                     text = title,
                     color = tabTextColor,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium
+                    style = TrafficTheme.typography.button
                 )
             }
         }

@@ -47,6 +47,7 @@ fun SearchBarSection(
                 Text(
                     text = placeholder,
                     color = TrafficTheme.colors.searchBarPlaceholder,
+                    style = TrafficTheme.typography.placeHolder,
                 )
             },
             shape = RoundedCornerShape(8.dp),

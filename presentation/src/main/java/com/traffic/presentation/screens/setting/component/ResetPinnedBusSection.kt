@@ -42,8 +42,7 @@ fun ResetPinnedBusSection(
         ) {
             Text(
                 text = "저장된 핀 리스트 초기화",
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp,
+                style = TrafficTheme.typography.sectionTitle,
                 color = TrafficTheme.colors.textPrimary
             )
 
@@ -82,6 +81,7 @@ private fun ResetButton(
         ){
             Text(
                 text = "핀 초기화",
+                style = TrafficTheme.typography.button,
                 color = White,
             )
         }

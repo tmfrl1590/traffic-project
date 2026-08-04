@@ -24,10 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.traffic.design.R
 import com.traffic.design.ui.theme.TrafficTheme
 import com.traffic.domain.model.StationModel
@@ -50,7 +48,7 @@ fun SearchedStationListSection(
             ) {
                 Text(
                     text = stringResource(R.string.searched_station_no_data),
-                    fontSize = 24.sp,
+                    style = TrafficTheme.typography.empty,
                     color = TrafficTheme.colors.textPrimary
                 )
             }
@@ -175,8 +173,7 @@ private fun BusStationName(
     ){
         Text(
             text = busStopName,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
+            style = TrafficTheme.typography.cardTitle,
             color = TrafficTheme.colors.textPrimary
         )
     }
@@ -187,7 +184,7 @@ private fun BusStationName(
 private fun StationInfoFavoriteIcon(
     modifier: Modifier,
     stationModel: StationModel,
-    onFavoriteIconClick: (StationModel) -> Unit = {}
+    onFavoriteIconClick: (StationModel) -> Unit
 ) {
     IconButton(
         modifier = modifier,
@@ -207,20 +204,23 @@ private fun CurrentBusStopNameAndArsId(
     nextBusStop: String,
     arsId: String
 ) {
+    val text = if(arsId.isEmpty()){
+        ""
+    } else {
+        currentBusStopNameAndArsId(
+            nextBusStop = nextBusStop,
+            arsId = arsId
+        )
+    }
+
     Box(
         modifier = modifier,
         contentAlignment = Alignment.CenterStart
     ){
         Text(
-            text = if(arsId.isEmpty()){
-                ""
-            } else {
-                currentBusStopNameAndArsId(
-                    nextBusStop = nextBusStop,
-                    arsId = arsId
-                )
-            },
-            color = TrafficTheme.colors.textPrimary
+            text = text,
+            color = TrafficTheme.colors.textPrimary,
+            style = TrafficTheme.typography.cardBody,
         )
     }
 }

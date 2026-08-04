@@ -134,8 +134,7 @@ private fun MainTopBar(title: String) {
         title = {
             Text(
                 text = title,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.SemiBold,
+                style = TrafficTheme.typography.title,
                 color = TrafficTheme.colors.textPrimary
             )
         },
