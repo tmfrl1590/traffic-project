@@ -1,8 +1,10 @@
 package com.traffic.domain.usecase.file
 
 import com.traffic.domain.repository.FileRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 sealed interface InitState {
@@ -28,5 +30,5 @@ class InitializeDataUseCase @Inject constructor(
         
         emit(InitState.Progress("초기화 완료", 1.0f))
         emit(InitState.Complete)
-    }
+    }.flowOn(Dispatchers.IO) // 파일 읽기 등 Room 밖의 블로킹 IO 커버
 }

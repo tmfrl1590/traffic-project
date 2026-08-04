@@ -130,7 +130,7 @@ class LocalDataSourceImpl @Inject constructor(
         return fileDataSource.getStationDataFromFile()
     }
 
-    override fun insertStation(stationEntity: StationEntity) {
+    override suspend fun insertStation(stationEntity: StationEntity) {
         val stationLocal = StationLocal(
             stationNum = stationEntity.stationNum,
             busStopName = stationEntity.busStopName,
@@ -143,7 +143,7 @@ class LocalDataSourceImpl @Inject constructor(
         stationDao.insertStation(stationLocal)
     }
 
-    override fun insertStations(stations: List<StationEntity>) {
+    override suspend fun insertStations(stations: List<StationEntity>) {
         val stationLocals = stations.map { entity ->
             StationLocal(
                 stationNum = entity.stationNum,
@@ -162,7 +162,7 @@ class LocalDataSourceImpl @Inject constructor(
         return fileDataSource.getLineDataFromFile()
     }
 
-    override fun insertLine(lineEntity: LineEntity) {
+    override suspend fun insertLine(lineEntity: LineEntity) {
         val lineLocal = LineLocal(
             line_id = lineEntity.lineId,
             dir_down_name = lineEntity.dirDownName,
@@ -178,7 +178,7 @@ class LocalDataSourceImpl @Inject constructor(
         lineDao.insertLine(lineLocal)
     }
 
-    override fun insertLines(lines: List<LineEntity>) {
+    override suspend fun insertLines(lines: List<LineEntity>) {
         val lineLocals = lines.map { entity ->
             LineLocal(
                 line_id = entity.lineId,

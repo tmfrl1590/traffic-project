@@ -4,19 +4,17 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import com.system.traffic.local.db.model.LineLocal
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LineDao {
 
-    @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertLine(lineLocal: LineLocal)
+    suspend fun insertLine(lineLocal: LineLocal)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllLines(lines: List<LineLocal>)
+    suspend fun insertAllLines(lines: List<LineLocal>)
 
     /*@Query("SELECT * FROM line_local WHERE line_name LIKE :text")
     fun getSearchedLineList(text: String): Flow<List<LineLocal>>

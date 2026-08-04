@@ -39,19 +39,19 @@ interface LocalDataSource {
     fun getStationFileData(): List<StationEntity>
 
     // 정류장 데이터 DB에 저장
-    fun insertStation(stationEntity: StationEntity)
+    suspend fun insertStation(stationEntity: StationEntity)
 
     // 정류장 데이터 리스트 DB에 벌크 저장
-    fun insertStations(stations: List<StationEntity>)
+    suspend fun insertStations(stations: List<StationEntity>)
 
     // JSON 파일에서 노선 데이터 읽기
     fun getLineFileData(): List<LineEntity>
 
     // 노선 데이터 DB에 저장
-    fun insertLine(lineEntity: LineEntity)
+    suspend fun insertLine(lineEntity: LineEntity)
 
     // 노선 데이터 리스트 DB에 벌크 저장
-    fun insertLines(lines: List<LineEntity>)
+    suspend fun insertLines(lines: List<LineEntity>)
 
     // 키워드 저장
     suspend fun insertKeyword(keyword: String)

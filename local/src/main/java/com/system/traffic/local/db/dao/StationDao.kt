@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import com.system.traffic.local.db.model.StationLocal
 import com.traffic.data.model.local.StationCoordinates
 import kotlinx.coroutines.flow.Flow
@@ -12,12 +11,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface StationDao {
 
-    @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertStation(stationEntity: StationLocal)
+    suspend fun insertStation(stationEntity: StationLocal)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllStations(stations: List<StationLocal>)
+    suspend fun insertAllStations(stations: List<StationLocal>)
 
     // 검색어에 해당하는 정류장 리스트와 즐겨찾기 테이블에 저장되있는 정류장 리스트를 합쳐서 가져옴
     @Query("SELECT * FROM  station_entity WHERE busStopName LIKE :text")

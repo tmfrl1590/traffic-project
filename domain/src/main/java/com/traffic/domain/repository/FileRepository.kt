@@ -7,13 +7,13 @@ interface FileRepository {
 
     fun getStationFileData(): List<StationModel>
 
-    fun insertStation(stationModel: StationModel)
+    suspend fun insertStation(stationModel: StationModel)
 
-    fun insertStations(stations: List<StationModel>)
+    suspend fun insertStations(stations: List<StationModel>)
 
     fun getLineFileData(): List<LineModel>
 
-    fun insertLine(lineModel: LineModel)
+    suspend fun insertLine(lineModel: LineModel)
 
-    fun insertLines(lines: List<LineModel>)
+    suspend fun insertLines(lines: List<LineModel>)
 }

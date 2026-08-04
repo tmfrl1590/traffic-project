@@ -8,7 +8,6 @@ import com.traffic.domain.usecase.file.InitState
 import com.traffic.domain.usecase.file.InitializeDataUseCase
 import com.traffic.presentation.screens.splash.state.SplashState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -41,7 +40,8 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun initializeData() {
-        viewModelScope.launch(context = Dispatchers.IO) {
+        // 스레드 전환은 데이터 레이어(suspend DAO + flowOn)가 책임지므로 디스패처 지정 불필요
+        viewModelScope.launch {
             try {
                 withTimeout(timeMillis = INIT_TIMEOUT_MS) {
                     if (getIsFirstLoginUseCase()) {
