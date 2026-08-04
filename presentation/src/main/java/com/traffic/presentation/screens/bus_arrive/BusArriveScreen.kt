@@ -33,7 +33,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.compose.CameraPositionState
@@ -90,10 +92,12 @@ fun BusArriveScreenRoute(
         busArriveViewModel.getBusArriveList(busStopId = busStopId)
     }
 
-    val error by busArriveViewModel.errorFlow.collectAsStateWithLifecycle("")
-    LaunchedEffect(key1 = error) {
-        if (error.isNotEmpty()) {
-            snackBarHostState.showSnackbar(message = error)
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(key1 = Unit) {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            busArriveViewModel.errorFlow.collect { message ->
+                snackBarHostState.showSnackbar(message = message)
+            }
         }
     }
 
