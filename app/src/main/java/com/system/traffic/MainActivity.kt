@@ -1,9 +1,6 @@
 package com.system.traffic
 
-import android.Manifest
 import android.content.pm.ActivityInfo
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -31,10 +28,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.system.traffic.core.enum.AppThemeType
+import com.system.traffic.permission.PermissionManager
 import com.traffic.design.component.AdConfig
 import com.traffic.design.ui.theme.MainColor
 import com.traffic.design.ui.theme.TrafficTheme
@@ -50,12 +46,19 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var adConfig: AdConfig
 
+    @Inject
+    lateinit var permissionManager: PermissionManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT // 세로 고정
         enableEdgeToEdge()
 
-        requestNotificationPermission()
+        permissionManager.requestNotificationPermission { isGranted ->
+            if (!isGranted) {
+                // 권한 거부 시 처리
+            }
+        }
 
         setContent {
             val isNetworkConnected by rootViewModel.isNetworkConnected.collectAsStateWithLifecycle()
@@ -67,6 +70,7 @@ class MainActivity : ComponentActivity() {
             )
 
             TrafficTheme(
+                adConfig = adConfig,
                 isDarkTheme = isDarkTheme,
                 selectedFontSize = selectedFontSize,
                 content = {
@@ -91,22 +95,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun requestNotificationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val permission = Manifest.permission.POST_NOTIFICATIONS
-            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(permission),
-                    PERMISSION_REQUEST_CODE
-                )
-            }
-        }
-    }
-
-    companion object {
-        private const val PERMISSION_REQUEST_CODE = 1001
-    }
 }
 
 
