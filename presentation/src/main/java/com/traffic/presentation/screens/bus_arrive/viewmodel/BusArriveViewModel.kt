@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -120,6 +121,7 @@ class BusArriveViewModel @Inject constructor(
                 val likeStationSet = likeStationList.mapTo(HashSet()) { it.arsId }
                 stationRes to likeStationSet
             }
+                .catch { _errorFlow.emit("오류가 발생하였습니다.") } // repository에서 흘려보낸 예외 처리
                 .collectLatest { (stationRes, likeStationSet) -> // 구조분해
                     val updatedStation = stationRes.copy(
                         selected = stationRes.arsId in likeStationSet

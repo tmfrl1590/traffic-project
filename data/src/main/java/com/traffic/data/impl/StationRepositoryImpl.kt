@@ -12,21 +12,11 @@ class StationRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource
 ) : StationRepository {
     override fun getSearchedStationList(keyword: String): Flow<List<StationModel>> = flow {
-        try {
-            val searchedStationList = localDataSource.getSearchedStationList(keyword).map { it.toDomain() }
-            emit(value = searchedStationList)
-        } catch (e: Exception){
-            e.printStackTrace()
-        }
+        emit(localDataSource.getSearchedStationList(keyword).map { it.toDomain() })
     }
 
     override fun getStationInfo(arsId: String): Flow<StationModel> = flow {
-        try {
-            val stationInfo = localDataSource.getStationInfo(arsId = arsId).toDomain()
-            emit(stationInfo)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        emit(localDataSource.getStationInfo(arsId = arsId).toDomain())
     }
 
     override suspend fun getLocationInfo(ids: List<String?>): List<StationCoordinateModel> {
