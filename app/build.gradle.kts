@@ -114,4 +114,6 @@ dependencies {
 
     // Firebase
     implementation(libs.firebase.messaging)
+
+    implementation(libs.androidx.core.splashscreen)
 }

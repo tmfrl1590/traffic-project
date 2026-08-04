@@ -32,7 +32,7 @@ analytics="22.5.0"
 mapSdk = "3.23.0"
 naverMapCompose = "1.9.0"
 androidx-lifecycle = "2.10.0"
-
+coreSplashscreen = "1.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -106,6 +106,9 @@ play-services-ads = { module = "com.google.android.gms:play-services-ads", versi
 # map
 map-sdk = { module = "com.naver.maps:map-sdk", version.ref = "mapSdk" }
 naver-map-compose = { module = "io.github.fornewid:naver-map-compose", version.ref = "naverMapCompose" }
+
+# splash
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

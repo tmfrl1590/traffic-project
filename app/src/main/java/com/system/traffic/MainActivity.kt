@@ -28,8 +28,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.system.traffic.core.enums.AppThemeType
 import com.system.traffic.permission.PermissionManager
 import com.traffic.design.component.AdConfig
 import com.traffic.design.ui.theme.MainColor
@@ -50,6 +50,7 @@ class MainActivity : ComponentActivity() {
     lateinit var permissionManager: PermissionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen() // super.onCreate 이전
         super.onCreate(savedInstanceState)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT // 세로 고정
         enableEdgeToEdge()
@@ -60,19 +61,20 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+        // 테마 로드 전까지 시스템 스플래시 유지
+        splashScreen.setKeepOnScreenCondition { rootViewModel.appConfig.value == null }
+
         setContent {
             val isNetworkConnected by rootViewModel.isNetworkConnected.collectAsStateWithLifecycle()
-            val selectedFontSize by rootViewModel.savedFontScale.collectAsStateWithLifecycle()
-            val selectedTheme by rootViewModel.savedThemeType.collectAsStateWithLifecycle()
+            val appConfig by rootViewModel.appConfig.collectAsStateWithLifecycle()
+            val config = appConfig ?: return@setContent // 로드 전엔 그리지 않음
 
-            val isDarkTheme = AppThemeType.fromThemeName(selectedTheme).isDarkTheme(
-                isSystemInDark = isSystemInDarkTheme()
-            )
+            val isDarkTheme = config.themeType.isDarkTheme(isSystemInDarkTheme())
 
             TrafficTheme(
                 adConfig = adConfig,
                 isDarkTheme = isDarkTheme,
-                selectedFontSize = selectedFontSize,
+                selectedFontSize = config.fontScale,
                 content = {
                     Column(
                         modifier = Modifier
@@ -94,7 +96,6 @@ class MainActivity : ComponentActivity() {
             )
         }
     }
-
 }
 
 
