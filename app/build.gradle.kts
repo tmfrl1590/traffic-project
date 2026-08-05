@@ -1,12 +1,8 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
 
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.daggerHilt)
-    alias(libs.plugins.compose.compiler)
+    id("traffic.android.application")
+    id("traffic.hilt")
     id("com.google.android.gms.oss-licenses-plugin")
     id("com.google.gms.google-services")
     alias(libs.plugins.firebase.crashlytics)
@@ -16,17 +12,14 @@ val properties = Properties()
 properties.load(project.rootProject.file("local.properties").inputStream())
 
 android {
-    namespace= "com.system.traffic"
-    compileSdk = 36
+    namespace = "com.system.traffic"
 
     defaultConfig {
         applicationId = "com.system.traffic"
-        minSdk = 28
-        targetSdk = 36
-        versionCode = 54
-        versionName = "2.2.4"
+        targetSdk = ProjectConfig.TARGET_SDK
+        versionCode = ProjectConfig.VERSION_CODE
+        versionName = ProjectConfig.VERSION_NAME
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -63,17 +56,7 @@ android {
     composeCompiler {
         includeSourceInformation = true
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
-    }
     buildFeatures {
-        compose = true
         buildConfig = true
     }
     packaging {
@@ -102,10 +85,6 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.activity)
-
-    // hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
 
     // Admob
     implementation(libs.play.services.ads)

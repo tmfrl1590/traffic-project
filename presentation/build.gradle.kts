@@ -1,30 +1,14 @@
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.ksp)
+    id("traffic.android.library.compose")
+    id("traffic.hilt")
 }
 
 android {
     namespace = "com.traffic.presentation"
-    compileSdk = 35
-
-    defaultConfig {
-        minSdk = 26
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
 
     buildFeatures {
-        compose = true
         buildConfig = true
     }
-
 }
 
 dependencies {
@@ -41,8 +25,6 @@ dependencies {
     implementation(libs.androidx.material3)
 
     // hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
     // Firebase
@@ -56,5 +38,4 @@ dependencies {
 
     implementation(libs.map.sdk) // 네이버 맵 공식 SDK
     implementation(libs.naver.map.compose) // Compose 래퍼
-
 }
