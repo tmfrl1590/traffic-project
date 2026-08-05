@@ -10,6 +10,13 @@ import com.traffic.presentation.BuildConfig
 
 fun logEvent(context: Context, screenName: String) {
     if (BuildConfig.DEBUG) return
+
+    // 브레드크럼: 크래시 리포트 "로그" 탭에 화면 이동 경로가 남음
+    FirebaseCrashlytics.getInstance().apply {
+        log("screen: $screenName")
+        setCustomKey("last_screen", screenName)
+    }
+
     val firebaseAnalytics = FirebaseAnalytics.getInstance(context)
     firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
         param(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
