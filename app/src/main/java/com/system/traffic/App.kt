@@ -7,7 +7,7 @@ import android.os.Build
 import android.util.Log
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.traffic.design.R
+import com.system.traffic.design.R
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

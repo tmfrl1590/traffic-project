@@ -3,7 +3,7 @@ package com.system.traffic.local.db.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.system.traffic.local.RoomConstant
-import com.traffic.data.model.local.StationEntity
+import com.system.traffic.data.model.local.StationEntity
 
 @Entity(tableName = RoomConstant.Table.STATION_LIKE_LOCAL)
 data class LikeStationLocal(

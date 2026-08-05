@@ -1,0 +1,61 @@
+package com.system.traffic.presentation.model
+
+import androidx.compose.ui.graphics.Color
+import com.system.traffic.domain.model.BusArrive
+import com.system.traffic.domain.model.BusArriveItem
+
+data class BusArriveModel(
+    val itemList: List<BusArriveItemModel>
+)
+
+data class BusArriveItemModel(
+    val arrive : String?,
+    val remainStop : String?,
+    val shortLineName : String?,
+    val busId : String?,
+    val metroFlag : String?,
+    val busStopName : String?,
+    val currStopId : String?,
+    val lineId : String?,
+    val remainMin : String?,
+    val engBusStopName : String?,
+    val dirStart : String?,
+    val dir : String?,
+    val dirEnd : String?,
+    val lowBus : String?,
+    val arriveFlag : String?,
+    val lineName : String?,
+    val lineColor: Color = Color.Transparent,
+    val busLatitude: Double?,
+    val busLongitude: Double?,
+    val isPinned: Boolean,
+)
+
+fun BusArrive.toPresentation(): BusArriveModel = BusArriveModel(
+    itemList = itemList.map { it.toPresentation() }
+)
+
+fun BusArriveItem.toPresentation(
+    lineColor: Color = Color.Transparent,
+): BusArriveItemModel = BusArriveItemModel(
+    arrive = arrive,
+    remainStop = remainStop,
+    shortLineName = shortLineName,
+    busId = busId,
+    metroFlag = metroFlag,
+    busStopName = busStopName,
+    currStopId = currStopId,
+    lineId = lineId,
+    remainMin = remainMin,
+    engBusStopName = engBusStopName,
+    dirStart = dirStart,
+    dir = dir,
+    dirEnd = dirEnd,
+    lowBus = lowBus,
+    arriveFlag = arriveFlag,
+    lineName = lineName,
+    lineColor = lineColor,
+    busLatitude = busLatitude,
+    busLongitude = busLongitude,
+    isPinned = isPinned,
+)

@@ -1,10 +1,10 @@
 package com.system.traffic.local.db
 
 import android.content.Context
-import com.traffic.data.model.local.LineDataWrapper
-import com.traffic.data.model.local.LineEntity
-import com.traffic.data.model.local.StationDataWrapper
-import com.traffic.data.model.local.StationEntity
+import com.system.traffic.data.model.local.LineDataWrapper
+import com.system.traffic.data.model.local.LineEntity
+import com.system.traffic.data.model.local.StationDataWrapper
+import com.system.traffic.data.model.local.StationEntity
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.serialization.json.Json
 import javax.inject.Inject

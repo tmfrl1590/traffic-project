@@ -4,7 +4,7 @@ plugins {
     `kotlin-dsl`
 }
 
-group = "com.traffic.buildlogic"
+group = "com.system.traffic.buildlogic"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17

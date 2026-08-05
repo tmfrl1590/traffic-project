@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.system.traffic.local.LocalMapper
 import com.system.traffic.local.RoomConstant
-import com.traffic.data.model.local.KeywordEntity
+import com.system.traffic.data.model.local.KeywordEntity
 
 @Entity(tableName = RoomConstant.Table.KEYWORD_LOCAL)
 data class KeywordLocal(

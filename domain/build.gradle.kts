@@ -6,11 +6,12 @@ plugins {
 }
 
 android {
-    namespace = "com.traffic.domain"
+    namespace = "com.system.traffic.domain"
 }
 
 dependencies {
-    implementation(projects.core)
+    // domain의 공개 API(RemoteRepository 등)가 core 타입(Result, DataError)을 노출하므로 api로 선언
+    api(projects.core)
 
     // Kotlin Serialization
     implementation(libs.kotlin.stdlib)

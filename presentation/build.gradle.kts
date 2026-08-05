@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.traffic.presentation"
+    namespace = "com.system.traffic.presentation"
 
     buildFeatures {
         buildConfig = true

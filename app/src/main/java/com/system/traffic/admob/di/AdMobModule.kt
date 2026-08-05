@@ -1,6 +1,6 @@
 package com.system.traffic.admob.di
 import com.system.traffic.BuildConfig
-import com.traffic.design.component.AdConfig
+import com.system.traffic.design.component.AdConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

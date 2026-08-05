@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.system.traffic.local.LocalMapper
 import com.system.traffic.local.RoomConstant
-import com.traffic.data.model.local.LineEntity
+import com.system.traffic.data.model.local.LineEntity
 import javax.annotation.Nonnull
 
 @Entity(tableName = RoomConstant.Table.LINE_LOCAL)

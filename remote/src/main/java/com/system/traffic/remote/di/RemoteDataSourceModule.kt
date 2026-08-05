@@ -1,7 +1,7 @@
 package com.system.traffic.remote.di
 
 import com.system.traffic.remote.impl.RemoteDataSourceImpl
-import com.traffic.data.remote.RemoteDataSource
+import com.system.traffic.data.remote.RemoteDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

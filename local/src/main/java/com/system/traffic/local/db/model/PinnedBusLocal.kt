@@ -5,7 +5,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.system.traffic.local.LocalMapper
 import com.system.traffic.local.RoomConstant
-import com.traffic.data.model.local.PinnedBusEntity
+import com.system.traffic.data.model.local.PinnedBusEntity
 
 @Entity(
     tableName = RoomConstant.Table.PINNED_BUS_LOCAL,

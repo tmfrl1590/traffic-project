@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.traffic.data"
+    namespace = "com.system.traffic.data"
 }
 
 dependencies {

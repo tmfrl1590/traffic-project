@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.system.traffic.core.enums.AppFontSize
 import com.system.traffic.core.enums.AppThemeType
-import com.traffic.domain.usecase.datastore.GetAppFontSizeUseCase
-import com.traffic.domain.usecase.datastore.GetAppThemeTypeUseCase
-import com.traffic.domain.usecase.network.GetNetworkStatusUseCase
+import com.system.traffic.domain.usecase.datastore.GetAppFontSizeUseCase
+import com.system.traffic.domain.usecase.datastore.GetAppThemeTypeUseCase
+import com.system.traffic.domain.usecase.network.GetNetworkStatusUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

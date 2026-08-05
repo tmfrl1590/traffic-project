@@ -1,7 +1,7 @@
 package com.system.traffic.local.di
 
 import com.system.traffic.local.impl.LocalDataSourceImpl
-import com.traffic.data.local.LocalDataSource
+import com.system.traffic.data.local.LocalDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

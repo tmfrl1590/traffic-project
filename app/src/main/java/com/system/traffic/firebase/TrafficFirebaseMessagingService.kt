@@ -7,7 +7,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.traffic.design.R
+import com.system.traffic.design.R
 import com.system.traffic.MainActivity
 
 class TrafficFirebaseMessagingService : FirebaseMessagingService() {

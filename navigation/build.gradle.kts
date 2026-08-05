@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.traffic.navigation"
+    namespace = "com.system.traffic.navigation"
 }
 
 dependencies {

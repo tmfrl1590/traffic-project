@@ -1,0 +1,124 @@
+package com.system.traffic.presentation.screens.station.component
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.system.traffic.design.component.noRippleClickable
+import com.system.traffic.design.R
+import com.system.traffic.design.ui.theme.TrafficTheme
+import com.system.traffic.domain.model.KeywordModel
+
+@Composable
+fun KeywordListSection(
+    keywordList: List<KeywordModel>,
+    onClickKeyword: (String) -> Unit,
+    onClickDeleteKeyword: (String) -> Unit,
+    onClickAllDeleteKeywordList: () -> Unit,
+) {
+    if (keywordList.isNotEmpty()) {
+        Column {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                ,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(R.string.recent_keywords),
+                    modifier = Modifier
+                        .padding(start = 20.dp)
+                        .padding(bottom = 4.dp)
+                )
+
+                Text(
+                    text = stringResource(R.string.delete_all),
+                    modifier = Modifier
+                        .padding(end = 20.dp)
+                        .noRippleClickable{ onClickAllDeleteKeywordList() }
+                    ,
+                    fontSize = 12.sp
+                )
+            }
+
+
+            LazyRow(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(vertical = 8.dp)
+            ) {
+                items(
+                    items = keywordList.sortedByDescending { it.id },
+                    key = { it.id }
+                ) { keyword ->
+                    KeywordCard(
+                        keywordModel = keyword,
+                        onKeywordClick = onClickKeyword,
+                        onDeleteClick = { onClickDeleteKeyword(keyword.keyword) }
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun KeywordCard(
+    keywordModel: KeywordModel,
+    onKeywordClick: (String) -> Unit,
+    onDeleteClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .clickable { onKeywordClick(keywordModel.keyword) },
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = TrafficTheme.colors.unselectedChipBackground
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 2.dp
+        )
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = keywordModel.keyword,
+                style = TrafficTheme.typography.chip,
+                color = TrafficTheme.colors.unselectedChipText
+            )
+            Icon(
+                imageVector = Icons.Default.Clear,
+                contentDescription = "Delete Keyword",
+                tint = Color.Gray,
+                modifier = Modifier
+                    .size(16.dp)
+                    .noRippleClickable { onDeleteClick() }
+            )
+        }
+    }
+}

@@ -5,9 +5,9 @@ import com.system.traffic.core.domain.DataError
 import com.system.traffic.core.domain.Result
 import com.system.traffic.remote.network.NetworkObserver
 import com.system.traffic.remote.service.TrafficService
-import com.traffic.data.model.remote.BusArriveEntity
-import com.traffic.data.model.remote.LineStationInfoEntity
-import com.traffic.data.remote.RemoteDataSource
+import com.system.traffic.data.model.remote.BusArriveEntity
+import com.system.traffic.data.model.remote.LineStationInfoEntity
+import com.system.traffic.data.remote.RemoteDataSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

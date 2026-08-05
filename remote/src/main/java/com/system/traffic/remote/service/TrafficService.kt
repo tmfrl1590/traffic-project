@@ -1,8 +1,8 @@
 package com.system.traffic.remote.service
 
 import com.system.traffic.remote.RemoteConstants
-import com.traffic.data.model.remote.BusArriveEntity
-import com.traffic.data.model.remote.LineStationInfoEntity
+import com.system.traffic.data.model.remote.BusArriveEntity
+import com.system.traffic.data.model.remote.LineStationInfoEntity
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

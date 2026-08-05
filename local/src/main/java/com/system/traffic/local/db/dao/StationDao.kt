@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.system.traffic.local.db.model.StationLocal
-import com.traffic.data.model.local.StationCoordinates
+import com.system.traffic.data.model.local.StationCoordinates
 import kotlinx.coroutines.flow.Flow
 
 @Dao

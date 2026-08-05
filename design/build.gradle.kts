@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.traffic.design"
+    namespace = "com.system.traffic.design"
 }
 
 dependencies {
