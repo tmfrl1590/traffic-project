@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     id("com.google.android.gms.oss-licenses-plugin")
     id("com.google.gms.google-services")
+    alias(libs.plugins.firebase.crashlytics)
 }
 
 val properties = Properties()
@@ -113,7 +114,10 @@ dependencies {
     implementation(libs.play.services.ads)
 
     // Firebase
+    implementation(platform(libs.firebase.bom))   // 34.16.0, 이미 toml에 선언돼 있음
     implementation(libs.firebase.messaging)
+    implementation(libs.firebase.crashlytics)
 
+    // splash screen
     implementation(libs.androidx.core.splashscreen)
 }
