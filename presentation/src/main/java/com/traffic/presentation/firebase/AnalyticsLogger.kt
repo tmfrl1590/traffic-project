@@ -6,6 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.logEvent
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.traffic.presentation.BuildConfig
 
 fun logEvent(context: Context, screenName: String) {
