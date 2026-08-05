@@ -37,10 +37,6 @@ dependencies {
     implementation(projects.data)
     implementation(projects.domain)
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-
     // hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)

@@ -34,15 +34,11 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
 
     // hilt
     implementation(libs.hilt.android)
@@ -52,7 +48,6 @@ dependencies {
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
-    implementation(libs.firebase.messaging)
     implementation(libs.firebase.crashlytics)
 
     implementation(libs.oss.licenses)

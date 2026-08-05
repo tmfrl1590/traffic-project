@@ -36,9 +36,6 @@ android {
 dependencies {
     implementation(projects.core)
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-
     // hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)

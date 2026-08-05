@@ -36,9 +36,6 @@ dependencies {
     implementation(projects.core)
     implementation(projects.domain)
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-
     // hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
@@ -46,12 +43,4 @@ dependencies {
     // Kotlin Serialization
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.serialization.json)
-
-    // DataStore Preferences
-    implementation(libs.androidx.datastore.preferences)
-
-    // room
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
 }

@@ -19,14 +19,6 @@ dependencies {
     // Kotlin Serialization
     implementation(libs.kotlinx.serialization.json)
 
-    // Okhttp3
-    implementation(libs.okhttp)
-    implementation(libs.logging.interceptor)
-
     // retrofit
     implementation(libs.retrofit)
-
-    // Coroutines
-    implementation(libs.coroutines.core)
-    implementation(libs.coroutines.android)
 }

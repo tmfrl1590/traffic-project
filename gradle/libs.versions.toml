@@ -20,13 +20,11 @@ kotlinxSerializationJson = "1.7.3" # Kotlinx Serialization
 datastore = "1.2.1" # Datastore Preferences
 roomRuntime = "2.7.2"
 activity = "1.10.1"
-constraintlayout = "2.2.1"
 firebaseBom = "34.16.0" # Firebase BOM
 crashlyticsPlugin = "3.0.7"
 ossLicenses = "17.5.1" # OSS Licenses
 ossLicensesPlugin = "0.13.0" # OSS Licenses Plugin
 ksp = "2.2.0-2.0.2" # KSP
-material = "1.14.0"
 playServicesAds = "25.4.0"
 mapSdk = "3.23.0"
 naverMapCompose = "1.9.0"
@@ -83,7 +81,6 @@ androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRunt
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
-androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
 # Firebase
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
@@ -94,7 +91,6 @@ firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics"}
 # OSS Licenses
 oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "ossLicenses" }
 oss-licenses-plugin = { group = "com.google.android.gms", name = "oss-licenses-plugin", version.ref = "ossLicensesPlugin" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 # admob
 play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
