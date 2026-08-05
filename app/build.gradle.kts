@@ -114,7 +114,7 @@ dependencies {
     implementation(libs.play.services.ads)
 
     // Firebase
-    implementation(platform(libs.firebase.bom))   // 34.16.0, 이미 toml에 선언돼 있음
+    implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.messaging)
     implementation(libs.firebase.crashlytics)
 

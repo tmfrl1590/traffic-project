@@ -21,7 +21,6 @@ datastore = "1.2.1" # Datastore Preferences
 roomRuntime = "2.7.2"
 activity = "1.10.1"
 constraintlayout = "2.2.1"
-firebaseMessaging = "25.1.1" # Firebase Messaging
 firebaseBom = "34.16.0" # Firebase BOM
 crashlyticsPlugin = "3.0.7"
 ossLicenses = "17.5.1" # OSS Licenses
@@ -29,7 +28,6 @@ ossLicensesPlugin = "0.13.0" # OSS Licenses Plugin
 ksp = "2.2.0-2.0.2" # KSP
 material = "1.14.0"
 playServicesAds = "25.4.0"
-analytics="22.5.0"
 mapSdk = "3.23.0"
 naverMapCompose = "1.9.0"
 androidx-lifecycle = "2.10.0"
@@ -87,15 +85,10 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
-# Firebase Messaging
-firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
-
-# Firebase BOM
+# Firebase
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-
-# Firebase Analytics
-firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx", version.ref="analytics" }
-
+firebase-messaging = { module = "com.google.firebase:firebase-messaging" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics"}
 
 # OSS Licenses
@@ -122,4 +115,4 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlyticsPlugin" }   # ← 여기서 3.0.7 사용
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlyticsPlugin" }
