@@ -31,7 +31,7 @@ DI : Hilt
 |---|---|
 | app | 앱 진입점(MainActivity, Application), Firebase 서비스, 권한 처리 |
 | presentation | 화면(Compose)·ViewModel, 단방향 상태 관리 |
-| navigation | Navigation3 기반 화면 전환, 하단 탭, 백스택 관리 |
+| navigation | Navigation3 기반 화면 전환 (NavDisplay 백스택 직접 관리), 하단 탭, 뒤로가기 처리 |
 | domain | UseCase, Repository 인터페이스, 도메인 모델 |
 | data | Repository 구현, DataSource 인터페이스, DTO 매핑 |
 | remote | Retrofit 기반 API 통신, 네트워크 상태 감지 |
@@ -50,6 +50,13 @@ DI : Hilt
 - 앱 테마(라이트/다크/시스템)·글자 크기 설정
 - FCM 푸시 알림
 - 네트워크 오프라인 안내 배너
+
+---
+### 성능/메모리 최적화
+- 개발 중 LeakCanary로 AdMob AdView 미해제로 인한 Activity 메모리 누수 검출, AndroidView onRelease에서 destroy 처리로 해결
+- 초기 데이터(asset JSON 1.2MB) 파싱을 스트리밍 방식(decodeFromStream)으로 전환해 최초 실행 시 순간 메모리 피크 감소 및 스트림 close 보장
+- 지도 마커 좌표 등 데이터에서 파생되는 상태의 불필요한 savedState(Bundle) 저장 제거
+- Android Studio Profiler(힙 덤프, allocation tracking)로 수정 전후 검증
 
 ---
 ### 화면 설명
