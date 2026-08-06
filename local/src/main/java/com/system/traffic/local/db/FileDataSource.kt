@@ -6,7 +6,9 @@ import com.system.traffic.data.model.local.LineEntity
 import com.system.traffic.data.model.local.StationDataWrapper
 import com.system.traffic.data.model.local.StationEntity
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.decodeFromStream
 import javax.inject.Inject
 
 class FileDataSource @Inject constructor(
@@ -18,18 +20,19 @@ class FileDataSource @Inject constructor(
     }
 
     // 정류장 파일 파싱
+    // 스트리밍 파싱: 파일 전체를 String으로 만들지 않아 순간 메모리 피크 감소, use로 스트림 자동 close
+    @OptIn(ExperimentalSerializationApi::class)
     fun getStationDataFromFile(): List<StationEntity> {
-        val jsonString = context.assets.open("station.json").reader().readText()
-        // 단 한 줄로 파싱 완료 (자동으로 List<StationEntity>로 역직렬화됨)
-        val wrapper = json.decodeFromString<StationDataWrapper>(jsonString)
-        return wrapper.stationList // 지역 변수만 반환하므로 함수가 끝난 후 GC에 의해 자동 소멸
+        return context.assets.open("station.json").use { stream ->
+            json.decodeFromStream<StationDataWrapper>(stream).stationList
+        }
     }
 
     // 노선 파일 파싱
+    @OptIn(ExperimentalSerializationApi::class)
     fun getLineDataFromFile(): List<LineEntity> {
-        val jsonString = context.assets.open("line.json").reader().readText()
-        // 단 한 줄로 파싱 완료
-        val wrapper = json.decodeFromString<LineDataWrapper>(jsonString)
-        return wrapper.lineList
+        return context.assets.open("line.json").use { stream ->
+            json.decodeFromStream<LineDataWrapper>(stream).lineList
+        }
     }
 }
