@@ -22,7 +22,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,8 +41,8 @@ import com.naver.maps.map.compose.MarkerState
 import com.naver.maps.map.compose.NaverMap
 import com.naver.maps.map.compose.rememberCameraPositionState
 import com.system.traffic.core.enums.LineType
-import com.system.traffic.design.ui.theme.TrafficTheme
 import com.system.traffic.design.R
+import com.system.traffic.design.ui.theme.TrafficTheme
 import com.system.traffic.presentation.PresentationConstants.DEFAULT_LATITUDE
 import com.system.traffic.presentation.PresentationConstants.DEFAULT_LONGITUDE
 import com.system.traffic.presentation.firebase.ScreenName
@@ -201,18 +200,21 @@ private fun LineStationScreen(
                     }
                 }
             ) {
-                val turnIndex = state.lineStationList.indexOfFirst { it.lineType == LineType.TURN }
-                // 1. 회차지가 없을 때를 대비해 safe 가드 추가
-                val filterList = if (turnIndex != -1) {
-                    state.lineStationList.subList(0, turnIndex + 1)
-                } else {
-                    state.lineStationList
+                // 1. 회차지 계산은 리스트가 바뀔 때만 수행 (recomposition마다 재계산 방지)
+                val filterList = remember(state.lineStationList) {
+                    val turnIndex = state.lineStationList.indexOfFirst { it.lineType == LineType.TURN }
+                    if (turnIndex != -1) {
+                        state.lineStationList.subList(0, turnIndex + 1)
+                    } else {
+                        state.lineStationList
+                    }
                 }
                 // 2. 각 정류장을 순회하며 지도 위에 마커를 표시합니다.
                 filterList.forEach { station ->
                     // Compose가 각각의 마커를 식별하여 불필요한 재렌더링을 피하도록 key를 지정합니다.
                     key(station.busStopId) {
-                        val markerState = rememberSaveable(saver = MarkerState.Saver) {
+                        // 좌표는 station 데이터에서 파생되는 값이라 Bundle 저장(rememberSaveable) 불필요
+                        val markerState = remember(station.latitude, station.longitude) {
                             MarkerState(
                                 position = LatLng(station.latitude, station.longitude)
                             )
