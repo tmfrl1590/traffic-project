@@ -14,10 +14,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.system.traffic.design.R
 import com.system.traffic.design.component.TrafficSnackBar
@@ -33,29 +34,17 @@ fun MainScreenRoute(
     onStationCardClick: (String, String) -> Unit,
     mainViewModel: MainViewModel = hiltViewModel(),
 ) {
-    val navigationState = rememberNavigationState(
-        startRoute = Screens.Home,
-        topLevelRoutes = TOP_LEVEL_DESTINATIONS.keys
-    )
-    val navigator = remember {
-        Navigator(navigationState)
-    }
-
+    val backStack = rememberNavBackStack(Screens.Home)
     val snackBarHostState = remember { SnackbarHostState() }
 
-    // 뒤로가기 상태 판별용 변수 계산
-    val homeStack = navigationState.backStacks[Screens.Home]
-    val isOnHomeTab = navigationState.topLevelRoute == Screens.Home
-    val canPopWithinHome = homeStack != null && homeStack.size > 1
-    val shouldHandleExitOnHome = isOnHomeTab && !canPopWithinHome
-
-    // 분리해 낸 뒤로가기 더블 클릭 앱 종료 핸들러 사용
+    // 홈탭(루트)에서만 동작: 뒤로가기 더블 클릭 시 앱 종료
     DoubleBackToExitHandler(
-        enabled = shouldHandleExitOnHome,
+        enabled = backStack.size == 1,
         snackbarHostState = snackBarHostState
     )
 
-    LaunchedEffect(key1 = Unit) {
+    // key에 viewModel 포함: VM 인스턴스가 교체돼도 새 인스턴스의 이벤트를 구독하도록 함
+    LaunchedEffect(mainViewModel) {
         mainViewModel.uiEvent.collect { event ->
             when (event) {
                 is UiEvent.ShowSnackBar -> {
@@ -68,29 +57,18 @@ fun MainScreenRoute(
         }
     }
 
-    // 단순하고 맑아진 뒤로가기 액션 분기 로직
-    val onBack: () -> Unit = {
-        when {
-            canPopWithinHome -> navigator.goBack()
-            shouldHandleExitOnHome -> Unit // 핸들러에서 자체적으로 처리하므로 여기서는 무동작
-            else -> navigator.goBack()
-        }
-    }
-
     Scaffold(
         topBar = {
             MainTopBar(
-                title = stringResource(
-                    TOP_LEVEL_DESTINATIONS[navigationState.topLevelRoute]?.topBarTitleRes
-                        ?: R.string.top_bar_title_home
-                )
+                title = stringResource(id = TOP_LEVEL_DESTINATIONS[backStack.lastOrNull()]?.topBarTitleRes ?: R.string.top_bar_title_home)
             )
         },
         bottomBar = {
             TrafficNavigationBar(
-                selectedKey = navigationState.topLevelRoute,
+                selectedKey = backStack.lastOrNull() ?: Screens.Home,
                 onSelectKey = { route ->
-                    navigator.navigate(route)
+                    // [Home] 또는 [Home, 선택탭] — route가 Home이면 set이 중복을 알아서 제거
+                    backStack.apply { clear(); addAll(elements = setOf(Screens.Home, route)) }
                 }
             )
         },
@@ -106,29 +84,31 @@ fun MainScreenRoute(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues = innerPadding),
-            onBack = onBack,
+            backStack = backStack,
             sizeTransform = null,
             transitionSpec = { headUpSlideTransition() },
             popTransitionSpec = { headUpSlidePopTransition() },
             predictivePopTransitionSpec = { _ -> headUpSlidePopTransition() },
-            entries = navigationState.toEntries(
-                entryProvider {
-                    entry<Screens.Home> {
-                        HomeScreenRoute(
-                            onStationCardClick = onStationCardClick,
-                            onGotoStation = { navigator.navigate(route = Screens.Station)}
-                        )
-                    }
-                    entry<Screens.Station> {
-                        StationScreenRoute(
-                            onStationCardClick = onStationCardClick,
-                        )
-                    }
-                    entry<Screens.Setting> {
-                        SettingScreenRoute()
-                    }
+            entryDecorators = listOf(
+                rememberSaveableStateHolderNavEntryDecorator(),
+                rememberViewModelStoreNavEntryDecorator(),
+            ),
+            entryProvider = entryProvider {
+                entry<Screens.Home> {
+                    HomeScreenRoute(
+                        onStationCardClick = onStationCardClick,
+                        onGotoStation = { backStack.add(Screens.Station) }
+                    )
                 }
-            )
+                entry<Screens.Station> {
+                    StationScreenRoute(
+                        onStationCardClick = onStationCardClick,
+                    )
+                }
+                entry<Screens.Setting> {
+                    SettingScreenRoute()
+                }
+            }
         )
     }
 }
