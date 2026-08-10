@@ -1,9 +1,7 @@
 package com.system.traffic.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
@@ -48,7 +46,6 @@ fun TrafficNavigationRoot() {
                 BusArriveScreenRoute(
                     arsId = key.arsId,
                     busStopId = key.busStopId,
-                    snackBarHostState = remember { SnackbarHostState() },
                     onClickBusArriveCard = { lineId ->
                         backStack.add(Screens.LineStation(lineId = lineId))
                     }
@@ -57,7 +54,6 @@ fun TrafficNavigationRoot() {
             entry<Screens.LineStation> { key ->
                 LineStationScreenRoute(
                     lineId = key.lineId,
-                    snackBarHostState = remember { SnackbarHostState() }
                 )
             }
         }

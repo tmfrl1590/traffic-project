@@ -42,6 +42,7 @@ import com.naver.maps.map.compose.NaverMap
 import com.naver.maps.map.compose.rememberCameraPositionState
 import com.system.traffic.core.enums.LineType
 import com.system.traffic.design.R
+import com.system.traffic.design.ui.theme.LocalSnackBarHostState
 import com.system.traffic.design.ui.theme.TrafficTheme
 import com.system.traffic.presentation.PresentationConstants.DEFAULT_LATITUDE
 import com.system.traffic.presentation.PresentationConstants.DEFAULT_LONGITUDE
@@ -57,10 +58,11 @@ import kotlinx.coroutines.launch
 @Composable
 fun LineStationScreenRoute(
     lineId: String,
-    snackBarHostState: SnackbarHostState,
     lineStationViewModel: LineStationViewModel = hiltViewModel(),
 ) {
     TrackScreenView(screenName = ScreenName.LineStation)
+
+    val snackBarHostState = LocalSnackBarHostState.current
 
     val state by lineStationViewModel.state.collectAsStateWithLifecycle()
 

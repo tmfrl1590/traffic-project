@@ -47,6 +47,7 @@ import com.naver.maps.map.compose.rememberCameraPositionState
 import com.naver.maps.map.overlay.OverlayImage
 import com.system.traffic.design.R
 import com.system.traffic.design.component.AdBannerView
+import com.system.traffic.design.ui.theme.LocalSnackBarHostState
 import com.system.traffic.design.ui.theme.TrafficTheme
 import com.system.traffic.presentation.PresentationConstants.DEFAULT_LATITUDE
 import com.system.traffic.presentation.PresentationConstants.DEFAULT_LONGITUDE
@@ -65,11 +66,12 @@ import kotlinx.coroutines.launch
 fun BusArriveScreenRoute(
     arsId: String,
     busStopId: String,
-    snackBarHostState: SnackbarHostState,
     busArriveViewModel: BusArriveViewModel = hiltViewModel(),
     onClickBusArriveCard: (String) -> Unit,
 ) {
     TrackScreenView(screenName = ScreenName.BusArrive)
+
+    val snackBarHostState = LocalSnackBarHostState.current
 
     val state by busArriveViewModel.state.collectAsStateWithLifecycle()
 

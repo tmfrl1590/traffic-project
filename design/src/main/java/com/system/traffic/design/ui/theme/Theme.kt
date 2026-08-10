@@ -1,10 +1,12 @@
 package com.system.traffic.design.ui.theme
 
 import android.app.Activity
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.Density
@@ -33,6 +35,7 @@ fun TrafficTheme(
     content: @Composable () -> Unit,
 ) {
     val currentDensity = LocalDensity.current
+    val snackBarHostState = remember { SnackbarHostState() }
 
     // 상단 상태바(시계, 배터리, 와이파이) 아이콘 색상 자동 제어
     val view = LocalView.current
@@ -51,6 +54,7 @@ fun TrafficTheme(
             density = currentDensity.density,
             fontScale = selectedFontSize,
         ),
+        LocalSnackBarHostState provides snackBarHostState,
     ){
         content()
     }

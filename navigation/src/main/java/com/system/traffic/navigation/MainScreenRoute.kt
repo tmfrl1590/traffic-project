@@ -6,12 +6,10 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -22,6 +20,7 @@ import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.system.traffic.design.R
 import com.system.traffic.design.component.TrafficSnackBar
+import com.system.traffic.design.ui.theme.LocalSnackBarHostState
 import com.system.traffic.design.ui.theme.TrafficTheme
 import com.system.traffic.presentation.event.UiEvent
 import com.system.traffic.presentation.screens.home.HomeScreenRoute
@@ -35,7 +34,7 @@ fun MainScreenRoute(
     mainViewModel: MainViewModel = hiltViewModel(),
 ) {
     val backStack = rememberNavBackStack(Screens.Home)
-    val snackBarHostState = remember { SnackbarHostState() }
+    val snackBarHostState = LocalSnackBarHostState.current
 
     // 홈탭(루트)에서만 동작: 뒤로가기 더블 클릭 시 앱 종료
     DoubleBackToExitHandler(
