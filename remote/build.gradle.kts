@@ -13,8 +13,6 @@ android {
     namespace = "com.system.traffic.remote"
 
     defaultConfig {
-        consumerProguardFiles("consumer-rules.pro")
-
         buildConfigField("String", "BASE_URL", "\"${properties.getProperty("BASE_URL")}\"")
         buildConfigField("String", "SERVICE_KEY", "\"${properties.getProperty("SERVICE_KEY")}\"")
     }
