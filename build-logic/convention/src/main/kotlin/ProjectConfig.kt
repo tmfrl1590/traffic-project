@@ -6,7 +6,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
  * SDK 버전이나 앱 버전을 올릴 때 이 파일만 수정하면 됨
  */
 object ProjectConfig {
-    const val COMPILE_SDK = 36
+    const val COMPILE_SDK = 37
     const val TARGET_SDK = 36
     const val MIN_SDK = 28
 

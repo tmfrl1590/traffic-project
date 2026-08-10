@@ -1,6 +1,6 @@
 [versions]
-agp = "8.12.1"
-kotlin = "2.2.0"
+agp = "9.1.1"
+kotlin = "2.2.20"
 coreKtx = "1.16.0"
 kotlinxCoroutinesAndroid = "1.10.2"
 lifecycleRuntimeKtx = "2.10.0"
@@ -11,7 +11,7 @@ appcompat = "1.7.1"
 # Add Library
 navigation3 = "1.1.1"
 materialIconsExtended = "1.7.8" # Material Icons Extended
-hiltAndroid = "2.57" # Hilt
+hiltAndroid = "2.60.1" # Hilt
 hiltNavigationCompose = "1.2.0"
 okhttp = "4.12.0" # OkHttp
 retrofit = "3.0.0" # Retrofit
@@ -24,11 +24,11 @@ firebaseBom = "34.16.0" # Firebase BOM
 crashlyticsPlugin = "3.0.7"
 ossLicenses = "17.5.1" # OSS Licenses
 ossLicensesPlugin = "0.13.0" # OSS Licenses Plugin
-ksp = "2.2.0-2.0.2" # KSP
+ksp = "2.3.1" # KSP
 playServicesAds = "25.4.0"
 mapSdk = "3.23.0"
 naverMapCompose = "1.9.0"
-androidx-lifecycle = "2.10.0"
+androidx-lifecycle = "2.11.0"
 coreSplashscreen = "1.2.0"
 
 [libraries]
@@ -48,7 +48,7 @@ coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutin
 # navigation3
 androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
-jetbrains-lifecycle-viewmodel-nav3 = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "androidx-lifecycle" }
+androdix-lifecycle-viewmodel-nav3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "androidx-lifecycle" }
 
 
 # Material Icons Extended
@@ -108,7 +108,6 @@ kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-pl
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
-jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 daggerHilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid"}
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin"}
