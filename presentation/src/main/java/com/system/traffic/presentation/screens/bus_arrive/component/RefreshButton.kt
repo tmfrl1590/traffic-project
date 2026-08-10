@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.system.traffic.presentation.PresentationConstants.REFRESH_INTERVAL_SECONDS
 
 @Composable
 fun RefreshButton(
@@ -33,7 +34,7 @@ fun RefreshButton(
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxSize()
         ) {
-            val progress = remainingSeconds / 30f
+            val progress = remainingSeconds / REFRESH_INTERVAL_SECONDS.toFloat()
             CircularProgressIndicator(
                 progress = { progress },
                 color = Color.White,

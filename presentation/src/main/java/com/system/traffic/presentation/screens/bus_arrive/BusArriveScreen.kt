@@ -55,6 +55,7 @@ import com.system.traffic.presentation.screens.bus_arrive.component.NextBusStopS
 import com.system.traffic.presentation.screens.bus_arrive.component.RefreshButton
 import com.system.traffic.presentation.screens.bus_arrive.state.BusArriveState
 import com.system.traffic.presentation.screens.bus_arrive.viewmodel.BusArriveViewModel
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @Composable
@@ -68,27 +69,22 @@ fun BusArriveScreenRoute(
 
     val state by busArriveViewModel.state.collectAsStateWithLifecycle()
 
-    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
-        if (busStopId.isNotEmpty()) {
-            busArriveViewModel.startTimer(busStopId)
-        }
-    }
-    LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) {
-        busArriveViewModel.stopTimer()
+    // 화면 진입: 정류장 정보 및 도착 정보 로딩 (OnResume보다 먼저 선언해 busStopId 저장 순서 보장)
+    LaunchedEffect(busArriveViewModel, arsId, busStopId) {
+        busArriveViewModel.onAction(BusArriveAction.OnEnter(arsId = arsId, busStopId = busStopId))
     }
 
-    // 해당 arsId 정류장 조회
-    LaunchedEffect(key1 = arsId) {
-        busArriveViewModel.getStationInfo(arsId)
+    // 화면 resume/pause 시 도착 정보 갱신 시작/중지
+    LifecycleEventEffect(event = Lifecycle.Event.ON_RESUME) {
+        busArriveViewModel.onAction(BusArriveAction.OnResume)
     }
-
-    // 해당 정류장 버스 도착 정보 조회
-    LaunchedEffect(key1 = Unit) {
-        busArriveViewModel.getBusArriveList(busStopId = busStopId)
+    LifecycleEventEffect(event = Lifecycle.Event.ON_PAUSE) {
+        busArriveViewModel.onAction(BusArriveAction.OnPause)
     }
 
     BusArriveScreen(
         state = state,
+        remainingSeconds = busArriveViewModel.remainingSeconds,
         onAction = busArriveViewModel::onAction,
         onClickBusArriveCard = onClickBusArriveCard,
     )
@@ -98,6 +94,7 @@ fun BusArriveScreenRoute(
 @Composable
 private fun BusArriveScreen(
     state: BusArriveState,
+    remainingSeconds: StateFlow<Int>,
     onAction: (BusArriveAction) -> Unit,
     onClickBusArriveCard: (String) -> Unit,
 ) {
@@ -231,15 +228,33 @@ private fun BusArriveScreen(
             }
         }
 
-        RefreshButton(
+        CountdownRefreshButton(
             modifier = Modifier
                 .align (Alignment.BottomEnd)
                 .padding(end = 20.dp, bottom = 20.dp)
             ,
-            remainingSeconds = state.remainingSeconds,
+            remainingSecondsFlow = remainingSeconds,
             onClickRefresh = { onAction(BusArriveAction.OnClickRefresh) }
         )
     }
+}
+
+/**
+ * 카운트다운 flow를 여기서만 구독해 매초 recomposition 범위를 이 컴포저블로 한정
+ */
+@Composable
+private fun CountdownRefreshButton(
+    modifier: Modifier,
+    remainingSecondsFlow: StateFlow<Int>,
+    onClickRefresh: () -> Unit,
+) {
+    val remainingSeconds by remainingSecondsFlow.collectAsStateWithLifecycle()
+
+    RefreshButton(
+        modifier = modifier,
+        remainingSeconds = remainingSeconds,
+        onClickRefresh = onClickRefresh,
+    )
 }
 
 /**

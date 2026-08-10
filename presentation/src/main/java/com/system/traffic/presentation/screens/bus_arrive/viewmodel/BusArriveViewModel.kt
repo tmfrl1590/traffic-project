@@ -15,6 +15,7 @@ import com.system.traffic.domain.usecase.pinned_bus.DeletePinnedBusUseCase
 import com.system.traffic.domain.usecase.pinned_bus.GetPinnedBusUseCase
 import com.system.traffic.domain.usecase.pinned_bus.InsertPinnedBusUseCase
 import com.system.traffic.domain.usecase.station.GetStationInfoUseCase
+import com.system.traffic.presentation.PresentationConstants.REFRESH_INTERVAL_SECONDS
 import com.system.traffic.presentation.event.UiEvent
 import com.system.traffic.presentation.event.UiEventBus
 import com.system.traffic.presentation.model.toPresentation
@@ -28,6 +29,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
@@ -80,8 +82,32 @@ class BusArriveViewModel @Inject constructor(
             initialValue = BusArriveState()
         )
 
+    // 자동 새로고침 카운트다운 (state와 분리해 매초 전체 state 갱신 방지)
+    private val _remainingSeconds = MutableStateFlow(REFRESH_INTERVAL_SECONDS)
+    val remainingSeconds: StateFlow<Int> = _remainingSeconds.asStateFlow()
+
+    // OnEnter 시 저장되는 화면 파라미터
+    private var busStopId: String = ""
+
+    fun onAction(action: BusArriveAction) {
+        when (action) {
+            is BusArriveAction.OnEnter -> onEnter(arsId = action.arsId, busStopId = action.busStopId)
+            BusArriveAction.OnResume -> startTimer()
+            BusArriveAction.OnPause -> stopTimer()
+            is BusArriveAction.OnClickFavoriteIcon -> toggleLikeStation(action.stationModel)
+            BusArriveAction.OnClickRefresh -> onClickRefresh()
+            is BusArriveAction.OnClickPinnedIcon -> onClickPinnedIcon(lineId = action.lineId, isPinned = action.isPinned)
+        }
+    }
+
+    private fun onEnter(arsId: String, busStopId: String) {
+        this.busStopId = busStopId
+        getStationInfo(arsId = arsId)
+        getBusArriveList(busStopId = busStopId)
+    }
+
     // 버스 도착 정보 조회
-    fun getBusArriveList(busStopId: String) {
+    private fun getBusArriveList(busStopId: String) {
         viewModelScope.launch(context = Dispatchers.IO) {
             _state.update { it.copy(isLoading = true) }
             busArriveUseCase(busStopId = busStopId)
@@ -107,7 +133,7 @@ class BusArriveViewModel @Inject constructor(
     private var stationInfoJob: Job? = null
 
     // 정류장 정보 조회
-    fun getStationInfo(arsId: String) {
+    private fun getStationInfo(arsId: String) {
         stationInfoJob?.cancel()
         stationInfoJob = viewModelScope.launch(context = Dispatchers.IO) {
             combine(
@@ -128,25 +154,27 @@ class BusArriveViewModel @Inject constructor(
         }
     }
 
-    fun toggleLikeStation(stationModel: StationModel) = viewModelScope.launch(Dispatchers.IO) {
+    private fun toggleLikeStation(stationModel: StationModel) = viewModelScope.launch(Dispatchers.IO) {
         toggleLikeStationUseCase(stationModel)
     }
 
 
     private var timerJob: Job? = null
 
-    // 타이머 시작 (30초 카운트다운)
-    fun startTimer(busStopId: String) {
+    // 자동 새로고침 타이머 시작 (카운트다운)
+    private fun startTimer() {
+        if (busStopId.isEmpty()) return
+
         timerJob?.cancel()
         timerJob = viewModelScope.launch {
-            _state.update { it.copy(remainingSeconds = 30) }
+            _remainingSeconds.value = REFRESH_INTERVAL_SECONDS
             while (true) {
                 delay(1000L)
-                val currentSeconds = _state.value.remainingSeconds
+                val currentSeconds = _remainingSeconds.value
                 if (currentSeconds > 1) {
-                    _state.update { it.copy(remainingSeconds = currentSeconds - 1) }
+                    _remainingSeconds.value = currentSeconds - 1
                 } else {
-                    _state.update { it.copy(remainingSeconds = 30) }
+                    _remainingSeconds.value = REFRESH_INTERVAL_SECONDS
                     getBusArriveList(busStopId = busStopId)
                 }
             }
@@ -154,39 +182,28 @@ class BusArriveViewModel @Inject constructor(
     }
 
     // 타이머 정지 및 상태 리셋
-    fun stopTimer() {
+    private fun stopTimer() {
         timerJob?.cancel()
         timerJob = null
-        _state.update { it.copy(remainingSeconds = 30) }
+        _remainingSeconds.value = REFRESH_INTERVAL_SECONDS
     }
 
     // 도착정보 새로고침
-    fun onClickRefresh(){
-        val busStopId = _state.value.stationInfo.busStopId ?: "0"
+    private fun onClickRefresh(){
         if (busStopId.isNotEmpty()) {
-            startTimer(busStopId)
+            startTimer()
             getBusArriveList(busStopId = busStopId)
         }
     }
 
     // 핀 아이콘 클릭
-    fun onClickPinnedIcon(lineId: String, isPinned: Boolean){
-        val busStopId = _state.value.stationInfo.busStopId ?: "0"
-
+    private fun onClickPinnedIcon(lineId: String, isPinned: Boolean){
         viewModelScope.launch(Dispatchers.IO) {
             if(isPinned){
                 deletePinnedBusUseCase(busStopId = busStopId, lineId = lineId)
             } else {
                 insertPinnedBusUseCase(busStopId = busStopId, lineId = lineId)
             }
-        }
-    }
-
-    fun onAction(action: BusArriveAction){
-        when(action){
-            is BusArriveAction.OnClickFavoriteIcon -> toggleLikeStation(action.stationModel)
-            BusArriveAction.OnClickRefresh -> onClickRefresh()
-            is BusArriveAction.OnClickPinnedIcon -> onClickPinnedIcon(lineId = action.lineId, isPinned = action.isPinned)
         }
     }
 
