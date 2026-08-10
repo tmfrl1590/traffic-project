@@ -9,9 +9,13 @@ import com.system.traffic.domain.usecase.datastore.SetFontSizeUseCase
 import com.system.traffic.domain.usecase.pinned_bus.ResetPinnedBusUseCase
 import com.system.traffic.presentation.event.UiEvent
 import com.system.traffic.presentation.event.UiEventBus
+import com.system.traffic.presentation.screens.setting.action.SettingAction
+import com.system.traffic.presentation.screens.setting.effect.SettingEffect
 import com.system.traffic.presentation.screens.setting.state.SettingState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -32,6 +36,9 @@ class SettingViewModel @Inject constructor(
     private val _state = MutableStateFlow(value = SettingState())
     val state: StateFlow<SettingState> = _state.asStateFlow()
 
+    private val _effect = MutableSharedFlow<SettingEffect>()
+    val effect = _effect.asSharedFlow()
+
     init {
         viewModelScope.launch {
             getAppFontSizeUseCase().collectLatest { fontSize ->
@@ -46,27 +53,45 @@ class SettingViewModel @Inject constructor(
         }
     }
 
-    fun selectFontSize(fontSizeText: String){
+    fun onAction(action: SettingAction) {
+        when (action) {
+            SettingAction.OnClickInquire -> emitEffect(SettingEffect.SendInquireEmail)
+            SettingAction.OnClickOpenSource -> emitEffect(SettingEffect.OpenOssLicenses)
+            is SettingAction.OnClickFontSize -> selectFontSize(fontSizeText = action.fontSizeText)
+            is SettingAction.OnClickTheme -> selectTheme(themeType = action.themeType)
+            SettingAction.OnClickReset -> showResetConfirmDialog()
+            SettingAction.OnDismissResetDialog -> dismissResetConfirmDialog()
+            SettingAction.OnClickResetConfirm -> resetPinnedBusData()
+        }
+    }
+
+    private fun emitEffect(effect: SettingEffect) {
+        viewModelScope.launch {
+            _effect.emit(effect)
+        }
+    }
+
+    private fun selectFontSize(fontSizeText: String){
         viewModelScope.launch {
             setFontSizeUseCase(fontSizeText = fontSizeText)
         }
     }
 
-    fun selectTheme(themeType: String){
+    private fun selectTheme(themeType: String){
         viewModelScope.launch {
             setAppThemeTypeUseCase(themeType = themeType)
         }
     }
 
-    fun showResetConfirmDialog(){
+    private fun showResetConfirmDialog(){
         _state.update { it.copy(isShowResetConfirmDialog = true) }
     }
 
-    fun dismissResetConfirmDialog(){
+    private fun dismissResetConfirmDialog(){
         _state.update { it.copy(isShowResetConfirmDialog = false) }
     }
 
-    fun resetPinnedBusData() {
+    private fun resetPinnedBusData() {
         viewModelScope.launch {
             _state.update { it.copy(isShowResetConfirmDialog = false) }
             resetPinnedBusUseCase()

@@ -2,7 +2,6 @@ package com.system.traffic.presentation.screens.setting
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageInfo
 import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -13,7 +12,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -22,7 +23,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.system.traffic.design.R
 import com.system.traffic.design.component.TwoButtonDialog
@@ -37,40 +41,46 @@ import com.system.traffic.presentation.screens.setting.component.AppVersionSecti
 import com.system.traffic.presentation.screens.setting.component.InquireSection
 import com.system.traffic.presentation.screens.setting.component.LicenseSection
 import com.system.traffic.presentation.screens.setting.component.ResetPinnedBusSection
+import com.system.traffic.presentation.screens.setting.effect.SettingEffect
 import com.system.traffic.presentation.screens.setting.state.SettingState
 import com.system.traffic.presentation.screens.setting.viewmodel.SettingViewModel
 
 @Composable
 fun SettingScreenRoute(
-    context: Context = LocalContext.current,
     viewModel: SettingViewModel = hiltViewModel(),
 ){
-    val info: PackageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-    val appVersion = info.versionName.orEmpty()
+    TrackScreenView(screenName = ScreenName.Setting)
+
+    val context = LocalContext.current
+    val appVersion = remember(context) { context.packageManager.getPackageInfo(context.packageName, 0).versionName.orEmpty() }
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    // VM이 발행한 일회성 사이드 이펙트(Context 필요 작업) 수집
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(key1 = viewModel) {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewModel.effect.collect { effect ->
+                when (effect) {
+                    SettingEffect.SendInquireEmail -> {
+                        context.sendEmail(
+                            to = PresentationConstants.INQUIRE_EMAIL,
+                            subject = PresentationConstants.INQUIRE_SUBJECT,
+                            chooserTitle = context.getString(R.string.setting_inquire)
+                        )
+                    }
+                    SettingEffect.OpenOssLicenses -> {
+                        context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
+                    }
+                }
+            }
+        }
+    }
 
     SettingScreen(
         state = state,
         appVersion = appVersion,
-        onAction = { action ->
-            when(action){
-                SettingAction.OnClickInquire -> {
-                    context.sendEmail(
-                        to = PresentationConstants.INQUIRE_EMAIL,
-                        subject = PresentationConstants.INQUIRE_SUBJECT,
-                        chooserTitle = context.getString(R.string.setting_inquire)
-                    )
-                }
-                SettingAction.OnClickOpenSource -> { context.startActivity(Intent(context, OssLicensesMenuActivity::class.java)) }
-                is SettingAction.OnClickFontSize -> { viewModel.selectFontSize(fontSizeText = action.fontSizeText) }
-                is SettingAction.OnClickTheme -> { viewModel.selectTheme(themeType = action.themeType) }
-                SettingAction.OnClickReset -> { viewModel.showResetConfirmDialog() }
-                SettingAction.OnDismissResetDialog -> { viewModel.dismissResetConfirmDialog() }
-                SettingAction.OnClickResetConfirm -> { viewModel.resetPinnedBusData() }
-            }
-        }
+        onAction = viewModel::onAction,
     )
 }
 
@@ -81,8 +91,6 @@ private fun SettingScreen(
     onAction: (SettingAction) -> Unit,
 ) {
     val scrollState = rememberScrollState()
-
-    TrackScreenView(screenName = ScreenName.Setting)
 
     Box(
         modifier = Modifier
