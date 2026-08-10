@@ -5,15 +5,15 @@ import androidx.lifecycle.viewModelScope
 import com.system.traffic.core.domain.onError
 import com.system.traffic.core.domain.onSuccess
 import com.system.traffic.domain.usecase.line.GetLineStationListUseCase
+import com.system.traffic.presentation.event.UiEvent
+import com.system.traffic.presentation.event.UiEventBus
 import com.system.traffic.presentation.model.toPresentation
 import com.system.traffic.presentation.screens.line_station.action.LineStationAction
 import com.system.traffic.presentation.screens.line_station.state.LineStationState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -21,14 +21,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LineStationViewModel @Inject constructor(
-    private val getLineStationListUseCase: GetLineStationListUseCase
+    private val getLineStationListUseCase: GetLineStationListUseCase,
+    private val uiEventBus: UiEventBus,
 ): ViewModel(){
 
     private val _state = MutableStateFlow(value = LineStationState())
     val state: StateFlow<LineStationState> = _state.asStateFlow()
-
-    private val _errorFlow = MutableSharedFlow<String>()
-    val errorFlow = _errorFlow.asSharedFlow()
 
     // 노선 경유지 조회
     fun getLineStationList(lineId: String){
@@ -45,7 +43,7 @@ class LineStationViewModel @Inject constructor(
                     }
                 }
                 .onError {
-                    _errorFlow.emit("오류가 발생하였습니다.")
+                    uiEventBus.sendEvent(UiEvent.ShowSnackBar(message = "오류가 발생하였습니다"))
                     _state.update { it.copy(isLoading = false) }
                 }
         }

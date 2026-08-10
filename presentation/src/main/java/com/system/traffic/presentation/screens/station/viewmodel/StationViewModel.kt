@@ -69,7 +69,7 @@ class StationViewModel @Inject constructor(
                 val likeIds = likes.map { it.arsId }.toSet()
                 searchedStation.map { it.copy(selected = it.arsId in likeIds) }
             }
-                .catch { uiEventBus.sendEvent(UiEvent.ShowSnackBar(message = "오류가 발생하였습니다.")) } // repository에서 흘려보낸 예외 처리
+                .catch { uiEventBus.sendEvent(UiEvent.ShowSnackBar(message = "오류가 발생하였습니다")) } // repository에서 흘려보낸 예외 처리
                 .collectLatest { updatedList ->
                     _state.update { it.copy(searchedStationList = updatedList) }
                 }

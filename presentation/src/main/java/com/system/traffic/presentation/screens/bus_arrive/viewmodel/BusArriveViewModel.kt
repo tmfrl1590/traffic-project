@@ -15,6 +15,8 @@ import com.system.traffic.domain.usecase.pinned_bus.DeletePinnedBusUseCase
 import com.system.traffic.domain.usecase.pinned_bus.GetPinnedBusUseCase
 import com.system.traffic.domain.usecase.pinned_bus.InsertPinnedBusUseCase
 import com.system.traffic.domain.usecase.station.GetStationInfoUseCase
+import com.system.traffic.presentation.event.UiEvent
+import com.system.traffic.presentation.event.UiEventBus
 import com.system.traffic.presentation.model.toPresentation
 import com.system.traffic.presentation.screens.bus_arrive.action.BusArriveAction
 import com.system.traffic.presentation.screens.bus_arrive.state.BusArriveState
@@ -23,11 +25,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
@@ -50,8 +50,8 @@ class BusArriveViewModel @Inject constructor(
     private val insertPinnedBusUseCase: InsertPinnedBusUseCase,
     private val deletePinnedBusUseCase: DeletePinnedBusUseCase,
     private val getPinnedBusUseCase: GetPinnedBusUseCase,
+    private val uiEventBus: UiEventBus,
 ): ViewModel() {
-
 
     private val _state = MutableStateFlow(value = BusArriveState())
 
@@ -80,9 +80,6 @@ class BusArriveViewModel @Inject constructor(
             initialValue = BusArriveState()
         )
 
-    private val _errorFlow = MutableSharedFlow<String>()
-    val errorFlow = _errorFlow.asSharedFlow()
-
     // 버스 도착 정보 조회
     fun getBusArriveList(busStopId: String) {
         viewModelScope.launch(context = Dispatchers.IO) {
@@ -100,8 +97,8 @@ class BusArriveViewModel @Inject constructor(
                 .onError { error ->
                     _state.update { it.copy(isLoading = false) }
                     when(error){
-                        DataError.Remote.SERVER_TIMEOUT -> _errorFlow.emit("서버 연결이 지연되고 있습니다. 잠시 후 다시 시도해주세요.")
-                        else -> _errorFlow.emit("오류가 발생하였습니다.")
+                        DataError.Remote.SERVER_TIMEOUT -> uiEventBus.sendEvent(UiEvent.ShowSnackBar(message = "서버 연결이 지연되고 있습니다. 잠시 후 다시 시도해주세요"))
+                        else -> uiEventBus.sendEvent(UiEvent.ShowSnackBar(message = "오류가 발생하였습니다"))
                     }
                 }
         }
@@ -121,7 +118,7 @@ class BusArriveViewModel @Inject constructor(
                 val likeStationSet = likeStationList.mapTo(HashSet()) { it.arsId }
                 stationRes to likeStationSet
             }
-                .catch { _errorFlow.emit("오류가 발생하였습니다.") } // repository에서 흘려보낸 예외 처리
+                .catch { uiEventBus.sendEvent(UiEvent.ShowSnackBar(message = "오류가 발생하였습니다")) } // repository에서 흘려보낸 예외 처리
                 .collectLatest { (stationRes, likeStationSet) -> // 구조분해
                     val updatedStation = stationRes.copy(
                         selected = stationRes.arsId in likeStationSet

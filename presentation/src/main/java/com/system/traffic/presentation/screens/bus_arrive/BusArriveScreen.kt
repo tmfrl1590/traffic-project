@@ -31,9 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.repeatOnLifecycle
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.compose.CameraPositionState
@@ -45,7 +43,6 @@ import com.naver.maps.map.compose.rememberCameraPositionState
 import com.naver.maps.map.overlay.OverlayImage
 import com.system.traffic.design.R
 import com.system.traffic.design.component.AdBannerView
-import com.system.traffic.design.ui.theme.LocalSnackBarHostState
 import com.system.traffic.design.ui.theme.TrafficTheme
 import com.system.traffic.presentation.PresentationConstants.DEFAULT_LATITUDE
 import com.system.traffic.presentation.PresentationConstants.DEFAULT_LONGITUDE
@@ -69,8 +66,6 @@ fun BusArriveScreenRoute(
 ) {
     TrackScreenView(screenName = ScreenName.BusArrive)
 
-    val snackBarHostState = LocalSnackBarHostState.current
-
     val state by busArriveViewModel.state.collectAsStateWithLifecycle()
 
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
@@ -91,16 +86,6 @@ fun BusArriveScreenRoute(
     LaunchedEffect(key1 = Unit) {
         busArriveViewModel.getBusArriveList(busStopId = busStopId)
     }
-
-    val lifecycleOwner = LocalLifecycleOwner.current
-    LaunchedEffect(key1 = Unit) {
-        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            busArriveViewModel.errorFlow.collect { message ->
-                snackBarHostState.showSnackbar(message = message)
-            }
-        }
-    }
-
 
     BusArriveScreen(
         state = state,

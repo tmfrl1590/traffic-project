@@ -27,10 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.repeatOnLifecycle
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.CameraUpdate
@@ -41,7 +38,6 @@ import com.naver.maps.map.compose.NaverMap
 import com.naver.maps.map.compose.rememberCameraPositionState
 import com.system.traffic.core.enums.LineType
 import com.system.traffic.design.R
-import com.system.traffic.design.ui.theme.LocalSnackBarHostState
 import com.system.traffic.design.ui.theme.TrafficTheme
 import com.system.traffic.presentation.PresentationConstants.DEFAULT_LATITUDE
 import com.system.traffic.presentation.PresentationConstants.DEFAULT_LONGITUDE
@@ -61,22 +57,12 @@ fun LineStationScreenRoute(
 ) {
     TrackScreenView(screenName = ScreenName.LineStation)
 
-    val snackBarHostState = LocalSnackBarHostState.current
-
     val state by lineStationViewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = Unit) {
         lineStationViewModel.getLineStationList(lineId = lineId)
     }
 
-    val lifecycleOwner = LocalLifecycleOwner.current
-    LaunchedEffect(key1 = Unit) {
-        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            lineStationViewModel.errorFlow.collect { message ->
-                snackBarHostState.showSnackbar(message = message)
-            }
-        }
-    }
 
     LineStationScreen(
         state = state,
