@@ -9,14 +9,12 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.SheetValue
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberStandardBottomSheetState
@@ -106,7 +104,6 @@ fun BusArriveScreenRoute(
 
     BusArriveScreen(
         state = state,
-        snackBarHostState = snackBarHostState,
         onAction = busArriveViewModel::onAction,
         onClickBusArriveCard = onClickBusArriveCard,
     )
@@ -116,7 +113,6 @@ fun BusArriveScreenRoute(
 @Composable
 private fun BusArriveScreen(
     state: BusArriveState,
-    snackBarHostState: SnackbarHostState,
     onAction: (BusArriveAction) -> Unit,
     onClickBusArriveCard: (String) -> Unit,
 ) {
@@ -124,7 +120,6 @@ private fun BusArriveScreen(
         bottomSheetState = rememberStandardBottomSheetState(
             initialValue = SheetValue.Expanded // 진입 시 자동으로 올라옴
         ),
-        snackbarHostState = snackBarHostState,
     )
 
     val currentStationLatitude = state.stationInfo.latitude?.toDoubleOrNull() ?: DEFAULT_LATITUDE
@@ -140,7 +135,6 @@ private fun BusArriveScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .navigationBarsPadding()
     ){
         BottomSheetScaffold(
             sheetContainerColor = TrafficTheme.colors.mainBackground,

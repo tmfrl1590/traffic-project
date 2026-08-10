@@ -12,7 +12,6 @@ import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SheetValue
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberStandardBottomSheetState
@@ -81,7 +80,6 @@ fun LineStationScreenRoute(
 
     LineStationScreen(
         state = state,
-        snackBarHostState = snackBarHostState,
         onAction = lineStationViewModel::onAction
     )
 }
@@ -90,7 +88,6 @@ fun LineStationScreenRoute(
 @Composable
 private fun LineStationScreen(
     state: LineStationState,
-    snackBarHostState: SnackbarHostState,
     onAction: (LineStationAction) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -133,7 +130,6 @@ private fun LineStationScreen(
         bottomSheetState = rememberStandardBottomSheetState(
             initialValue = SheetValue.Expanded // 진입 시 자동으로 올라옴
         ),
-        snackbarHostState = snackBarHostState,
     )
 
     BottomSheetScaffold(
