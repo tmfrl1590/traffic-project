@@ -10,8 +10,8 @@ object ProjectConfig {
     const val TARGET_SDK = 36
     const val MIN_SDK = 28
 
-    const val VERSION_CODE = 57
-    const val VERSION_NAME = "2.2.7"
+    const val VERSION_CODE = 58
+    const val VERSION_NAME = "2.2.8"
 
     val JAVA_VERSION = JavaVersion.VERSION_17
     val JVM_TARGET = JvmTarget.JVM_17
