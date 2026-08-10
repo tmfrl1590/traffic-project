@@ -22,6 +22,7 @@ import com.system.traffic.design.R
 import com.system.traffic.design.component.MainTopBar
 import com.system.traffic.design.component.TrafficSnackBar
 import com.system.traffic.design.ui.theme.LocalSnackBarHostState
+import com.system.traffic.design.ui.theme.TrafficTheme
 import com.system.traffic.presentation.event.UiEvent
 import com.system.traffic.presentation.screens.bus_arrive.BusArriveScreenRoute
 import com.system.traffic.presentation.screens.home.HomeScreenRoute
@@ -60,6 +61,7 @@ fun TrafficNavigationRoot(
     }
 
     Scaffold(
+        containerColor = TrafficTheme.colors.mainBackground,
         topBar = {
             if(backStack.lastOrNull() in TOP_LEVEL_DESTINATIONS.keys) {
                 MainTopBar(
