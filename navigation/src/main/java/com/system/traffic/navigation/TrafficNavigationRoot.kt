@@ -10,6 +10,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
@@ -36,19 +39,20 @@ fun TrafficNavigationRoot(
     val backStack = rememberNavBackStack(Screens.Splash)
     val snackBarHostState = LocalSnackBarHostState.current
 
-    // 홈탭(루트)에서만 동작: 뒤로가기 더블 클릭 시 앱 종료
     DoubleBackToExitHandler(
         enabled = backStack.lastOrNull() == Screens.Home,
         snackbarHostState = snackBarHostState
     )
 
-    LaunchedEffect(mainViewModel) {
-        mainViewModel.uiEvent.collect { event ->
-            when (event) {
-                is UiEvent.ShowSnackBar -> {
-                    snackBarHostState.showSnackbar(
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    LaunchedEffect(key1 = mainViewModel) {
+        lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+            mainViewModel.uiEvent.collect { event ->
+                when (event) {
+                    is UiEvent.ShowSnackBar -> snackBarHostState.showSnackbar(
                         message = event.message,
-                        duration = SnackbarDuration.Short
+                        duration = SnackbarDuration.Short,
                     )
                 }
             }
