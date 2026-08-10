@@ -14,7 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -129,7 +128,7 @@ private fun PreviewHomeScreenLight() {
     TrafficTheme(
         adConfig = AdConfig(),
         isDarkTheme = false,
-        selectedFontSize = 1.0f
+        appFontSize = 1.0f
     ) {
         HomeScreen(
             likeStationList = listOf(
@@ -156,7 +155,7 @@ private fun PreviewHomeScreenDark() {
     TrafficTheme(
         adConfig = AdConfig(),
         isDarkTheme = true,
-        selectedFontSize = 1.0f
+        appFontSize = 1.0f
     ) {
         HomeScreen(
             likeStationList = listOf(
@@ -183,7 +182,7 @@ private fun PreviewEmptyLikeStation() {
     TrafficTheme(
         adConfig = AdConfig(),
         isDarkTheme = false,
-        selectedFontSize = 1.0f
+        appFontSize = 1.0f
     ) {
         HomeScreen(
             likeStationList = emptyList(),
@@ -200,7 +199,7 @@ private fun PreviewEmptyLikeStationDark() {
     TrafficTheme(
         adConfig = AdConfig(),
         isDarkTheme = true,
-        selectedFontSize = 1.0f
+        appFontSize = 1.0f
     ) {
         HomeScreen(
             likeStationList = emptyList(),

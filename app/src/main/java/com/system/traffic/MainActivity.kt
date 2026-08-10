@@ -31,12 +31,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.system.traffic.permission.PermissionManager
 import com.system.traffic.design.R
 import com.system.traffic.design.component.AdConfig
 import com.system.traffic.design.ui.theme.MainColor
 import com.system.traffic.design.ui.theme.TrafficTheme
 import com.system.traffic.navigation.TrafficNavigationRoot
+import com.system.traffic.permission.PermissionManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -76,7 +76,7 @@ class MainActivity : ComponentActivity() {
             TrafficTheme(
                 adConfig = adConfig,
                 isDarkTheme = isDarkTheme,
-                selectedFontSize = config.fontScale,
+                appFontSize = config.fontScale,
                 content = {
                     Column(
                         modifier = Modifier

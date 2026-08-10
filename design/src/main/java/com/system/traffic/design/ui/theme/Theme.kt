@@ -28,10 +28,10 @@ object TrafficTheme {
 @Composable
 fun TrafficTheme(
     isDarkTheme: Boolean,
-    selectedFontSize: Float,
     adConfig: AdConfig,
-    colors: TrafficColors = if (isDarkTheme) DarkTrafficColors else LightTrafficColors,
-    typography: TrafficTypography = DefaultTypography,
+    appFontSize: Float,
+    appColors: TrafficColors = if (isDarkTheme) DarkTrafficColors else LightTrafficColors,
+    appTypography: TrafficTypography = DefaultTypography,
     content: @Composable () -> Unit,
 ) {
     val currentDensity = LocalDensity.current
@@ -48,11 +48,11 @@ fun TrafficTheme(
 
     CompositionLocalProvider(
         LocalAdConfig provides adConfig,
-        LocalTrafficColors provides colors,
-        LocalTrafficTypography provides typography,
+        LocalTrafficColors provides appColors,
+        LocalTrafficTypography provides appTypography,
         LocalDensity provides Density(
             density = currentDensity.density,
-            fontScale = selectedFontSize,
+            fontScale = appFontSize,
         ),
         LocalSnackBarHostState provides snackBarHostState,
     ){
