@@ -1,29 +1,23 @@
 package com.system.traffic.presentation.screens.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.system.traffic.design.R
 import com.system.traffic.design.component.AdConfig
-import com.system.traffic.design.component.noRippleClickable
-import com.system.traffic.design.ui.theme.MainColor
 import com.system.traffic.design.ui.theme.TrafficTheme
 import com.system.traffic.domain.model.StationModel
 import com.system.traffic.presentation.firebase.ScreenName
@@ -35,8 +29,8 @@ import com.system.traffic.presentation.screens.home.viewmodel.HomeViewModel
 @Composable
 fun HomeScreenRoute(
     homeViewModel: HomeViewModel = hiltViewModel(),
-    onStationCardClick: (String, String) -> Unit,
-    onGotoStation: () -> Unit,
+    onStationCardClick: (String, String) -> Unit = {_, _ -> },
+    onGotoStation: () -> Unit = {},
 ) {
     TrackScreenView(screenName = ScreenName.Home)
 
@@ -67,6 +61,7 @@ private fun HomeScreen(
             style = TrafficTheme.typography.title,
             modifier = Modifier
                 .padding(start = 16.dp)
+                .testTag(HomeTestTags.LIKE_TEXT)
             ,
             color = TrafficTheme.colors.textPrimary,
         )
@@ -83,42 +78,6 @@ private fun HomeScreen(
             onClickFavorite = { onAction(HomeAction.OnClickFavoriteIcon(stationModel = it))},
             onGotoStation = onGotoStation,
         )
-    }
-}
-
-@Composable
-fun EmptyLikeStation(
-    modifier: Modifier = Modifier,
-    onGotoStation: () -> Unit,
-){
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-        ,
-        contentAlignment = Alignment.Center
-    ) {
-        Column {
-            Text(
-                text = stringResource(R.string.like_no_data),
-                lineHeight = 24.sp,
-                textAlign = TextAlign.Center,
-                style = TrafficTheme.typography.empty,
-                color = TrafficTheme.colors.textPrimary,
-            )
-
-            Spacer(
-                modifier = Modifier
-                    .height(20.dp)
-            )
-            Text(
-                text = stringResource(R.string.home_empty_action_search),
-                fontSize = 16.sp,
-                textAlign = TextAlign.Center,
-                color = MainColor,
-                modifier = Modifier
-                    .noRippleClickable { onGotoStation() }
-            )
-        }
     }
 }
 
