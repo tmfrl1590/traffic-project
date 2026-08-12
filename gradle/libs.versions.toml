@@ -31,6 +31,9 @@ naverMapCompose = "1.9.0"
 androidx-lifecycle = "2.11.0"
 coreSplashscreen = "1.2.0"
 
+junit = "4.13.2"
+androidxTestExt = "1.2.1"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
@@ -105,6 +108,15 @@ androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", versi
 # build-logic (convention plugin 컴파일용)
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+
+
+# Test
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxTestExt" }
+# Compose 테스트 (버전은 compose-bom이 관리하므로 명시 안 함)
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

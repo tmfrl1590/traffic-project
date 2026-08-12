@@ -38,4 +38,11 @@ dependencies {
 
     implementation(libs.map.sdk) // 네이버 맵 공식 SDK
     implementation(libs.naver.map.compose) // Compose 래퍼
+
+    // Test
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.test.manifest)
 }

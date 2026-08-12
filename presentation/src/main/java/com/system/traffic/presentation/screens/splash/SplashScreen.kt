@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -42,7 +43,7 @@ import com.system.traffic.presentation.screens.splash.viewmodel.SplashViewModel
 
 @Composable
 fun SplashScreenRoute(
-    onGoHomeScreen: () -> Unit,
+    onGoHomeScreen: () -> Unit = {},
     splashViewModel: SplashViewModel = hiltViewModel()
 ) {
     TrackScreenView(screenName = ScreenName.Splash)
@@ -96,7 +97,9 @@ private fun SplashScreen(
             Image(
                 modifier = Modifier
                     .size(300.dp)
-                    .scale(scale.value),
+                    .scale(scale.value)
+                    .testTag(SplashTestTags.LOGO)
+                ,
                 painter = painterResource(id = R.drawable.main_bus),
                 contentDescription = "main_logo"
             )

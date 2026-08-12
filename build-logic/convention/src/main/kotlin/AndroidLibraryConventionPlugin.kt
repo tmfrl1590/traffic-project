@@ -20,6 +20,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
                 defaultConfig {
                     minSdk = ProjectConfig.MIN_SDK
+                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 }
 
                 buildTypes {
