@@ -8,6 +8,7 @@ import android.util.Log
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.system.traffic.design.R
+import com.system.traffic.firebase.TrafficFirebaseMessagingService
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -36,7 +37,7 @@ class App : Application(){
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = "traffic_notification_channel"
+            val channelId = TrafficFirebaseMessagingService.CHANNEL_ID
             val channelName = getString(R.string.notification_channel_name)
             val channelDescription = getString(R.string.notification_channel_description)
             val importance = NotificationManager.IMPORTANCE_HIGH

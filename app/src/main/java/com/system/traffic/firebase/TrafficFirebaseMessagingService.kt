@@ -51,12 +51,12 @@ class TrafficFirebaseMessagingService : FirebaseMessagingService() {
 
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
-        notificationManager.notify(0, notificationBuilder.build())
+        val notificationId = System.currentTimeMillis().toInt()
+        notificationManager.notify(notificationId, notificationBuilder.build())
     }
 
     companion object {
         private const val TAG = "TrafficFCM"
         const val CHANNEL_ID = "traffic_notification_channel"
-        const val CHANNEL_NAME = "Traffic Notifications"
     }
 }
