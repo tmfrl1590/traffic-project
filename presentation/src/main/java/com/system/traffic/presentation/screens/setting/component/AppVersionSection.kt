@@ -24,9 +24,7 @@ import androidx.compose.ui.platform.testTag
 import com.system.traffic.presentation.screens.setting.SettingTestTags
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.system.traffic.design.R
 import com.system.traffic.design.ui.theme.TrafficTheme
 
