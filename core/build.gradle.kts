@@ -21,4 +21,8 @@ dependencies {
 
     // retrofit
     implementation(libs.retrofit)
+
+    // Test
+    testImplementation(libs.junit)
+    testImplementation(libs.coroutines.test)  // safeCall이 suspend라 runTest 필요
 }
