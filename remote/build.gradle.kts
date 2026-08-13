@@ -39,4 +39,9 @@ dependencies {
     // Kotlin Serialization
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.serialization.json)
+
+    // Test — JVM 유닛 테스트라 testImplementation (androidTest 아님!)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockwebserver)
+    testImplementation(libs.coroutines.test)
 }
