@@ -1,5 +1,7 @@
 package com.system.traffic.data.local
 
+import com.system.traffic.core.enums.AppFontSize
+import com.system.traffic.core.enums.AppThemeType
 import com.system.traffic.data.model.local.KeywordEntity
 import com.system.traffic.data.model.local.LineEntity
 import com.system.traffic.data.model.local.PinnedBusEntity
@@ -12,13 +14,13 @@ interface LocalDataSource {
 
     suspend fun getIsFirstLogin(): Boolean
 
-    suspend fun setAppFontSize(fontSize: String)
+    suspend fun setAppFontSize(fontSize: AppFontSize)
 
-    fun getAppFontSize(): Flow<String>
+    fun getAppFontSize(): Flow<AppFontSize>
 
-    suspend fun setAppThemeType(themeType: String)
+    suspend fun setAppThemeType(themeType: AppThemeType)
 
-    fun getAppThemeType(): Flow<String>
+    fun getAppThemeType(): Flow<AppThemeType>
 
     // 즐겨찾기 추가
     suspend fun addLikeStation(stationEntity: StationEntity)

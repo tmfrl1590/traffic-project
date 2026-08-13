@@ -65,6 +65,14 @@
     <string name="error_generic">오류가 발생하였습니다</string>
     <string name="error_server_timeout">서버 연결이 지연되고 있습니다. 잠시 후 다시 시도해주세요</string>
     <string name="setting_reset_complete">데이터가 초기화되었습니다.</string>
+    <string name="app_theme_light">라이트</string>
+    <string name="app_theme_dark">다크</string>
+    <string name="app_theme_system">시스템</string>
+    <string name="font_size_small">작게</string>
+    <string name="font_size_medium">보통</string>
+    <string name="font_size_large">크게</string>
+    <string name="bus_direction_up">상행</string>
+    <string name="bus_direction_down">하행</string>
 
     <!--App-->
     <string name="network_offline">네트워크 연결이 원활하지 않습니다.</string>

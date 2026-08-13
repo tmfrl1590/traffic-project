@@ -1,5 +1,7 @@
 package com.system.traffic.presentation.fake
 
+import com.system.traffic.core.enums.AppFontSize
+import com.system.traffic.core.enums.AppThemeType
 import com.system.traffic.domain.repository.DataStoreRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,8 +13,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
  */
 class FakeDataStoreRepository(
     private val isFirstLogin: Boolean = false,
-    initialFontSize: String = "",
-    initialThemeType: String = "",
+    initialFontSize: AppFontSize = AppFontSize.MEDIUM,
+    initialThemeType: AppThemeType = AppThemeType.LIGHT,
 ) : DataStoreRepository {
 
     private val fontSize = MutableStateFlow(initialFontSize)
@@ -22,15 +24,15 @@ class FakeDataStoreRepository(
 
     override suspend fun getIsFirstLogin(): Boolean = isFirstLogin
 
-    override suspend fun setAppFontSize(fontSize: String) {
+    override suspend fun setAppFontSize(fontSize: AppFontSize) {
         this.fontSize.value = fontSize
     }
 
-    override fun getAppFontSize(): Flow<String> = fontSize
+    override fun getAppFontSize(): Flow<AppFontSize> = fontSize
 
-    override suspend fun setAppThemeType(themeType: String) {
+    override suspend fun setAppThemeType(themeType: AppThemeType) {
         this.themeType.value = themeType
     }
 
-    override fun getAppThemeType(): Flow<String> = themeType
+    override fun getAppThemeType(): Flow<AppThemeType> = themeType
 }

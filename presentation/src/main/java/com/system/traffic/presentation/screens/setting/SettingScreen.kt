@@ -110,7 +110,7 @@ private fun SettingScreen(
 
             AppFontSizeSection(
                 selectedFontSize = state.selectedFontSize,
-                onClickFontSize = { onAction(SettingAction.OnClickFontSize(fontSizeText = it)) }
+                onClickFontSize = { onAction(SettingAction.OnClickFontSize(fontSize = it)) }
             )
 
             AppThemeSection(

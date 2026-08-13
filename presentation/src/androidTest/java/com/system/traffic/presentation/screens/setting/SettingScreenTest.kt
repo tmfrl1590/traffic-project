@@ -6,6 +6,8 @@ import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import com.system.traffic.core.enums.AppFontSize
+import com.system.traffic.core.enums.AppThemeType
 import com.system.traffic.domain.usecase.datastore.GetAppFontSizeUseCase
 import com.system.traffic.domain.usecase.datastore.GetAppThemeTypeUseCase
 import com.system.traffic.domain.usecase.datastore.SetAppThemeTypeUseCase
@@ -91,8 +93,8 @@ class SettingScreenTest {
 
 
     private fun createViewModel(
-        initialFontSize: String = "",
-        initialThemeType: String = "",
+        initialFontSize: AppFontSize = AppFontSize.MEDIUM,
+        initialThemeType: AppThemeType = AppThemeType.LIGHT,
     ): SettingViewModel {
         val dataStoreRepository = FakeDataStoreRepository(
             initialFontSize = initialFontSize,

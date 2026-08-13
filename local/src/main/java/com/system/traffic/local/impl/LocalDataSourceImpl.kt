@@ -64,33 +64,29 @@ class LocalDataSourceImpl @Inject constructor(
         return preferences[isFirstLogin] ?: true
     }
 
-    override suspend fun setAppFontSize(fontSize: String) {
-        val enumName = AppFontSize.fromFontSizeText(fontSize).name
+    override suspend fun setAppFontSize(fontSize: AppFontSize) {
         myDataStore.edit { preferences ->
-            preferences[appFontSize] = enumName
+            preferences[appFontSize] = fontSize.name
         }
     }
 
-    override fun getAppFontSize(): Flow<String> {
+    override fun getAppFontSize(): Flow<AppFontSize> {
         return myDataStore.data.map { preferences ->
             val name = preferences[appFontSize] ?: AppFontSize.MEDIUM.name
-            val appFontSize = runCatching { AppFontSize.valueOf(name) }.getOrDefault(defaultValue = AppFontSize.MEDIUM)
-            appFontSize.fontSizeText
+            runCatching { AppFontSize.valueOf(name) }.getOrDefault(defaultValue = AppFontSize.MEDIUM)
         }
     }
 
-    override suspend fun setAppThemeType(themeType: String) {
-        val enumName = AppThemeType.fromThemeName(themeType).name
+    override suspend fun setAppThemeType(themeType: AppThemeType) {
         myDataStore.edit { preferences ->
-            preferences[appThemeType] = enumName
+            preferences[appThemeType] = themeType.name
         }
     }
 
-    override fun getAppThemeType(): Flow<String> {
+    override fun getAppThemeType(): Flow<AppThemeType> {
         return myDataStore.data.map { preferences ->
             val name = preferences[appThemeType] ?: AppThemeType.LIGHT.name
-            val appThemeType = runCatching { AppThemeType.valueOf(name) }.getOrDefault(defaultValue = AppThemeType.LIGHT)
-            appThemeType.themeName
+            runCatching { AppThemeType.valueOf(name) }.getOrDefault(defaultValue = AppThemeType.LIGHT)
         }
     }
 

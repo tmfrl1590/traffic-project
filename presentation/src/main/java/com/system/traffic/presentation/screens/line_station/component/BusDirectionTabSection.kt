@@ -13,8 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.system.traffic.core.enums.BusDirection
+import com.system.traffic.design.R
 import com.system.traffic.design.component.noRippleClickable
 import com.system.traffic.design.ui.theme.TrafficTheme
 
@@ -23,7 +24,7 @@ fun BusDirectionTabSection(
     selectedBusDirectionIndex: Int,
     onClickBusDirectionTab: (Int) -> Unit,
 ) {
-    val tabs = listOf(BusDirection.UP.busDirectionName, BusDirection.DOWN.busDirectionName)
+    val tabs = listOf(stringResource(R.string.bus_direction_up), stringResource(R.string.bus_direction_down))
     Row(
         modifier = Modifier
             .fillMaxWidth()

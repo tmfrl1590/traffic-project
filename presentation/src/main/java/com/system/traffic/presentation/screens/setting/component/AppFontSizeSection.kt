@@ -1,5 +1,6 @@
 package com.system.traffic.presentation.screens.setting.component
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,8 +30,8 @@ import com.system.traffic.design.R
 
 @Composable
 fun AppFontSizeSection(
-    selectedFontSize: String,
-    onClickFontSize: (String) -> Unit,
+    selectedFontSize: AppFontSize,
+    onClickFontSize: (AppFontSize) -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -70,10 +71,10 @@ fun AppFontSizeSection(
                         modifier = Modifier
                             .weight(1f)
                         ,
-                        fontSizeText = appFontSize.fontSizeText,
-                        fontColor = if (selectedFontSize == appFontSize.fontSizeText) Color.White else TrafficTheme.colors.unselectedChipText,
-                        containerColor = if (selectedFontSize == appFontSize.fontSizeText) MainColor else TrafficTheme.colors.unselectedChipBackground,
-                        onClickFontSize = { onClickFontSize(appFontSize.fontSizeText) }
+                        fontSizeText = stringResource(appFontSize.toLabelRes()),
+                        fontColor = if (selectedFontSize == appFontSize) Color.White else TrafficTheme.colors.unselectedChipText,
+                        containerColor = if (selectedFontSize == appFontSize) MainColor else TrafficTheme.colors.unselectedChipBackground,
+                        onClickFontSize = { onClickFontSize(appFontSize) }
                     )
                 }
             }
@@ -111,4 +112,11 @@ fun FontSizeCard(
             )
         }
     }
+}
+
+@StringRes
+private fun AppFontSize.toLabelRes(): Int = when (this) {
+    AppFontSize.SMALL -> R.string.font_size_small
+    AppFontSize.MEDIUM -> R.string.font_size_medium
+    AppFontSize.LARGE -> R.string.font_size_large
 }

@@ -2,6 +2,8 @@ package com.system.traffic.presentation.screens.setting.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.system.traffic.core.enums.AppFontSize
+import com.system.traffic.core.enums.AppThemeType
 import com.system.traffic.design.R
 import com.system.traffic.domain.usecase.datastore.GetAppFontSizeUseCase
 import com.system.traffic.domain.usecase.datastore.GetAppThemeTypeUseCase
@@ -58,7 +60,7 @@ class SettingViewModel @Inject constructor(
         when (action) {
             SettingAction.OnClickInquire -> emitEffect(SettingEffect.SendInquireEmail)
             SettingAction.OnClickOpenSource -> emitEffect(SettingEffect.OpenOssLicenses)
-            is SettingAction.OnClickFontSize -> selectFontSize(fontSizeText = action.fontSizeText)
+            is SettingAction.OnClickFontSize -> selectFontSize(fontSize = action.fontSize)
             is SettingAction.OnClickTheme -> selectTheme(themeType = action.themeType)
             SettingAction.OnClickReset -> showResetConfirmDialog()
             SettingAction.OnDismissResetDialog -> dismissResetConfirmDialog()
@@ -72,13 +74,13 @@ class SettingViewModel @Inject constructor(
         }
     }
 
-    private fun selectFontSize(fontSizeText: String){
+    private fun selectFontSize(fontSize: AppFontSize){
         viewModelScope.launch {
-            setFontSizeUseCase(fontSizeText = fontSizeText)
+            setFontSizeUseCase(fontSize = fontSize)
         }
     }
 
-    private fun selectTheme(themeType: String){
+    private fun selectTheme(themeType: AppThemeType){
         viewModelScope.launch {
             setAppThemeTypeUseCase(themeType = themeType)
         }

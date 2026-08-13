@@ -1,5 +1,7 @@
 package com.system.traffic.data.impl
 
+import com.system.traffic.core.enums.AppFontSize
+import com.system.traffic.core.enums.AppThemeType
 import com.system.traffic.data.local.LocalDataSource
 import com.system.traffic.domain.repository.DataStoreRepository
 import kotlinx.coroutines.flow.Flow
@@ -16,19 +18,19 @@ class DataStoreRepositoryImpl @Inject constructor(
         return localDataSource.getIsFirstLogin()
     }
 
-    override suspend fun setAppFontSize(fontSize: String) {
+    override suspend fun setAppFontSize(fontSize: AppFontSize) {
         localDataSource.setAppFontSize(fontSize)
     }
 
-    override fun getAppFontSize(): Flow<String> {
+    override fun getAppFontSize(): Flow<AppFontSize> {
         return localDataSource.getAppFontSize()
     }
 
-    override suspend fun setAppThemeType(themeType: String) {
+    override suspend fun setAppThemeType(themeType: AppThemeType) {
         localDataSource.setAppThemeType(themeType)
     }
 
-    override fun getAppThemeType(): Flow<String> {
+    override fun getAppThemeType(): Flow<AppThemeType> {
         return localDataSource.getAppThemeType()
     }
 }

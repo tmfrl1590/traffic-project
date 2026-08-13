@@ -31,10 +31,10 @@ class RootViewModel @Inject constructor(
     val appConfig: StateFlow<AppConfig?> = combine(
         getAppThemeTypeUseCase(),
         getAppFontSizeUseCase(),
-    ) { themeName, fontSizeText ->
+    ) { themeType, fontSize ->
         AppConfig(
-            themeType = AppThemeType.fromThemeName(themeName),
-            fontScale = AppFontSize.getScaleFromText(fontSizeText),
+            themeType = themeType,
+            fontScale = fontSize.scale,
         )
     }.stateIn(
         scope = viewModelScope,

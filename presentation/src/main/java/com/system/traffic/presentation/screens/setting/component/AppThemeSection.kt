@@ -1,5 +1,6 @@
 package com.system.traffic.presentation.screens.setting.component
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,8 +30,8 @@ import com.system.traffic.design.R
 
 @Composable
 fun AppThemeSection(
-    selectedTheme: String,
-    onClickTheme: (String) -> Unit,
+    selectedTheme: AppThemeType,
+    onClickTheme: (AppThemeType) -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -71,10 +72,10 @@ fun AppThemeSection(
                         modifier = Modifier
                             .weight(1f)
                         ,
-                        themeText = appThemeType.themeName,
-                        fontColor = if (appThemeType.themeName == selectedTheme) Color.White else TrafficTheme.colors.unselectedChipText,
-                        containerColor = if (appThemeType.themeName == selectedTheme) MainColor else TrafficTheme.colors.unselectedChipBackground,
-                        onClickTheme = { onClickTheme(appThemeType.themeName) }
+                        themeText = stringResource(appThemeType.toLabelRes()),
+                        fontColor = if (appThemeType == selectedTheme) Color.White else TrafficTheme.colors.unselectedChipText,
+                        containerColor = if (appThemeType == selectedTheme) MainColor else TrafficTheme.colors.unselectedChipBackground,
+                        onClickTheme = { onClickTheme(appThemeType) }
                     )
                 }
             }
@@ -112,4 +113,11 @@ private fun AppThemeCard(
             )
         }
     }
+}
+
+@StringRes
+private fun AppThemeType.toLabelRes(): Int = when (this) {
+    AppThemeType.LIGHT -> R.string.app_theme_light
+    AppThemeType.DARK -> R.string.app_theme_dark
+    AppThemeType.SYSTEM -> R.string.app_theme_system
 }

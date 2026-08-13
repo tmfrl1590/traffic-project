@@ -4,7 +4,7 @@ import com.system.traffic.core.enums.AppFontSize
 import com.system.traffic.core.enums.AppThemeType
 
 data class SettingState(
-    val selectedFontSize: String = AppFontSize.MEDIUM.fontSizeText,
-    val selectedTheme: String = AppThemeType.LIGHT.themeName,
+    val selectedFontSize: AppFontSize = AppFontSize.MEDIUM,
+    val selectedTheme: AppThemeType = AppThemeType.LIGHT,
     val isShowResetConfirmDialog: Boolean = false,
 )
