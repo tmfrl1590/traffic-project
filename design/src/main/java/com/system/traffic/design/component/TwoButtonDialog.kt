@@ -21,10 +21,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.system.traffic.design.R
 import com.system.traffic.design.ui.theme.Black
 import com.system.traffic.design.ui.theme.TrafficTheme
 import com.system.traffic.design.ui.theme.White
@@ -35,6 +37,8 @@ fun TwoButtonDialog(
     cancelButtonModifier: Modifier,
     dialogTitle: String,
     dialogDescription: String,
+    cancelButtonText: String = stringResource(R.string.dialog_cancel),
+    confirmButtonText: String = stringResource(R.string.dialog_delete),
     onCancel: () -> Unit,
     onConfirm: () -> Unit,
 ) {
@@ -98,7 +102,7 @@ fun TwoButtonDialog(
                             modifier = cancelButtonModifier
                                 .weight(1f)
                             ,
-                            buttonText = "취소",
+                            buttonText = cancelButtonText,
                             buttonColor = Black,
                             containerColor = Color.LightGray,
                             onClickButton = onCancel,
@@ -107,7 +111,7 @@ fun TwoButtonDialog(
                             modifier = Modifier
                                 .weight(1f)
                             ,
-                            buttonText = "삭제",
+                            buttonText = confirmButtonText,
                             buttonColor = White,
                             containerColor = Color.Red,
                             onClickButton = onConfirm,

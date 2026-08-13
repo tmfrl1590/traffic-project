@@ -60,6 +60,8 @@
     <!--Common-->
     <string name="common1">정류장명을 입력하세요</string>
     <string name="common2">에러가 발생했습니다</string>
+    <string name="dialog_cancel">취소</string>
+    <string name="dialog_delete">삭제</string>
 
     <!--App-->
     <string name="network_offline">네트워크 연결이 원활하지 않습니다.</string>
