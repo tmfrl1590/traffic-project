@@ -17,6 +17,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import com.system.traffic.presentation.screens.setting.SettingTestTags
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -31,14 +33,16 @@ fun AppFontSizeSection(
     onClickFontSize: (String) -> Unit,
 ) {
     Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .testTag(tag = SettingTestTags.FONT_SIZE_SECTION)
+        ,
         shape = RoundedCornerShape(20.dp),
         border = BorderStroke(1.dp, color = TrafficTheme.colors.cardBorder),
         colors = CardDefaults.cardColors(
             containerColor = TrafficTheme.colors.mainBackground
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        modifier = Modifier
-            .fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(20.dp)

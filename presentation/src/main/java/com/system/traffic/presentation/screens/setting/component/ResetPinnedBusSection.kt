@@ -15,6 +15,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import com.system.traffic.presentation.screens.setting.SettingTestTags
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -29,15 +31,17 @@ fun ResetPinnedBusSection(
     onClickReset: () -> Unit,
 ) {
     Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 20.dp)
+            .testTag(tag = SettingTestTags.RESET_PINNED_BUS_SECTION)
+        ,
         shape = RoundedCornerShape(20.dp),
         border = BorderStroke(1.dp, color = TrafficTheme.colors.cardBorder),
         colors = CardDefaults.cardColors(
             containerColor = TrafficTheme.colors.mainBackground
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 20.dp)
     ) {
         Column(
             modifier = Modifier.padding(20.dp)
@@ -70,6 +74,7 @@ private fun ResetButton(
         modifier = Modifier
             .fillMaxWidth()
             .height(40.dp)
+            .testTag(tag = SettingTestTags.RESET_BUTTON)
         ,
         colors = CardDefaults.cardColors(
             containerColor = MainColor

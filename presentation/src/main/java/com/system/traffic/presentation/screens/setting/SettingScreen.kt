@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -134,6 +135,10 @@ private fun SettingScreen(
             TwoButtonDialog(
                 modifier = Modifier
                     .align(Alignment.Center)
+                    .testTag(SettingTestTags.RESET_PINNED_BUS_DIALOG)
+                ,
+                cancelButtonModifier = Modifier
+                    .testTag(SettingTestTags.RESET_PINNED_BUS_DIALOG_CANCEL_BUTTON)
                 ,
                 dialogTitle = stringResource(R.string.setting_reset_pin_dialog_title),
                 dialogDescription = stringResource(R.string.setting_reset_pin_dialog_description),

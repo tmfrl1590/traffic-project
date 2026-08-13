@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -32,6 +33,7 @@ import com.system.traffic.design.ui.theme.White
 @Composable
 fun TwoButtonDialog(
     modifier: Modifier = Modifier,
+    cancelButtonModifier: Modifier,
     dialogTitle: String,
     dialogDescription: String,
     onCancel: () -> Unit,
@@ -94,7 +96,7 @@ fun TwoButtonDialog(
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
                         DialogButton(
-                            modifier = Modifier
+                            modifier = cancelButtonModifier
                                 .weight(1f)
                             ,
                             buttonText = "취소",

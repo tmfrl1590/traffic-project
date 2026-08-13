@@ -24,10 +24,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.system.traffic.design.R
 import com.system.traffic.design.ui.theme.TrafficTheme
+import com.system.traffic.presentation.screens.setting.SettingTestTags
 
 @Composable
 fun InquireSection(
@@ -36,7 +38,9 @@ fun InquireSection(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 20.dp),
+            .padding(bottom = 20.dp)
+            .testTag(SettingTestTags.INQUIRE_SECTION)
+        ,
         shape = RoundedCornerShape(20.dp),
         border = BorderStroke(1.dp, color = TrafficTheme.colors.cardBorder),
         colors = CardDefaults.cardColors(
