@@ -7,8 +7,16 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
+enum class InitStep {
+    LOAD_STATIONS,
+    SAVE_STATIONS,
+    LOAD_LINES,
+    SAVE_LINES,
+    DONE,
+}
+
 sealed interface InitState {
-    data class Progress(val message: String, val progress: Float) : InitState
+    data class Progress(val step: InitStep, val progress: Float) : InitState
     data object Complete : InitState
 }
 
@@ -16,19 +24,19 @@ class InitializeDataUseCase @Inject constructor(
     private val repository: FileRepository
 ) {
     operator fun invoke(): Flow<InitState> = flow {
-        emit(InitState.Progress("정류장 정보를 불러오는 중...", 0.1f))
+        emit(value = InitState.Progress(step = InitStep.LOAD_STATIONS, progress = 0.1f))
         val stationList = repository.getStationFileData()
-        
-        emit(InitState.Progress("정류장 정보를 저장하는 중...", 0.3f))
+
+        emit(value = InitState.Progress(step = InitStep.SAVE_STATIONS, progress = 0.3f))
         repository.insertStations(stationList)
-        
-        emit(InitState.Progress("노선 정보를 불러오는 중...", 0.6f))
+
+        emit(value = InitState.Progress(step = InitStep.LOAD_LINES, progress = 0.6f))
         val lineList = repository.getLineFileData()
-        
-        emit(InitState.Progress("노선 정보를 저장하는 중...", 0.8f))
+
+        emit(value = InitState.Progress(step = InitStep.SAVE_LINES, progress = 0.8f))
         repository.insertLines(lineList)
-        
-        emit(InitState.Progress("초기화 완료", 1.0f))
-        emit(InitState.Complete)
-    }.flowOn(Dispatchers.IO) // 파일 읽기 등 Room 밖의 블로킹 IO 커버
+
+        emit(value = InitState.Progress(step = InitStep.DONE, progress = 1.0f))
+        emit(value = InitState.Complete)
+    }.flowOn(context = Dispatchers.IO) // 파일 읽기 등 Room 밖의 블로킹 IO 커버
 }

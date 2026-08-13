@@ -133,7 +133,7 @@ private fun SplashScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = state.message,
+                    text = state.messageRes?.let { stringResource(it) }.orEmpty(),
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onBackground

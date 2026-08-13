@@ -1,10 +1,13 @@
 package com.system.traffic.presentation.screens.splash.viewmodel
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.system.traffic.design.R
 import com.system.traffic.domain.usecase.datastore.GetIsFirstLoginUseCase
 import com.system.traffic.domain.usecase.datastore.SetUpIsFirstLoginUseCase
 import com.system.traffic.domain.usecase.file.InitState
+import com.system.traffic.domain.usecase.file.InitStep
 import com.system.traffic.domain.usecase.file.InitializeDataUseCase
 import com.system.traffic.presentation.screens.splash.state.SplashState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -55,7 +58,7 @@ class SplashViewModel @Inject constructor(
                                         _state.update {
                                             it.copy(
                                                 isLoading = true,
-                                                message = initState.message,
+                                                messageRes = initState.step.toMessageRes(),
                                                 progress = initState.progress
                                             )
                                         }
@@ -67,7 +70,7 @@ class SplashViewModel @Inject constructor(
                                         _state.update {
                                             it.copy(
                                                 isLoading = false,
-                                                message = "완료",
+                                                messageRes = R.string.splash_init_complete,
                                                 progress = 1.0f,
                                                 isComplete = true
                                             )
@@ -88,4 +91,13 @@ class SplashViewModel @Inject constructor(
     companion object {
         private const val INIT_TIMEOUT_MS = 30_000L
     }
+}
+
+@StringRes
+private fun InitStep.toMessageRes(): Int = when (this) {
+    InitStep.LOAD_STATIONS -> R.string.splash_init_load_stations
+    InitStep.SAVE_STATIONS -> R.string.splash_init_save_stations
+    InitStep.LOAD_LINES -> R.string.splash_init_load_lines
+    InitStep.SAVE_LINES -> R.string.splash_init_save_lines
+    InitStep.DONE -> R.string.splash_init_done
 }
