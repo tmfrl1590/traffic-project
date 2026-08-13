@@ -30,7 +30,7 @@ import com.system.traffic.presentation.screens.station.viewmodel.StationViewMode
 @Composable
 fun StationScreenRoute(
     stationViewModel: StationViewModel = hiltViewModel(),
-    onStationCardClick: (String, String) -> Unit,
+    onStationCardClick: (String, String) -> Unit = { _, _ -> }
 ) {
     TrackScreenView(screenName = ScreenName.Station)
 

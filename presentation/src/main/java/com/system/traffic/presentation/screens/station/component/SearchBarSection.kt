@@ -18,12 +18,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.system.traffic.design.component.noRippleClickable
 import com.system.traffic.design.ui.theme.TrafficTheme
+import com.system.traffic.presentation.screens.station.StationTestTags
 
 @Composable
 fun SearchBarSection(
@@ -37,7 +39,9 @@ fun SearchBarSection(
         modifier = Modifier
             .fillMaxWidth()
             .height(54.dp)
-            .padding(horizontal = 20.dp),
+            .padding(horizontal = 20.dp)
+            .testTag(tag = StationTestTags.SEARCH_BAR)
+        ,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         OutlinedTextField(
@@ -64,7 +68,9 @@ fun SearchBarSection(
             singleLine = true,
             modifier = Modifier
                 .weight(1f)
-                .fillMaxHeight(),
+                .fillMaxHeight()
+                .testTag(tag = StationTestTags.SEARCH_INPUT)
+            ,
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = TrafficTheme.colors.searchBarBackground,
                 unfocusedBorderColor = TrafficTheme.colors.searchBarBackground,
@@ -78,7 +84,9 @@ fun SearchBarSection(
                     imageVector = Icons.Filled.Close,
                     contentDescription = "close",
                     modifier = Modifier
-                        .noRippleClickable { onDeleteInputText() },
+                        .noRippleClickable { onDeleteInputText() }
+                        .testTag(tag = StationTestTags.SEARCH_CLEAR_ICON)
+                    ,
                     tint = TrafficTheme.colors.searchBarClearIcon
                 )
             }
