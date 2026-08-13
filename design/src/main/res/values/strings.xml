@@ -62,6 +62,9 @@
     <string name="common2">에러가 발생했습니다</string>
     <string name="dialog_cancel">취소</string>
     <string name="dialog_delete">삭제</string>
+    <string name="error_generic">오류가 발생하였습니다</string>
+    <string name="error_server_timeout">서버 연결이 지연되고 있습니다. 잠시 후 다시 시도해주세요</string>
+    <string name="setting_reset_complete">데이터가 초기화되었습니다.</string>
 
     <!--App-->
     <string name="network_offline">네트워크 연결이 원활하지 않습니다.</string>

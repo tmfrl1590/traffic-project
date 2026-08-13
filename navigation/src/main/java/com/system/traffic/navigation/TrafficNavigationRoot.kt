@@ -8,6 +8,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
@@ -46,13 +47,14 @@ fun TrafficNavigationRoot(
     )
 
     val lifecycleOwner = LocalLifecycleOwner.current
+    val resources = LocalResources.current
 
     LaunchedEffect(key1 = mainViewModel) {
         lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
             mainViewModel.uiEvent.collect { event ->
                 when (event) {
                     is UiEvent.ShowSnackBar -> snackBarHostState.showSnackbar(
-                        message = event.message,
+                        message = resources.getString(event.messageRes),
                         duration = SnackbarDuration.Short,
                     )
                 }

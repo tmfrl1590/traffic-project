@@ -2,6 +2,7 @@ package com.system.traffic.presentation.screens.line_station.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.system.traffic.design.R
 import com.system.traffic.core.domain.onError
 import com.system.traffic.core.domain.onSuccess
 import com.system.traffic.domain.usecase.line.GetLineStationListUseCase
@@ -43,7 +44,7 @@ class LineStationViewModel @Inject constructor(
                     }
                 }
                 .onError {
-                    uiEventBus.sendEvent(UiEvent.ShowSnackBar(message = "오류가 발생하였습니다"))
+                    uiEventBus.sendEvent(UiEvent.ShowSnackBar(messageRes = R.string.error_generic))
                     _state.update { it.copy(isLoading = false) }
                 }
         }

@@ -3,6 +3,7 @@ package com.system.traffic.presentation.screens.bus_arrive.viewmodel
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.system.traffic.design.R
 import com.system.traffic.core.domain.DataError
 import com.system.traffic.core.domain.onError
 import com.system.traffic.core.domain.onSuccess
@@ -123,8 +124,8 @@ class BusArriveViewModel @Inject constructor(
                 .onError { error ->
                     _state.update { it.copy(isLoading = false) }
                     when(error){
-                        DataError.Remote.SERVER_TIMEOUT -> uiEventBus.sendEvent(UiEvent.ShowSnackBar(message = "서버 연결이 지연되고 있습니다. 잠시 후 다시 시도해주세요"))
-                        else -> uiEventBus.sendEvent(UiEvent.ShowSnackBar(message = "오류가 발생하였습니다"))
+                        DataError.Remote.SERVER_TIMEOUT -> uiEventBus.sendEvent(UiEvent.ShowSnackBar(messageRes = R.string.error_server_timeout))
+                        else -> uiEventBus.sendEvent(UiEvent.ShowSnackBar(messageRes = R.string.error_generic))
                     }
                 }
         }
@@ -144,7 +145,7 @@ class BusArriveViewModel @Inject constructor(
                 val likeStationSet = likeStationList.mapTo(HashSet()) { it.arsId }
                 stationRes to likeStationSet
             }
-                .catch { uiEventBus.sendEvent(UiEvent.ShowSnackBar(message = "오류가 발생하였습니다")) } // repository에서 흘려보낸 예외 처리
+                .catch { uiEventBus.sendEvent(UiEvent.ShowSnackBar(messageRes = R.string.error_generic)) } // repository에서 흘려보낸 예외 처리
                 .collectLatest { (stationRes, likeStationSet) -> // 구조분해
                     val updatedStation = stationRes.copy(
                         selected = stationRes.arsId in likeStationSet

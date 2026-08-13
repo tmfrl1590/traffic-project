@@ -2,6 +2,7 @@ package com.system.traffic.presentation.screens.station.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.system.traffic.design.R
 import com.system.traffic.domain.model.StationModel
 import com.system.traffic.domain.usecase.keyword.ClearAllKeywordUseCase
 import com.system.traffic.domain.usecase.keyword.DeleteKeywordUseCase
@@ -69,7 +70,7 @@ class StationViewModel @Inject constructor(
                 val likeIds = likes.map { it.arsId }.toSet()
                 searchedStation.map { it.copy(selected = it.arsId in likeIds) }
             }
-                .catch { uiEventBus.sendEvent(UiEvent.ShowSnackBar(message = "오류가 발생하였습니다")) } // repository에서 흘려보낸 예외 처리
+                .catch { uiEventBus.sendEvent(UiEvent.ShowSnackBar(messageRes = R.string.error_generic)) } // repository에서 흘려보낸 예외 처리
                 .collectLatest { updatedList ->
                     _state.update { it.copy(searchedStationList = updatedList) }
                 }
