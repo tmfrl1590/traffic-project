@@ -194,22 +194,22 @@ private fun BusArriveScreen(
                 val busIcon = remember {
                     OverlayImage.fromResource(R.drawable.icon_bus_marker)
                 }
-                // 2. [개선] associate 를 활용해 임시 리스트를 생성하지 않고 다이렉트로 Map 생성
+                // 2. [개선] buildMap 으로 임시 리스트 없이 다이렉트로 Map 생성
                 val offsetCoordinates = remember(key1 = state.arriveList) {
                     val counts = mutableMapOf<LatLng, Int>()
-                    state.arriveList
-                        .filter { it.busLatitude != null && it.busLongitude != null }
-                        .associate { bus ->
-                            val baseLat = bus.busLatitude!!
-                            val baseLng = bus.busLongitude!!
+                    buildMap {
+                        state.arriveList.forEach { bus ->
+                            val baseLat = bus.busLatitude ?: return@forEach
+                            val baseLng = bus.busLongitude ?: return@forEach
                             val baseLatLng = LatLng(baseLat, baseLng)
                             val count = counts[baseLatLng] ?: 0
                             counts[baseLatLng] = count + 1
                             val offsetLat = baseLat + (count * 0.00008)
                             val offsetLng = baseLng + (count * 0.00008)
-                            // busId와 최종 타겟 좌표를 1:1로 매핑하여 리턴
-                            bus.busId to LatLng(offsetLat, offsetLng)
+                            // busId와 최종 타겟 좌표를 1:1로 매핑
+                            put(bus.busId, LatLng(offsetLat, offsetLng))
                         }
+                    }
                 }
                 // 3. [개선] 버스 리스트 순회부 - 컴포저블 분리로 완전히 쾌적해진 부분!
                 state.arriveList.forEach { bus ->
