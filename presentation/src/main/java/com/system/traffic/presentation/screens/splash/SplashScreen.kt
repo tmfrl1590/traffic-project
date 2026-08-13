@@ -20,7 +20,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.system.traffic.design.R
 import com.system.traffic.presentation.firebase.ScreenName
 import com.system.traffic.presentation.firebase.TrackScreenView
@@ -49,7 +49,7 @@ fun SplashScreenRoute(
     TrackScreenView(screenName = ScreenName.Splash)
 
     val scale = remember { Animatable(0f) }
-    val state by splashViewModel.state.collectAsState()
+    val state by splashViewModel.state.collectAsStateWithLifecycle()
     var animationDone by remember { mutableStateOf(false) }
 
     // 애니메이션은 초기화와 분리해 병렬로 진행
