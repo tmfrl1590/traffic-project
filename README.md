@@ -6,7 +6,7 @@
 
 ---
 ### 기술스택
-언어 : Kotlin 2.2.0
+언어 : Kotlin 2.2.20
 
 UI : Jetpack Compose, Navigation3, Compose Material3
 
@@ -22,7 +22,9 @@ DI : Hilt
 
 지도 : 네이버 지도 SDK, naver-map-compose
 
-기타 : Firebase(Analytics, Cloud Messaging), AdMob, Core SplashScreen
+코드 품질 : GitHub Actions CI, ktlint, Android Lint
+
+기타 : Firebase(Analytics, Cloud Messaging - FID 기반 등록), AdMob, Core SplashScreen
 
 ---
 ### 모듈 구조
@@ -50,6 +52,33 @@ DI : Hilt
 - 앱 테마(라이트/다크/시스템)·글자 크기 설정
 - FCM 푸시 알림
 - 네트워크 오프라인 안내 배너
+
+---
+### CI / 코드 품질
+
+`main`, `develop` 브랜치 푸시 및 모든 PR에서 GitHub Actions가 자동 실행된다. (`.github/workflows/ci.yml`)
+
+검사 순서 : ktlint(미사용 import 검출) → 단위 테스트 → Android Lint → 디버그 빌드
+
+- ktlint 룰은 루트 `.editorconfig`에서 관리한다. 현재는 `no-unused-imports`만 활성화 상태이며, 룰 추가는 `ktlint_standard_룰이름 = enabled` 한 줄로 가능하다.
+- 각 모듈은 자신이 사용하는 권한을 모듈 manifest에 직접 선언한다. (lint MissingPermission 대응, 앱 빌드 시 자동 병합)
+- CI 실행에는 저장소 Secret `LOCAL_PROPERTIES`(로컬 `local.properties` 내용)가 필요하다.
+
+##### 로컬 검증 명령어
+
+```bash
+# 푸시 전 CI와 동일한 검사를 한 번에 (전 모듈 끝까지 검사)
+./gradlew ktlintCheck lintDebug --continue
+
+# 미사용 import 등 ktlint 위반 자동 수정
+./gradlew ktlintFormat
+
+# 단위 테스트 (Android 모듈 + core JVM 모듈)
+./gradlew testDebugUnitTest :core:test
+
+# 디버그 빌드
+./gradlew assembleDebug
+```
 
 ---
 ### 성능/메모리 최적화
