@@ -14,6 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -28,7 +29,7 @@ class SplashViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SplashState())
-    val state: StateFlow<SplashState> = _state
+    val state: StateFlow<SplashState> = _state.asStateFlow()
 
     init {
         // 생성 즉시 초기화 시작.
