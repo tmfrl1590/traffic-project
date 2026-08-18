@@ -1,20 +1,6 @@
 <resources>
     <string name="app_name">광주 버스</string>
 
-    <!--애드몹-->
-    <!--테스트 ID-->
-    <string name="adModId">ca-app-pub-3940256099942544/6300978111</string>
-
-    <!-- 릴리즈 ID-->
-    <!--<string name="adModId">ca-app-pub-3991873148102758/7356139432</string>-->
-
-    <!--애드몹 ID-->
-    <!--테스트 ID-->
-    <!--<string name="adModSettingId">ca-app-pub-3940256099942544~3347511713</string>-->
-
-    <!-- 릴리즈 ID-->
-    <string name="adModSettingId">ca-app-pub-3991873148102758~3904544234</string>
-
     <!--Home Screen-->
     <string name="like_station">즐겨찾기</string>
     <string name="like_no_data">즐겨찾기 정보가\n없습니다</string>
