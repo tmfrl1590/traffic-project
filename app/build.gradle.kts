@@ -86,6 +86,9 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.activity)
 
+    // OSS Licenses (manifest에서 OssLicensesMenuActivity/OssLicensesActivity 참조)
+    implementation(libs.oss.licenses)
+
     // Admob
     implementation(libs.play.services.ads)
 
