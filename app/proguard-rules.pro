@@ -96,3 +96,13 @@
 -keep class **_HiltModules* { *; }
 -keep class **_Factory { *; }
 -keep class **_MembersInjector { *; }
+
+
+# ====================================================================
+# 릴리즈 빌드에서 디버그 로그 제거
+# Log.v / Log.d 호출을 R8이 제거함 (Log.e / Log.w는 크래시 로깅용으로 유지)
+# ====================================================================
+-assumenosideeffects class android.util.Log {
+    public static int v(...);
+    public static int d(...);
+}
