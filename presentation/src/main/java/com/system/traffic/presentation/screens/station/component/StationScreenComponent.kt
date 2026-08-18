@@ -192,7 +192,9 @@ private fun StationInfoFavoriteIcon(
     ){
         Icon(
             painter = painterResource(id = if (stationModel.selected) R.drawable.icon_selected_star else R.drawable.icon_unselected_star),
-            contentDescription = "Favorite",
+            contentDescription = stringResource(
+                if (stationModel.selected) R.string.cd_favorite_remove else R.string.cd_favorite_add
+            ),
             tint = Color.Unspecified
         )
     }

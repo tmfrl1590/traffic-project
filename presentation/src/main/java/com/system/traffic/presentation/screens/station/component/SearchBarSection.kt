@@ -17,12 +17,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.system.traffic.design.R
 import com.system.traffic.design.component.noRippleClickable
 import com.system.traffic.design.ui.theme.TrafficTheme
 import com.system.traffic.presentation.screens.station.StationTestTags
@@ -82,7 +84,7 @@ fun SearchBarSection(
             trailingIcon = {
                 Icon(
                     imageVector = Icons.Filled.Close,
-                    contentDescription = "close",
+                    contentDescription = stringResource(R.string.cd_clear_search),
                     modifier = Modifier
                         .noRippleClickable { onDeleteInputText() }
                         .testTag(tag = StationTestTags.SEARCH_CLEAR_ICON)

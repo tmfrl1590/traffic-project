@@ -49,6 +49,12 @@
     <string name="common2">에러가 발생했습니다</string>
     <string name="dialog_cancel">취소</string>
     <string name="dialog_delete">삭제</string>
+    <string name="cd_favorite_add">즐겨찾기 추가</string>
+    <string name="cd_favorite_remove">즐겨찾기 해제</string>
+    <string name="cd_pin_bus">버스 핀 고정</string>
+    <string name="cd_unpin_bus">버스 핀 해제</string>
+    <string name="cd_delete_keyword">검색어 삭제</string>
+    <string name="cd_clear_search">검색어 지우기</string>
     <string name="error_generic">오류가 발생하였습니다</string>
     <string name="error_server_timeout">서버 연결이 지연되고 있습니다. 잠시 후 다시 시도해주세요</string>
     <string name="setting_reset_complete">데이터가 초기화되었습니다.</string>

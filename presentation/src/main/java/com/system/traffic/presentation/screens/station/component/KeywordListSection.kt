@@ -112,7 +112,7 @@ private fun KeywordCard(
             )
             Icon(
                 imageVector = Icons.Default.Clear,
-                contentDescription = "Delete Keyword",
+                contentDescription = stringResource(R.string.cd_delete_keyword),
                 tint = Color.Gray,
                 modifier = Modifier
                     .size(16.dp)

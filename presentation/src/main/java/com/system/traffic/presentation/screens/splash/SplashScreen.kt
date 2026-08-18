@@ -101,7 +101,8 @@ private fun SplashScreen(
                     .testTag(SplashTestTags.LOGO)
                 ,
                 painter = painterResource(id = R.drawable.main_bus),
-                contentDescription = "main_logo"
+                contentDescription = null // 장식용 로고
+
             )
 
             if (state.isError) {

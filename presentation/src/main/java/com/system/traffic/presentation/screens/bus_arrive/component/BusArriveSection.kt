@@ -190,7 +190,9 @@ private fun BusArriveCard(
             ) {
                 Icon(
                     imageVector = Icons.Filled.PushPin,
-                    contentDescription = null,
+                    contentDescription = stringResource(
+                        if (busArriveModel.isPinned) R.string.cd_unpin_bus else R.string.cd_pin_bus
+                    ),
                     tint = if (busArriveModel.isPinned) MainColor else Color.LightGray,
                     modifier = Modifier.size(22.dp)
                 )
