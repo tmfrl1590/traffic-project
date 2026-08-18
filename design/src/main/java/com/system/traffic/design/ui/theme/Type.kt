@@ -15,27 +15,7 @@ val PretendardFontFamily = FontFamily(
     Font(R.font.pretendard_medium, FontWeight.Medium),
     Font(R.font.pretendard_bold, FontWeight.Bold)
 )
-// 2. 앱 전역 Typography 정의 (M3 기본 크기/행간은 유지하고 폰트만 Pretendard로 교체)
-//private val defaultTypography = Typography()
-
-/*val TrafficTypography = Typography(
-    displayLarge = defaultTypography.displayLarge.copy(fontFamily = PretendardFontFamily),
-    displayMedium = defaultTypography.displayMedium.copy(fontFamily = PretendardFontFamily),
-    displaySmall = defaultTypography.displaySmall.copy(fontFamily = PretendardFontFamily),
-    headlineLarge = defaultTypography.headlineLarge.copy(fontFamily = PretendardFontFamily),
-    headlineMedium = defaultTypography.headlineMedium.copy(fontFamily = PretendardFontFamily),
-    headlineSmall = defaultTypography.headlineSmall.copy(fontFamily = PretendardFontFamily),
-    titleLarge = defaultTypography.titleLarge.copy(fontFamily = PretendardFontFamily),
-    titleMedium = defaultTypography.titleMedium.copy(fontFamily = PretendardFontFamily),
-    titleSmall = defaultTypography.titleSmall.copy(fontFamily = PretendardFontFamily),
-    bodyLarge = defaultTypography.bodyLarge.copy(fontFamily = PretendardFontFamily),
-    bodyMedium = defaultTypography.bodyMedium.copy(fontFamily = PretendardFontFamily),
-    bodySmall = defaultTypography.bodySmall.copy(fontFamily = PretendardFontFamily),
-    labelLarge = defaultTypography.labelLarge.copy(fontFamily = PretendardFontFamily),
-    labelMedium = defaultTypography.labelMedium.copy(fontFamily = PretendardFontFamily),
-    labelSmall = defaultTypography.labelSmall.copy(fontFamily = PretendardFontFamily),
-)*/
-
+// 2. 앱 전역 Typography 정의
 data class TrafficTypography(
     val title: TextStyle,
     val sectionTitle: TextStyle,

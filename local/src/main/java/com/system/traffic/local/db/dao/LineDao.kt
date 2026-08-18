@@ -13,15 +13,4 @@ interface LineDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllLines(lines: List<LineLocal>)
-
-    /*@Query("SELECT * FROM line_local WHERE line_name LIKE :text")
-    fun getSearchedLineList(text: String): Flow<List<LineLocal>>
-
-    // 노선 한건 조회
-    @Query("SELECT * FROM line_local WHERE line_id=:lineId")
-    fun getLineOne(lineId: String): LineLocal
-
-    // 노선 LineKind 조회
-    @Query("SELECT line_kind FROM line_local WHERE line_id=:lineId")
-    fun getLineKind(lineId: String): String*/
 }
