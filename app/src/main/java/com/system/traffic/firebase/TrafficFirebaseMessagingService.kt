@@ -1,5 +1,6 @@
 package com.system.traffic.firebase
 
+import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
@@ -7,14 +8,18 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.system.traffic.design.R
+import com.system.traffic.BuildConfig
 import com.system.traffic.MainActivity
+import com.system.traffic.design.R
 
+@SuppressLint("MissingFirebaseInstanceTokenRefresh")
 class TrafficFirebaseMessagingService : FirebaseMessagingService() {
 
-    override fun onNewToken(token: String) {
-        super.onNewToken(token)
-        Log.d(TAG, "Refreshed token: $token")
+    override fun onRegistered(installationId: String) {
+        super.onRegistered(installationId)
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "Refreshed installationId: $installationId")
+        }
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
