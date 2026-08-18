@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,6 +54,7 @@ fun SettingScreenRoute(
     TrackScreenView(screenName = ScreenName.Setting)
 
     val context = LocalContext.current
+    val resources = LocalResources.current
     val appVersion = remember(context) { context.packageManager.getPackageInfo(context.packageName, 0).versionName.orEmpty() }
 
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -66,8 +68,8 @@ fun SettingScreenRoute(
                     SettingEffect.SendInquireEmail -> {
                         context.sendEmail(
                             to = PresentationConstants.INQUIRE_EMAIL,
-                            subject = context.getString(R.string.setting_inquire_subject),
-                            chooserTitle = context.getString(R.string.setting_inquire)
+                            subject = resources.getString(R.string.setting_inquire_subject),
+                            chooserTitle = resources.getString(R.string.setting_inquire)
                         )
                     }
                     SettingEffect.OpenOssLicenses -> {
