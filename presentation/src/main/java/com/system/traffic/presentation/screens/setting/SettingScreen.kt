@@ -66,7 +66,7 @@ fun SettingScreenRoute(
                     SettingEffect.SendInquireEmail -> {
                         context.sendEmail(
                             to = PresentationConstants.INQUIRE_EMAIL,
-                            subject = PresentationConstants.INQUIRE_SUBJECT,
+                            subject = context.getString(R.string.setting_inquire_subject),
                             chooserTitle = context.getString(R.string.setting_inquire)
                         )
                     }
