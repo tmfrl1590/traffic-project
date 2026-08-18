@@ -1,0 +1,8 @@
+root = true
+
+[*.{kt,kts}]
+# ktlint 최소 구성: 표준 룰셋 전체를 끄고 필요한 룰만 활성화
+ktlint_standard = disabled
+
+# 미사용 import 검출
+ktlint_standard_no-unused-imports = enabled
