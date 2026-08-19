@@ -1,19 +1,21 @@
 package com.system.traffic.firebase
 
 import android.annotation.SuppressLint
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Intent
 import android.util.Log
-import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.system.traffic.BuildConfig
-import com.system.traffic.MainActivity
 import com.system.traffic.design.R
+import com.system.traffic.notification.NotificationHelper
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 @SuppressLint("MissingFirebaseInstanceTokenRefresh")
 class TrafficFirebaseMessagingService : FirebaseMessagingService() {
+
+    @Inject
+    lateinit var notificationHelper: NotificationHelper
 
     override fun onRegistered(installationId: String) {
         super.onRegistered(installationId)
@@ -29,39 +31,15 @@ class TrafficFirebaseMessagingService : FirebaseMessagingService() {
         val title = remoteMessage.notification?.title ?: remoteMessage.data["title"] ?: getString(R.string.app_name)
         val body = remoteMessage.notification?.body ?: remoteMessage.data["body"] ?: ""
 
-        sendNotification(title, body)
-    }
-
-    private fun sendNotification(title: String, body: String) {
-        val intent = Intent(this, MainActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        }
-
-        val pendingIntent = PendingIntent.getActivity(
-            this,
-            0,
-            intent,
-            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
+        val notification = notificationHelper.buildNotification(
+            title = title,
+            body = body,
         )
 
-        val channelId = CHANNEL_ID
-        val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.main_bus)
-            .setContentTitle(title)
-            .setContentText(body)
-            .setAutoCancel(true)
-            .setContentIntent(pendingIntent)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setColor(0xFF3B82F6.toInt())
-
-        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-
-        val notificationId = System.currentTimeMillis().toInt()
-        notificationManager.notify(notificationId, notificationBuilder.build())
+        notificationHelper.notify(notification = notification)
     }
 
     companion object {
         private const val TAG = "TrafficFCM"
-        const val CHANNEL_ID = "traffic_notification_channel"
     }
 }

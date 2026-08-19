@@ -69,8 +69,6 @@
 
     <!--App-->
     <string name="network_offline">네트워크 연결이 원활하지 않습니다.</string>
-    <string name="notification_channel_name">Traffic Notifications</string>
-    <string name="notification_channel_description">Notifications for Traffic App</string>
 
     <!--Bottom Navigation-->
     <string name="nav_title_home">홈</string>
