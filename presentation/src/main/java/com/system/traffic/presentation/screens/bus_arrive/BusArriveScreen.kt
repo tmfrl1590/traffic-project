@@ -23,6 +23,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -287,11 +288,9 @@ private fun MovingBusMarker(
         // 3. 고정된 마커 상태 객체 보존
         val markerState = remember { MarkerState(position = targetLatLng) }
         // 4. 애니메이션 변화를 런타임에 동기화
-        LaunchedEffect(animatedLat.value, animatedLng.value) {
-            markerState.position = LatLng(
-                animatedLat.value.toDouble(),
-                animatedLng.value.toDouble()
-            )
+        LaunchedEffect(Unit) {
+            snapshotFlow { LatLng(animatedLat.value.toDouble(), animatedLng.value.toDouble()) }
+                .collect { markerState.position = it }
         }
 
         Marker(
