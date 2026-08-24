@@ -53,9 +53,7 @@ android {
             signingConfig = signingConfigs.getByName("release")
         }
     }
-    composeCompiler {
-        includeSourceInformation = true
-    }
+
     buildFeatures {
         buildConfig = true
     }
