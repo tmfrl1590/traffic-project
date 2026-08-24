@@ -41,6 +41,7 @@ import com.naver.maps.map.compose.Marker
 import com.naver.maps.map.compose.MarkerState
 import com.naver.maps.map.compose.NaverMap
 import com.naver.maps.map.compose.rememberCameraPositionState
+import com.naver.maps.map.compose.rememberUpdatedMarkerState
 import com.naver.maps.map.overlay.OverlayImage
 import com.system.traffic.design.R
 import com.system.traffic.design.component.AdBannerView
@@ -105,10 +106,12 @@ private fun BusArriveScreen(
         ),
     )
 
-    val currentStationLatitude = state.stationInfo.latitude?.toDoubleOrNull() ?: DEFAULT_LATITUDE
-    val currentStationLongitude = state.stationInfo.longitude?.toDoubleOrNull() ?: DEFAULT_LONGITUDE
-
-    val currentLocation = LatLng(currentStationLatitude, currentStationLongitude)
+    val currentLocation = remember(state.stationInfo.latitude, state.stationInfo.longitude) {
+        LatLng(
+            state.stationInfo.latitude?.toDoubleOrNull() ?: DEFAULT_LATITUDE,
+            state.stationInfo.longitude?.toDoubleOrNull() ?: DEFAULT_LONGITUDE,
+        )
+    }
     val cameraPositionState: CameraPositionState = rememberCameraPositionState()
 
     LaunchedEffect(key1 = currentLocation) {
@@ -188,7 +191,7 @@ private fun BusArriveScreen(
                 cameraPositionState = cameraPositionState,
             ) {
                 Marker(
-                    state = MarkerState(position = currentLocation),
+                    state = rememberUpdatedMarkerState(position = currentLocation),
                     captionText = state.stationInfo.busStopName ?: "",
                 )
                 // 1. 단일 마커 이미지 캐싱
