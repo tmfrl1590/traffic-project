@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -56,12 +56,11 @@ fun SearchedStationListSection(
             LazyColumn(
                 modifier = Modifier
             ){
-                itemsIndexed(
+                items(
                     items = searchedStationList,
-                    key = { index, item ->
-                        "${item.busStopId}_$index"
-                    }
-                ){ index, item ->
+                    // stationNum은 정류장 고유 번호라 non-null이고 검색 결과 내에서 중복되지 않는다
+                    key = { it.stationNum }
+                ){ item ->
                     SearchedStationCard(
                         busStopName = item.busStopName ?: "",
                         stationModel = item,

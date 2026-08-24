@@ -30,9 +30,8 @@ fun LineStationListSection(
     ) {
         itemsIndexed(
             items = currentList,
-            key = { index, item ->
-                "${item.busStopId}_$index"
-            }
+            // seq는 노선 내 정류장 순번이라 목록에서 고유하다 (같은 정류장이 재등장해도 구분됨)
+            key = { _, item -> item.seq }
         ) { index, station ->
             Row(
                 modifier = Modifier

@@ -95,7 +95,8 @@ private fun BusArriveList(
     LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         itemsIndexed(
             items = busArriveList,
-            key = { index, item -> "${item.lineId}_$index" }
+            // busId는 차량 고유 식별자. 핀 정렬로 순서가 바뀌어도 항목이 유지되도록 index를 키에서 제외
+            key = { index, item -> item.busId ?: index }
         ) { index, item ->
             BusArriveCard(
                 haptic = haptic,
