@@ -65,7 +65,7 @@ fun SearchedStationListSection(
                         busStopName = item.busStopName ?: "",
                         stationModel = item,
                         onStationCardClick = onClickStationCard,
-                        onFavoriteIconClick = {onClickFavoriteIcon(it)},
+                        onFavoriteIconClick = onClickFavoriteIcon,
                     )
                 }
             }
@@ -183,11 +183,11 @@ private fun BusStationName(
 private fun StationInfoFavoriteIcon(
     modifier: Modifier,
     stationModel: StationModel,
-    onFavoriteIconClick: (StationModel) -> Unit
+    onFavoriteIconClick: () -> Unit
 ) {
     IconButton(
         modifier = modifier,
-        onClick = { onFavoriteIconClick(stationModel) }
+        onClick = onFavoriteIconClick
     ){
         Icon(
             painter = painterResource(id = if (stationModel.selected) R.drawable.icon_selected_star else R.drawable.icon_unselected_star),
