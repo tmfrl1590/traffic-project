@@ -3,7 +3,7 @@ import java.util.Properties
 plugins {
     id("traffic.android.application")
     id("traffic.hilt")
-    id("com.google.android.gms.oss-licenses-plugin")
+    alias(libs.plugins.oss.licenses)
     id("com.google.gms.google-services")
     alias(libs.plugins.firebase.crashlytics)
 }
