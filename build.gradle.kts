@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.ksp) apply false
 
-    id("com.google.gms.google-services") version "4.4.2" apply false
+    alias(libs.plugins.google.services) apply false
     alias(libs.plugins.oss.licenses) apply false
     alias(libs.plugins.firebase.crashlytics) apply false
     alias(libs.plugins.ktlint) apply false

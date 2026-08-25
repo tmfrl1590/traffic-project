@@ -4,7 +4,7 @@ plugins {
     id("traffic.android.application")
     id("traffic.hilt")
     alias(libs.plugins.oss.licenses)
-    id("com.google.gms.google-services")
+    alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
 }
 
