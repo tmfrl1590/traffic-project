@@ -30,7 +30,7 @@ androidx-lifecycle = "2.11.0"           # lifecycle-runtime-ktx / viewmodel-nav3
 composeBom = "2026.06.01"               # compose 계열 버전은 전부 이 BOM이 관리
 
 #--- Navigation 3 ---------------------------------------------------
-navigation3 = "1.1.1"
+navigation3 = "1.1.6"
 
 #--- DI (Hilt) ------------------------------------------------------
 hiltAndroid = "2.60.1"
