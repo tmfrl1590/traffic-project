@@ -23,8 +23,8 @@ kotlinxSerializationJson = "1.9.0"      # 1.10+ 은 Kotlin 2.3 필요
 coreKtx = "1.16.0"
 appcompat = "1.7.1"
 coreSplashscreen = "1.2.0"
-androidx-activity = "1.13.0"            # activity-ktx / activity-compose 공용
-androidx-lifecycle = "2.11.0"           # lifecycle-runtime-ktx / viewmodel-nav3 공용
+androidxActivity = "1.13.0"             # activity-ktx / activity-compose 공용
+androidxLifecycle = "2.11.0"            # lifecycle-runtime-ktx / viewmodel-nav3 공용
 
 #--- Compose --------------------------------------------------------
 composeBom = "2026.06.01"               # compose 계열 버전은 전부 이 BOM이 관리
@@ -43,7 +43,7 @@ retrofit2KotlinxSerializationConverter = "1.0.0"
 
 #--- 로컬 저장소 -----------------------------------------------------
 datastore = "1.2.1"                     # DataStore Preferences
-room = "2.7.2"                   # room runtime / ktx / compiler 공용
+room = "2.7.2"                          # room runtime / ktx / compiler 공용
 
 #--- Firebase -------------------------------------------------------
 firebaseBom = "34.16.0"                 # firebase 계열 버전은 전부 이 BOM이 관리
@@ -76,8 +76,8 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
-androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "androidx-activity" }
-androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
+androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "androidxActivity" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
 
 #--- Compose (버전은 아래 BOM이 일괄 관리하므로 version 명시 안 함) -------
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -87,12 +87,12 @@ androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
-androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
 
 #--- Navigation 3 ---------------------------------------------------
 androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
-androidx-lifecycle-viewmodel-nav3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-viewmodel-nav3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "androidxLifecycle" }
 
 #--- DI (Hilt) ------------------------------------------------------
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
@@ -143,8 +143,8 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 [plugins]
 
 #--- 빌드 도구 / 언어 ------------------------------------------------
-androidApplication = { id = "com.android.application", version.ref = "agp" }
-androidLibrary = { id = "com.android.library", version.ref = "agp" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
@@ -152,7 +152,7 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 
 #--- DI (Hilt) ------------------------------------------------------
-daggerHilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
+dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
 
 #--- Firebase / Google Play 서비스 -----------------------------------
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
