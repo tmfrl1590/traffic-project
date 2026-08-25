@@ -25,6 +25,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.material3)
 
+    // Coroutines (Flow, launch, Dispatchers.IO 직접 사용)
+    implementation(libs.coroutines.core)
+
     // hilt
     implementation(libs.androidx.hilt.navigation.compose)
 

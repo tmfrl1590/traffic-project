@@ -40,6 +40,9 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.serialization.json)
 
+    // Coroutines (callbackFlow, Dispatchers.Default 직접 사용)
+    implementation(libs.coroutines.core)
+
     // Test — JVM 유닛 테스트라 testImplementation (androidTest 아님!)
     testImplementation(libs.junit)
     testImplementation(libs.mockwebserver)

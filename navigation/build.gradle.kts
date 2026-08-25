@@ -20,6 +20,9 @@ dependencies {
 
     implementation(libs.kotlinx.serialization.json)
 
+    // Coroutines (launch 직접 사용)
+    implementation(libs.coroutines.core)
+
     // Material Icons Extended
     implementation(libs.androidx.material.icons.extended)
 

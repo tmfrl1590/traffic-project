@@ -84,6 +84,10 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.activity.ktx)
 
+    // Coroutines (Flow 직접 사용 + Dispatchers.Main 런타임 제공자)
+    implementation(libs.coroutines.core)
+    implementation(libs.coroutines.android)
+
     // OSS Licenses (manifest에서 OssLicensesMenuActivity/OssLicensesActivity 참조)
     implementation(libs.oss.licenses)
 
