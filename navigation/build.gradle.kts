@@ -29,5 +29,5 @@ dependencies {
     // navigation3
     implementation(libs.androidx.navigation3.runtime)
     implementation(libs.androidx.navigation3.ui)
-    implementation(libs.androdix.lifecycle.viewmodel.nav3)
+    implementation(libs.androidx.lifecycle.viewmodel.nav3)
 }
