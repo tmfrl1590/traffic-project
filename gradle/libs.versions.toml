@@ -37,8 +37,8 @@ hiltAndroid = "2.60.1"
 hiltNavigationCompose = "1.2.0"
 
 #--- 네트워크 --------------------------------------------------------
-okhttp = "4.12.0"
-retrofit = "3.0.0"
+okhttp = "5.4.0"                        # okhttp / logging-interceptor / mockwebserver 공용
+retrofit = "3.0.0"                      # okhttp 4.12.0 을 선언하지만 5.x 로 상향 해석됨
 retrofit2KotlinxSerializationConverter = "1.0.0"
 
 #--- 로컬 저장소 -----------------------------------------------------
