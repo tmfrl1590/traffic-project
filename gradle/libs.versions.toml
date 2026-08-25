@@ -10,7 +10,6 @@ appcompat = "1.7.1"
 
 # Add Library
 navigation3 = "1.1.1"
-materialIconsExtended = "1.7.8" # Material Icons Extended
 hiltAndroid = "2.60.1" # Hilt
 hiltNavigationCompose = "1.2.0"
 okhttp = "4.12.0" # OkHttp
@@ -57,8 +56,8 @@ androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", vers
 androidx-lifecycle-viewmodel-nav3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "androidx-lifecycle" }
 
 
-# Material Icons Extended
-androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
+# Material Icons Extended (버전은 compose-bom이 관리)
+androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 
 
 # Hilt
