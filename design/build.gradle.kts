@@ -13,7 +13,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.activity)
 
     // Admob
     implementation(libs.play.services.ads)

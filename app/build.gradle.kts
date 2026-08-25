@@ -82,7 +82,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.activity)
+    implementation(libs.androidx.activity.ktx)
 
     // OSS Licenses (manifest에서 OssLicensesMenuActivity/OssLicensesActivity 참조)
     implementation(libs.oss.licenses)
