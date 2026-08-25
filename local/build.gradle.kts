@@ -14,7 +14,7 @@ dependencies {
     implementation(projects.domain)
 
     // DataStore Preferences
-    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore)
 
     // room
     implementation(libs.androidx.room.runtime)
