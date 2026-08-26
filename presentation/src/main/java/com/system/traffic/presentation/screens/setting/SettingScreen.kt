@@ -29,7 +29,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import com.google.android.gms.oss.licenses.v2.OssLicensesMenuActivity
 import com.system.traffic.design.R
 import com.system.traffic.design.component.TwoButtonDialog
 import com.system.traffic.design.ui.theme.TrafficTheme
