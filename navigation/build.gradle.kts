@@ -1,6 +1,5 @@
 plugins {
     id("traffic.android.library.compose")
-    id("traffic.hilt")
     id("kotlinx-serialization")
 }
 
